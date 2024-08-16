@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Arquviso Ignorados ###
+/resources/
+pom.xml
