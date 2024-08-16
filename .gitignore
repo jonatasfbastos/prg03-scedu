@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Propriedades do Banco de Dados ###
+/src/main/resources/application.properties
+pom.xml
