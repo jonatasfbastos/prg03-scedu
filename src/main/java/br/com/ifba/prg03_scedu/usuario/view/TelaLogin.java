@@ -49,7 +49,7 @@ public class TelaLogin extends javax.swing.JFrame {
         btnCriarConta = new javax.swing.JButton();
         btnEntrar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 
@@ -165,6 +165,7 @@ public class TelaLogin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
@@ -172,6 +173,7 @@ public class TelaLogin extends javax.swing.JFrame {
         
         telaInicial.setVisible(true);
         telaInicial.toFront();
+        this.dispose();
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
