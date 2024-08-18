@@ -1,7 +1,7 @@
 package br.com.ifba.gestaofaltas.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Falta {
@@ -10,22 +10,36 @@ public class Falta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long studentId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "aluno_id")
+    private Alunos aluno;
 
     @Column(nullable = false)
-    private LocalDate date;
+    @Temporal(TemporalType.DATE)
+    private Date data;
 
     @Column(nullable = false)
-    private boolean isPresent;
+    private String aula;
+
+    @Column(nullable = false)
+    private boolean justificada;
+
+    @Column(length = 500)
+    private String observacoes;
+
+    @Column(nullable = false)
+    private String disciplina;
 
     // Construtores, getters e setters
     public Falta() {}
 
-    public Falta(Long studentId, LocalDate date, boolean isPresent) {
-        this.studentId = studentId;
-        this.date = date;
-        this.isPresent = isPresent;
+    public Falta(Alunos aluno, Date data, String aula, boolean justificada, String observacoes, String disciplina) {
+        this.aluno = aluno;
+        this.data = data;
+        this.aula = aula;
+        this.justificada = justificada;
+        this.observacoes = observacoes;
+        this.disciplina = disciplina;
     }
 
     public Long getId() {
@@ -36,27 +50,51 @@ public class Falta {
         this.id = id;
     }
 
-    public Long getStudentId() {
-        return studentId;
+    public Alunos getAluno() {
+        return aluno;
     }
 
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
+    public void setAluno(Alunos aluno) {
+        this.aluno = aluno;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Date getData() {
+        return data;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setData(Date data) {
+        this.data = data;
     }
 
-    public boolean isPresent() {
-        return isPresent;
+    public String getAula() {
+        return aula;
     }
 
-    public void setPresent(boolean present) {
-        isPresent = present;
+    public void setAula(String aula) {
+        this.aula = aula;
+    }
+
+    public boolean isJustificada() {
+        return justificada;
+    }
+
+    public void setJustificada(boolean justificada) {
+        this.justificada = justificada;
+    }
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
+    public String getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(String disciplina) {
+        this.disciplina = disciplina;
     }
 }
