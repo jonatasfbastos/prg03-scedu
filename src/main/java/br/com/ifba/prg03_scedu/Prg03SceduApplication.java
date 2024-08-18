@@ -1,6 +1,6 @@
 package br.com.ifba.prg03_scedu;
 
-import org.springframework.boot.SpringApplication;
+import br.com.ifba.disciplina.view.DisciplinaListar;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -17,10 +17,9 @@ public class Prg03SceduApplication {
             .headless(false)
             .run(args);
 
-        /*// Obtém o bean CursoListar do contexto Spring e o torna visível
-        CursoListar telaListar = context.getBean(CursoListar.class);
-        telaListar.setVisible(true);
-		SpringApplication.run(Prg03SceduApplication.class, args);*/
+        // Obtém o bean CursoListar do contexto Spring e o torna visível
+            DisciplinaListar telaListar = context.getBean(DisciplinaListar.class);
+            telaListar.setVisible(true);
 	}
 
 }

@@ -2,19 +2,38 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.com.ifba.view;
+package br.com.ifba.disciplina.view;
+
+import br.com.ifba.disciplina.controller.DisciplinaIController;
+import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Flavio Junior
  */
+
+@Component
+@RequiredArgsConstructor
 public class DisciplinaListar extends javax.swing.JFrame {
 
-    /**
-     * Creates new form DisciplinaListar
-     */
-    public DisciplinaListar() {
+
+    /*private final DisciplinaIController disciplinaController;
+
+    public DisciplinaListar(DisciplinaIController disciplinaController) {
+        this.disciplinaController = disciplinaController;
+    }*/
+    
+    
+    // Método anotado com @PostConstruct será executado após a injeção de dependências
+    @PostConstruct
+    private void init() {
         initComponents();
+        //carregarTabela();
     }
 
     /**
@@ -26,17 +45,32 @@ public class DisciplinaListar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 255));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 765, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 525, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -72,11 +106,19 @@ public class DisciplinaListar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DisciplinaListar().setVisible(true);
+                ConfigurableApplicationContext context = 
+            new SpringApplicationBuilder(Prg03SceduApplication.class)
+            .headless(false)
+            .run(args);
+
+        // Obtém o bean CursoListar do contexto Spring e o torna visível
+            DisciplinaListar telaListar = context.getBean(DisciplinaListar.class);
+            telaListar.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
