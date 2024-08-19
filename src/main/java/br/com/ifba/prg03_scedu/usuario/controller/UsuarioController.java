@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequiredArgsConstructor
 public class UsuarioController implements UsuarioIController {
-
+    
     private final UsuarioIService usuarioService;
 
     @Override
@@ -25,7 +25,7 @@ public class UsuarioController implements UsuarioIController {
 
     @Override
     public void save(Usuario usuario) {
-        usuarioService.save(usuario);
+            usuarioService.save(usuario);
     }
 
     @Override
@@ -36,5 +36,10 @@ public class UsuarioController implements UsuarioIController {
     @Override
     public void delete(Long id) {
         usuarioService.delete(id);
+    }
+    
+   @Override
+    public boolean existsByEmail(String email) {
+        return usuarioService.existsByEmail(email);
     }
 }

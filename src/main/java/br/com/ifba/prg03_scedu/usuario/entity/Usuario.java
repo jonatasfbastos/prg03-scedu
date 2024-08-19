@@ -6,9 +6,12 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Data
 @NoArgsConstructor
+@Table(name = "usuario", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @Entity
 public class Usuario {
     

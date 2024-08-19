@@ -11,4 +11,5 @@ public interface UsuarioIController {
     void save(Usuario usuario);
     void update(Usuario usuario);
     void delete(Long id);
+    boolean existsByEmail(String email);
 }
