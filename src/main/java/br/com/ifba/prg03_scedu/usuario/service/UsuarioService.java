@@ -1,23 +1,22 @@
-
 package br.com.ifba.prg03_scedu.usuario.service;
 
 import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
 import br.com.ifba.prg03_scedu.usuario.repository.UsuarioRepository;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UsuarioService implements UsuarioIService {
 
     private final UsuarioRepository usuarioRepository;
-    
     private static final Logger LOGGER = LoggerFactory.getLogger(UsuarioService.class);
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -35,7 +34,7 @@ public class UsuarioService implements UsuarioIService {
     }
 
     @Override
-    public Usuario findById(Long id) throws RuntimeException {
+    public Usuario findById(Long id) {
         String timestamp = getTimestamp();
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario.isEmpty()) {
@@ -46,7 +45,7 @@ public class UsuarioService implements UsuarioIService {
     }
 
     @Override
-    public void save(Usuario usuario) throws RuntimeException {
+    public void save(Usuario usuario) {
         String timestamp = getTimestamp();
         if (usuario == null) {
             throw new RuntimeException("Dados do Usuário não preenchidos");
@@ -60,7 +59,7 @@ public class UsuarioService implements UsuarioIService {
     }
 
     @Override
-    public void update(Usuario usuario) throws RuntimeException {
+    public void update(Usuario usuario) {
         String timestamp = getTimestamp();
         if (usuario == null) {
             throw new RuntimeException("Dados do Usuário não preenchidos");
@@ -81,7 +80,7 @@ public class UsuarioService implements UsuarioIService {
     }
 
     @Override
-    public void delete(Long id) throws RuntimeException {
+    public void delete(Long id) {
         String timestamp = getTimestamp();
         if (id == null) {
             throw new RuntimeException("ID do Usuário não pode ser nulo");

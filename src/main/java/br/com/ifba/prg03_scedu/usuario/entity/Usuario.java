@@ -1,15 +1,21 @@
-
 package br.com.ifba.prg03_scedu.usuario.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-@Entity
 @Data
+@NoArgsConstructor
+@Entity
 public class Usuario {
+    
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String nome;
     private String email;
     private String senha;

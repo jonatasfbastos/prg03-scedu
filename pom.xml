@@ -27,7 +27,8 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>22</java.version>
+		<start-class>br.com.ifba.Prg03SceduApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -58,6 +59,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+                                                                                          <mainClass>${start-class}</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
