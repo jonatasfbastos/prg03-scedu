@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+<<<<<<< Updated upstream
+/src/main/resources/icons/
+=======
+>>>>>>> Stashed changes
+
+### Exclude application.properties ###
+application.properties
