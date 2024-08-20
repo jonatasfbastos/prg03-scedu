@@ -12,4 +12,5 @@ public interface UsuarioIService {
     void delete(Long id);
     boolean existsByEmail(String email);
     boolean existsBySenha(String senha);
+    void recuperarSenha(String email);
 }

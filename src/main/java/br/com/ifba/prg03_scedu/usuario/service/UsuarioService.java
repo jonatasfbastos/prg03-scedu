@@ -1,5 +1,6 @@
 package br.com.ifba.prg03_scedu.usuario.service;
 
+import br.com.ifba.prg03_scedu.mail.service.MailIService;
 import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
 import br.com.ifba.prg03_scedu.usuario.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UsuarioService implements UsuarioIService {
 
    private final UsuarioRepository usuarioRepository;
+   private final MailIService mailService;
     private static final Logger LOGGER = LoggerFactory.getLogger(UsuarioService.class);
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -40,6 +42,8 @@ public class UsuarioService implements UsuarioIService {
             return new RuntimeException("Usuário com ID " + id + " não encontrado");
         });
     }
+    
+    
 
     @Override
     public void save(Usuario usuario) {
@@ -101,5 +105,41 @@ public class UsuarioService implements UsuarioIService {
     @Override
     public boolean existsBySenha(String senha) {
         return usuarioRepository.existsBySenha(senha);
+    }
+
+    @Override
+    public void recuperarSenha(String email) {
+        String timestamp = getTimestamp();
+        LOGGER.info("[{}] Iniciando o processo de recuperacao de senha para o e-mail: {}", timestamp, email);
+
+        if (!usuarioRepository.existsByEmail(email)) {
+            LOGGER.error("[{}] Nao existe nenhum usuario cadastrado com o e-mail: {}", timestamp, email);
+            throw new RuntimeException("Nao existe nenhum usuario cadastrado com esse email");
+        }
+
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        LOGGER.info("[{}] Usuario encontrado para recuperacao de senha: ID - {}, Nome - {}", timestamp, usuario.getId(), usuario.getNome());
+
+        String mensagem = String.format(
+            "Ola %s,\n\n" +
+            "Recebemos uma solicitacao de recuperacao de senha para a sua conta. Abaixo esta a sua senha atual:\n\n" +
+            "Senha: %s\n\n" +
+            "Se voce nao fez essa solicitacao, por favor, ignore este e-mail.\n\n" +
+            "Este e-mail foi enviado automaticamente, portanto nao responda a ele. Se precisar de assistencia adicional, entre em contato com o nosso suporte tecnico.\n\n" +
+            "Atenciosamente,\n" +
+            "Sistema Educacional para Cidades Inteligentes\n" +
+            "suportescedu@gmail.com",
+            usuario.getNome(),
+            usuario.getSenha()
+        );
+
+        try {
+            LOGGER.info("[{}] Enviando e-mail de recuperacao de senha para o e-mail: {}", timestamp, email);
+            mailService.enviarEmail("Suporte SCEDU <suportescedu@gmail.com>", email, "Recuperacao de Senha da Sua Conta.", mensagem);
+            LOGGER.info("[{}] E-mail de recuperacao de senha enviado com sucesso para o e-mail: {}", timestamp, email);
+        } catch (RuntimeException e) {
+            LOGGER.error("[{}] Falha ao enviar e-mail de recuperacao de senha para o e-mail: {}. Mensagem de erro: {}", timestamp, email, e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

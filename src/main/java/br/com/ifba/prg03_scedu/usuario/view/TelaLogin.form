@@ -229,6 +229,9 @@
                 <Property name="text" type="java.lang.String" value="Esqueceu a senha?"/>
                 <Property name="opaque" type="boolean" value="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEsqueceuASenhaActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

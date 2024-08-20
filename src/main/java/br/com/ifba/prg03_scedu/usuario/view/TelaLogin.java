@@ -6,7 +6,7 @@ package br.com.ifba.prg03_scedu.usuario.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.home.view.TelaInicial;
-import br.com.ifba.prg03_scedu.usuario.controller.UsuarioController;
+import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
 import jakarta.annotation.PostConstruct;
 import javax.swing.JOptionPane;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -25,9 +25,9 @@ public class TelaLogin extends javax.swing.JFrame {
      * Creates new form TelaLogin
      */
     
-    private final UsuarioController usuarioController;
+    private final UsuarioIController usuarioController;
     
-    public TelaLogin(UsuarioController usuarioController) {
+    public TelaLogin(UsuarioIController usuarioController) {
         this.usuarioController = usuarioController;
     }
 
@@ -119,6 +119,11 @@ public class TelaLogin extends javax.swing.JFrame {
 
         btnEsqueceuASenha.setText("Esqueceu a senha?");
         btnEsqueceuASenha.setOpaque(true);
+        btnEsqueceuASenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEsqueceuASenhaActionPerformed(evt);
+            }
+        });
 
         jLayeredPane2.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(tfEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -238,6 +243,20 @@ public class TelaLogin extends javax.swing.JFrame {
         usuarioCadastrar.setVisible(true);
         usuarioCadastrar.toFront();
     }//GEN-LAST:event_btnCriarContaActionPerformed
+
+    private void btnEsqueceuASenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueceuASenhaActionPerformed
+        if (tfEmail.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, insira o seu email.", "Campo Obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        try{
+            usuarioController.recuperarSenha(tfEmail.getText());
+            JOptionPane.showMessageDialog(null, "Um e-mail com a sua senha atual foi enviado para " + tfEmail.getText(), "Solicitação Concluída", JOptionPane.INFORMATION_MESSAGE);
+        }catch(RuntimeException e){
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro na recuperação de senha", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEsqueceuASenhaActionPerformed
 
     /**
      * @param args the command line arguments
