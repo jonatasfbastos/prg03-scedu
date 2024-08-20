@@ -97,4 +97,9 @@ public class UsuarioService implements UsuarioIService {
     public boolean existsByEmail(String email) {
         return usuarioRepository.existsByEmail(email);
     }
+
+    @Override
+    public boolean existsBySenha(String senha) {
+        return usuarioRepository.existsBySenha(senha);
+    }
 }

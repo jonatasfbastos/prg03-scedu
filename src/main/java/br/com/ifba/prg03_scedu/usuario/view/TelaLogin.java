@@ -6,7 +6,9 @@ package br.com.ifba.prg03_scedu.usuario.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.home.view.TelaInicial;
+import br.com.ifba.prg03_scedu.usuario.controller.UsuarioController;
 import jakarta.annotation.PostConstruct;
+import javax.swing.JOptionPane;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
@@ -22,7 +24,11 @@ public class TelaLogin extends javax.swing.JFrame {
     /**
      * Creates new form TelaLogin
      */
-    public TelaLogin() {
+    
+    private final UsuarioController usuarioController;
+    
+    public TelaLogin(UsuarioController usuarioController) {
+        this.usuarioController = usuarioController;
     }
 
     @PostConstruct
@@ -209,6 +215,16 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+        if (tfEmail.getText().trim().isEmpty() || tfSenha.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, insira as suas credenciais.", "Campo Obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if(!usuarioController.existsByEmail(tfEmail.getText()) || !usuarioController.existsBySenha(tfSenha.getText())){
+            JOptionPane.showMessageDialog(null, "Email ou senha inválidos.", "Erro de Login", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         TelaInicial telaInicial = new TelaInicial();
         
         telaInicial.setVisible(true);
@@ -217,7 +233,10 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarContaActionPerformed
+        UsuarioCadastrar usuarioCadastrar = new UsuarioCadastrar(usuarioController);
         
+        usuarioCadastrar.setVisible(true);
+        usuarioCadastrar.toFront();
     }//GEN-LAST:event_btnCriarContaActionPerformed
 
     /**
