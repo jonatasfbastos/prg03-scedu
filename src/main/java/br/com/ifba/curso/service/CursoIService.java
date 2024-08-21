@@ -29,4 +29,8 @@ public interface CursoIService {
     // Método para encontrar todos os cursos
     // Retorna uma lista de todos os cursos ou lança uma exceção em caso de erro
     public List<Curso> findAll() throws RuntimeException;
+    
+    List<Curso> findByDescricao(String descricao)throws RuntimeException;
+    List<Curso> findByModalidade(String modalidade)throws RuntimeException;
+    List<Curso> findByCargaHoraria(int cargaHoraria)throws RuntimeException;
 }

@@ -29,4 +29,8 @@ public interface CursoIController {
     // Declaração de método para encontrar todos os cursos
     // O método deve implementar a lógica para buscar todos os cursos disponíveis
     public List<Curso> findAll() throws RuntimeException;
+    
+     List<Curso> findByDescricao(String descricao)throws RuntimeException;
+     List<Curso> findByModalidade(String modalidade)throws RuntimeException;
+     List<Curso> findByCargaHoraria(int cargaHoraria)throws RuntimeException;
 }

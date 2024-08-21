@@ -13,6 +13,7 @@ public class CursoController implements CursoIController {
    
     private final CursoIService cursoService; // Serviço de Curso que será injetado e utilizado para operações de negócio
 
+    
     @Override
     public Curso save(Curso curso) throws RuntimeException {
        
@@ -49,5 +50,17 @@ public class CursoController implements CursoIController {
     public List<Curso> findAll() throws RuntimeException {
         // Chama o método findAll do serviço para encontrar todos os cursos e retorna a lista de cursos
         return cursoService.findAll();
+    }
+    @Override
+    public List<Curso> findByDescricao(String descricao)throws RuntimeException {
+        return cursoService.findByDescricao(descricao);
+    }
+    @Override
+    public List<Curso> findByModalidade(String modalidade)throws RuntimeException {
+        return cursoService.findByModalidade(modalidade);
+    }
+    @Override
+    public List<Curso> findByCargaHoraria(int cargaHoraria)throws RuntimeException {
+        return cursoService.findByCargaHoraria(cargaHoraria);
     }
 }

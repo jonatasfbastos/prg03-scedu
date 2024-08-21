@@ -32,20 +32,15 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel1" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -53,64 +48,59 @@
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="ff" red="0" type="rgb"/>
+          <Color blue="cb" green="82" red="27" type="rgb"/>
         </Property>
       </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                  <Component id="btnPesquisa" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="TxtPesquisa" min="-2" pref="730" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="101" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="1314" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="btnPesquisa" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="TxtPesquisa" min="-2" pref="170" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="jScrollPane1" min="-2" pref="548" max="-2" attributes="0"/>
+                      <Component id="btnAtualizar" min="-2" pref="130" max="-2" attributes="0"/>
+                      <Component id="BtnIncluir" min="-2" pref="130" max="-2" attributes="0"/>
+                      <Component id="BtnExcluir" min="-2" pref="130" max="-2" attributes="0"/>
+                      <Component id="BtnAlterar" min="-2" pref="130" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace pref="54" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="BtnAlterar" min="-2" pref="130" max="-2" attributes="0"/>
-                              <Component id="BtnIncluir" min="-2" pref="130" max="-2" attributes="0"/>
-                              <Component id="BtnExcluir" min="-2" pref="130" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace pref="47" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnAtualizar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
+                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                  <Component id="btnAtualizar" min="-2" pref="42" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="BtnIncluir" min="-2" pref="57" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                  <Component id="BtnAlterar" min="-2" pref="49" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="BtnExcluir" min="-2" pref="52" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="TxtPesquisa" min="-2" pref="45" max="-2" attributes="0"/>
-                      <Component id="btnPesquisa" min="-2" pref="49" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
+                          <Component id="btnAtualizar" min="-2" pref="73" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                          <Component id="BtnIncluir" min="-2" pref="84" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                          <Component id="BtnExcluir" min="-2" pref="81" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                          <Component id="BtnAlterar" min="-2" pref="83" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="btnPesquisa" pref="49" max="32767" attributes="0"/>
+                              <Component id="TxtPesquisa" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" pref="660" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="362" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="109" max="32767" attributes="0"/>
+                  <EmptySpace pref="73" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -119,9 +109,9 @@
         <Component class="javax.swing.JButton" name="BtnIncluir">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI Black" size="14" style="0"/>
+              <Font name="Segoe UI Black" size="18" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Cadastro"/>
+            <Property name="text" type="java.lang.String" value="CADASTRO"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnIncluirActionPerformed"/>
@@ -142,13 +132,17 @@
             <Component class="javax.swing.JTable" name="TblDados">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="0">
-                    <Column editable="true" title="Codigo" type="java.lang.Object"/>
+                  <Table columnCount="7" rowCount="0">
+                    <Column editable="true" title="ID" type="java.lang.Object"/>
                     <Column editable="true" title="Curso" type="java.lang.Object"/>
-                    <Column editable="true" title="N&#xb0;Curso" type="java.lang.Object"/>
+                    <Column editable="true" title="C&#xf3;digo do Curso" type="java.lang.Object"/>
                     <Column editable="true" title="Status" type="java.lang.Object"/>
+                    <Column editable="true" title="Carga Hor&#xe1;ria" type="java.lang.Object"/>
+                    <Column editable="true" title="Descri&#xe7;&#xe3;o" type="java.lang.Object"/>
+                    <Column editable="true" title="Modalidade" type="java.lang.Object"/>
                   </Table>
                 </Property>
+                <Property name="autoscrolls" type="boolean" value="false"/>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
@@ -186,9 +180,9 @@
         <Component class="javax.swing.JButton" name="BtnAlterar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI Black" size="14" style="0"/>
+              <Font name="Segoe UI Black" size="18" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Editar"/>
+            <Property name="text" type="java.lang.String" value="EDITAR"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnAlterarActionPerformed"/>
@@ -197,9 +191,9 @@
         <Component class="javax.swing.JButton" name="BtnExcluir">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI Black" size="14" style="0"/>
+              <Font name="Segoe UI Black" size="18" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Remover"/>
+            <Property name="text" type="java.lang.String" value="REMOVER"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnExcluirActionPerformed"/>
@@ -208,7 +202,7 @@
         <Component class="javax.swing.JButton" name="btnPesquisa">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI Black" size="14" style="0"/>
+              <Font name="Segoe UI Black" size="18" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="SEARCH"/>
           </Properties>
@@ -219,9 +213,9 @@
         <Component class="javax.swing.JButton" name="btnAtualizar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI Black" size="14" style="0"/>
+              <Font name="Segoe UI Black" size="18" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Refresh"/>
+            <Property name="text" type="java.lang.String" value="REFRESH"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>

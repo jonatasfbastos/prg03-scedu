@@ -22,14 +22,30 @@ public class CursoService implements CursoIService {
     // Logger para registrar atividades e eventos
     private static final Logger LOGGER = LoggerFactory.getLogger(CursoService.class);
     
+    
     @Override
     public Curso save(Curso curso) throws RuntimeException {
         LOGGER.info("Salvando curso: {}", curso);  // Loga a tentativa de salvar o curso
-
+        
+        if (curso.getDescricao() == null || curso.getDescricao().isEmpty()) {
+        LOGGER.error("Descrição do curso não pode ser nula ou vazia.");
+        throw new RuntimeException("Descrição do curso é obrigatória.");
+    }
+    
+    if (curso.getModalidade() == null || curso.getModalidade().isEmpty()) {
+        LOGGER.error("Modalidade do curso não pode ser nula ou vazia.");
+       throw new RuntimeException("Modalidade do curso é obrigatória.");
+    }
+    
+    if (curso.getCargaHoraria() <= 0) {
+        LOGGER.error("Carga horária deve ser maior que zero.");
+        throw new RuntimeException("Carga horária inválida.");
+    }
         // Verifica se o curso é nulo
         if (curso == null) {
             LOGGER.error("Tentativa de salvar um curso nulo.");
             throw new RuntimeException(StringUtil.getNullCourseError());
+            
         // Verifica se o curso já existe (tem ID)
         } else if (curso.getId() != null) {
             LOGGER.error("Tentativa de salvar um curso que já existe: {}", curso);
@@ -117,6 +133,42 @@ public class CursoService implements CursoIService {
         // Busca todos os cursos no banco de dados
         List<Curso> cursos = cursoDao.findAll();
         LOGGER.info("Total de cursos encontrados: {}", cursos.size());  // Loga a quantidade de cursos encontrados
+        return cursos;
+        
+    }
+    @Override
+    public List<Curso> findByDescricao(String descricao)throws RuntimeException {
+        LOGGER.info("Buscando cursos por descrição: {}", descricao);
+
+        if (descricao == null || descricao.isEmpty()) {
+            LOGGER.error("Tentativa de buscar cursos com descrição nula ou vazia.");
+            throw new RuntimeException("Descrição não pode ser nula ou vazia.");
+        } else {
+            List<Curso> cursos = cursoDao.findByDescricao(descricao);
+            LOGGER.info("Cursos encontrados: {}", cursos);
+            return cursos;
+        }
+    }
+    @Override
+    public List<Curso> findByModalidade(String modalidade)throws RuntimeException {
+        LOGGER.info("Buscando cursos por modalidade: {}", modalidade);
+
+        if (modalidade == null || modalidade.isEmpty()) {
+            LOGGER.error("Tentativa de buscar cursos com modalidade nula ou vazia.");
+            throw new RuntimeException("Modalidade não pode ser nula ou vazia.");
+        } else {
+            List<Curso> cursos = cursoDao.findByModalidade(modalidade);
+            LOGGER.info("Cursos encontrados: {}", cursos);
+            return cursos;
+        }
+    }
+    @Override
+    public List<Curso> findByCargaHoraria(int cargaHoraria)throws RuntimeException {
+        LOGGER.info("Buscando cursos por carga horária: {}", cargaHoraria);
+
+        // Assumindo que cargaHoraria pode ser 0, então não verifica se é nulo
+        List<Curso> cursos = cursoDao.findByCargaHoraria(cargaHoraria);
+        LOGGER.info("Cursos encontrados: {}", cursos);
         return cursos;
     }
 }

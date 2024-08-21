@@ -25,7 +25,6 @@ public class CursoListar extends javax.swing.JFrame {
     
     // Método para carregar os dados da tabela
 private void carregarTabela() {
-    // Cria uma instância do CursoIController para acessar os dados do curso
     // Obtém todos os cursos do banco de dados
     List<Curso> dadosTabela = cursoController.findAll();
     
@@ -37,12 +36,22 @@ private void carregarTabela() {
     // Itera sobre a lista de cursos obtida do banco de dados
     for (Curso lista : dadosTabela) {
         // Cria um array de objetos contendo os dados de cada curso
-        Object[] dados = {lista.getId(), lista.getNome(), lista.getNumeroCurso(), lista.isEstado()};
+        Object[] dados = {
+            lista.getId(),    // Código
+            lista.getNome(),          // Curso
+            lista.getNumeroCurso(),   // Número do Curso
+            lista.isEstado() ? "Ativo" : "Inativo", // Status
+            lista.getCargaHoraria(),  // Carga Horária
+            lista.getDescricao(),     // Descrição
+            lista.getModalidade()     // Modalidade
+        };
         // Adiciona os dados do curso como uma nova linha no modelo da tabela
         dtmCursos.addRow(dados);
     }
     // Notifica a tabela que os dados foram atualizados para que a interface gráfica seja atualizada
     dtmCursos.fireTableDataChanged();
+    TblDados.revalidate();
+    TblDados.repaint();
 }
 
     
@@ -84,10 +93,10 @@ private void carregarTabela() {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setForeground(new java.awt.Color(0, 0, 0));
 
-        jPanel1.setBackground(new java.awt.Color(0, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(39, 130, 203));
 
-        BtnIncluir.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        BtnIncluir.setText("Cadastro");
+        BtnIncluir.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        BtnIncluir.setText("CADASTRO");
         BtnIncluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnIncluirActionPerformed(evt);
@@ -105,9 +114,10 @@ private void carregarTabela() {
 
             },
             new String [] {
-                "Codigo", "Curso", "N°Curso", "Status"
+                "ID", "Curso", "Código do Curso", "Status", "Carga Horária", "Descrição", "Modalidade"
             }
         ));
+        TblDados.setAutoscrolls(false);
         TblDados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TblDadosMouseClicked(evt);
@@ -115,23 +125,23 @@ private void carregarTabela() {
         });
         jScrollPane1.setViewportView(TblDados);
 
-        BtnAlterar.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        BtnAlterar.setText("Editar");
+        BtnAlterar.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        BtnAlterar.setText("EDITAR");
         BtnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnAlterarActionPerformed(evt);
             }
         });
 
-        BtnExcluir.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        BtnExcluir.setText("Remover");
+        BtnExcluir.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        BtnExcluir.setText("REMOVER");
         BtnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnExcluirActionPerformed(evt);
             }
         });
 
-        btnPesquisa.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        btnPesquisa.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         btnPesquisa.setText("SEARCH");
         btnPesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,8 +149,8 @@ private void carregarTabela() {
             }
         });
 
-        btnAtualizar.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        btnAtualizar.setText("Refresh");
+        btnAtualizar.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        btnAtualizar.setText("REFRESH");
         btnAtualizar.setToolTipText("");
         btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,64 +162,57 @@ private void carregarTabela() {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
+                .addComponent(btnPesquisa)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TxtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(101, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnPesquisa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(TxtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BtnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BtnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(47, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAtualizar)
-                        .addGap(68, 68, 68))))
+                    .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BtnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(BtnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(BtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(157, 157, 157))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TxtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 109, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(BtnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(BtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)
+                        .addComponent(BtnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                            .addComponent(TxtPesquisa))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -220,47 +223,52 @@ private void carregarTabela() {
     }//GEN-LAST:event_TxtPesquisaActionPerformed
 
     private void BtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAlterarActionPerformed
-// Obtém a linha selecionada na tabela
-        int row = TblDados.getSelectedRow(); // Obtém o índice da linha selecionada na tabela
-        if (row != -1) { // Verifica se uma linha foi realmente selecionada
-            // Supondo que o ID esteja na primeira coluna, obtém o ID do curso
-            long id = (long) TblDados.getValueAt(row, 0); // Obtém o valor da célula da primeira coluna e converte para long
+int row= TblDados.getSelectedRow(); 
 
-            try {
-                // Cria uma nova instância do CursoIController e busca o curso pelo ID
-                Curso curso = new Curso(); // Cria uma nova instância de Curso (não é necessário, pois o resultado será substituído)
-                curso = cursoController.findById(id); // Busca o curso no banco de dados pelo ID
+    if (row != -1) { 
+        Object idObj= TblDados.getValueAt(row, 0); 
 
-                if (curso != null) { // Verifica se o curso foi encontrado
-                    // Abre a tela de edição e passa o curso como parâmetro
-                    TelaEditar newFrame = new TelaEditar(cursoController,curso); // Cria uma nova instância da tela de edição, passando o curso encontrado
-                    newFrame.setVisible(true); // Torna a tela de edição visível
-
-                    // Adiciona um ouvinte para quando a janela de edição for fechada
-                    newFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-                        @Override
-                        public void windowClosed(java.awt.event.WindowEvent e) {
-                            // Recarrega a tabela quando a janela de edição for fechada
-                            carregarTabela();
-                        }
-                    });
-
-                } else {
-                    // Se o curso não for encontrado, exibe uma mensagem de aviso
-                    JOptionPane.showMessageDialog(null, "Curso não encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
-                    carregarTabela(); // Recarrega a tabela para garantir que todos os cursos estejam atualizados
-                }
-
-            } catch (Exception e) {
-                // Se ocorrer uma exceção, imprime o stack trace e exibe uma mensagem de erro
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Erro ao buscar o curso.", "Erro", JOptionPane.ERROR_MESSAGE);
+        long id=0;
+          try {
+            System.out.println("ID Object: " + idObj); // Log para verificar o valor
+            System.out.println("ID Object Class: " + idObj.getClass()); // Log para verificar a classe do valorif (idObj instanceof Number) {
+              
+            if (idObj instanceof Number) {
+                id = ((Number) idObj).longValue();
+            } else if (idObj instanceof String) {
+                id = Long.parseLong((String) idObj);
+            } else {
+                throw new IllegalArgumentException("Tipo de dado inválido para o ID do curso.");
             }
 
-        } else {
-            // Se nenhuma linha for selecionada, exibe uma mensagem de aviso
-            JOptionPane.showMessageDialog(null, "Nenhum curso selecionado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            Curso curso= cursoController.findById(id);
+
+            if (curso != null) { 
+                TelaEditar newFrame =new TelaEditar(cursoController, curso); 
+                newFrame.setVisible(true); 
+    
+                newFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override public void windowClosed (java.awt.event.WindowEvent e) {
+                        carregarTabela(); 
+                    }
+                });
+
+           } else {
+                JOptionPane.showMessageDialog(null, "Curso não encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                carregarTabela(); 
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Formato do ID inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao buscar o curso.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
+
+    } else {
+        JOptionPane.showMessageDialog(null, "Nenhum curso selecionado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+    }
+
     }//GEN-LAST:event_BtnAlterarActionPerformed
 
     private void BtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIncluirActionPerformed
@@ -284,36 +292,45 @@ private void carregarTabela() {
 
     private void BtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExcluirActionPerformed
         
-// Obtém a linha selecionada na tabela
-    int row = TblDados.getSelectedRow();
+   int row= TblDados.getSelectedRow();
     if (row != -1) {
-        long id = (long) TblDados.getValueAt(row, 0); // Supondo que o ID esteja na primeira coluna
+        Object value= TblDados.getValueAt(row, 0); 
         
+        if (value == null) {
+            JOptionPane.showMessageDialog(null, "ID não pode ser nulo.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        String idString= value.toString(); 
+        
+        if (idString.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "ID não pode ser vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        long id;
+        try {
+            id = Long.parseLong(idString);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "ID inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
         try {
-
-            // Busca o curso pelo ID
-            Curso curso = new Curso();
-            curso = cursoController.findById(id);
+            Curso curso= cursoController.findById(id);
             
             if (curso != null) {
-                // Pergunta ao usuário se deseja remover o curso
-                int resposta = JOptionPane.showConfirmDialog(null, "Deseja remover o curso?", "Confirmar Remoção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int resposta= JOptionPane.showConfirmDialog(null, "Deseja remover o curso?", "Confirmar Remoção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                 if (resposta == JOptionPane.YES_OPTION) {
                     cursoController.delete(curso);
                     JOptionPane.showMessageDialog(null, "Curso removido com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                    
-                    // Atualiza a tabela de dados (implementação não fornecida)
                     carregarTabela();
                     
                 } else {
-                    // Cancelar a operação
-                    //em.getTransaction().rollback();
                     JOptionPane.showMessageDialog(null, "Remoção cancelada.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
-                // Curso não encontrado, lidar com isso apropriadamente
                 JOptionPane.showMessageDialog(null, "Curso não encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
@@ -323,40 +340,42 @@ private void carregarTabela() {
     } else {
         JOptionPane.showMessageDialog(null, "Nenhum curso selecionado.", "Aviso", JOptionPane.WARNING_MESSAGE);
     }
-        
     }//GEN-LAST:event_BtnExcluirActionPerformed
 
     private void btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaActionPerformed
-        // Obtém o nome do curso a ser pesquisado
-        String nomeCurso = TxtPesquisa.getText().trim(); // Use trim() para remover espaços em branco desnecessários
+       String nomeCurso= TxtPesquisa.getText().trim(); // Use trim() para remover espaços em branco desnecessários// Criação da variável para dar início à pesquisa
+            List<Curso> cursos;
 
-        // Criação da variável para dar início à pesquisa
-        List<Curso> cursos;
-
-        try {
-            //Passsa as informações caso encontre o curso
-            cursos = cursoController.findByNome(nomeCurso);
-
-            // Se encontrado, atualiza a tabela com os cursos encontrados
-            DefaultTableModel dtmCursos = (DefaultTableModel) TblDados.getModel();
-            dtmCursos.setRowCount(0);  // Limpa todos os dados da tabela
-
-            if (cursos.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Curso nao encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
-                carregarTabela(); // Carregar tabela com todos os cursos após a pesquisa
-            } else {
-                for (Curso curso : cursos) {
-                    Object[] dados = {curso.getId(), curso.getNome(), curso.getNumeroCurso(), curso.isEstado()};
-                    dtmCursos.addRow(dados);
-                }
-            }
-        } catch (NoResultException e) {
+    try {
+        // Passa as informações caso encontre o curso
+        cursos = cursoController.findByNome(nomeCurso);
+            
+    
+        // Se encontrado, atualiza a tabela com os cursos encontrados
+        DefaultTableModel dtmCursos= (DefaultTableModel) TblDados.getModel();
+        dtmCursos.setRowCount(0);  // Limpa todos os dados da tabela
+        if (cursos.isEmpty()) {
+       
+            JOptionPane.showMessageDialog(null, "Curso não encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
             carregarTabela(); // Carregar tabela com todos os cursos após a pesquisa
-            JOptionPane.showMessageDialog(null, "Curso nao encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao buscar curso: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }    
+        } else {
+            for (Curso curso : cursos) {
+               Object[] dados = {
+                    curso.getId(),
+                    curso.getNome(),
+                    curso.getNumeroCurso(),
+                    curso.getCargaHoraria(), // Incluindo carga horária
+                    curso.getDescricao(), // Incluindo descrição
+                    curso.getModalidade(), // Incluindo modalidade
+                    curso.isEstado()
+                };
+                dtmCursos.addRow(dados);
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Erro ao buscar curso: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnPesquisaActionPerformed
 
     private void TblDadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TblDadosMouseClicked

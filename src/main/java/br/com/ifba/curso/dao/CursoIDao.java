@@ -14,4 +14,7 @@ public interface CursoIDao extends JpaRepository<Curso, Long>{
     
     //Função de procurar na base de dados pelo nome
     public List<Curso> findByNome(String nomeCurso);
+    public List<Curso> findByDescricao(String descricao);
+    public List<Curso> findByModalidade(String modalidade);
+    public List<Curso> findByCargaHoraria(int cargaHoraria);
 }

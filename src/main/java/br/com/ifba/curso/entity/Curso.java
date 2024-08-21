@@ -31,4 +31,13 @@ public class Curso extends PersistenceEntity {
     // Indica se o curso está ativo ou não
     @Column(name = "Ativo")
     private boolean estado;
+    
+    @Column(name = "descricao")
+    private String descricao;
+    
+    @Column(name = "modalidade")
+    private String modalidade;
+    
+    @Column(name = "cargaHoraria")
+    private int cargaHoraria;
 }
