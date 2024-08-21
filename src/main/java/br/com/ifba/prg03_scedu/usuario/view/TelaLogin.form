@@ -133,9 +133,9 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="tfSenha" pref="203" max="32767" attributes="0"/>
                                       <Component id="jLabel3" alignment="0" min="-2" pref="177" max="-2" attributes="0"/>
-                                      <Component id="btnEsqueceuASenha" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="btnEsqueceuASenha" alignment="0" pref="203" max="32767" attributes="0"/>
+                                      <Component id="pfSenha" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -156,7 +156,7 @@
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="tfSenha" min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="pfSenha" min="-2" pref="42" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnEsqueceuASenha" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
@@ -179,8 +179,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfEmail">
-            </Component>
-            <Component class="javax.swing.JTextField" name="tfSenha">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
@@ -232,6 +230,8 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEsqueceuASenhaActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JPasswordField" name="pfSenha">
             </Component>
           </SubComponents>
         </Container>

@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
 @RequiredArgsConstructor
 public class UsuarioService implements UsuarioIService {
 
-   private final UsuarioRepository usuarioRepository;
-   private final MailIService mailService;
+    private final UsuarioRepository usuarioRepository;
+    private final MailIService mailService;
     private static final Logger LOGGER = LoggerFactory.getLogger(UsuarioService.class);
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -108,23 +108,66 @@ public class UsuarioService implements UsuarioIService {
         return usuarioRepository.existsBySenha(senha);
     }
 
+        @Override
+    public Usuario login(String email, String senha) {
+        // Obtém o timestamp atual para incluir nos logs
+        String timestamp = getTimestamp();
+
+        // Log de início do processo de login
+        LOGGER.info("[{}] Iniciando o processo de login para o e-mail: {}", timestamp, email);
+
+        // Verifica se o email ou a senha estão em branco e lança uma exceção se estiverem
+        if (email.isBlank() || senha.isBlank()) {
+            LOGGER.warn("[{}] Falha no login: e-mail ou senha em branco.", timestamp);
+            throw new RuntimeException("Por favor, insira as suas credenciais.");
+        }
+
+        // Busca o usuário no repositório pelo e-mail
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        // Verifica se o usuário foi encontrado; se não, lança uma exceção
+        if (usuario == null) {
+            LOGGER.error("[{}] Falha no login: Nenhum usuário encontrado com o e-mail: {}", timestamp, email);
+            throw new RuntimeException("Email ou senha inválidos.");
+        }
+
+        // Verifica se a senha fornecida corresponde à senha armazenada; se não, lança uma exceção
+        if (!usuario.getSenha().equals(senha)) {
+            LOGGER.error("[{}] Falha no login: Senha incorreta para o e-mail: {}", timestamp, email);
+            throw new RuntimeException("Email ou senha inválidos.");
+        }
+
+        // Log de sucesso no login com informações do usuário
+        LOGGER.info("[{}] Login bem-sucedido para o usuário: ID - {}, Nome - {}", timestamp, usuario.getId(), usuario.getNome());
+
+        // Retorna o usuário autenticado
+        return usuario;
+    }
+
     @Override
     public void recuperarSenha(String email) {
+        // Obtém o timestamp atual para incluir nos logs
         String timestamp = getTimestamp();
+
+        // Log de início do processo de recuperação de senha
         LOGGER.info("[{}] Iniciando o processo de recuperacao de senha para o e-mail: {}", timestamp, email);
-        
+
+        // Verifica se o email está em branco e lança uma exceção se estiver
         if (email.isBlank()) {
             throw new RuntimeException("Por favor, insira o seu email.");
         }
 
+        // Verifica se o email existe no repositório; se não, lança uma exceção
         if (!usuarioRepository.existsByEmail(email)) {
             LOGGER.error("[{}] Nao existe nenhum usuario cadastrado com o e-mail: {}", timestamp, email);
             throw new RuntimeException("Nao existe nenhum usuario cadastrado com esse email");
         }
 
+        // Busca o usuário no repositório pelo e-mail
         Usuario usuario = usuarioRepository.findByEmail(email);
         LOGGER.info("[{}] Usuario encontrado para recuperacao de senha: ID - {}, Nome - {}", timestamp, usuario.getId(), usuario.getNome());
 
+        // Prepara a mensagem de e-mail com a senha atual do usuário
         String mensagem = String.format(
             "Ola %s,\n\n" +
             "Recebemos uma solicitacao de recuperacao de senha para a sua conta. Abaixo esta a sua senha atual:\n\n" +
@@ -139,28 +182,21 @@ public class UsuarioService implements UsuarioIService {
         );
 
         try {
+            // Log de envio do e-mail de recuperação de senha
             LOGGER.info("[{}] Enviando e-mail de recuperacao de senha para o e-mail: {}", timestamp, email);
+
+            // Envia o e-mail para o usuário com a senha atual
             mailService.enviarEmail("Suporte SCEDU <suportescedu@gmail.com>", email, "Recuperacao de Senha da Sua Conta.", mensagem);
+
+            // Log de sucesso no envio do e-mail
             LOGGER.info("[{}] E-mail de recuperacao de senha enviado com sucesso para o e-mail: {}", timestamp, email);
+
         } catch (RuntimeException e) {
+            // Log de erro caso o envio do e-mail falhe
             LOGGER.error("[{}] Falha ao enviar e-mail de recuperacao de senha para o e-mail: {}. Mensagem de erro: {}", timestamp, email, e.getMessage());
+
+            // Relança a exceção para tratamento adicional
             throw new RuntimeException(e.getMessage());
         }
-    }
-
-    @Override
-    public Usuario login(String email, String senha) {
-        
-        if (email.isBlank() || senha.isBlank()) {
-            throw new RuntimeException("Por favor, insira as suas credenciais.");
-        }
-        
-        Usuario usuario = usuarioRepository.findByEmail(email);
-        
-        if(usuario == null || !usuario.getSenha().equals(senha)){
-            throw new RuntimeException("Email ou senha inválidos.");
-        }
-        
-        return usuario;
     }
 }

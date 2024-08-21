@@ -9,6 +9,7 @@ import br.com.ifba.prg03_scedu.home.view.TelaInicial;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
 import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
 import jakarta.annotation.PostConstruct;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -52,12 +53,12 @@ public class TelaLogin extends javax.swing.JFrame {
         jLayeredPane2 = new javax.swing.JLayeredPane();
         jLabel1 = new javax.swing.JLabel();
         tfEmail = new javax.swing.JTextField();
-        tfSenha = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnCriarConta = new javax.swing.JButton();
         btnEntrar = new javax.swing.JButton();
         btnEsqueceuASenha = new javax.swing.JButton();
+        pfSenha = new javax.swing.JPasswordField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -128,12 +129,12 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jLayeredPane2.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(tfEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(tfSenha, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(btnCriarConta, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(btnEntrar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(btnEsqueceuASenha, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(pfSenha, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
@@ -159,9 +160,9 @@ public class TelaLogin extends javax.swing.JFrame {
                         .addGroup(jLayeredPane2Layout.createSequentialGroup()
                             .addContainerGap()
                             .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(tfSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnEsqueceuASenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(btnEsqueceuASenha, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                                .addComponent(pfSenha)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jLayeredPane2Layout.setVerticalGroup(
@@ -176,7 +177,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addGap(7, 7, 7)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEsqueceuASenha)
                 .addGap(12, 12, 12)
@@ -222,7 +223,16 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         try {
-            Usuario usuario = usuarioController.login(tfEmail.getText(), tfSenha.getText());
+
+            // Obtém a senha do JPasswordField como um array de caracteres
+            char[] senhaArray = pfSenha.getPassword();
+
+            // Converte o array de caracteres em uma string
+            String senha = new String(senhaArray);
+            Usuario usuario = usuarioController.login(tfEmail.getText(), senha);
+
+            // Limpa o array de caracteres após o uso para segurança
+            Arrays.fill(senhaArray, ' ');
 
             TelaInicial telaInicial = new TelaInicial();
             telaInicial.setVisible(true);
@@ -302,7 +312,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPasswordField pfSenha;
     private javax.swing.JTextField tfEmail;
-    private javax.swing.JTextField tfSenha;
     // End of variables declaration//GEN-END:variables
 }
