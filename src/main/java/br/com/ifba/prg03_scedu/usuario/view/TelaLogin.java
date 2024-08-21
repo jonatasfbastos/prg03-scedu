@@ -8,6 +8,7 @@ import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.home.view.TelaInicial;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
 import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
+import br.com.ifba.prg03_scedu.util.CredenciaisManager;
 import jakarta.annotation.PostConstruct;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
@@ -28,14 +29,24 @@ public class TelaLogin extends javax.swing.JFrame {
      */
     
     private final UsuarioIController usuarioController;
+    private final CredenciaisManager credenciaisManager;
     
-    public TelaLogin(UsuarioIController usuarioController) {
+    public TelaLogin(UsuarioIController usuarioController, CredenciaisManager credenciaisManager) {
         this.usuarioController = usuarioController;
+        this.credenciaisManager = credenciaisManager;
     }
 
     @PostConstruct
     private void init() {
         initComponents();
+
+        String[] credenciais = credenciaisManager.carregarCredenciais();
+
+        if (credenciais != null) {
+            tfEmail.setText(credenciais[0]);  // Preenche o campo de e-mail
+            pfSenha.setText(credenciais[1]);  // Preenche o campo de senha
+            cbLembrarDeMim.setSelected(true); // Marca a checkbox "Lembrar de mim"
+        }
     }
 
     /**
@@ -57,8 +68,9 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnCriarConta = new javax.swing.JButton();
         btnEntrar = new javax.swing.JButton();
-        btnEsqueceuASenha = new javax.swing.JButton();
         pfSenha = new javax.swing.JPasswordField();
+        cbLembrarDeMim = new javax.swing.JCheckBox();
+        btnEsqueceuASenha = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -119,13 +131,9 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
+        cbLembrarDeMim.setText("Lembrar de mim");
+
         btnEsqueceuASenha.setText("Esqueceu a senha?");
-        btnEsqueceuASenha.setOpaque(true);
-        btnEsqueceuASenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEsqueceuASenhaActionPerformed(evt);
-            }
-        });
 
         jLayeredPane2.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(tfEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -133,8 +141,9 @@ public class TelaLogin extends javax.swing.JFrame {
         jLayeredPane2.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(btnCriarConta, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(btnEntrar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(btnEsqueceuASenha, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(pfSenha, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(cbLembrarDeMim, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(btnEsqueceuASenha, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
@@ -160,9 +169,10 @@ public class TelaLogin extends javax.swing.JFrame {
                         .addGroup(jLayeredPane2Layout.createSequentialGroup()
                             .addContainerGap()
                             .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(cbLembrarDeMim)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnEsqueceuASenha, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                                .addComponent(pfSenha)))))
+                                .addComponent(pfSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                                .addComponent(btnEsqueceuASenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jLayeredPane2Layout.setVerticalGroup(
@@ -178,13 +188,15 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEsqueceuASenha)
-                .addGap(12, 12, 12)
-                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbLembrarDeMim)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCriarConta, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jLayeredPane1.setLayer(jLayeredPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -193,17 +205,17 @@ public class TelaLogin extends javax.swing.JFrame {
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap(296, Short.MAX_VALUE)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addGap(294, 294, 294)
                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(294, 294, 294))
+                .addContainerGap(296, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap(126, Short.MAX_VALUE)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addGap(121, 121, 121)
                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(124, 124, 124))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -229,7 +241,14 @@ public class TelaLogin extends javax.swing.JFrame {
 
             // Converte o array de caracteres em uma string
             String senha = new String(senhaArray);
-            Usuario usuario = usuarioController.login(tfEmail.getText(), senha);
+            String email = tfEmail.getText();
+            Usuario usuario = usuarioController.login(email, senha);
+            
+            if (cbLembrarDeMim.isSelected()) {
+                credenciaisManager.salvarCredenciais(email, senha);
+            } else {
+                credenciaisManager.limparCredenciais();
+            }
 
             // Limpa o array de caracteres após o uso para segurança
             Arrays.fill(senhaArray, ' ');
@@ -250,15 +269,6 @@ public class TelaLogin extends javax.swing.JFrame {
         usuarioCadastrar.setVisible(true);
         usuarioCadastrar.toFront();
     }//GEN-LAST:event_btnCriarContaActionPerformed
-
-    private void btnEsqueceuASenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueceuASenhaActionPerformed
-        try{
-            usuarioController.recuperarSenha(tfEmail.getText());
-            JOptionPane.showMessageDialog(null, "Um e-mail com a sua senha atual foi enviado para " + tfEmail.getText(), "Solicitação Concluída", JOptionPane.INFORMATION_MESSAGE);
-        }catch(RuntimeException e){
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro na recuperação de senha", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_btnEsqueceuASenhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,6 +315,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JButton btnCriarConta;
     private javax.swing.JButton btnEntrar;
     private javax.swing.JButton btnEsqueceuASenha;
+    private javax.swing.JCheckBox cbLembrarDeMim;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
