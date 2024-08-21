@@ -7,17 +7,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.util.Date;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @Entity
-@Table(name = "alunos")
+@Table(name="pessoas")
 public class Alunos extends Pessoa {
+    
     private String nomeSocial;
+    
     private char Sexo;
+    
     private String genero;
 
     @Column(unique = true)
@@ -28,7 +29,4 @@ public class Alunos extends Pessoa {
 
     @Column(unique = true)
     private String tituloEleitor;
-
-    private PaisAluno pai;
-    private PaisAluno mae;
 }

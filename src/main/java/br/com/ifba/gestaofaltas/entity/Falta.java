@@ -11,7 +11,7 @@ public class Falta {
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "aluno_id")
+     @JoinColumn(name = "rg", referencedColumnName = "rg")
     private Alunos aluno;
 
     @Column(nullable = false)

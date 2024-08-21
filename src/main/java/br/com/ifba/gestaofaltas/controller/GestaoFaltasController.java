@@ -6,9 +6,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 
-/**
- * Controlador para a gestão de faltas.
- */
 @Controller
 @RequiredArgsConstructor
 public class GestaoFaltasController implements GestaoFaltasIController {
@@ -41,10 +38,10 @@ public class GestaoFaltasController implements GestaoFaltasIController {
     }
 
     // Busca faltas pelo ID do aluno utilizando o serviço e retorna a lista de faltas encontradas
-    @Override
-    public List<Falta> findByStudentId(Long studentId) throws RuntimeException {
-        return attendanceService.findByStudentId(studentId);
-    }
+//    @Override
+//    public List<Falta> findByStudentId(Long rg) throws RuntimeException {
+//        return attendanceService.findByStudentId(rg);
+//    }
 
     // Retorna uma lista com todas as faltas utilizando o serviço
     @Override

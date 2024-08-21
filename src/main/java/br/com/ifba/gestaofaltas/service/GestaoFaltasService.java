@@ -33,10 +33,10 @@ public class GestaoFaltasService implements GestaoFaltasIService {
         return gestaoFaltasRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public List<Falta> findByStudentId(Long studentId) {
-        return gestaoFaltasRepository.findByStudentId(studentId);
-    }
+//    @Override
+//    public List<Falta> findByStudentId(Long rg) {
+//        return gestaoFaltasRepository.findByStudentId(rg);
+//    }
 
     @Override
     public List<Falta> findAll() {

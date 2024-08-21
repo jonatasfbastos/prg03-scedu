@@ -46,11 +46,11 @@ public interface GestaoFaltasIController {
     /**
      * Encontra todas as faltas de um aluno específico.
      *
-     * @param studentId O identificador do aluno cujas faltas devem ser buscadas.
+     * @param rg O identificador do aluno cujas faltas devem ser buscadas.
      * @return Uma lista de faltas correspondentes ao aluno fornecido.
      * @throws RuntimeException Se ocorrer um erro durante a operação de busca.
      */
-    public List<Falta> findByStudentId(Long studentId) throws RuntimeException;
+    //public List<Falta> findByStudentId(Long rg) throws RuntimeException;
 
     /**
      * Encontra todas as faltas registradas no sistema.

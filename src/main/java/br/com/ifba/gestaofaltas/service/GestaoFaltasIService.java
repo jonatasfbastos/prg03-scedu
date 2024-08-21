@@ -13,7 +13,7 @@ public interface GestaoFaltasIService {
 
     Falta findById(Long id);
 
-    List<Falta> findByStudentId(Long studentId);
+//    List<Falta> findByStudentId(Long rg);
 
     List<Falta> findAll();
 }
