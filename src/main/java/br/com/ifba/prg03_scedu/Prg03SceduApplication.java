@@ -12,14 +12,13 @@ public class Prg03SceduApplication {
 
 	@Autowired
     /*Repositório com bean do spring boot*/
-    private Prg03SceduApplication cursoRepository;
     
 	public static void main(String[] args) {
-             ConfigurableApplicationContext context = 
+          ConfigurableApplicationContext context = 
                 new SpringApplicationBuilder(ProfessorView.class)
                 .headless(false).run(args);
         
             ProfessorView telalistar = context.getBean(ProfessorView.class);
-            telalistar.setVisible(true);        
+            telalistar.setVisible(true); 
     }
 }

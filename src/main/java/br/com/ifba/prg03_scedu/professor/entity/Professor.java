@@ -10,43 +10,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 /**
  *
  * @author hmart
  */
-@Table(name="Professor")
-@Entity
 
+@Data
+@Entity
+@Table(name="Professor")
 public class Professor extends Pessoa{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     
     public String materia;
     public Boolean formado;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getMateria() {
-        return materia;
-    }
-
-    public void setMateria(String materia) {
-        this.materia = materia;
-    }
-
-    public Boolean getFormado() {
-        return formado;
-    }
-
-    public void setFormado(Boolean formado) {
-        this.formado = formado;
-    }
+    
 }

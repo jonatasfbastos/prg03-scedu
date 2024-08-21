@@ -8,6 +8,7 @@ import br.com.ifba.prg03_scedu.professor.entity.Professor;
 import br.com.ifba.prg03_scedu.professor.repository.ProfessorRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import static org.hibernate.bytecode.BytecodeLogging.LOGGER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,15 +19,35 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ProfessorService{
+public class ProfessorService implements ProfessorIService{
     @Autowired
-    private ProfessorRepository clienteRepository;
+    private ProfessorRepository professorRepository;
 
-    public List<Professor> listarProfessor() {
-        return clienteRepository.findAll();
+    @Override
+    public List<Professor> findAll() {
+       List<Professor> professor = professorRepository.findAll(); 
+       return professor;
     }
 
-    public Professor salvarProfessor(Professor cliente) {
-        return clienteRepository.save(cliente);
-    } 
+    @Override
+    public Professor findById(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void save(Professor usuario) {
+        professorRepository.save(usuario);
+    }
+
+    @Override
+    public void update(Professor usuario) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void delete(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    
 }
