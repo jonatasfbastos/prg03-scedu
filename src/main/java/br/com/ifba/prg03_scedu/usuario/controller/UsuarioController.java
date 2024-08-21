@@ -52,4 +52,9 @@ public class UsuarioController implements UsuarioIController {
     public void recuperarSenha(String email) {
         usuarioService.recuperarSenha(email);
     }
+
+    @Override
+    public Usuario login(String email, String senha) {
+        return usuarioService.login(email, senha);
+    }
 }

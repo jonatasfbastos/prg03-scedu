@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 @Service
 @RequiredArgsConstructor
@@ -111,6 +112,10 @@ public class UsuarioService implements UsuarioIService {
     public void recuperarSenha(String email) {
         String timestamp = getTimestamp();
         LOGGER.info("[{}] Iniciando o processo de recuperacao de senha para o e-mail: {}", timestamp, email);
+        
+        if (email.isBlank()) {
+            throw new RuntimeException("Por favor, insira o seu email.");
+        }
 
         if (!usuarioRepository.existsByEmail(email)) {
             LOGGER.error("[{}] Nao existe nenhum usuario cadastrado com o e-mail: {}", timestamp, email);
@@ -141,5 +146,21 @@ public class UsuarioService implements UsuarioIService {
             LOGGER.error("[{}] Falha ao enviar e-mail de recuperacao de senha para o e-mail: {}. Mensagem de erro: {}", timestamp, email, e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    @Override
+    public Usuario login(String email, String senha) {
+        
+        if (email.isBlank() || senha.isBlank()) {
+            throw new RuntimeException("Por favor, insira as suas credenciais.");
+        }
+        
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        
+        if(usuario == null || !usuario.getSenha().equals(senha)){
+            throw new RuntimeException("Email ou senha inválidos.");
+        }
+        
+        return usuario;
     }
 }

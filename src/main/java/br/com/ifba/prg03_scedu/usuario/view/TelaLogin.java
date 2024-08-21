@@ -7,6 +7,7 @@ package br.com.ifba.prg03_scedu.usuario.view;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.home.view.TelaInicial;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
+import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
 import jakarta.annotation.PostConstruct;
 import javax.swing.JOptionPane;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -220,21 +221,17 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        if (tfEmail.getText().trim().isEmpty() || tfSenha.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Por favor, insira as suas credenciais.", "Campo Obrigatório", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        if(!usuarioController.existsByEmail(tfEmail.getText()) || !usuarioController.existsBySenha(tfSenha.getText())){
-            JOptionPane.showMessageDialog(null, "Email ou senha inválidos.", "Erro de Login", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        try {
+            Usuario usuario = usuarioController.login(tfEmail.getText(), tfSenha.getText());
 
-        TelaInicial telaInicial = new TelaInicial();
-        
-        telaInicial.setVisible(true);
-        telaInicial.toFront();
-        this.dispose();
+            TelaInicial telaInicial = new TelaInicial();
+            telaInicial.setVisible(true);
+            telaInicial.toFront();
+            this.dispose();
+
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro no login", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarContaActionPerformed
@@ -245,11 +242,6 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCriarContaActionPerformed
 
     private void btnEsqueceuASenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueceuASenhaActionPerformed
-        if (tfEmail.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Por favor, insira o seu email.", "Campo Obrigatório", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
         try{
             usuarioController.recuperarSenha(tfEmail.getText());
             JOptionPane.showMessageDialog(null, "Um e-mail com a sua senha atual foi enviado para " + tfEmail.getText(), "Solicitação Concluída", JOptionPane.INFORMATION_MESSAGE);
