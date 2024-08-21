@@ -5,11 +5,15 @@
 package br.com.ifba.gestaoalunos.entity;
 
 import br.com.ifba.infrastructure.entity.Pessoa;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 /**
  *
  * @author batis
  */
-public class PaisAluno extends Pessoa{
+@Entity
+@Table(name = "reponsaveis")
+public class Responsaveis extends Pessoa{
     
 }

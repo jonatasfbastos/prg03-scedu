@@ -10,11 +10,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@Entity
+@Table(name = "alunos")
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-@Entity
-@Table(name = "alunos")
 public class Alunos extends Pessoa{
     private String nomeSocial;
     private char Sexo;
@@ -29,6 +29,6 @@ public class Alunos extends Pessoa{
     @Column(unique = true)
     private String tituloEleitor;
     
-    private PaisAluno pai;
-    private PaisAluno mae;
+    private Responsaveis pai;
+    private Responsaveis mae;
 }

@@ -1,62 +1,17 @@
 
-package br.com.ifba.gestaoalunos.view;
+package br.com.ifba.gestaoalunos.view.testes;
 
-import br.com.ifba.gestaoalunos.controller.GestaoAlunoIController;
-import br.com.ifba.gestaoalunos.entity.Alunos;
-import br.com.ifba.infrastructure.util.StringUtil;
-import br.com.ifba.prg03_scedu.Prg03SceduApplication;
-import jakarta.annotation.PostConstruct;
-import jakarta.persistence.NoResultException;
-import java.awt.event.WindowEvent;
-import java.util.List;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.ConfigurableApplicationContext;
 
-@RequiredArgsConstructor
-public class TelaListar extends javax.swing.JFrame {
-    //Atributos usados na classe
-    private static final Logger log = LoggerFactory.getLogger(TelaListar.class);
-    private final GestaoAlunoIController gestaoAlunoController;
-    
-    //Método reponsável por atualiza os dados da tabela
-    private void refresh(){
-        try{
-            log.info("Carregando dados da tabela de alunos");
-            // Cria uma consulta JPQL para selecionar todos os registros da entidade Alunos
-            List<Alunos> dadosTabela = this.gestaoAlunoController.findAll();
+import br.com.ifba.gestaoalunos.view.testes.TelaListar1;
 
-            // Obtém o modelo da tabela associado ao componente tblAlunos
-            DefaultTableModel dtmAlunos = (DefaultTableModel)tblAlunos.getModel();
 
-            // Remove todas as linhas existentes no modelo da tabela
-            dtmAlunos.setRowCount(0);
+public class TelaListar1 extends javax.swing.JFrame {
 
-            for(Alunos lista: dadosTabela){
-                // Cria um array de objetos contendo os dados de cada aluno
-                Object[] dados = {lista.getId(),lista.getNomeSocial(), lista.getPai().getNome()};
-
-                // Adiciona uma nova linha no modelo da tabela com os dados do aluno
-                dtmAlunos.addRow(dados);
-            }
-            dtmAlunos.fireTableDataChanged();
-        }catch(Exception e){
-            log.error("Erro ao carregar dados da tabela", e);
-            JOptionPane.showMessageDialog(null, StringUtil.getFindAllError(), "ERRO", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    @PostConstruct
-    private void init() {
-        log.info("Inicializando componentes da tela de listagem de alunos");
+    public TelaListar1() {
         initComponents();
-        refresh();
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -215,116 +170,19 @@ public class TelaListar extends javax.swing.JFrame {
   
     
     private void btnAdcionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdcionarActionPerformed
-        // Instanciamento da tela da de adição de alunos
-        log.info("Ação de adicionar aluno iniciada");
-        TelaAdicionar novaTela = new TelaAdicionar(gestaoAlunoController);
-        novaTela.setVisible(true);
-        
-        // Adiciona um ouvinte de eventos de janela à nova tela
-        novaTela.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosed(java.awt.event.WindowEvent e) {
-                log.info("Tela de adicionar aluno fechada");
-                refresh();
-            } 
-        });
+       
     }//GEN-LAST:event_btnAdcionarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // Verifica se há uma linha selecionada na tabela
-        if(tblAlunos.getSelectedRow() != -1){
-            log.info("Ação de exclusão de aluno iniciada");
-            // Exibe uma caixa de diálogo de confirmação ao usuário
-            int resposta = JOptionPane.showConfirmDialog(null, "Deseja continuar?", "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (resposta == JOptionPane.YES_OPTION) {
-                try{    
-                    // Obtém o ID do aluno a ser removido da linha selecionada na tabela
-                    Object idAlunoRemover = tblAlunos.getValueAt(tblAlunos.getSelectedRow(), 0);
-                    log.info("Excluindo aluno com ID: {}", idAlunoRemover);
-                    //Encontra o aluno
-                    Alunos alunoRemover = this.gestaoAlunoController.findById((Long)idAlunoRemover);
-                    //Exclui o aluno
-                    this.gestaoAlunoController.delete(alunoRemover);
-                    log.info("Aluno excluído com sucesso");
-                }catch(Exception e){
-                    JOptionPane.showMessageDialog(null, StringUtil.getDELETE_ERROR(), "ERRO", JOptionPane.ERROR_MESSAGE);
-                    log.error("Erro ao excluir aluno", e);
-                }
-            }else{
-                // Exibe uma mensagem indicando que a operação foi cancelada
-                JOptionPane.showConfirmDialog(null, "Operaçao Cancelada", "Confirmação", JOptionPane.DEFAULT_OPTION, JOptionPane.CANCEL_OPTION);
-                log.info("Ação de exclusão de aluno cancelada");
-            }
-        }else{
-            // Exibe uma mensagem de erro se nenhuma linha estiver selecionada
-            JOptionPane.showConfirmDialog(null, "Selecione um Aluno para Excluir", "Erro", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-            log.warn("Nenhum aluno selecionado para exclusão");
-        }
-        // Atualiza a tabela recarregando os dados
-        refresh();
+        
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnProcuraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcuraActionPerformed
-        // Obtém o nome do aluno que o usuário deseja pesquisar
-        log.info("Ação de pesquisa de aluno iniciada");
-        String busca = txtProcura.getText();
-        List<Alunos> alunosBuscados;
-        try {
-            log.info("Procurando alunos com texto: {}", busca);
-            // Tenta obter a lista de resultados da consulta
-            alunosBuscados = this.gestaoAlunoController.findByNome(busca);
-        } catch (NoResultException e) {
-            alunosBuscados = null;
-        }
-
-        if (alunosBuscados != null) {
-            // Atualiza a tabela para mostrar os resultados
-            DefaultTableModel dtmAlunos = (DefaultTableModel) tblAlunos.getModel();
-            dtmAlunos.setRowCount(0);  // Limpa todos os dados da tabela
-
-            for(Alunos lista: alunosBuscados){
-                // Cria um array de objetos contendo os dados de cada aluno
-                Object[] dados = {lista.getId(),lista.getNomeSocial(), lista.getPai().getNome()};
-
-                // Adiciona uma nova linha no modelo da tabela com os dados do aluno
-                dtmAlunos.addRow(dados);
-            }
-            // Limpa o texto de busca da caixa de texto
-            txtProcura.setText("");
-        } else {
-            log.error("Aluno com texto: {} não encontrado", busca);
-            JOptionPane.showMessageDialog(null, StringUtil.getFindByNameError(busca), "Erro", JOptionPane.WARNING_MESSAGE);
-            refresh();
-        }
+       
     }//GEN-LAST:event_btnProcuraActionPerformed
                             
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        try{    
-            // Verifica se há uma linha selecionada na tabela
-            if(tblAlunos.getSelectedRow() != -1){
-                log.info("Ação de edição de aluno iniciada");
-                // Obtém o ID do aluno a ser removido da linha selecionada na tabela
-                Object alunoEditado = tblAlunos.getValueAt(tblAlunos.getSelectedRow(), 0);
-                // Instanciamento da tela da de adição de alunos
-                log.info("Editando aluno com ID: {}", alunoEditado);
-                TelaEditar novaTela = new TelaEditar((Long)alunoEditado, this.gestaoAlunoController);
-                novaTela.setVisible(true);
-                // Adiciona um ouvinte de eventos de janela à nova tela
-                novaTela.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosed(WindowEvent e) {
-                        log.info("Tela de edição de aluno fechada");
-                        refresh();
-                    }
-                });
-            }else{
-                log.warn("Nenhum aluno selecionado para edição");
-                JOptionPane.showConfirmDialog(null, "Selecione um Aluno para Editar", "Erro", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
-            }
-        }catch(Exception e){
-            log.error("Aluno com ID: {} não encontrado para edição",e);
-            JOptionPane.showMessageDialog(null, StringUtil.getUPDATE_ERROR(), "ERRO", JOptionPane.ERROR_MESSAGE);
-        }
+        
     }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
@@ -344,30 +202,20 @@ public class TelaListar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaListar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaListar1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaListar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaListar1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaListar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaListar1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaListar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaListar1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form*/ 
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
             public void run() {
-                ConfigurableApplicationContext context = 
-            new SpringApplicationBuilder(Prg03SceduApplication.class)
-            .headless(false)
-            .run(args);
-
-            TelaListar telaListar = context.getBean(TelaListar.class);
-            telaListar.setVisible(true);
+                new TelaListar1().setVisible(true);
             }
         });
     }
