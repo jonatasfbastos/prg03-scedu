@@ -1,11 +1,21 @@
 package br.com.ifba.gestaofaltas.view;
 
+import br.com.ifba.gestaofaltas.entity.Falta;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import org.springframework.stereotype.Component;
+import br.com.ifba.gestaofaltas.service.GestaoFaltasService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+
 
 public class TelaEditar extends JDialog {
 
+ @Autowired
+private GestaoFaltasService gestaoFaltasService;
+    
     public TelaEditar(JFrame parent) {
         super(parent, "Editar", true); // Configura o JDialog como modal
         initComponents();
@@ -130,7 +140,46 @@ public class TelaEditar extends JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+        try {
+        // Obter os dados da interface
+        String aluno = jComboBox2.getSelectedItem().toString();
+        String disciplina = jComboBox1.getSelectedItem().toString();
+        String data = jTextField1.getText();
+        boolean justificada = jCheckBox1.isSelected();
+        String observacoes = jTextArea1.getText();
+
+        // Verificação básica de campos obrigatórios
+        if (aluno.isEmpty() || disciplina.isEmpty() || data.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos obrigatórios.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Criar e preencher a entidade Falta
+        Falta falta = new Falta();
+        falta.setAluno(aluno);
+        falta.setDisciplina(disciplina);
+        falta.setData(data); 
+        falta.setJustificada(justificada);
+        falta.setObservacoes(observacoes);
+
+        // Salvar no banco de dados
+        gestaoFaltasService.save(falta);
+
+        // Exibir mensagem de sucesso
+        JOptionPane.showMessageDialog(this, "Falta salva com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+        // Fechar a janela de edição
+        this.dispose();
+
+        // Atualizar a lista de faltas na tela principal (TelaListar)
+        TelaListar parent = (TelaListar) getParent();
+        parent.carregarFaltas();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Exibir mensagem de erro
+        JOptionPane.showMessageDialog(this, "Ocorreu um erro ao salvar a falta. Por favor, tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

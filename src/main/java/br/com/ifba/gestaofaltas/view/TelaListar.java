@@ -18,7 +18,7 @@ public class TelaListar extends javax.swing.JFrame {
         carregarFaltas();
     }
 
-    private void carregarFaltas() {
+    void carregarFaltas() {
         DefaultTableModel model = (DefaultTableModel) t_list.getModel();
         model.setRowCount(0); // Limpar tabela antes de carregar novos dados
 
