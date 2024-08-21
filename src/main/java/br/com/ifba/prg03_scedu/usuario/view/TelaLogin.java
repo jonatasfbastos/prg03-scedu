@@ -134,6 +134,11 @@ public class TelaLogin extends javax.swing.JFrame {
         cbLembrarDeMim.setText("Lembrar de mim");
 
         btnEsqueceuASenha.setText("Esqueceu a senha?");
+        btnEsqueceuASenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEsqueceuASenhaActionPerformed(evt);
+            }
+        });
 
         jLayeredPane2.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(tfEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -269,6 +274,15 @@ public class TelaLogin extends javax.swing.JFrame {
         usuarioCadastrar.setVisible(true);
         usuarioCadastrar.toFront();
     }//GEN-LAST:event_btnCriarContaActionPerformed
+
+    private void btnEsqueceuASenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueceuASenhaActionPerformed
+        try{
+            usuarioController.recuperarSenha(tfEmail.getText());
+                JOptionPane.showMessageDialog(null, "Um e-mail com a sua senha atual foi enviado para " + tfEmail.getText(), "Solicitação Concluída", JOptionPane.INFORMATION_MESSAGE);
+        }catch(RuntimeException e){
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro na recuperação de senha", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEsqueceuASenhaActionPerformed
 
     /**
      * @param args the command line arguments
