@@ -6,7 +6,6 @@ package br.com.ifba.prg03_scedu.curriculo.entity;
 
 import br.com.ifba.disciplina.entity.Disciplina;
 import br.com.ifba.infrastructure.entity.PersistenceEntity;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.io.Serializable;
@@ -25,7 +24,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = false)
 public class Curriculo extends PersistenceEntity implements Serializable{
     
     private Long codigoCurriculo;
