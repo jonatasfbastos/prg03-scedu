@@ -44,13 +44,25 @@ public class UsuarioService implements UsuarioIService {
     @Override
     public void save(Usuario usuario) {
         String timestamp = getTimestamp();
+        
         if (usuario == null) {
             LOGGER.error("[{}] Dados do Usuário não preenchidos", timestamp);
             throw new RuntimeException("Dados do Usuário não preenchidos");
         }
-        if (usuario.getId() != null) {
-            LOGGER.error("[{}] Usuário já existente no Banco de dados: ID {}", timestamp, usuario.getId());
-            throw new RuntimeException("Usuário já existente no Banco de dados");
+
+        // Validação dos campos obrigatórios
+        if (usuario.getNome() == null || usuario.getNome().isEmpty() ||
+            usuario.getEmail() == null || usuario.getEmail().isEmpty() ||
+            usuario.getSenha() == null || usuario.getSenha().isEmpty() ||
+            usuario.getNivelAcesso() == null || usuario.getNivelAcesso().isEmpty()) {
+            LOGGER.error("[{}] Todos os campos do usuário devem ser preenchidos", timestamp);
+            throw new RuntimeException("Todos os campos do usuário devem ser preenchidos");
+        }
+
+        // Verifica se o e-mail já está em uso
+        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+            LOGGER.error("[{}] O e-mail {} já está em uso", timestamp, usuario.getEmail());
+            throw new RuntimeException("O e-mail já está em uso");
         }
 
         LOGGER.info("[{}] Salvando o Usuário: Nome - {}, Email - {}, Nível de Acesso - {}", 
@@ -59,23 +71,42 @@ public class UsuarioService implements UsuarioIService {
         LOGGER.info("[{}] Usuário salvo com sucesso: Nome - {}", timestamp, usuario.getNome());
     }
 
-    @Override
-    public void update(Usuario usuario) {
-        String timestamp = getTimestamp();
-        if (usuario == null || usuario.getId() == null) {
-            LOGGER.error("[{}] Dados do Usuário ou ID não preenchidos", timestamp);
-            throw new RuntimeException("Dados do Usuário ou ID não preenchidos");
-        }
-
-        Usuario existingUsuario = usuarioRepository.findById(usuario.getId()).orElseThrow(
-            () -> new RuntimeException("Usuário com ID " + usuario.getId() + " não encontrado")
-        );
-
-        LOGGER.info("[{}] Atualizando o Usuário: ID - {}, Nome Antigo - {}, Novo Nome - {}", 
-                    timestamp, usuario.getId(), existingUsuario.getNome(), usuario.getNome());
-        usuarioRepository.save(usuario);
-        LOGGER.info("[{}] Usuário atualizado com sucesso: ID - {}", timestamp, usuario.getId());
+@Override
+public void update(Usuario usuario) {
+    String timestamp = getTimestamp();
+    
+    // Verifica se o objeto usuário ou o ID estão nulos
+    if (usuario == null || usuario.getId() == null) {
+        LOGGER.error("[{}] Dados do Usuário ou ID não preenchidos", timestamp);
+        throw new RuntimeException("Dados do Usuário ou ID não preenchidos");
     }
+
+    // Validação dos campos obrigatórios
+    if (usuario.getNome() == null || usuario.getNome().isEmpty() ||
+        usuario.getEmail() == null || usuario.getEmail().isEmpty() ||
+        usuario.getSenha() == null || usuario.getSenha().isEmpty() ||
+        usuario.getNivelAcesso() == null || usuario.getNivelAcesso().isEmpty()) {
+        LOGGER.error("[{}] Todos os campos do usuário devem ser preenchidos", timestamp);
+        throw new RuntimeException("Todos os campos do usuário devem ser preenchidos");
+    }
+
+    // Verifica se o usuário existe no banco de dados
+    Usuario existingUsuario = usuarioRepository.findById(usuario.getId()).orElseThrow(
+        () -> new RuntimeException("Usuário com ID " + usuario.getId() + " não encontrado")
+    );
+
+    // Verifica se o e-mail está em uso por outro usuário
+    if (!existingUsuario.getEmail().equals(usuario.getEmail()) && usuarioRepository.existsByEmail(usuario.getEmail())) {
+        LOGGER.error("[{}] O e-mail {} já está em uso. Informe um e-mail diferente", timestamp, usuario.getEmail());
+        throw new RuntimeException("O e-mail já está em uso");
+    }
+
+    // Atualiza os dados do usuário
+    LOGGER.info("[{}] Atualizando o Usuário: ID - {}, Nome Antigo - {}, Novo Nome - {}", 
+                timestamp, usuario.getId(), existingUsuario.getNome(), usuario.getNome());
+    usuarioRepository.save(usuario);
+    LOGGER.info("[{}] Usuário atualizado com sucesso: ID - {}", timestamp, usuario.getId());
+}
 
     @Override
     public void delete(Long id) {
@@ -93,7 +124,7 @@ public class UsuarioService implements UsuarioIService {
         LOGGER.info("[{}] Usuário removido com sucesso: ID - {}", timestamp, id);
     }
     
-     @Override
+    @Override
     public boolean existsByEmail(String email) {
         return usuarioRepository.existsByEmail(email);
     }
