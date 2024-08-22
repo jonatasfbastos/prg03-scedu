@@ -17,7 +17,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class SerieTela extends javax.swing.JFrame {
     
-    Serie serie = new Serie();
+    @Autowired
+    private SerieListar serieListar;
 
     /**
      * Creates new form SerieTela
@@ -89,6 +90,11 @@ public class SerieTela extends javax.swing.JFrame {
 
         btnListarSerie.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnListarSerie.setText("Listar Series");
+        btnListarSerie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarSerieActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -179,6 +185,11 @@ public class SerieTela extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, error, "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnListarSerieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarSerieActionPerformed
+        // TODO add your handling code here:
+        serieListar.setVisible(true);
+    }//GEN-LAST:event_btnListarSerieActionPerformed
 
     /**
      * @param args the command line arguments
