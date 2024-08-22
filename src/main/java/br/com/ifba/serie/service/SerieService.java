@@ -18,36 +18,37 @@ import br.com.ifba.serie.repository.SerieIRepository;
 public class SerieService implements SerieIService {
     
     @Autowired
-    private SerieIRepository daoSerie;
+    private SerieIRepository repositorySerie;
 
     public List<Serie> getAllSerie() {
-        return daoSerie.findAll();
+        return repositorySerie.findAll();
     }
 
     @Override
     public Serie save(Serie serie) {
-        return daoSerie.save(serie);
+        return repositorySerie.save(serie);
     }
 
     //Metodo para alterar dados da serie
     @Override
     public Serie update(Serie serie) {
-        return serie;
+        return repositorySerie.save(serie);
     }
 
     //Metodo para excluir uma serie
     @Override
-    public void delete(Serie serie) {        
+    public void delete(Serie serie) {   
+       // repositorySerie.delete(id);
     }
 
     @Override
     public Serie findById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return repositorySerie.getReferenceById(id);
     }
 
     @Override
     public List<Serie> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return repositorySerie.findAll();
     }
     
 }
