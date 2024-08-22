@@ -20,4 +20,6 @@ public interface GestaoFaltasIController {
 
     //public List<Falta> findByStudentId(Long rg) throws RuntimeException;
     public List<Falta> findAll() throws RuntimeException;
+
+    public Alunos getAlunoByNome(String nomeAluno);
 }

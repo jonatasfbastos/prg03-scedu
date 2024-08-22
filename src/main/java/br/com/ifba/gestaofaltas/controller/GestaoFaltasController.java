@@ -62,4 +62,16 @@ public class GestaoFaltasController implements GestaoFaltasIController {
     public List<Falta> findAll() throws RuntimeException {
         return attendanceService.findAll();
     }
+    
+    // Busca todos os alunos usando o serviço de alunos
+    @Override
+    public Alunos getAlunoByNome(String nome) {
+    List<Alunos> alunos = alunosService.findAll();
+    for (Alunos aluno : alunos) {
+        if (aluno.getNome().equalsIgnoreCase(nome)) {
+            return aluno;
+        }
+    }
+    return null;
+  }
 }

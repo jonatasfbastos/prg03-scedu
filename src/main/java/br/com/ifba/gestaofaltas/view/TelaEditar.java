@@ -12,6 +12,7 @@ import java.util.List;
 public class TelaEditar extends JDialog {
 
     private final GestaoFaltasIController gestaoFaltasController;
+    private Falta faltaAtual;
 
     public TelaEditar(TelaListar parent, GestaoFaltasIController gestaoFaltasController) {
         super(parent, "Editar", true); // Configura o JDialog como modal
@@ -20,6 +21,28 @@ public class TelaEditar extends JDialog {
         setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
         postAluno();
         getAlunos();
+    }
+    
+     public TelaEditar(TelaListar parent, GestaoFaltasIController gestaoFaltasController, Falta falta) {
+        super(parent, "Editar", true); // Configura o JDialog como modal
+        this.gestaoFaltasController = gestaoFaltasController;
+        this.faltaAtual = falta;
+        initComponents();
+        setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
+        postAluno();
+        getAlunos();
+        populateFields();
+    }
+     
+     private void populateFields() {
+        if (faltaAtual != null) {
+            jComboBox2.setSelectedItem(faltaAtual.getAluno().getNomeSocial());
+            jComboBox1.setSelectedItem(faltaAtual.getDisciplina());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            jTextField1.setText(sdf.format(faltaAtual.getData()));
+            jCheckBox1.setSelected(faltaAtual.isJustificada());
+            jTextArea1.setText(faltaAtual.getObservacoes());
+        }
     }
 
     public void postAluno() {
@@ -191,7 +214,6 @@ public class TelaEditar extends JDialog {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         try {
             // Obter os dados da interface
             String alunoName = jComboBox2.getSelectedItem().toString();
@@ -206,28 +228,37 @@ public class TelaEditar extends JDialog {
                 return;
             }
 
-            Date agora = new Date(); // obtem a data atual
-
-            // Aluno de forma estática
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date dataEmissao = sdf.parse("15/08/2020");
+            Date dataEmissao = sdf.parse(data);
 
             Alunos aluno = buscarAlunoPorNome(alunoName);
 
-            // Criar e preencher a entidade Falta
-            Falta falta = new Falta();
-            falta.setAluno(aluno);
-            falta.setDisciplina(disciplina);
-            falta.setData(agora);
-            falta.setJustificada(justificada);
-            falta.setObservacoes(observacoes);
-            falta.setAula(data);
+            if (faltaAtual == null) {
+                // Criar uma nova falta
+                Falta falta = new Falta();
+                falta.setAluno(aluno);
+                falta.setDisciplina(disciplina);
+                falta.setData(dataEmissao);
+                falta.setJustificada(justificada);
+                falta.setObservacoes(observacoes);
+                falta.setAula(data);
 
-            // Salvar no banco de dados
-            gestaoFaltasController.save(falta);
+                // Salvar a nova falta
+                gestaoFaltasController.save(falta);
+                JOptionPane.showMessageDialog(this, "Falta salva com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // Atualizar a falta existente
+                faltaAtual.setAluno(aluno);
+                faltaAtual.setDisciplina(disciplina);
+                faltaAtual.setData(dataEmissao);
+                faltaAtual.setJustificada(justificada);
+                faltaAtual.setObservacoes(observacoes);
+                faltaAtual.setAula(data);
 
-            // Exibir mensagem de sucesso
-            JOptionPane.showMessageDialog(this, "Falta salva com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                // Salvar as alterações
+                gestaoFaltasController.update(faltaAtual);
+                JOptionPane.showMessageDialog(this, "Falta atualizada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            }
 
             // Fechar a janela de edição
             this.dispose();
