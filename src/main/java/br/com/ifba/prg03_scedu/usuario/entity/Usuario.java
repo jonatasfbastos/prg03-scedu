@@ -1,5 +1,6 @@
 package br.com.ifba.prg03_scedu.usuario.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +20,15 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @Column(nullable = false)
     private String nome;
+    
+    @Column(nullable = false, unique = true)
     private String email;
+    
+    @Column(nullable = false)
     private String senha;
+    
+    @Column(nullable = false)
     private String nivelAcesso;
 }
