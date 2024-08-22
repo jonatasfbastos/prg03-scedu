@@ -14,6 +14,7 @@ import java.util.List;
 public interface ProfessorIService {
     List<Professor> findAll();
     Professor findById(Long id);
+    List<Professor> findbyname(String nome);
     void save(Professor usuario);
     void update(Professor usuario);
     void delete(Long id);

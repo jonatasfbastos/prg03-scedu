@@ -25,13 +25,12 @@ public class ProfessorService implements ProfessorIService{
 
     @Override
     public List<Professor> findAll() {
-       List<Professor> professor = professorRepository.findAll(); 
-       return professor;
+        return professorRepository.findAll();
     }
 
     @Override
     public Professor findById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return professorRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -47,6 +46,11 @@ public class ProfessorService implements ProfessorIService{
     @Override
     public void delete(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Professor> findbyname(String nome) {
+      return   professorRepository.findByNome(nome);
     }
 
     

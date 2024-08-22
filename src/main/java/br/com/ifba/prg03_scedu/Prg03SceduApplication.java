@@ -15,7 +15,7 @@ public class Prg03SceduApplication {
     
 	public static void main(String[] args) {
           ConfigurableApplicationContext context = 
-                new SpringApplicationBuilder(ProfessorView.class)
+                new SpringApplicationBuilder(Prg03SceduApplication.class)
                 .headless(false).run(args);
         
             ProfessorView telalistar = context.getBean(ProfessorView.class);
