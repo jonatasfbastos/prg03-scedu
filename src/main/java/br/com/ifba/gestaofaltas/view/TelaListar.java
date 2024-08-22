@@ -38,6 +38,20 @@ public class TelaListar extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    
+    private Alunos buscarAlunoPorNome(String nome) throws RuntimeException {
+        // Buscar todos os alunos
+        List<Alunos> alunosList = gestaoFaltasController.getAllAlunos();
+
+        // Procurar o aluno pelo nome
+        for (Alunos aluno : alunosList) {
+            if (aluno.getNomeSocial().equals(nome)) {
+                return aluno;
+            }
+        }
+
+        throw new RuntimeException("Aluno não encontrado: " + nome);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -98,6 +112,11 @@ public class TelaListar extends javax.swing.JFrame {
         });
 
         btn_search.setText("Pesquisar");
+        btn_search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_searchMouseClicked(evt);
+            }
+        });
         btn_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchActionPerformed(evt);
@@ -261,6 +280,10 @@ public class TelaListar extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Por favor, selecione uma falta para remover.", "Erro", JOptionPane.WARNING_MESSAGE);
     }
     }//GEN-LAST:event_bnt_removerActionPerformed
+
+    private void btn_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_searchMouseClicked
 
     /**
      * @param args the command line arguments

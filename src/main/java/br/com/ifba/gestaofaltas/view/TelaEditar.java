@@ -113,7 +113,7 @@ public class TelaEditar extends JDialog {
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btn_save = new javax.swing.JButton();
 
         jLabel1.setText("Aluno:");
 
@@ -143,10 +143,10 @@ public class TelaEditar extends JDialog {
             }
         });
 
-        jButton1.setText("Salvar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_save.setText("Salvar");
+        btn_save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_saveActionPerformed(evt);
             }
         });
 
@@ -160,7 +160,7 @@ public class TelaEditar extends JDialog {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1))
+                        .addComponent(btn_save))
                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -198,7 +198,7 @@ public class TelaEditar extends JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btn_save)
                 .addContainerGap())
         );
 
@@ -213,7 +213,7 @@ public class TelaEditar extends JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
         try {
             // Obter os dados da interface
             String alunoName = jComboBox2.getSelectedItem().toString();
@@ -234,6 +234,7 @@ public class TelaEditar extends JDialog {
             Alunos aluno = buscarAlunoPorNome(alunoName);
 
             if (faltaAtual == null) {
+                System.out.println("Adicionando nova falta.");
                 // Criar uma nova falta
                 Falta falta = new Falta();
                 falta.setAluno(aluno);
@@ -247,6 +248,7 @@ public class TelaEditar extends JDialog {
                 gestaoFaltasController.save(falta);
                 JOptionPane.showMessageDialog(this, "Falta salva com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             } else {
+                System.out.println("Atualizando falta.");
                 // Atualizar a falta existente
                 faltaAtual.setAluno(aluno);
                 faltaAtual.setDisciplina(disciplina);
@@ -272,10 +274,10 @@ public class TelaEditar extends JDialog {
             // Exibir mensagem de erro
             JOptionPane.showMessageDialog(this, "Ocorreu um erro ao salvar a falta. Por favor, tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_saveActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btn_save;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
