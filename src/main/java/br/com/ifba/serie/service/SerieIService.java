@@ -13,10 +13,9 @@ import java.util.List;
  */
 public interface SerieIService {
     
-   // public List<Serie> getAllSerie();
-    public Serie saveSerie(Serie serie);
-    public Serie updateSerie(Serie serie);
-    public void deleteSerie(Serie serie);
+    public Serie save(Serie serie);
+    public Serie update(Serie serie);
+    public void delete(Serie serie);
     public Serie findById(Long id);
     public List<Serie> findAll();
 }

@@ -25,19 +25,19 @@ public class SerieService implements SerieIService {
     }
 
     @Override
-    public Serie saveSerie(Serie serie) {
+    public Serie save(Serie serie) {
         return daoSerie.save(serie);
     }
 
     //Metodo para alterar dados da serie
     @Override
-    public Serie updateSerie(Serie serie) {
+    public Serie update(Serie serie) {
         return serie;
     }
 
     //Metodo para excluir uma serie
     @Override
-    public void deleteSerie(Serie serie) {        
+    public void delete(Serie serie) {        
     }
 
     @Override
