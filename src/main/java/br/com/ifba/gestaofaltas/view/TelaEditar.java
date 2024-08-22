@@ -1,25 +1,79 @@
 package br.com.ifba.gestaofaltas.view;
 
+import br.com.ifba.gestaofaltas.controller.GestaoFaltasIController;
+import br.com.ifba.gestaofaltas.entity.Alunos;
 import br.com.ifba.gestaofaltas.entity.Falta;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import org.springframework.stereotype.Component;
-import br.com.ifba.gestaofaltas.service.GestaoFaltasService;
-import org.springframework.beans.factory.annotation.Autowired;
-
-
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 public class TelaEditar extends JDialog {
 
- @Autowired
-private GestaoFaltasService gestaoFaltasService;
-    
-    public TelaEditar(JFrame parent) {
+    private final GestaoFaltasIController gestaoFaltasController;
+
+    public TelaEditar(TelaListar parent, GestaoFaltasIController gestaoFaltasController) {
         super(parent, "Editar", true); // Configura o JDialog como modal
+        this.gestaoFaltasController = gestaoFaltasController;
         initComponents();
         setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
+        postAluno();
+        getAlunos();
+    }
+
+    public void postAluno() {
+        Date agora = new Date();
+        Alunos aluno = new Alunos();
+
+        aluno.setNomeSocial("Vittorio");
+        aluno.setSexo('M');
+        aluno.setGenero("Masculino");
+        aluno.setRg("523456789");
+        aluno.setOrgaoExpedidor("SSP");
+        aluno.setDataEmissao(agora);
+        aluno.setTituloEleitor("5234567890");
+
+        try {
+            gestaoFaltasController.saveAluno(aluno);
+            JOptionPane.showMessageDialog(this, "Aluno cadastrado.", "Erro", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao cadastrar os alunos.", "Erro", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    public void getAlunos() {
+        try {
+            // Buscar a lista de alunos do banco de dados
+            List<Alunos> alunosList = gestaoFaltasController.getAllAlunos();
+
+            // Limpar os itens existentes no JComboBox
+            jComboBox2.removeAllItems();
+
+            // Adicionar os alunos ao JComboBox
+            for (Alunos aluno : alunosList) {
+                jComboBox2.addItem(aluno.getNomeSocial());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao buscar os alunos.", "Sucesso", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private Alunos buscarAlunoPorNome(String nome) throws RuntimeException {
+        // Buscar todos os alunos
+        List<Alunos> alunosList = gestaoFaltasController.getAllAlunos();
+
+        // Procurar o aluno pelo nome
+        for (Alunos aluno : alunosList) {
+            if (aluno.getNomeSocial().equals(nome)) {
+                return aluno;
+            }
+        }
+
+        throw new RuntimeException("Aluno não encontrado: " + nome);
     }
 
     @SuppressWarnings("unchecked")
@@ -58,8 +112,6 @@ private GestaoFaltasService gestaoFaltasService;
         jLabel6.setText("Disciplina:");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Programação Orientada a Objetos", "Análise de Sistemas" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vittorio Kevin", "Stela" }));
 
         jTextField1.setText("22/09/2024");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -141,50 +193,55 @@ private GestaoFaltasService gestaoFaltasService;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-        // Obter os dados da interface
-        String aluno = jComboBox2.getSelectedItem().toString();
-        String disciplina = jComboBox1.getSelectedItem().toString();
-        String data = jTextField1.getText();
-        boolean justificada = jCheckBox1.isSelected();
-        String observacoes = jTextArea1.getText();
+            // Obter os dados da interface
+            String alunoName = jComboBox2.getSelectedItem().toString();
+            String disciplina = jComboBox1.getSelectedItem().toString();
+            String data = jTextField1.getText();
+            boolean justificada = jCheckBox1.isSelected();
+            String observacoes = jTextArea1.getText();
 
-        // Verificação básica de campos obrigatórios
-        if (aluno.isEmpty() || disciplina.isEmpty() || data.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos obrigatórios.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
-            return;
+            // Verificação básica de campos obrigatórios
+            if (alunoName.isEmpty() || disciplina.isEmpty() || data.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos obrigatórios.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Date agora = new Date(); // obtem a data atual
+
+            // Aluno de forma estática
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date dataEmissao = sdf.parse("15/08/2020");
+
+            Alunos aluno = buscarAlunoPorNome(alunoName);
+
+            // Criar e preencher a entidade Falta
+            Falta falta = new Falta();
+            falta.setAluno(aluno);
+            falta.setDisciplina(disciplina);
+            falta.setData(agora);
+            falta.setJustificada(justificada);
+            falta.setObservacoes(observacoes);
+            falta.setAula(data);
+
+            // Salvar no banco de dados
+            gestaoFaltasController.save(falta);
+
+            // Exibir mensagem de sucesso
+            JOptionPane.showMessageDialog(this, "Falta salva com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+            // Fechar a janela de edição
+            this.dispose();
+
+            // Atualizar a lista de faltas na tela principal (TelaListar)
+            TelaListar parent = (TelaListar) getParent();
+            parent.carregarFaltas();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Exibir mensagem de erro
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao salvar a falta. Por favor, tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
-        // Criar e preencher a entidade Falta
-        Falta falta = new Falta();
-        falta.setAluno(aluno);
-        falta.setDisciplina(disciplina);
-        falta.setData(data); 
-        falta.setJustificada(justificada);
-        falta.setObservacoes(observacoes);
-
-        // Salvar no banco de dados
-        gestaoFaltasService.save(falta);
-
-        // Exibir mensagem de sucesso
-        JOptionPane.showMessageDialog(this, "Falta salva com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
-        // Fechar a janela de edição
-        this.dispose();
-
-        // Atualizar a lista de faltas na tela principal (TelaListar)
-        TelaListar parent = (TelaListar) getParent();
-        parent.carregarFaltas();
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        // Exibir mensagem de erro
-        JOptionPane.showMessageDialog(this, "Ocorreu um erro ao salvar a falta. Por favor, tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
-    }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

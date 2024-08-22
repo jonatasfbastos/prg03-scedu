@@ -1,17 +1,32 @@
 package br.com.ifba.gestaofaltas.controller;
 
+import br.com.ifba.gestaofaltas.entity.Alunos;
 import br.com.ifba.gestaofaltas.entity.Falta;
+import br.com.ifba.gestaofaltas.service.AlunosIService;
 import br.com.ifba.gestaofaltas.service.GestaoFaltasIService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
-@RequiredArgsConstructor
 public class GestaoFaltasController implements GestaoFaltasIController {
 
-    // Injeta uma instância do serviço de faltas gerenciado pelo Spring
-    private final GestaoFaltasIService attendanceService;
+    @Autowired
+    private AlunosIService alunosService;
+
+    @Autowired
+    private GestaoFaltasIService attendanceService;
+
+    @Override
+    public Alunos saveAluno(Alunos aluno) {
+        return alunosService.save(aluno);
+    }
+
+    @Override
+    public List<Alunos> getAllAlunos() throws RuntimeException {
+        return alunosService.findAll();
+    }
 
     // Salva uma falta utilizando o serviço e retorna a falta salva
     @Override
@@ -42,7 +57,6 @@ public class GestaoFaltasController implements GestaoFaltasIController {
 //    public List<Falta> findByStudentId(Long rg) throws RuntimeException {
 //        return attendanceService.findByStudentId(rg);
 //    }
-
     // Retorna uma lista com todas as faltas utilizando o serviço
     @Override
     public List<Falta> findAll() throws RuntimeException {

@@ -1,19 +1,21 @@
 package br.com.ifba.gestaofaltas.view;
 
+import br.com.ifba.gestaofaltas.controller.GestaoFaltasIController;
 import br.com.ifba.gestaofaltas.entity.Falta;
 import br.com.ifba.gestaofaltas.repository.GestaoFaltasRepository;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TelaListar extends javax.swing.JFrame {
 
-    @Autowired
-    private GestaoFaltasRepository gestaoFaltasRepository;
+    private final GestaoFaltasIController gestaoFaltasController;
 
-    public TelaListar() {
+    public TelaListar(GestaoFaltasIController gestaoFaltasController) {
+        this.gestaoFaltasController = gestaoFaltasController;
         initComponents();
         carregarFaltas();
     }
@@ -24,11 +26,11 @@ public class TelaListar extends javax.swing.JFrame {
 
         try {
             // Buscar as faltas do banco de dados
-            List<Falta> faltas = gestaoFaltasRepository.findAll();
+            List<Falta> faltas = gestaoFaltasController.findAll();
 
             // Adicionar os dados à tabela
             for (Falta falta : faltas) {
-                model.addRow(new Object[]{falta.getAluno(), falta.getDisciplina(), falta.isJustificada()});
+                model.addRow(new Object[]{falta.getAluno().getNomeSocial(), falta.getDisciplina(), falta.isJustificada()});
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -147,7 +149,7 @@ public class TelaListar extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_searchActionPerformed
 
     private void btn_addFoulMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addFoulMouseClicked
-        TelaEditar telaEditar = new TelaEditar(this); // Passa a janela principal como pai
+        TelaEditar telaEditar = new TelaEditar(this, gestaoFaltasController); // Passa a janela principal e o controller
         telaEditar.setVisible(true); // Exibe o diálogo modal
     }//GEN-LAST:event_btn_addFoulMouseClicked
 
