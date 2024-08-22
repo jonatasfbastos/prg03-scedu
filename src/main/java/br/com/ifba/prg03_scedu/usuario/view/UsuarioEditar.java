@@ -16,12 +16,12 @@ public class UsuarioEditar extends javax.swing.JFrame {
 
     private final UsuarioController usuarioController;
     private final Usuario usuario;
-    private boolean senhaVisivel = false; // Controle de visibilidade da senha
 
     public UsuarioEditar(UsuarioController usuarioController, Usuario usuario) {
             this.usuarioController = usuarioController;
             this.usuario = usuario; // Armazena o usuário
             initComponents();
+            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             if (usuario != null) {
                 nomeTextfc.setText(usuario.getNome());
                 emailTextfd.setText(usuario.getEmail());

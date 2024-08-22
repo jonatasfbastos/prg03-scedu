@@ -16,6 +16,7 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
     public UsuarioCadastrar(UsuarioController usuarioController) {
         this.usuarioController = usuarioController;
         initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     @SuppressWarnings("unchecked")
