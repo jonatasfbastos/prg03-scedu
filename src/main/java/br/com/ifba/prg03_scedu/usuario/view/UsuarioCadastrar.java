@@ -37,6 +37,7 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         senhaConfirmTextfc = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,22 +57,26 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel1.setBackground(new java.awt.Color(102, 102, 102));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("Nome:");
 
-        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel2.setBackground(new java.awt.Color(102, 102, 102));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(102, 102, 102));
         jLabel2.setText("Email:");
 
-        jLabel3.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel3.setBackground(new java.awt.Color(102, 102, 102));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setText("Senha:");
 
         cadastrarComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Gerente", "Suporte", "Convidado" }));
 
-        jLabel4.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel4.setBackground(new java.awt.Color(102, 102, 102));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("Nível de Acesso:");
 
         voltarButtomc.setText("Voltar");
@@ -82,9 +87,9 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel5.setBackground(new java.awt.Color(102, 102, 102));
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel5.setForeground(new java.awt.Color(102, 102, 102));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Cadastro de Usuários");
 
@@ -94,9 +99,14 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel6.setBackground(new java.awt.Color(102, 102, 102));
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(102, 102, 102));
         jLabel6.setText("Confirmação de Senha:");
+
+        jLabel7.setBackground(new java.awt.Color(153, 153, 153));
+        jLabel7.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel7.setText("A senha deve ter pelo menos 8 dígitos e incluir números.");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -123,19 +133,20 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
                             .addComponent(nomeTextfc))
                         .addGap(0, 80, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(senhaTextfc, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel6)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(1, 1, 1)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(senhaTextfc, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel4)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(cadastrarComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(senhaConfirmTextfc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(senhaConfirmTextfc, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(79, 79, 79))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -159,11 +170,13 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(senhaConfirmTextfc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cadastrarComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(68, 68, 68)
+                .addGap(46, 46, 46)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(voltarButtomc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cadastrarButtomc, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -297,6 +310,7 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField nomeTextfc;
