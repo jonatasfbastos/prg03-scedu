@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  * @author geovana
  */
 @Repository
-public interface SerieIRepository extends JpaRepository<Serie, Long> {
+public interface SerieRepository extends JpaRepository<Serie, Long> {
     
    // public List<Serie> getAllSerie();
     

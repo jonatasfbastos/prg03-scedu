@@ -8,7 +8,7 @@ import br.com.ifba.serie.entity.Serie;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import br.com.ifba.serie.repository.SerieIRepository;
+import br.com.ifba.serie.repository.SerieRepository;
 
 /**
  *
@@ -18,7 +18,7 @@ import br.com.ifba.serie.repository.SerieIRepository;
 public class SerieService implements SerieIService {
     
     @Autowired
-    private SerieIRepository repositorySerie;
+    private SerieRepository repositorySerie;
 
     public List<Serie> getAllSerie() {
         return repositorySerie.findAll();
@@ -38,7 +38,7 @@ public class SerieService implements SerieIService {
     //Metodo para excluir uma serie
     @Override
     public void delete(Serie serie) {   
-       // repositorySerie.delete(id);
+        repositorySerie.delete(serie);
     }
 
     @Override

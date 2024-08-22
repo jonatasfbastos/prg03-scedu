@@ -4,12 +4,25 @@
  */
 package br.com.ifba.serie.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Data;
+
 /**
  *
  * @author geovana
  */
+@Data
+@Entity
+@Table(name="serie")
 public class Serie {
     
-    public Long id;
-    public String nome;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nome;
+  //  private Long curriculoId;
 }

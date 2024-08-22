@@ -16,6 +16,6 @@ public interface SerieIController {
     public List<Serie> findAll();
     public Serie findById(Long id);
     public Serie save(Serie serie);
-    public void delete (Long id);
+    public void delete(Serie serie);
     public Serie update (Serie serie);
 }

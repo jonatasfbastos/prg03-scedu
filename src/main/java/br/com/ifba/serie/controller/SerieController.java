@@ -36,10 +36,10 @@ public class SerieController implements SerieIController{
     }
 
     @Override
-    public void delete(Long id) {
-      // serieService.delete(id);
+    public void delete(Serie serie) {
+       serieService.delete(serie);
     }
-
+    
     @Override
     public Serie update(Serie serie) {
         return serieService.update(serie);
