@@ -1,5 +1,5 @@
 
-package br.com.ifba.infrastructure.util;
+package br.com.ifba.prg03_scedu.infrastructure.util;
 
 /**
  *

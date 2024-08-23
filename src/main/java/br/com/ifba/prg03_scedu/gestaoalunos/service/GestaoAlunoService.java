@@ -1,9 +1,10 @@
-package br.com.ifba.gestaoalunos.service;
+package br.com.ifba.prg03_scedu.gestaoalunos.service;
 
-import br.com.ifba.gestaoalunos.dao.GestaoAlunoRepository;
-import br.com.ifba.gestaoalunos.entity.Alunos;
-import br.com.ifba.infrastructure.util.StringUtil;
-import jakarta.transaction.Transactional;
+import br.com.ifba.prg03_scedu.gestaoalunos.dao.GestaoAlunoRepository;
+import br.com.ifba.prg03_scedu.gestaoalunos.dao.GestaoAlunoRepositoryResponsaveis;
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.Alunos;
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.Responsaveis;
+import br.com.ifba.prg03_scedu.infrastructure.util.StringUtil;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -11,13 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service // Indica que esta classe é um serviço do Spring.
-@Transactional // Habilita a transação para todos os métodos desta classe.
 @RequiredArgsConstructor // Gera um construtor com um argumento para cada campo final.
 public class GestaoAlunoService implements GestaoAlunoIService {
-
+    private final GestaoAlunoRepositoryResponsaveis gestaoAlunoRepositoryResponsaveis; // Injeta o repositório de alunos.
     private final GestaoAlunoRepository gestaoAlunoRepository; // Injeta o repositório de alunos.
     private final Logger log = LoggerFactory.getLogger(GestaoAlunoService.class); // Cria um logger para registrar mensagens.
-
+//CRUD ALUNOS
     @Override
     public Alunos save(Alunos aluno) throws RuntimeException {
         if(aluno == null ){
@@ -78,7 +78,7 @@ public class GestaoAlunoService implements GestaoAlunoIService {
         }
         else{
             log.info("Buscando Alunoss por Nome: {}", nome); // Registra uma mensagem indicando que os alunos estão sendo buscados pelo nome.
-            return gestaoAlunoRepository.findByNomeAlunoStartingWith(nome); // Busca alunos no repositório pelo nome.
+            return gestaoAlunoRepository.findByNomeStartingWith(nome); // Busca alunos no repositório pelo nome.
         }
     }
 
@@ -86,6 +86,47 @@ public class GestaoAlunoService implements GestaoAlunoIService {
     public List<Alunos> findAll() throws RuntimeException {
         log.info("Buscando todos os Alunoss"); // Registra uma mensagem indicando que todos os alunos estão sendo buscados.
         return gestaoAlunoRepository.findAll(); // Busca todos os alunos no repositório.
+    }
+    
+    //CRUD RESPONSAVEIS
+    
+    @Override
+    public Responsaveis save(Responsaveis responsavel) throws RuntimeException {
+        if(responsavel == null ){
+            log.error("Erro ao salvar aluno: aluno é nulo"); // Registra um erro se o aluno for nulo.
+            throw new RuntimeException(StringUtil.getNullCourseError()); // Lança uma exceção com uma mensagem de erro apropriada.
+        }
+        else if(responsavel.getId() != null){
+            log.error("Erro ao salvar aluno: aluno já existe"); // Registra um erro se o aluno já existir.
+            throw new RuntimeException(StringUtil.getExistingCourseError()); // Lança uma exceção com uma mensagem de erro apropriada.
+        }
+        else{
+            log.info("Salvando o Objeto Alunos: {}", responsavel); // Registra uma mensagem indicando que o aluno está sendo salvo.
+            return gestaoAlunoRepositoryResponsaveis.save(responsavel); // Salva o aluno no repositório.
+        }
+    }
+    
+    public Responsaveis update(Responsaveis responsavel) throws RuntimeException {
+        if(responsavel == null ){
+            log.error("Erro ao atualizar aluno: aluno é nulo"); // Registra um erro se o aluno for nulo.
+            throw new RuntimeException(StringUtil.getNullCourseError()); // Lança uma exceção com uma mensagem de erro apropriada.
+        }
+        else{
+            log.info("Atualizando o Objeto Alunos: {}", responsavel); // Registra uma mensagem indicando que o aluno está sendo atualizado.
+            return gestaoAlunoRepositoryResponsaveis.save(responsavel); // Atualiza o aluno no repositório.
+        }
+    }
+
+    @Override
+    public void delete(Responsaveis responsavel) throws RuntimeException {
+        if(responsavel == null ){
+            log.error("Erro ao deletar aluno: aluno é nulo"); // Registra um erro se o aluno for nulo.
+            throw new RuntimeException(StringUtil.getNullCourseError()); // Lança uma exceção com uma mensagem de erro apropriada.
+        }
+        else {
+            log.info("Deletando o Objeto Alunos: {}", responsavel); // Registra uma mensagem indicando que o aluno está sendo deletado.
+            gestaoAlunoRepositoryResponsaveis.delete(responsavel); // Deleta o aluno do repositório.
+        }
     }
 }
 

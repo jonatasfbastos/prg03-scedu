@@ -4,23 +4,28 @@
  */
 package br.com.ifba.prg03_scedu.home.view;
 
+import br.com.ifba.prg03_scedu.gestaoalunos.view.TelaListar;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Micro
  */
-public class TelaInicial extends javax.swing.JFrame {
 
+public class TelaInicial extends javax.swing.JFrame {
+    private final GestaoAlunoIController gestaoAlunoController;
     /**
      * Creates new form HomeScreen
      */
-    public TelaInicial() {
+    public TelaInicial(GestaoAlunoIController gestaoAlunoController) {
         initComponents();
+        this.gestaoAlunoController = gestaoAlunoController;
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,22 +35,61 @@ public class TelaInicial extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        btnGestaoAlunos = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        btnGestaoAlunos.setText("Gestao de Alunos");
+        btnGestaoAlunos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestaoAlunosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(btnGestaoAlunos)
+                .addContainerGap(918, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(btnGestaoAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(482, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1920, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1080, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGestaoAlunosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestaoAlunosActionPerformed
+    // TODO add your handling code here:
+        TelaListar telaGestaoAluno = new TelaListar(gestaoAlunoController);
+        telaGestaoAluno.setVisible(true);
+    }//GEN-LAST:event_btnGestaoAlunosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -86,5 +130,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGestaoAlunos;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

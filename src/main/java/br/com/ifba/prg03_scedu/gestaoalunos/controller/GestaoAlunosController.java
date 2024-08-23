@@ -1,8 +1,9 @@
 
-package br.com.ifba.gestaoalunos.controller;
+package br.com.ifba.prg03_scedu.gestaoalunos.controller;
 
-import br.com.ifba.gestaoalunos.entity.Alunos;
-import br.com.ifba.gestaoalunos.service.GestaoAlunoIService;
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.Alunos;
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.Responsaveis;
+import br.com.ifba.prg03_scedu.gestaoalunos.service.GestaoAlunoIService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -46,5 +47,20 @@ public class GestaoAlunosController implements GestaoAlunoIController{
     public List<Alunos> findAll() throws RuntimeException {
         // Chama o serviço para listar todos os alunos.
         return gestaoAlunoService.findAll();
+    }
+//CRUD RESPONSAVEIS
+    @Override
+    public Responsaveis save(Responsaveis responsavel) throws RuntimeException {
+        return gestaoAlunoService.save(responsavel);
+    }
+
+    @Override
+    public Responsaveis update(Responsaveis responsavel) throws RuntimeException {
+        return gestaoAlunoService.update(responsavel);
+    }
+
+    @Override
+    public void delete(Responsaveis responsavel) throws RuntimeException {
+        gestaoAlunoService.delete(responsavel);
     }
 }

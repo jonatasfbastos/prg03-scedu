@@ -5,6 +5,8 @@
 package br.com.ifba.prg03_scedu.usuario.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
+import br.com.ifba.prg03_scedu.gestaoalunos.view.TelaListar;
 import br.com.ifba.prg03_scedu.home.view.TelaInicial;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
 import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
@@ -23,7 +25,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TelaLogin extends javax.swing.JFrame {
-
+    private final GestaoAlunoIController gestaoAlunoController;
     /**
      * Creates new form TelaLogin
      */
@@ -31,9 +33,10 @@ public class TelaLogin extends javax.swing.JFrame {
     private final UsuarioIController usuarioController;
     private final CredenciaisManager credenciaisManager;
     
-    public TelaLogin(UsuarioIController usuarioController, CredenciaisManager credenciaisManager) {
+    public TelaLogin(UsuarioIController usuarioController, CredenciaisManager credenciaisManager, GestaoAlunoIController gestaoAlunoController) {
         this.usuarioController = usuarioController;
         this.credenciaisManager = credenciaisManager;
+        this.gestaoAlunoController = gestaoAlunoController;
     }
 
     @PostConstruct
@@ -258,7 +261,7 @@ public class TelaLogin extends javax.swing.JFrame {
             // Limpa o array de caracteres após o uso para segurança
             Arrays.fill(senhaArray, ' ');
 
-            TelaInicial telaInicial = new TelaInicial();
+            TelaInicial telaInicial = new TelaInicial(gestaoAlunoController);
             telaInicial.setVisible(true);
             telaInicial.toFront();
             this.dispose();
@@ -269,10 +272,12 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarContaActionPerformed
-        UsuarioCadastrar usuarioCadastrar = new UsuarioCadastrar(usuarioController);
+        /*UsuarioCadastrar usuarioCadastrar = new UsuarioCadastrar(usuarioController);
         
         usuarioCadastrar.setVisible(true);
-        usuarioCadastrar.toFront();
+        usuarioCadastrar.toFront();*/
+        TelaListar telaGestaoAluno = new TelaListar(gestaoAlunoController);
+        telaGestaoAluno.setVisible(true);
     }//GEN-LAST:event_btnCriarContaActionPerformed
 
     private void btnEsqueceuASenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueceuASenhaActionPerformed

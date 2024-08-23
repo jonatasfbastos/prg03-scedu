@@ -1,15 +1,15 @@
 
-package br.com.ifba.gestaoalunos.entity;
+package br.com.ifba.prg03_scedu.gestaoalunos.entity;
 
-import br.com.ifba.infrastructure.entity.Pessoa;
+import br.com.ifba.prg03_scedu.infrastructure.entity.Pessoa;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "reponsaveis")
+@DiscriminatorValue("RESPONSAVEL")
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
