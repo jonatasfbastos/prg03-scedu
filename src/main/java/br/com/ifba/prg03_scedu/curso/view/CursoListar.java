@@ -1,9 +1,10 @@
 
-package br.com.ifba.curso.view;
+package br.com.ifba.prg03_scedu.curso.view;
 
-import br.com.ifba.Application;
-import br.com.ifba.curso.controller.CursoIController;
-import br.com.ifba.curso.entity.Curso;
+
+import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
+import br.com.ifba.prg03_scedu.curso.entity.Curso;
+import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.NoResultException;
 import java.util.List;
@@ -419,7 +420,7 @@ int row= TblDados.getSelectedRow();
             @Override
             public void run() {
                 ConfigurableApplicationContext context = 
-            new SpringApplicationBuilder(Application.class)
+            new SpringApplicationBuilder(Prg03SceduApplication.class)
             .headless(false)
             .run(args);
 

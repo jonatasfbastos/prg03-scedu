@@ -1,7 +1,7 @@
 
-package br.com.ifba.curso.dao;
+package br.com.ifba.prg03_scedu.curso.dao;
 
-import br.com.ifba.curso.entity.Curso;
+import br.com.ifba.prg03_scedu.curso.entity.Curso;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

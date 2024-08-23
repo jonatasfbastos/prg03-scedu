@@ -1,9 +1,9 @@
 
-package br.com.ifba.curso.view;
+package br.com.ifba.prg03_scedu.curso.view;
 
-import br.com.ifba.Application;
-import br.com.ifba.curso.controller.CursoIController;
-import br.com.ifba.curso.entity.Curso;
+import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
+import br.com.ifba.prg03_scedu.curso.entity.Curso;
+import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import javax.swing.JOptionPane;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -280,7 +280,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         });*/
         
              ConfigurableApplicationContext context = 
-            new SpringApplicationBuilder(Application.class)
+            new SpringApplicationBuilder(Prg03SceduApplication.class)
             .headless(false)
             .run(args);
 

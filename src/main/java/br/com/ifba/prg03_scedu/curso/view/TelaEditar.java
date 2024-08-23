@@ -1,10 +1,11 @@
 
-package br.com.ifba.curso.view;
+package br.com.ifba.prg03_scedu.curso.view;
 
-import br.com.ifba.Application;
-import br.com.ifba.curso.controller.CursoController;
-import br.com.ifba.curso.controller.CursoIController;
-import br.com.ifba.curso.entity.Curso;
+
+import br.com.ifba.prg03_scedu.curso.controller.CursoController;
+import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
+import br.com.ifba.prg03_scedu.curso.entity.Curso;
+import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -176,11 +177,8 @@ public class TelaEditar extends javax.swing.JFrame {
                                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                                     .addComponent(cmbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                     .addGap(54, 54, 54)))
+                                            .addComponent(txtCodigoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(txtCodigoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(lblStatus)
                                                 .addGap(196, 196, 196)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -240,7 +238,7 @@ public class TelaEditar extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 761, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,7 +299,7 @@ public class TelaEditar extends javax.swing.JFrame {
         });*/
        
        ConfigurableApplicationContext context = 
-            new SpringApplicationBuilder(Application.class)
+            new SpringApplicationBuilder(Prg03SceduApplication.class)
             .headless(false)
             .run(args);
 

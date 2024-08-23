@@ -1,6 +1,6 @@
-package br.com.ifba.curso.entity;
+package br.com.ifba.prg03_scedu.curso.entity;
 
-import br.com.ifba.infrastructure.entity.PersistenceEntity; // Importa a classe base PersistenceEntity
+import br.com.ifba.prg03_scedu.infrastructure.entity.PersistenceEntity; // Importa a classe base PersistenceEntity
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity; // Importa a anotação Entity do Jakarta Persistence (JPA)
 import jakarta.persistence.Table;

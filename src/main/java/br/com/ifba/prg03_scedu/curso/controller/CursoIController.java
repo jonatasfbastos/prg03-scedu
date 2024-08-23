@@ -1,6 +1,6 @@
-package br.com.ifba.curso.controller;
+package br.com.ifba.prg03_scedu.curso.controller;
 
-import br.com.ifba.curso.entity.Curso; // Importa a entidade Curso
+import br.com.ifba.prg03_scedu.curso.entity.Curso; // Importa a entidade Curso
 import java.util.List; // Importa a lista para manipulação de coleções de objetos Curso
 
 // Interface que define os métodos para operações de controle de Curso

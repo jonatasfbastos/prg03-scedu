@@ -1,7 +1,7 @@
-package br.com.ifba.curso.controller;
+package br.com.ifba.prg03_scedu.curso.controller;
 
-import br.com.ifba.curso.entity.Curso; // Importa a entidade Curso
-import br.com.ifba.curso.service.CursoIService; // Importa o serviço de Curso, que é a interface para operações de negócio
+import br.com.ifba.prg03_scedu.curso.entity.Curso; // Importa a entidade Curso
+import br.com.ifba.prg03_scedu.curso.service.CursoIService; // Importa o serviço de Curso, que é a interface para operações de negócio
 import java.util.List; // Importa a lista para manipulação de coleções de objetos Curso
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller; // Importa a anotação que marca a classe como um controlador Spring MVC

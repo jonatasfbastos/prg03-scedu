@@ -1,4 +1,4 @@
-package br.com.ifba.infrastructure.entity;
+package br.com.ifba.prg03_scedu.infrastructure.entity;
 
 import jakarta.persistence.GeneratedValue; // Importa a anotação para definir a estratégia de geração de valor
 import jakarta.persistence.GenerationType; // Importa os tipos de estratégia de geração de valor

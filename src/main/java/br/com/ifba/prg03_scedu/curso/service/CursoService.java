@@ -1,8 +1,8 @@
-package br.com.ifba.curso.service;
+package br.com.ifba.prg03_scedu.curso.service;
 
-import br.com.ifba.curso.dao.CursoIDao;
-import br.com.ifba.curso.entity.Curso;
-import br.com.ifba.infrastructure.util.StringUtil;
+import br.com.ifba.prg03_scedu.curso.dao.CursoIDao;
+import br.com.ifba.prg03_scedu.curso.entity.Curso;
+import br.com.ifba.prg03_scedu.infrastructure.util.StringUtil;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;

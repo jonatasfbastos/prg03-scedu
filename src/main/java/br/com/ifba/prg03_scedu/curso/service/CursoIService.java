@@ -1,6 +1,6 @@
-package br.com.ifba.curso.service;
+package br.com.ifba.prg03_scedu.curso.service;
 
-import br.com.ifba.curso.entity.Curso; // Importa a classe Curso
+import br.com.ifba.prg03_scedu.curso.entity.Curso; // Importa a classe Curso
 import java.util.List; // Importa a classe List para usar listas de cursos
 
 // Interface que define os métodos que serão implementados pelo serviço de curso
