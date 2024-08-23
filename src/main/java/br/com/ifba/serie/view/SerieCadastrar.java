@@ -4,6 +4,7 @@
  */
 package br.com.ifba.serie.view;
 
+import br.com.ifba.serie.controller.SerieController;
 import br.com.ifba.serie.entity.Serie;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -20,21 +21,24 @@ public class SerieCadastrar extends javax.swing.JFrame {
     @Autowired
     private SerieListar serieListar;
     
+    @Autowired
+    private SerieController serieController;
+    
     Serie serie = new Serie();
 
     /**
      * Creates new form SerieTela
      */
     public SerieCadastrar() {
+       // this.serieController = serieController;
         initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
         //Cor de fundo da tela
         getContentPane().setBackground(new java.awt.Color(8, 102, 255));
         
         //Cor de fundo do painel
         jPanel1.setBackground(Color.white);
-       
-       
     }
 
     /**
@@ -186,9 +190,12 @@ public class SerieCadastrar extends javax.swing.JFrame {
         try {
            // serie.setId(txtIdSerie.getText());
             serie.setNome(txtNomeSerie.getText());
+           // serie.setCurriculoId(txtIdCurriculo.getText());
+           serieController.save(serie);
         } catch (Exception error) {
             JOptionPane.showMessageDialog(null, error, "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
         }
+        this.dispose();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnListarSerieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarSerieActionPerformed

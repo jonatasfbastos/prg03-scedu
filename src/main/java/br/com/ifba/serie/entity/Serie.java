@@ -24,5 +24,6 @@ public class Serie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-  //  private Long curriculoId;
+    private Long curriculoId;
+   // private List<Turma> listaTurma;
 }
