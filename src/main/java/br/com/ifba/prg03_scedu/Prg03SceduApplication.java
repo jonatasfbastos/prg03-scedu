@@ -9,9 +9,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
-@ComponentScan(basePackages = "br.com.ifba.gestaoalunos.view.TelaListar")
-//@EnableJpaRepositories(basePackages = "br.com.ifba.gestaoalunos.dao")
+@SpringBootApplication(scanBasePackages = "br.com.ifba.gestaoalunos")
+//@ComponentScan(basePackages = "br.com.ifba.gestaoalunos.view")
 public class Prg03SceduApplication {
 
     private static final Logger log = LoggerFactory.getLogger(Prg03SceduApplication.class); // Cria um logger para registrar mensagens.

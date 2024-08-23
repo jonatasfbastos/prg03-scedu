@@ -116,7 +116,7 @@ public class TelaEditar extends javax.swing.JFrame {
             .addGroup(pnlDadosLayout.createSequentialGroup()
                 .addGap(70, 70, 70)
                 .addComponent(lblDadosAtuais)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 515, Short.MAX_VALUE)
                 .addComponent(lblDadosNovos)
                 .addGap(77, 77, 77))
         );
@@ -186,7 +186,7 @@ public class TelaEditar extends javax.swing.JFrame {
                 .addComponent(pnlDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         pack();
@@ -207,7 +207,7 @@ public class TelaEditar extends javax.swing.JFrame {
                 novoAluno.setNomeSocial(txtNovoCodigo.getText());
                 log.info("Código do aluno atualizado para: {0}", txtNovoCodigo.getText());
             }
-            
+
             /*
             if (!(cbxNovoStatus.getSelectedItem().equals(" "))) {
                 if (cbxNovoStatus.getSelectedItem().toString().equals("ATIVO")) {
@@ -279,15 +279,139 @@ public class TelaEditar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<String> cbxGenero;
+    private javax.swing.JComboBox<String> cbxGenero1;
+    private javax.swing.JComboBox<String> cbxGenero2;
+    private javax.swing.JComboBox<String> cbxGenero3;
     private javax.swing.JComboBox<String> cbxNovoStatus;
+    private javax.swing.JCheckBox cbxSexoFeminino;
+    private javax.swing.JCheckBox cbxSexoFeminino1;
+    private javax.swing.JCheckBox cbxSexoFeminino2;
+    private javax.swing.JCheckBox cbxSexoFeminino3;
+    private javax.swing.JCheckBox cbxSexoMasculino;
+    private javax.swing.JCheckBox cbxSexoMasculino1;
+    private javax.swing.JCheckBox cbxSexoMasculino2;
+    private javax.swing.JCheckBox cbxSexoMasculino3;
+    private javax.swing.JCheckBox cbxSexoNenhum;
+    private javax.swing.JCheckBox cbxSexoNenhum1;
+    private javax.swing.JCheckBox cbxSexoNenhum2;
+    private javax.swing.JCheckBox cbxSexoNenhum3;
+    private javax.swing.JLabel lblCpf;
+    private javax.swing.JLabel lblCpf1;
+    private javax.swing.JLabel lblCpf2;
+    private javax.swing.JLabel lblCpf3;
     private javax.swing.JLabel lblDadosAtuais;
     private javax.swing.JLabel lblDadosNovos;
+    private javax.swing.JLabel lblDataEmissão;
+    private javax.swing.JLabel lblDataEmissão1;
+    private javax.swing.JLabel lblDataEmissão2;
+    private javax.swing.JLabel lblDataEmissão3;
+    private javax.swing.JLabel lblDataNascimento;
+    private javax.swing.JLabel lblDataNascimento1;
+    private javax.swing.JLabel lblDataNascimento2;
+    private javax.swing.JLabel lblDataNascimento3;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblEmail1;
+    private javax.swing.JLabel lblEmail2;
+    private javax.swing.JLabel lblEmail3;
+    private javax.swing.JLabel lblGenero;
+    private javax.swing.JLabel lblGenero1;
+    private javax.swing.JLabel lblGenero2;
+    private javax.swing.JLabel lblGenero3;
+    private javax.swing.JLabel lblNacionalide;
+    private javax.swing.JLabel lblNacionalide1;
+    private javax.swing.JLabel lblNacionalide2;
+    private javax.swing.JLabel lblNacionalide3;
+    private javax.swing.JLabel lblNaturalidade;
+    private javax.swing.JLabel lblNaturalidade1;
+    private javax.swing.JLabel lblNaturalidade2;
+    private javax.swing.JLabel lblNaturalidade3;
+    private javax.swing.JLabel lblNomeAluno;
+    private javax.swing.JLabel lblNomeAluno1;
+    private javax.swing.JLabel lblNomeAluno2;
+    private javax.swing.JLabel lblNomeAluno3;
+    private javax.swing.JLabel lblNomeSocial;
+    private javax.swing.JLabel lblNomeSocial1;
+    private javax.swing.JLabel lblNomeSocial2;
+    private javax.swing.JLabel lblNomeSocial3;
+    private javax.swing.JLabel lblOrgaoExpedidor;
+    private javax.swing.JLabel lblOrgaoExpedidor1;
+    private javax.swing.JLabel lblOrgaoExpedidor2;
+    private javax.swing.JLabel lblOrgaoExpedidor3;
+    private javax.swing.JLabel lblRg;
+    private javax.swing.JLabel lblRg1;
+    private javax.swing.JLabel lblRg2;
+    private javax.swing.JLabel lblRg3;
+    private javax.swing.JLabel lblSexo;
+    private javax.swing.JLabel lblSexo1;
+    private javax.swing.JLabel lblSexo2;
+    private javax.swing.JLabel lblSexo3;
+    private javax.swing.JLabel lblTelefone;
+    private javax.swing.JLabel lblTelefone1;
+    private javax.swing.JLabel lblTelefone2;
+    private javax.swing.JLabel lblTelefone3;
+    private javax.swing.JLabel lblTituloEleitor;
+    private javax.swing.JLabel lblTituloEleitor1;
+    private javax.swing.JLabel lblTituloEleitor2;
+    private javax.swing.JLabel lblTituloEleitor3;
     private javax.swing.JPanel pnlDados;
+    private javax.swing.JPanel pnlDadosPessoais;
+    private javax.swing.JPanel pnlDadosPessoais1;
+    private javax.swing.JPanel pnlDadosPessoais2;
+    private javax.swing.JPanel pnlDadosPessoais3;
     private javax.swing.JPanel pnlSalvar;
     private javax.swing.JTextField txtCodigoAtual;
+    private javax.swing.JTextField txtCpf;
+    private javax.swing.JTextField txtCpf1;
+    private javax.swing.JTextField txtCpf2;
+    private javax.swing.JTextField txtCpf3;
+    private javax.swing.JTextField txtDataEmissao;
+    private javax.swing.JTextField txtDataEmissao1;
+    private javax.swing.JTextField txtDataEmissao2;
+    private javax.swing.JTextField txtDataEmissao3;
+    private javax.swing.JTextField txtDataNascimento;
+    private javax.swing.JTextField txtDataNascimento1;
+    private javax.swing.JTextField txtDataNascimento2;
+    private javax.swing.JTextField txtDataNascimento3;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtEmail1;
+    private javax.swing.JTextField txtEmail2;
+    private javax.swing.JTextField txtEmail3;
+    private javax.swing.JTextField txtNacionalidade;
+    private javax.swing.JTextField txtNacionalidade1;
+    private javax.swing.JTextField txtNacionalidade2;
+    private javax.swing.JTextField txtNacionalidade3;
+    private javax.swing.JTextField txtNaturalidade;
+    private javax.swing.JTextField txtNaturalidade1;
+    private javax.swing.JTextField txtNaturalidade2;
+    private javax.swing.JTextField txtNaturalidade3;
+    private javax.swing.JTextField txtNomeAluno;
+    private javax.swing.JTextField txtNomeAluno1;
+    private javax.swing.JTextField txtNomeAluno2;
+    private javax.swing.JTextField txtNomeAluno3;
     private javax.swing.JTextField txtNomeAtual;
+    private javax.swing.JTextField txtNomeSocial;
+    private javax.swing.JTextField txtNomeSocial1;
+    private javax.swing.JTextField txtNomeSocial2;
+    private javax.swing.JTextField txtNomeSocial3;
     private javax.swing.JTextField txtNovoCodigo;
     private javax.swing.JTextField txtNovoNome;
+    private javax.swing.JTextField txtOrgaoExpedidor;
+    private javax.swing.JTextField txtOrgaoExpedidor1;
+    private javax.swing.JTextField txtOrgaoExpedidor2;
+    private javax.swing.JTextField txtOrgaoExpedidor3;
+    private javax.swing.JTextField txtRg;
+    private javax.swing.JTextField txtRg1;
+    private javax.swing.JTextField txtRg2;
+    private javax.swing.JTextField txtRg3;
     private javax.swing.JTextField txtStatusAtual;
+    private javax.swing.JTextField txtTelefone;
+    private javax.swing.JTextField txtTelefone1;
+    private javax.swing.JTextField txtTelefone2;
+    private javax.swing.JTextField txtTelefone3;
+    private javax.swing.JTextField txtTituloEleitor;
+    private javax.swing.JTextField txtTituloEleitor1;
+    private javax.swing.JTextField txtTituloEleitor2;
+    private javax.swing.JTextField txtTituloEleitor3;
     // End of variables declaration//GEN-END:variables
 }
