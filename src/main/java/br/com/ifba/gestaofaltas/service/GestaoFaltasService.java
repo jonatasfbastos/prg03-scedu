@@ -1,5 +1,6 @@
 package br.com.ifba.gestaofaltas.service;
 
+import br.com.ifba.gestaofaltas.entity.Alunos;
 import br.com.ifba.gestaofaltas.repository.GestaoFaltasRepository;
 import br.com.ifba.gestaofaltas.entity.Falta;
 
@@ -34,10 +35,10 @@ public class GestaoFaltasService implements GestaoFaltasIService {
         return gestaoFaltasRepository.findById(id).orElse(null);
     }
 
-//    @Override
-//    public List<Falta> findByStudentId(Long rg) {
-//        return gestaoFaltasRepository.findByStudentId(rg);
-//    }
+    @Override
+    public List<Falta> findByAluno(Alunos aluno) {
+        return gestaoFaltasRepository.findByAluno(aluno);
+    }
     @Override
     public List<Falta> findAll() {
         return gestaoFaltasRepository.findAll();

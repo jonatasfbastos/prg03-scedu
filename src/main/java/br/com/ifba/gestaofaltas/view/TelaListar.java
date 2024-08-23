@@ -5,6 +5,7 @@ import br.com.ifba.gestaofaltas.entity.Alunos;
 import br.com.ifba.gestaofaltas.entity.Falta;
 import br.com.ifba.gestaofaltas.repository.GestaoFaltasRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lombok.RequiredArgsConstructor;
@@ -22,35 +23,29 @@ public class TelaListar extends javax.swing.JFrame {
         carregarFaltas();
     }
 
+    private List<Falta> loadFaltas() {
+        try {
+            // Buscar as faltas do banco de dados
+            List<Falta> faltas = gestaoFaltasController.findAll();
+            return faltas;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     void carregarFaltas() {
         DefaultTableModel model = (DefaultTableModel) t_list.getModel();
         model.setRowCount(0); // Limpar tabela antes de carregar novos dados
 
-        try {
-            // Buscar as faltas do banco de dados
-            List<Falta> faltas = gestaoFaltasController.findAll();
+        List<Falta> faltas = loadFaltas();
 
-            // Adicionar os dados à tabela
-            for (Falta falta : faltas) {
-                model.addRow(new Object[]{falta.getAluno().getNomeSocial(), falta.getDisciplina(), falta.isJustificada()});
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        // Adicionar os dados à tabela
+        for (Falta falta : faltas) {
+            model.addRow(new Object[]{falta.getAluno().getNomeSocial(), falta.getDisciplina(), falta.isJustificada()});
         }
-    }
-    
-    private Alunos buscarAlunoPorNome(String nome) throws RuntimeException {
-        // Buscar todos os alunos
-        List<Alunos> alunosList = gestaoFaltasController.getAllAlunos();
-
-        // Procurar o aluno pelo nome
-        for (Alunos aluno : alunosList) {
-            if (aluno.getNomeSocial().equals(nome)) {
-                return aluno;
-            }
-        }
-
-        throw new RuntimeException("Aluno não encontrado: " + nome);
     }
 
     @SuppressWarnings("unchecked")
@@ -281,9 +276,60 @@ public class TelaListar extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_bnt_removerActionPerformed
 
-    private void btn_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_searchMouseClicked
+    private void btn_searchMouseClicked(java.awt.event.MouseEvent evt) {
+        String alunoNome = txt_search.getText();
+        DefaultTableModel model = (DefaultTableModel) t_list.getModel();
+        model.setRowCount(0); // Clear table before loading new data
+
+        if (!alunoNome.isEmpty()) {
+            System.out.println("Não está vazio");
+
+            // Load the list of faltas
+            List<Falta> faltas = loadFaltas();
+
+            // Filter the faltas by the student's name
+            List<Falta> faltasFiltradas = faltas.stream()
+                    .filter(falta -> falta.getAluno() != null
+                            && falta.getAluno().getNomeSocial() != null
+                            && falta.getAluno().getNomeSocial().equalsIgnoreCase(alunoNome))
+                    .collect(Collectors.toList());
+
+            // Display results in the table
+            if (!faltasFiltradas.isEmpty()) {
+                for (Falta falta : faltasFiltradas) {
+                    model.addRow(new Object[]{
+                            falta.getAluno() != null ? falta.getAluno().getNomeSocial() : "Nome não disponível",
+                            falta.getDisciplina(),
+                            falta.isJustificada()
+                    });
+                }
+            } else {
+                // If no results, search the database
+                Alunos aluno = new Alunos();
+                aluno.setNome(alunoNome);
+
+                // Search in the database
+                List<Falta> faltasBanco = gestaoFaltasController.findByAluno(aluno);
+
+                if (!faltasBanco.isEmpty()) {
+                    for (Falta falta : faltasBanco) {
+                        model.addRow(new Object[]{
+                                falta.getAluno() != null ? falta.getAluno().getNome() : "Nome não disponível",
+                                falta.getDisciplina(),
+                                falta.isJustificada()
+                        });
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Nenhum resultado encontrado.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, insira um termo para pesquisar.", "Atenção", JOptionPane.WARNING_MESSAGE);
+            carregarFaltas(); // Reload the table with all the faltas if the search term is empty
+        }
+    }
+
 
     /**
      * @param args the command line arguments

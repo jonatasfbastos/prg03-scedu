@@ -52,11 +52,12 @@ public class GestaoFaltasController implements GestaoFaltasIController {
         return attendanceService.findById(id);
     }
 
-    // Busca faltas pelo ID do aluno utilizando o serviço e retorna a lista de faltas encontradas
-//    @Override
-//    public List<Falta> findByStudentId(Long rg) throws RuntimeException {
-//        return attendanceService.findByStudentId(rg);
-//    }
+    // Busca faltas pelo NOME do aluno utilizando o serviço e retorna a lista de faltas encontradas
+    @Override
+    public List<Falta> findByAluno(Alunos aluno) { // Update method name here
+        return attendanceService.findByAluno(aluno);
+    }
+
     // Retorna uma lista com todas as faltas utilizando o serviço
     @Override
     public List<Falta> findAll() throws RuntimeException {
