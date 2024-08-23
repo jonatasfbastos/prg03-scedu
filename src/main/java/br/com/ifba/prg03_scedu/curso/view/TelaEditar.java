@@ -99,8 +99,8 @@ public class TelaEditar extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(39, 130, 203));
 
-        btnCancelar.setBackground(new java.awt.Color(255, 0, 51));
         btnCancelar.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 0, 0));
         btnCancelar.setText("CANCELAR");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,8 +108,8 @@ public class TelaEditar extends javax.swing.JFrame {
             }
         });
 
-        btnEditar.setBackground(new java.awt.Color(255, 255, 0));
         btnEditar.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(51, 255, 0));
         btnEditar.setText("EDITAR");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,10 +177,11 @@ public class TelaEditar extends javax.swing.JFrame {
                                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                                     .addComponent(cmbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                     .addGap(54, 54, 54)))
-                                            .addComponent(txtCodigoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(lblStatus)
-                                                .addGap(196, 196, 196)))
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(txtCodigoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(lblStatus))
+                                                .addGap(149, 149, 149)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(108, 108, 108))))
@@ -238,7 +239,7 @@ public class TelaEditar extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

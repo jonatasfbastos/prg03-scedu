@@ -64,8 +64,8 @@ public class TelaCadastro extends javax.swing.JFrame {
         lblCodCurso.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         lblCodCurso.setText("Codigo do Curso");
 
-        btnCadastrar.setBackground(new java.awt.Color(51, 255, 0));
         btnCadastrar.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        btnCadastrar.setForeground(new java.awt.Color(51, 204, 0));
         btnCadastrar.setText("CONCLUIR");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,8 +82,8 @@ public class TelaCadastro extends javax.swing.JFrame {
         txtTeste.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         txtTeste.setForeground(new java.awt.Color(255, 255, 255));
 
-        btnCancelar.setBackground(new java.awt.Color(255, 0, 0));
         btnCancelar.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 0, 0));
         btnCancelar.setText("CANCELAR");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
