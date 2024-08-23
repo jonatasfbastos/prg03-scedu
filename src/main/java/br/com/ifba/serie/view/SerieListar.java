@@ -4,13 +4,20 @@
  */
 package br.com.ifba.serie.view;
 
+import br.com.ifba.serie.entity.Serie;
 import java.awt.Color;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author geovana
  */
+@Component
 public class SerieListar extends javax.swing.JFrame {
+    
+    @Autowired
+    Serie serie = new Serie();
 
     /**
      * Creates new form SerieListar
