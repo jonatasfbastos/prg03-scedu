@@ -50,6 +50,24 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+	 <dependency>
+	  <groupId>com.dukescript.presenters</groupId>
+	  <artifactId>renderer</artifactId>
+	  <version>1.6.3</version>
+	  <type>jar</type>
+	 </dependency>
+	 <dependency>
+	  <groupId>com.github.jobservice</groupId>
+	  <artifactId>job-service-config</artifactId>
+	  <version>7.1.0-426</version>
+	  <type>jar</type>
+	 </dependency>
+	 <dependency>
+	  <groupId>io.gitcoins</groupId>
+	  <artifactId>springboot</artifactId>
+	  <version>3.0.0</version>
+	  <type>jar</type>
+	 </dependency>
 	</dependencies>
 
 	<build>
