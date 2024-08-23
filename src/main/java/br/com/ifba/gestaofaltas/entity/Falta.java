@@ -11,7 +11,7 @@ public class Falta {
     private Long id;
 
     @ManyToOne(optional = false)
-     @JoinColumn(name = "rg", referencedColumnName = "rg")
+    @JoinColumn(name = "rg", referencedColumnName = "rg")
     private Alunos aluno;
 
     @Column(nullable = false)
@@ -31,7 +31,8 @@ public class Falta {
     private String disciplina;
 
     // Construtores, getters e setters
-    public Falta() {}
+    public Falta() {
+    }
 
     public Falta(Alunos aluno, Date data, String aula, boolean justificada, String observacoes, String disciplina) {
         this.aluno = aluno;

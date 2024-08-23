@@ -1,5 +1,6 @@
 package br.com.ifba.gestaofaltas.repository;
 
+import br.com.ifba.gestaofaltas.entity.Alunos;
 import br.com.ifba.gestaofaltas.entity.Falta;
 import java.util.List;
 
@@ -9,5 +10,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GestaoFaltasRepository extends JpaRepository<Falta, Long> {
-    //List<Falta> findByStudentId(Long rg);
+    List<Falta> findByAluno(Alunos aluno);
 }

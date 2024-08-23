@@ -1,17 +1,32 @@
 package br.com.ifba.gestaofaltas.controller;
 
+import br.com.ifba.gestaofaltas.entity.Alunos;
 import br.com.ifba.gestaofaltas.entity.Falta;
+import br.com.ifba.gestaofaltas.service.AlunosIService;
 import br.com.ifba.gestaofaltas.service.GestaoFaltasIService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
-@RequiredArgsConstructor
 public class GestaoFaltasController implements GestaoFaltasIController {
 
-    // Injeta uma instância do serviço de faltas gerenciado pelo Spring
-    private final GestaoFaltasIService attendanceService;
+    @Autowired
+    private AlunosIService alunosService;
+
+    @Autowired
+    private GestaoFaltasIService attendanceService;
+
+    @Override
+    public Alunos saveAluno(Alunos aluno) {
+        return alunosService.save(aluno);
+    }
+
+    @Override
+    public List<Alunos> getAllAlunos() throws RuntimeException {
+        return alunosService.findAll();
+    }
 
     // Salva uma falta utilizando o serviço e retorna a falta salva
     @Override
@@ -37,15 +52,27 @@ public class GestaoFaltasController implements GestaoFaltasIController {
         return attendanceService.findById(id);
     }
 
-    // Busca faltas pelo ID do aluno utilizando o serviço e retorna a lista de faltas encontradas
-//    @Override
-//    public List<Falta> findByStudentId(Long rg) throws RuntimeException {
-//        return attendanceService.findByStudentId(rg);
-//    }
+    // Busca faltas pelo NOME do aluno utilizando o serviço e retorna a lista de faltas encontradas
+    @Override
+    public List<Falta> findByAluno(Alunos aluno) { // Update method name here
+        return attendanceService.findByAluno(aluno);
+    }
 
     // Retorna uma lista com todas as faltas utilizando o serviço
     @Override
     public List<Falta> findAll() throws RuntimeException {
         return attendanceService.findAll();
+    }
+
+    // Busca todos os alunos usando o serviço de alunos
+    @Override
+    public Alunos getAlunoByNome(String nome) {
+        List<Alunos> alunos = alunosService.findAll();
+        for (Alunos aluno : alunos) {
+            if (aluno.getNomeSocial().equalsIgnoreCase(nome)) {
+                return aluno;
+            }
+        }
+        return null;
     }
 }

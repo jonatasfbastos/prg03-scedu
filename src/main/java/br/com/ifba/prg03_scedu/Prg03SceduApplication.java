@@ -10,10 +10,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
-@ComponentScan(basePackages = "br.com.ifba.gestaofaltas.view")
-@EntityScan(basePackages = "br.com.ifba.gestaofaltas.entity")
-@EnableJpaRepositories(basePackages = "br.com.ifba.gestaofaltas.repository")
+@SpringBootApplication(scanBasePackages = "br.com.ifba.gestaofaltas")
+@ComponentScan(basePackages = "br.com.ifba.gestaofaltas")
+@EntityScan(basePackages = "br.com.ifba.gestaofaltas")
+@EnableJpaRepositories(basePackages = "br.com.ifba.gestaofaltas")
 public class Prg03SceduApplication {
 
     public static void main(String[] args) {
