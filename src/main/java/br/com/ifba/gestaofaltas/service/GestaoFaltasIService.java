@@ -4,6 +4,7 @@ import br.com.ifba.gestaofaltas.entity.Alunos;
 import br.com.ifba.gestaofaltas.entity.Falta;
 import java.util.List;
 
+//Interface para operações relacionadas à entidade Falta
 public interface GestaoFaltasIService {
 
     Falta save(Falta attendance);

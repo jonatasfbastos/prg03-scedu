@@ -279,22 +279,22 @@ public class TelaListar extends javax.swing.JFrame {
     private void btn_searchMouseClicked(java.awt.event.MouseEvent evt) {
         String alunoNome = txt_search.getText();
         DefaultTableModel model = (DefaultTableModel) t_list.getModel();
-        model.setRowCount(0); // Clear table before loading new data
+        model.setRowCount(0); // Limpar a tabela antes de carregar novos dados
 
         if (!alunoNome.isEmpty()) {
             System.out.println("Não está vazio");
 
-            // Load the list of faltas
+            // Carregar a lista de faltas
             List<Falta> faltas = loadFaltas();
 
-            // Filter the faltas by the student's name
+            // Filtrar as faltas pelo nome do aluno
             List<Falta> faltasFiltradas = faltas.stream()
                     .filter(falta -> falta.getAluno() != null
                             && falta.getAluno().getNomeSocial() != null
                             && falta.getAluno().getNomeSocial().equalsIgnoreCase(alunoNome))
                     .collect(Collectors.toList());
 
-            // Display results in the table
+            // Exibir resultados na tabela
             if (!faltasFiltradas.isEmpty()) {
                 for (Falta falta : faltasFiltradas) {
                     model.addRow(new Object[]{
@@ -304,11 +304,11 @@ public class TelaListar extends javax.swing.JFrame {
                     });
                 }
             } else {
-                // If no results, search the database
+                // Se não houver resultados, pesquise no banco de dados
                 Alunos aluno = new Alunos();
                 aluno.setNome(alunoNome);
 
-                // Search in the database
+                // Pesquisar no banco de dados
                 List<Falta> faltasBanco = gestaoFaltasController.findByAluno(aluno);
 
                 if (!faltasBanco.isEmpty()) {
@@ -326,7 +326,7 @@ public class TelaListar extends javax.swing.JFrame {
 
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, insira um termo para pesquisar.", "Atenção", JOptionPane.WARNING_MESSAGE);
-            carregarFaltas(); // Reload the table with all the faltas if the search term is empty
+            carregarFaltas(); // Recarregar a tabela com todas as faltas se o termo de busca estiver vazio
         }
     }
 

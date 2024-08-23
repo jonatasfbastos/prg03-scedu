@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+//Implementação do serviço para operações relacionadas à entidade Falta
 @Service
 public class GestaoFaltasService implements GestaoFaltasIService {
 

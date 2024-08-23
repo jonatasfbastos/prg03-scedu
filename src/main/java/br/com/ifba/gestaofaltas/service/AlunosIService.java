@@ -4,6 +4,7 @@ import br.com.ifba.gestaofaltas.entity.Alunos;
 
 import java.util.List;
 
+//Interface para operações relacionadas à entidade Alunos
 public interface AlunosIService {
 
     Alunos save(Alunos aluno) throws RuntimeException;
