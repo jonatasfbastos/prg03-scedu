@@ -9,6 +9,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.util.Calendar;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,5 +29,5 @@ public abstract class Pessoa {
     private String cpf;
     
     @Temporal(TemporalType.DATE) 
-    private Calendar nascimento;
+    private Date nascimento;
 }
