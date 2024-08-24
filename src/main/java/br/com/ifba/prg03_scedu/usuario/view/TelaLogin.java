@@ -5,7 +5,7 @@
 package br.com.ifba.prg03_scedu.usuario.view;
 
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
-import br.com.ifba.prg03_scedu.Prg03sceduApplication;
+import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
 import br.com.ifba.prg03_scedu.home.view.TelaInicial;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
@@ -324,7 +324,7 @@ public class TelaLogin extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 ConfigurableApplicationContext context = 
-            new SpringApplicationBuilder(Prg03sceduApplication.class)
+            new SpringApplicationBuilder(Prg03SceduApplication.class)
             .headless(false)
             .run(args);
 

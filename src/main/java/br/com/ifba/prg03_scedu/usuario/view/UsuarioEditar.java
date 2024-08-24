@@ -4,7 +4,7 @@
  */
 package br.com.ifba.prg03_scedu.usuario.view;
 
-import br.com.ifba.prg03_scedu.Prg03sceduApplication;
+import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioController;
 import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
 import javax.swing.JOptionPane;
@@ -311,7 +311,7 @@ public class UsuarioEditar extends javax.swing.JFrame {
    public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ApplicationContext context = new AnnotationConfigApplicationContext(Prg03sceduApplication.class);
+                ApplicationContext context = new AnnotationConfigApplicationContext(Prg03SceduApplication.class);
                 UsuarioEditar cursoEditar = context.getBean(UsuarioEditar.class);
                 cursoEditar.setVisible(true);
             }

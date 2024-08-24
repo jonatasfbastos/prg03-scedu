@@ -8,11 +8,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 //@SpringBootApplication(scanBasePackages = "br.com.ifba")
 //@EnableJpaRepositories(basePackages = "br.com.ifba.disciplina.repository")
-public class Prg03sceduApplication {
+public class Prg03SceduApplication {
 
     public static void main(String[] args) {
         // Cria e configura o contexto da aplicação Spring
-        ConfigurableApplicationContext context = new SpringApplicationBuilder(Prg03sceduApplication.class)
+        ConfigurableApplicationContext context = new SpringApplicationBuilder(Prg03SceduApplication.class)
                 .headless(false)  // Permite que a aplicação use uma interface gráfica, desativando o modo "headless".
                 .run(args);       // Inicializa o contexto da aplicação Spring com os argumentos fornecidos.
 
