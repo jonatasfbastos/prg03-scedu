@@ -6,6 +6,7 @@ package br.com.ifba.prg03_scedu.home.view;
 
 import br.com.ifba.prg03_scedu.disciplina.view.DisciplinaListar;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -18,8 +19,12 @@ public class TelaInicial extends javax.swing.JFrame {
     /**
      * Creates new form HomeScreen
      */
-    public TelaInicial() {
+    
+    private final DisciplinaIController disciplinaController;
+    
+    public TelaInicial(DisciplinaIController disciplinaController) {
         initComponents();
+        this.disciplinaController = disciplinaController;
     }
 
     /**
@@ -35,7 +40,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        btnDisciplina.setText("jButton1");
+        btnDisciplina.setText("Disciplina");
         btnDisciplina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDisciplinaActionPerformed(evt);

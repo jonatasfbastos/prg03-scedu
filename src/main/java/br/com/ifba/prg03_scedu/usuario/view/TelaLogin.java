@@ -262,7 +262,7 @@ public class TelaLogin extends javax.swing.JFrame {
             // Limpa o array de caracteres após o uso para segurança
             Arrays.fill(senhaArray, ' ');
 
-            TelaInicial telaInicial = new TelaInicial();
+            TelaInicial telaInicial = new TelaInicial(disciplinaController);
             telaInicial.setVisible(true);
             telaInicial.toFront();
             this.dispose();
@@ -273,14 +273,11 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarContaActionPerformed
-        /*UsuarioCadastrar usuarioCadastrar = new UsuarioCadastrar(usuarioController);
+        UsuarioCadastrar usuarioCadastrar = new UsuarioCadastrar(usuarioController);
         
         usuarioCadastrar.setVisible(true);
-        usuarioCadastrar.toFront();*/
-        
-        DisciplinaListar listar = new DisciplinaListar(disciplinaController);
-        listar.setVisible(true);
-        listar.toFront();
+        usuarioCadastrar.toFront();
+       
     }//GEN-LAST:event_btnCriarContaActionPerformed
 
     private void btnEsqueceuASenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueceuASenhaActionPerformed
