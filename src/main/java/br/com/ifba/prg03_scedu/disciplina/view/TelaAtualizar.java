@@ -68,7 +68,7 @@ public class TelaAtualizar extends javax.swing.JFrame {
                 break;
             
             case "Religioso": 
-                disciplina.setBaseCurricular("Religioso");
+                disciplina.setBaseCurricular("Religiosa");
                 break;
             
             default:

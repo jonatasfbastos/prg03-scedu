@@ -220,7 +220,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                 break;
             
             case "Religioso": 
-                disciplina.setBaseCurricular("Religioso");
+                disciplina.setBaseCurricular("Religiosa");
                 break;
             
             default:

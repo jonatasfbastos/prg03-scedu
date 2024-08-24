@@ -23,7 +23,7 @@ public class DisciplinaListar extends javax.swing.JFrame {
     /**
      * Creates new form DisciplinaListar
      */
-    
+    //inserções da variaveis 
     private final DisciplinaIController disciplinaController;
     
     public DisciplinaListar(br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController disciplinaController) {
@@ -156,7 +156,7 @@ private void carregarTabela() {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
