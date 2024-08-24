@@ -5,7 +5,7 @@
 package br.com.ifba.prg03_scedu.home.view;
 
 import br.com.ifba.prg03_scedu.disciplina.view.DisciplinaListar;
-import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.Prg03sceduApplication;
 import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
 import br.com.ifba.prg03_scedu.curso.view.CursoListar;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
@@ -135,7 +135,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
         /* Create and display the form */
         ConfigurableApplicationContext context = 
-            new SpringApplicationBuilder(Prg03SceduApplication.class)
+            new SpringApplicationBuilder(Prg03sceduApplication.class)
             .headless(false)
             .run(args);
 

@@ -4,17 +4,14 @@ package br.com.ifba.prg03_scedu.curso.view;
 
 import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
 import br.com.ifba.prg03_scedu.curso.entity.Curso;
-import br.com.ifba.prg03_scedu.Prg03SceduApplication;
-import jakarta.annotation.PostConstruct;
-import jakarta.persistence.NoResultException;
+import br.com.ifba.prg03_scedu.Prg03sceduApplication;
+
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.stereotype.Component;
-
 
 
 //@Component
@@ -415,7 +412,7 @@ int row= TblDados.getSelectedRow();
             @Override
             public void run() {
                 ConfigurableApplicationContext context = 
-            new SpringApplicationBuilder(Prg03SceduApplication.class)
+            new SpringApplicationBuilder(Prg03sceduApplication.class)
             .headless(false)
             .run(args);
 

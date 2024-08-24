@@ -4,7 +4,7 @@
  */
 package br.com.ifba.prg03_scedu.disciplina.view;
 
-import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.Prg03sceduApplication;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
 import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
 import javax.swing.JOptionPane;
@@ -353,7 +353,7 @@ public class TelaAtualizar extends javax.swing.JFrame {
         });*/
         
         ConfigurableApplicationContext context = 
-            new SpringApplicationBuilder(Prg03SceduApplication.class)
+            new SpringApplicationBuilder(Prg03sceduApplication.class)
             .headless(false)
             .run(args);
 

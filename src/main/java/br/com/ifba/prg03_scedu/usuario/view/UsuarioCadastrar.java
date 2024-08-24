@@ -1,8 +1,7 @@
 
 package br.com.ifba.prg03_scedu.usuario.view;
 
-import br.com.ifba.prg03_scedu.Prg03SceduApplication;
-import br.com.ifba.prg03_scedu.usuario.controller.UsuarioController;
+import br.com.ifba.prg03_scedu.Prg03sceduApplication;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
 import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
 import javax.swing.JOptionPane;
@@ -62,8 +61,6 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
         jLabel3.setText("Senha:");
 
         cadastrarComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Gerente", "Suporte", "Convidado" }));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cadastr.png"))); // NOI18N
 
         jLabel4.setText("Nível de Acesso:");
 
@@ -248,7 +245,7 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ApplicationContext context = new AnnotationConfigApplicationContext(Prg03SceduApplication.class);
+                ApplicationContext context = new AnnotationConfigApplicationContext(Prg03sceduApplication.class);
                 UsuarioCadastrar cursoCadastro = context.getBean(UsuarioCadastrar.class);
                 cursoCadastro.setVisible(true);
             }
