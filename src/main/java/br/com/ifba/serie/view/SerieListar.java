@@ -6,6 +6,7 @@ package br.com.ifba.serie.view;
 
 import br.com.ifba.serie.entity.Serie;
 import java.awt.Color;
+import javax.swing.JFrame;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,7 @@ public class SerieListar extends javax.swing.JFrame {
      */
     public SerieListar() {
         initComponents();
-        
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //Cor de fundo da tela
         getContentPane().setBackground(new java.awt.Color(8, 102, 255));
         
