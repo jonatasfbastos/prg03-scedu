@@ -19,7 +19,7 @@ public class FaltasEditar extends JDialog {
         this.gestaoFaltasController = gestaoFaltasController;
         initComponents();
         setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
-        //postAluno();
+        postAluno();
         getAlunos();
     }
     
@@ -29,7 +29,7 @@ public class FaltasEditar extends JDialog {
         this.faltaAtual = falta;
         initComponents();
         setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
-        //postAluno();
+        postAluno();
         getAlunos();
         populateFields();
     }
