@@ -1,7 +1,7 @@
-package br.com.ifba.gestaofaltas.controller;
+package br.com.ifba.prg03_scedu.faltas.controller;
 
-import br.com.ifba.gestaofaltas.entity.Alunos;
-import br.com.ifba.gestaofaltas.entity.Falta;
+import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
+import br.com.ifba.prg03_scedu.faltas.entity.Falta;
 import java.util.List;
 
 public interface GestaoFaltasIController {

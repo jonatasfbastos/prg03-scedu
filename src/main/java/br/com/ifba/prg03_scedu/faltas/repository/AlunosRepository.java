@@ -1,6 +1,6 @@
-package br.com.ifba.gestaofaltas.repository;
+package br.com.ifba.prg03_scedu.faltas.repository;
 
-import br.com.ifba.gestaofaltas.entity.Alunos;
+import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

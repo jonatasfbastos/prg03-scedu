@@ -1,12 +1,11 @@
-package br.com.ifba.gestaofaltas.service;
+package br.com.ifba.prg03_scedu.faltas.service;
 
-import br.com.ifba.gestaofaltas.entity.Alunos;
-import br.com.ifba.gestaofaltas.repository.AlunosRepository;
+import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
+import br.com.ifba.prg03_scedu.faltas.repository.AlunosRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 //Implementação do serviço para operações relacionadas à entidade Alunos
 @Service

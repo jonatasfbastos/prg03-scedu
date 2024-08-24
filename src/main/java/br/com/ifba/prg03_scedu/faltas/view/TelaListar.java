@@ -1,15 +1,14 @@
-package br.com.ifba.gestaofaltas.view;
+package br.com.ifba.prg03_scedu.faltas.view;
 
-import br.com.ifba.gestaofaltas.controller.GestaoFaltasIController;
-import br.com.ifba.gestaofaltas.entity.Alunos;
-import br.com.ifba.gestaofaltas.entity.Falta;
-import br.com.ifba.gestaofaltas.repository.GestaoFaltasRepository;
+import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
+import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
+import br.com.ifba.prg03_scedu.faltas.entity.Falta;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Component;
 
 @Component

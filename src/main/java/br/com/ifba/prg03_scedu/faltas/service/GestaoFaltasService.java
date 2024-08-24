@@ -1,11 +1,11 @@
-package br.com.ifba.gestaofaltas.service;
+package br.com.ifba.prg03_scedu.faltas.service;
 
-import br.com.ifba.gestaofaltas.entity.Alunos;
-import br.com.ifba.gestaofaltas.repository.GestaoFaltasRepository;
-import br.com.ifba.gestaofaltas.entity.Falta;
+import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
+import br.com.ifba.prg03_scedu.faltas.repository.GestaoFaltasRepository;
+import br.com.ifba.prg03_scedu.faltas.entity.Falta;
 
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package br.com.ifba.gestaofaltas.entity;
+package br.com.ifba.prg03_scedu.faltas.entity;
 
 import br.com.ifba.infrastructure.entity.Pessoa;
 import jakarta.persistence.Column;

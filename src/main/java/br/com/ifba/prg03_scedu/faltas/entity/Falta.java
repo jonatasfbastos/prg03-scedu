@@ -1,4 +1,4 @@
-package br.com.ifba.gestaofaltas.entity;
+package br.com.ifba.prg03_scedu.faltas.entity;
 
 import jakarta.persistence.*;
 import java.util.Date;

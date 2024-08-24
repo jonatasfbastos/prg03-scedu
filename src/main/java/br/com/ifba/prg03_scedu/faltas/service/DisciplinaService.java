@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package br.com.ifba.gestaofaltas.service;
+package br.com.ifba.prg03_scedu.faltas.service;
 
-import br.com.ifba.gestaofaltas.entity.Disciplina;
-import br.com.ifba.gestaofaltas.repository.DisciplinaRepository;
+import br.com.ifba.prg03_scedu.faltas.entity.Disciplina;
+import br.com.ifba.prg03_scedu.faltas.repository.DisciplinaRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

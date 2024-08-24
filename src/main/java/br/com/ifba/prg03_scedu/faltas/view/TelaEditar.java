@@ -1,8 +1,8 @@
-package br.com.ifba.gestaofaltas.view;
+package br.com.ifba.prg03_scedu.faltas.view;
 
-import br.com.ifba.gestaofaltas.controller.GestaoFaltasIController;
-import br.com.ifba.gestaofaltas.entity.Alunos;
-import br.com.ifba.gestaofaltas.entity.Falta;
+import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
+import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
+import br.com.ifba.prg03_scedu.faltas.entity.Falta;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;

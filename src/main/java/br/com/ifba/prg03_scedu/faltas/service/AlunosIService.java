@@ -1,6 +1,6 @@
-package br.com.ifba.gestaofaltas.service;
+package br.com.ifba.prg03_scedu.faltas.service;
 
-import br.com.ifba.gestaofaltas.entity.Alunos;
+import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
 
 import java.util.List;
 
