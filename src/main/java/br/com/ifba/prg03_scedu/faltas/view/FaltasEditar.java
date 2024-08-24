@@ -9,27 +9,27 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class TelaEditar extends JDialog {
+public class FaltasEditar extends JDialog {
 
     private final GestaoFaltasIController gestaoFaltasController;
     private Falta faltaAtual;
 
-    public TelaEditar(TelaListar parent, GestaoFaltasIController gestaoFaltasController) {
+    public FaltasEditar(FaltasListar parent, GestaoFaltasIController gestaoFaltasController) {
         super(parent, "Editar", true); // Configura o JDialog como modal
         this.gestaoFaltasController = gestaoFaltasController;
         initComponents();
         setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
-        postAluno();
+        //postAluno();
         getAlunos();
     }
     
-     public TelaEditar(TelaListar parent, GestaoFaltasIController gestaoFaltasController, Falta falta) {
+     public FaltasEditar(FaltasListar parent, GestaoFaltasIController gestaoFaltasController, Falta falta) {
         super(parent, "Editar", true); // Configura o JDialog como modal
         this.gestaoFaltasController = gestaoFaltasController;
         this.faltaAtual = falta;
         initComponents();
         setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
-        postAluno();
+        //postAluno();
         getAlunos();
         populateFields();
     }
@@ -126,7 +126,6 @@ public class TelaEditar extends JDialog {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Aluno:");
 
-        jComboBox2.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox2.setEditable(true);
         jComboBox2.setForeground(new java.awt.Color(51, 51, 51));
         jComboBox2.setBorder(null);
@@ -136,7 +135,6 @@ public class TelaEditar extends JDialog {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Disciplina:");
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox1.setEditable(true);
         jComboBox1.setForeground(new java.awt.Color(51, 51, 51));
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Programação Orientada a Objetos", "Análise de Sistemas" }));
@@ -147,7 +145,6 @@ public class TelaEditar extends JDialog {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Data:");
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setForeground(new java.awt.Color(51, 51, 51));
         jTextField1.setText("22/09/2024");
         jTextField1.setBorder(null);
@@ -171,15 +168,12 @@ public class TelaEditar extends JDialog {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Observações");
 
-        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jTextArea1.setBorder(null);
         jScrollPane1.setViewportView(jTextArea1);
 
-        btn_save.setBackground(new java.awt.Color(255, 255, 255));
         btn_save.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btn_save.setForeground(new java.awt.Color(0, 0, 0));
         btn_save.setText("Salvar");
         btn_save.setBorder(null);
         btn_save.addActionListener(new java.awt.event.ActionListener() {
@@ -321,7 +315,7 @@ public class TelaEditar extends JDialog {
             this.dispose();
 
             // Atualizar a lista de faltas na tela principal (TelaListar)
-            TelaListar parent = (TelaListar) getParent();
+            FaltasListar parent = (FaltasListar) getParent();
             parent.carregarFaltas();
 
         } catch (Exception e) {

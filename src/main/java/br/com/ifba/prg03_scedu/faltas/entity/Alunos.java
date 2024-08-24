@@ -1,6 +1,6 @@
 package br.com.ifba.prg03_scedu.faltas.entity;
 
-import br.com.ifba.infrastructure.entity.Pessoa;
+import br.com.ifba.prg03_scedu.infrastructure.entity.Pessoa;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

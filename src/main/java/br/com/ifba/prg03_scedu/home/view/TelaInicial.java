@@ -9,6 +9,8 @@ import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
 import br.com.ifba.prg03_scedu.curso.view.CursoListar;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
+import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
+import br.com.ifba.prg03_scedu.faltas.view.FaltasListar;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -23,11 +25,17 @@ public class TelaInicial extends javax.swing.JFrame {
      */
     private final CursoIController cursoController;
     private final DisciplinaIController disciplinaController;
-    
-    public TelaInicial(DisciplinaIController disciplinaController,CursoIController cursoController) {
+    private final GestaoFaltasIController gestaoFaltasController;
+
+    public TelaInicial(
+        DisciplinaIController disciplinaController,
+        CursoIController cursoController,
+        GestaoFaltasIController gestaoFaltasController
+    ) {
         initComponents();
         this.disciplinaController = disciplinaController;
         this.cursoController = cursoController;
+        this.gestaoFaltasController = gestaoFaltasController;
     }
 
     /**
@@ -54,6 +62,11 @@ public class TelaInicial extends javax.swing.JFrame {
 
         bntFaltas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         bntFaltas.setText("Faltas");
+        bntFaltas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bntFaltasMouseClicked(evt);
+            }
+        });
 
         btnCurso.setText("Curso");
         btnCurso.addActionListener(new java.awt.event.ActionListener() {
@@ -105,6 +118,12 @@ public class TelaInicial extends javax.swing.JFrame {
         listar.toFront();
     }//GEN-LAST:event_btnCursoActionPerformed
 
+    private void bntFaltasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntFaltasMouseClicked
+        FaltasListar listar = new FaltasListar(gestaoFaltasController);
+        listar.setVisible(true);
+        listar.toFront();
+    }//GEN-LAST:event_bntFaltasMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -134,13 +153,13 @@ public class TelaInicial extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        ConfigurableApplicationContext context = 
-            new SpringApplicationBuilder(Prg03SceduApplication.class)
-            .headless(false)
-            .run(args);
+        ConfigurableApplicationContext context
+                = new SpringApplicationBuilder(Prg03SceduApplication.class)
+                        .headless(false)
+                        .run(args);
 
-            TelaInicial telaInicial = context.getBean(TelaInicial.class);
-            telaInicial.setVisible(true);
+        TelaInicial telaInicial = context.getBean(TelaInicial.class);
+        telaInicial.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

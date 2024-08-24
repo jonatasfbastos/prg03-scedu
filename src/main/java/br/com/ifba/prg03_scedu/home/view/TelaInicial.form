@@ -66,6 +66,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Faltas"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bntFaltasMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCurso">
       <Properties>

@@ -12,11 +12,11 @@ import javax.swing.table.DefaultTableModel;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TelaListar extends javax.swing.JFrame {
+public class FaltasListar extends javax.swing.JFrame {
 
     private final GestaoFaltasIController gestaoFaltasController;
 
-    public TelaListar(GestaoFaltasIController gestaoFaltasController) {
+    public FaltasListar(GestaoFaltasIController gestaoFaltasController) {
         this.gestaoFaltasController = gestaoFaltasController;
         initComponents();
         carregarFaltas();
@@ -69,7 +69,6 @@ public class TelaListar extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Gestão de Faltas");
 
-        txt_search.setBackground(new java.awt.Color(255, 255, 255));
         txt_search.setForeground(new java.awt.Color(51, 51, 51));
         txt_search.setBorder(null);
         txt_search.addActionListener(new java.awt.event.ActionListener() {
@@ -78,7 +77,6 @@ public class TelaListar extends javax.swing.JFrame {
             }
         });
 
-        btn_search.setBackground(new java.awt.Color(255, 255, 255));
         btn_search.setForeground(new java.awt.Color(51, 51, 51));
         btn_search.setText("Pesquisar");
         btn_search.setBorder(null);
@@ -93,7 +91,6 @@ public class TelaListar extends javax.swing.JFrame {
             }
         });
 
-        btn_addFoul.setBackground(new java.awt.Color(255, 255, 255));
         btn_addFoul.setForeground(new java.awt.Color(51, 51, 51));
         btn_addFoul.setText("Adicionar falta");
         btn_addFoul.setBorder(null);
@@ -108,7 +105,6 @@ public class TelaListar extends javax.swing.JFrame {
             }
         });
 
-        bnt_editar.setBackground(new java.awt.Color(255, 255, 255));
         bnt_editar.setForeground(new java.awt.Color(51, 51, 51));
         bnt_editar.setText("Editar");
         bnt_editar.setBorder(null);
@@ -129,7 +125,6 @@ public class TelaListar extends javax.swing.JFrame {
             }
         });
 
-        t_list.setBackground(new java.awt.Color(255, 255, 255));
         t_list.setForeground(new java.awt.Color(51, 51, 51));
         t_list.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -184,12 +179,13 @@ public class TelaListar extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                    .addComponent(btn_addFoul, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bnt_remover, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bnt_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_addFoul, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bnt_remover, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bnt_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -222,7 +218,7 @@ public class TelaListar extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_searchActionPerformed
 
     private void btn_addFoulMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addFoulMouseClicked
-        TelaEditar telaEditar = new TelaEditar(this, gestaoFaltasController); // Passa a janela principal e o controller
+        FaltasEditar telaEditar = new FaltasEditar(this, gestaoFaltasController); // Passa a janela principal e o controller
         telaEditar.setVisible(true); // Exibe o diálogo modal
     }//GEN-LAST:event_btn_addFoulMouseClicked
 
@@ -251,7 +247,7 @@ public class TelaListar extends javax.swing.JFrame {
 
             if (faltaToEdit != null) {
                 // Abre a tela de edição com a falta selecionada
-                TelaEditar telaEditar = new TelaEditar(this, gestaoFaltasController, faltaToEdit);
+                FaltasEditar telaEditar = new FaltasEditar(this, gestaoFaltasController, faltaToEdit);
                 telaEditar.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Falta não encontrada!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -322,15 +318,15 @@ public class TelaListar extends javax.swing.JFrame {
             // Filtrar as faltas pelo nome do aluno
             List<Falta> faltasFiltradas = faltas.stream()
                     .filter(falta -> falta.getAluno() != null
-                            && falta.getAluno().getNomeSocial() != null
-                            && falta.getAluno().getNomeSocial().equalsIgnoreCase(alunoNome))
+                            && falta.getAluno().getNome() != null
+                            && falta.getAluno().getNome().equalsIgnoreCase(alunoNome))
                     .collect(Collectors.toList());
 
             // Exibir resultados na tabela
             if (!faltasFiltradas.isEmpty()) {
                 for (Falta falta : faltasFiltradas) {
                     model.addRow(new Object[]{
-                            falta.getAluno() != null ? falta.getAluno().getNomeSocial() : "Nome não disponível",
+                            falta.getAluno() != null ? falta.getAluno().getNome() : "Nome não disponível",
                             falta.getDisciplina(),
                             falta.isJustificada()
                     });
