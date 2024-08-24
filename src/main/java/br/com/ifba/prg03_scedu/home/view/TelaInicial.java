@@ -6,6 +6,8 @@ package br.com.ifba.prg03_scedu.home.view;
 
 import br.com.ifba.prg03_scedu.disciplina.view.DisciplinaListar;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
+import br.com.ifba.prg03_scedu.curso.view.CursoListar;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -19,12 +21,13 @@ public class TelaInicial extends javax.swing.JFrame {
     /**
      * Creates new form HomeScreen
      */
-    
+    private final CursoIController cursoController;
     private final DisciplinaIController disciplinaController;
     
-    public TelaInicial(DisciplinaIController disciplinaController) {
+    public TelaInicial(DisciplinaIController disciplinaController,CursoIController cursoController) {
         initComponents();
         this.disciplinaController = disciplinaController;
+        this.cursoController = cursoController;
     }
 
     /**
@@ -38,6 +41,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
         btnDisciplina = new javax.swing.JButton();
         bntFaltas = new javax.swing.JButton();
+        btnCurso = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -51,6 +55,13 @@ public class TelaInicial extends javax.swing.JFrame {
         bntFaltas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         bntFaltas.setText("Faltas");
 
+        btnCurso.setText("Curso");
+        btnCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCursoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -60,13 +71,17 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bntFaltas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDisciplina, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
-                .addContainerGap(1718, Short.MAX_VALUE))
+                .addGap(130, 130, 130)
+                .addComponent(btnCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(1469, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(84, 84, 84)
-                .addComponent(btnDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDisciplina, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
                 .addGap(65, 65, 65)
                 .addComponent(bntFaltas, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(846, Short.MAX_VALUE))
@@ -82,6 +97,13 @@ public class TelaInicial extends javax.swing.JFrame {
         listar.setVisible(true);
         listar.toFront();
     }//GEN-LAST:event_btnDisciplinaActionPerformed
+
+    private void btnCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoActionPerformed
+        // TODO add your handling code here:
+        CursoListar listar = new CursoListar(cursoController);
+        listar.setVisible(true);
+        listar.toFront();
+    }//GEN-LAST:event_btnCursoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -123,6 +145,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntFaltas;
+    private javax.swing.JButton btnCurso;
     private javax.swing.JButton btnDisciplina;
     // End of variables declaration//GEN-END:variables
 }

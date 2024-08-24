@@ -29,7 +29,9 @@
                   <Component id="bntFaltas" max="32767" attributes="0"/>
                   <Component id="btnDisciplina" pref="127" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="1718" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
+              <Component id="btnCurso" min="-2" pref="119" max="-2" attributes="0"/>
+              <EmptySpace pref="1469" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -37,7 +39,10 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
-              <Component id="btnDisciplina" min="-2" pref="43" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="btnCurso" max="32767" attributes="0"/>
+                  <Component id="btnDisciplina" pref="43" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
               <Component id="bntFaltas" min="-2" pref="42" max="-2" attributes="0"/>
               <EmptySpace pref="846" max="32767" attributes="0"/>
@@ -61,6 +66,14 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Faltas"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCurso">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Curso"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCursoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

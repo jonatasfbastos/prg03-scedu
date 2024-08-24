@@ -17,11 +17,11 @@ import org.springframework.stereotype.Component;
 
 
 
-@Component
+//@Component
 public class CursoListar extends javax.swing.JFrame {
  
-    @Autowired
-    private CursoIController cursoController;
+    
+    private final CursoIController cursoController;
     
     
     // Método para carregar os dados da tabela
@@ -59,14 +59,9 @@ private void carregarTabela() {
     /**
      * Creates new form CursoListar
      */
-    public CursoListar() {
-        // initComponents();
-    }
-
-    @PostConstruct
-    private void init() {
+    public CursoListar(CursoIController cursoController) {
         initComponents();
-        //addMouseListenerToTable();
+        this.cursoController = cursoController;
         carregarTabela();
     }
 
