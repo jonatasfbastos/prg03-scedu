@@ -4,6 +4,8 @@
  */
 package br.com.ifba.prg03_scedu.usuario.view;
 
+import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
+import br.com.ifba.prg03_scedu.disciplina.view.DisciplinaListar;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.home.view.TelaInicial;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
@@ -30,10 +32,12 @@ public class TelaLogin extends javax.swing.JFrame {
     
     private final UsuarioIController usuarioController;
     private final CredenciaisManager credenciaisManager;
+    private final DisciplinaIController disciplinaController;
     
-    public TelaLogin(UsuarioIController usuarioController, CredenciaisManager credenciaisManager) {
+    public TelaLogin(UsuarioIController usuarioController, CredenciaisManager credenciaisManager,DisciplinaIController disciplinaController) {
         this.usuarioController = usuarioController;
         this.credenciaisManager = credenciaisManager;
+        this.disciplinaController = disciplinaController;
     }
 
     @PostConstruct
@@ -269,10 +273,14 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarContaActionPerformed
-        UsuarioCadastrar usuarioCadastrar = new UsuarioCadastrar(usuarioController);
+        /*UsuarioCadastrar usuarioCadastrar = new UsuarioCadastrar(usuarioController);
         
         usuarioCadastrar.setVisible(true);
-        usuarioCadastrar.toFront();
+        usuarioCadastrar.toFront();*/
+        
+        DisciplinaListar listar = new DisciplinaListar(disciplinaController);
+        listar.setVisible(true);
+        listar.toFront();
     }//GEN-LAST:event_btnCriarContaActionPerformed
 
     private void btnEsqueceuASenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueceuASenhaActionPerformed
