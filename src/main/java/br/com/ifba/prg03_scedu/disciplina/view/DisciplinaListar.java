@@ -26,7 +26,7 @@ public class DisciplinaListar extends javax.swing.JFrame {
     //inserções da variaveis 
     private final DisciplinaIController disciplinaController;
     
-    public DisciplinaListar(br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController disciplinaController) {
+    public DisciplinaListar(DisciplinaIController disciplinaController) {
         initComponents();
         this.disciplinaController = disciplinaController;
         carregarTabela();

@@ -273,7 +273,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarContaActionPerformed
-        DisciplinaListar usuarioCadastrar = new DisciplinaListar(disciplinaController);
+        UsuarioCadastrar usuarioCadastrar = new UsuarioCadastrar(usuarioController);
         
         usuarioCadastrar.setVisible(true);
         usuarioCadastrar.toFront();

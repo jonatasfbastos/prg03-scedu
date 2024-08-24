@@ -85,11 +85,12 @@ public class TelaAtualizar extends javax.swing.JFrame {
             disciplina.setEstado(false);
         
         
-        
         try {
       
         //Dando um update no banco de dados
+        disciplinaController.delete(disciplinaNew);
         disciplinaController.update(disciplina);
+        
         
     } catch (Exception e) {
       
@@ -107,6 +108,7 @@ public class TelaAtualizar extends javax.swing.JFrame {
     public TelaAtualizar(DisciplinaIController disciplinaController, Disciplina disciplina) {
         initComponents();
         this.disciplinaController = disciplinaController;
+        disciplinaNew.setId(disciplina.getId());
         disciplinaNew.setNome(disciplina.getNome());
         disciplinaNew.setNomeAbreviado(disciplina.getNomeAbreviado());
         disciplinaNew.setCargaHoraria(disciplina.getCargaHoraria());

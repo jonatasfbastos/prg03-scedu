@@ -78,7 +78,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void btnDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisciplinaActionPerformed
         // TODO add your handling code here:
-        DisciplinaListar listar = new DisciplinaListar(null);
+        DisciplinaListar listar = new DisciplinaListar(disciplinaController);
         listar.setVisible(true);
         listar.toFront();
     }//GEN-LAST:event_btnDisciplinaActionPerformed

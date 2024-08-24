@@ -4,8 +4,11 @@
  */
 package br.com.ifba.prg03_scedu.disciplina.view;
 
+import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
 import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  *
@@ -272,12 +275,20 @@ public class TelaCadastro extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        /*/* Create and display the form */
+        /*java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaCadastro(null).setVisible(true);
             }
-        });
+        });*/
+        
+        ConfigurableApplicationContext context = 
+            new SpringApplicationBuilder(Prg03SceduApplication.class)
+            .headless(false)
+            .run(args);
+
+            TelaCadastro telaListar = context.getBean(TelaCadastro.class);
+            telaListar.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

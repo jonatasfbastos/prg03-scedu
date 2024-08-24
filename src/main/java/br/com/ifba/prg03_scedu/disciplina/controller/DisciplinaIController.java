@@ -20,7 +20,7 @@ public interface DisciplinaIController {
      * @return A disciplina salva, possivelmente com modificações (como ID gerado).
      * @throws RuntimeException Se ocorrer um erro durante a operação de salvamento.
      */
-    public abstract Disciplina save(Disciplina disciplina) /*throws RuntimeException*/;
+    public abstract Disciplina save(Disciplina disciplina) throws RuntimeException;
 
     /**
      * Atualiza as informações de uma disciplina existente.
@@ -29,7 +29,7 @@ public interface DisciplinaIController {
      * @return A disciplina atualizada.
      * @throws RuntimeException Se ocorrer um erro durante a operação de atualização.
      */
-    public abstract Disciplina update(Disciplina disciplina) /*throws RuntimeException*/;
+    public abstract Disciplina update(Disciplina disciplina) throws RuntimeException;
 
     /**
      * Exclui uma disciplina do sistema.
@@ -37,7 +37,7 @@ public interface DisciplinaIController {
      * @param disciplina A disciplina a ser excluída.
      * @throws RuntimeException Se ocorrer um erro durante a operação de exclusão.
      */
-    public abstract void delete(Disciplina disciplina) /*throws RuntimeException*/;
+    public abstract void delete(Disciplina disciplina) throws RuntimeException;
 
     /**
      * Encontra uma disciplina pelo seu identificador.
@@ -46,7 +46,7 @@ public interface DisciplinaIController {
      * @return A disciplina encontrada ou null se nenhuma disciplina for encontrada com o ID fornecido.
      * @throws RuntimeException Se ocorrer um erro durante a operação de busca.
      */
-    public abstract Disciplina findById(Long id) /*throws RuntimeException*/;
+    public abstract Disciplina findById(Long id) throws RuntimeException;
 
     /**
      * Encontra disciplinas pelo nome.
@@ -55,7 +55,7 @@ public interface DisciplinaIController {
      * @return Uma lista de disciplinas que correspondem ao nome fornecido.
      * @throws RuntimeException Se ocorrer um erro durante a operação de busca.
      */
-    public List<Disciplina> findByNome(String nome) /*throws RuntimeException*/;
+    public List<Disciplina> findByNome(String nome) throws RuntimeException;
 
     /**
      * Encontra todas as disciplinas disponíveis no sistema.
@@ -63,5 +63,5 @@ public interface DisciplinaIController {
      * @return Uma lista de todas as disciplinas.
      * @throws RuntimeException Se ocorrer um erro durante a operação de busca.
      */
-    public List<Disciplina> findAll() /*throws RuntimeException*/;
+    public List<Disciplina> findAll() throws RuntimeException;
 }
