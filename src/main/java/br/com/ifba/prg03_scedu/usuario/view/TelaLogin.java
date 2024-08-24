@@ -4,6 +4,8 @@
  */
 package br.com.ifba.prg03_scedu.usuario.view;
 
+import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
+import br.com.ifba.prg03_scedu.disciplina.view.DisciplinaListar;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.home.view.TelaInicial;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
@@ -30,10 +32,12 @@ public class TelaLogin extends javax.swing.JFrame {
     
     private final UsuarioIController usuarioController;
     private final CredenciaisManager credenciaisManager;
+    private final DisciplinaIController disciplinaController;
     
-    public TelaLogin(UsuarioIController usuarioController, CredenciaisManager credenciaisManager) {
+    public TelaLogin(UsuarioIController usuarioController, CredenciaisManager credenciaisManager,DisciplinaIController disciplinaController) {
         this.usuarioController = usuarioController;
         this.credenciaisManager = credenciaisManager;
+        this.disciplinaController = disciplinaController;
     }
 
     @PostConstruct
@@ -258,7 +262,7 @@ public class TelaLogin extends javax.swing.JFrame {
             // Limpa o array de caracteres após o uso para segurança
             Arrays.fill(senhaArray, ' ');
 
-            TelaInicial telaInicial = new TelaInicial();
+            TelaInicial telaInicial = new TelaInicial(disciplinaController);
             telaInicial.setVisible(true);
             telaInicial.toFront();
             this.dispose();
@@ -273,6 +277,7 @@ public class TelaLogin extends javax.swing.JFrame {
         
         usuarioCadastrar.setVisible(true);
         usuarioCadastrar.toFront();
+       
     }//GEN-LAST:event_btnCriarContaActionPerformed
 
     private void btnEsqueceuASenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueceuASenhaActionPerformed

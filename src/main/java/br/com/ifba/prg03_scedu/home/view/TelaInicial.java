@@ -4,7 +4,9 @@
  */
 package br.com.ifba.prg03_scedu.home.view;
 
+import br.com.ifba.prg03_scedu.disciplina.view.DisciplinaListar;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -17,8 +19,12 @@ public class TelaInicial extends javax.swing.JFrame {
     /**
      * Creates new form HomeScreen
      */
-    public TelaInicial() {
+    
+    private final DisciplinaIController disciplinaController;
+    
+    public TelaInicial(DisciplinaIController disciplinaController) {
         initComponents();
+        this.disciplinaController = disciplinaController;
     }
 
     /**
@@ -30,22 +36,52 @@ public class TelaInicial extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnDisciplina = new javax.swing.JButton();
+        bntFaltas = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        btnDisciplina.setText("Disciplina");
+        btnDisciplina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDisciplinaActionPerformed(evt);
+            }
+        });
+
+        bntFaltas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        bntFaltas.setText("Faltas");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1920, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bntFaltas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDisciplina, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
+                .addContainerGap(1718, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1080, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(84, 84, 84)
+                .addComponent(btnDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(bntFaltas, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(846, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisciplinaActionPerformed
+        // TODO add your handling code here:
+        DisciplinaListar listar = new DisciplinaListar(disciplinaController);
+        listar.setVisible(true);
+        listar.toFront();
+    }//GEN-LAST:event_btnDisciplinaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -86,5 +122,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntFaltas;
+    private javax.swing.JButton btnDisciplina;
     // End of variables declaration//GEN-END:variables
 }

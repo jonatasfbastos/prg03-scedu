@@ -1,4 +1,4 @@
-package br.com.ifba.infrastructure.entity;
+package br.com.ifba.prg03_scedu.infrastructure.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
