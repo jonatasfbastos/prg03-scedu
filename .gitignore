@@ -33,5 +33,5 @@ build/
 .vscode/
 
 ### Arquviso Ignorados ###
-
-POM.xml
+/src/main/resources/application.properties
+pom.xml

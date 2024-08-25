@@ -32,6 +32,7 @@ public class ProfessorService implements ProfessorIService{
     public Professor findById(Long id) {
         return professorRepository.findById(id).orElse(null);
     }
+    
 
     @Override
     public void save(Professor usuario) {
@@ -50,7 +51,7 @@ public class ProfessorService implements ProfessorIService{
 
     @Override
     public List<Professor> findbyname(String nome) {
-      return   professorRepository.findByNome(nome);
+      return professorRepository.findByNome(nome);
     }
 
     

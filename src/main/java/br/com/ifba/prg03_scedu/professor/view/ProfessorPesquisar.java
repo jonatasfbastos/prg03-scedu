@@ -140,7 +140,7 @@ public class ProfessorPesquisar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIdActionPerformed
 
     private void btnNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNomeActionPerformed
-        // TODO add your handling code here:
+        pesquisarNome();
     }//GEN-LAST:event_btnNomeActionPerformed
 
     /**
@@ -194,6 +194,46 @@ public class ProfessorPesquisar extends javax.swing.JFrame {
     }
     public static void main(String args[]) {
         
+    }
+    
+    
+    
+    private void pesquisarNome(){     
+        
+        String nome  = JOptionPane.showInputDialog("Digite o Código do Professor");
+       
+        
+        
+         if (nome == null || nome.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, insira o Nome do professor.");
+            return;
+        }       
+         
+         Professor professor = (Professor) professorService.findbyname(nome);
+         
+         if (professor == null) {
+            JOptionPane.showMessageDialog(this, "Professor não encontrado.");
+        } else {
+             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+             
+            //Apagar todos os Dados
+            model.setRowCount(0);
+        
+          
+            model.addRow(new Object[]{
+               professor.getId(),
+               professor.getNome(),
+               professor.getCpf(),
+               professor.getMateria(),
+               professor.getNascimento(),
+               professor.getFormado()
+            });
+                 
+        }
+         
+        
+        
+        System.out.println("Salvo o ID " + nome);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
