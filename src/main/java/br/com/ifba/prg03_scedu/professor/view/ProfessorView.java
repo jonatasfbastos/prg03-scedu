@@ -40,9 +40,7 @@ public class ProfessorView extends javax.swing.JFrame {
         
     }
     
-     private ProfessorView() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -201,8 +199,8 @@ public class ProfessorView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        // TODO add your handling code here:
-        new ProfessorPesquisar().setVisible(true);
+        
+        new ProfessorPesquisar(professorService).setVisible(true);
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -227,7 +225,7 @@ public class ProfessorView extends javax.swing.JFrame {
     
     public void listarProfessor(){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        //Apagar todos os dias
+        //Apagar todos os Dados
         model.setRowCount(0);
         
         //Busca todos os professor e jogar em um Array List pegando da entidade Professor
@@ -271,4 +269,5 @@ public class ProfessorView extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel txtn1;
     // End of variables declaration//GEN-END:variables
+
 }
