@@ -246,7 +246,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        try {
+        /*try {
 
             // Obtém a senha do JPasswordField como um array de caracteres
             char[] senhaArray = pfSenha.getPassword();
@@ -263,18 +263,18 @@ public class TelaLogin extends javax.swing.JFrame {
             }
 
             // Limpa o array de caracteres após o uso para segurança
-            Arrays.fill(senhaArray, ' ');
+            Arrays.fill(senhaArray, ' ');*/
 
             TelaInicial telaInicial = new TelaInicial(disciplinaController, cursoController);
             telaInicial.setVisible(true);
             telaInicial.toFront();
             this.dispose();
 
-        } catch (RuntimeException e) {
+        /*} catch (RuntimeException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro no login", JOptionPane.WARNING_MESSAGE);
         }
-        
-            //this.dispose()
+        */
+            this.dispose();
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarContaActionPerformed

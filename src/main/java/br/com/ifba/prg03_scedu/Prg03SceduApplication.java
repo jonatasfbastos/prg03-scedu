@@ -4,12 +4,9 @@ import br.com.ifba.prg03_scedu.usuario.view.TelaLogin;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-//@SpringBootApplication(scanBasePackages = "br.com.ifba")
-//@EnableJpaRepositories(basePackages = "br.com.ifba.disciplina.repository")
-public class Prg03SceduApplication {
+public class Prg03SceduApplication{
 
     public static void main(String[] args) {
         // Cria e configura o contexto da aplicação Spring
