@@ -25,6 +25,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class TelaInicial extends javax.swing.JFrame {
 
     private final CurriculoIController curriculoController;
+    private final CursoIController cursoController;
     private final DisciplinaIController disciplinaController;
     private final GestaoFaltasIController gestaoFaltasController;
     private final UsuarioIController usuarioController;
@@ -33,11 +34,13 @@ public class TelaInicial extends javax.swing.JFrame {
         DisciplinaIController disciplinaController,
         CurriculoIController curriculoController,
         GestaoFaltasIController gestaoFaltasController,
+        CursoIController cursoController,
         UsuarioIController usuarioController
     ) {
         initComponents();
-        this.disciplinaController = disciplinaController;
         this.curriculoController = curriculoController;
+        this.disciplinaController = disciplinaController;
+        this.cursoController = cursoController;
         this.gestaoFaltasController = gestaoFaltasController;
         this.usuarioController = usuarioController;
     }
@@ -159,7 +162,9 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnCurso1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCurso1ActionPerformed
-        // TODO add your handling code here:
+        CursoListar listar = new CursoListar(cursoController);
+        listar.setVisible(true);
+        listar.toFront();
     }//GEN-LAST:event_btnCurso1ActionPerformed
 
     /**

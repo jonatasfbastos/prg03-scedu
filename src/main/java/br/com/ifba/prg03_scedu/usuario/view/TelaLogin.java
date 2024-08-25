@@ -28,19 +28,22 @@ public class TelaLogin extends javax.swing.JFrame {
     private final UsuarioIController usuarioController;
     private final CredenciaisManager credenciaisManager;
     private final DisciplinaIController disciplinaController;
+    private final CursoIController cursoController;
     private final GestaoFaltasIController gestaoFaltasController;
 
     public TelaLogin(
+            CurriculoIController curriculoController,
             UsuarioIController usuarioController, 
             CredenciaisManager credenciaisManager, 
             DisciplinaIController disciplinaController,
-            CurriculoIController curriculoController,
+            CursoIController cursoController,
             GestaoFaltasIController gestaoFaltasController
     ) {
+        this.curriculoController = curriculoController;
         this.usuarioController = usuarioController;
         this.credenciaisManager = credenciaisManager;
         this.disciplinaController = disciplinaController;
-        this.curriculoController = curriculoController;
+        this.cursoController = cursoController;
         this.gestaoFaltasController = gestaoFaltasController;
     }
 
@@ -262,7 +265,7 @@ public class TelaLogin extends javax.swing.JFrame {
             // Limpa o array de caracteres após o uso para segurança
             Arrays.fill(senhaArray, ' ');*/
 
-            TelaInicial telaInicial = new TelaInicial(disciplinaController, curriculoController, gestaoFaltasController, usuarioController);
+            TelaInicial telaInicial = new TelaInicial(disciplinaController, curriculoController, gestaoFaltasController, cursoController, usuarioController);
             telaInicial.setVisible(true);
             telaInicial.toFront();
             this.dispose();
