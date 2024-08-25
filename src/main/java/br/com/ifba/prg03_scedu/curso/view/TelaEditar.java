@@ -2,17 +2,14 @@
 package br.com.ifba.prg03_scedu.curso.view;
 
 
-import br.com.ifba.prg03_scedu.curso.controller.CursoController;
 import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
 import br.com.ifba.prg03_scedu.curso.entity.Curso;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
-import java.util.List;
+
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.stereotype.Component;
 
 
 public class TelaEditar extends javax.swing.JFrame {
