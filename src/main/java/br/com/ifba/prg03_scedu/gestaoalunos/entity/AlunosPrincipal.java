@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue("ALUNO")
+@DiscriminatorValue("ALUNOP")
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor

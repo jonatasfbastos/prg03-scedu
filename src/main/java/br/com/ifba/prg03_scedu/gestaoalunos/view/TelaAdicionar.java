@@ -386,7 +386,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
         lblResponsavelEscolha.setText("Reponsável");
         lblResponsavelEscolha.setToolTipText("");
 
-        cbxResponsavelEscolha.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "  ", "Pai", "Mãe", "Outro" }));
+        cbxResponsavelEscolha.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Pai", "Mãe", "Outro" }));
         cbxResponsavelEscolha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxResponsavelEscolhaActionPerformed(evt);
@@ -1013,24 +1013,22 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 novoAluno.setAlergia(cbxAlergia.getSelectedItem().toString());
                 novoAluno.setCondicoesMedicas(cbxCondicoesMedicas.getSelectedItem().toString());
                 novoAluno.setMedicamentos(cbxMedicamentos.getSelectedItem().toString());
-                
-                Date dataRgPai = sdf.parse(txtDataEmissao.getText()); // Converte a String para Date
-                responsavelPai.setDataEmissaoRg(dataRgPai);
-                responsavelPai.setNome(txtNomePai.getName());
-                responsavelPai.setOrgaoExpedidorRg(txtOrgaoExpedidorPai.getText());
-                responsavelPai.setProfissao(txtProfissaoPai.getText());
-                Date dataRgMae = sdf.parse(txtDataEmissao.getText()); // Converte a String para Date
-                responsavelMae.setDataEmissaoRg(dataRgMae);
-                responsavelMae.setNome(txtNomeMae.getName());
-                responsavelMae.setOrgaoExpedidorRg(txtOrgaoExpedidorMae.getText());
-                responsavelMae.setProfissao(txtProfissaoMae.getText());
-                this.gestaoAlunoController.save(responsavelPai);
-                this.gestaoAlunoController.save(responsavelMae);
-                
-                novoAluno.setPai(responsavelPai);
-                novoAluno.setMae(responsavelMae);
-                //novoAluno.setReponsavelLegal(responsavelLegal);
-                
+                if(!(cbxResponsavelEscolha.getSelectedItem().equals(" "))){
+                    Date dataRgPai = sdf.parse(txtDataEmissao.getText()); // Converte a String para Date
+                    responsavelPai.setDataEmissaoRg(dataRgPai);
+                    responsavelPai.setNome(txtNomePai.getName());
+                    responsavelPai.setOrgaoExpedidorRg(txtOrgaoExpedidorPai.getText());
+                    responsavelPai.setProfissao(txtProfissaoPai.getText());
+                    Date dataRgMae = sdf.parse(txtDataEmissao.getText()); // Converte a String para Date
+                    responsavelMae.setDataEmissaoRg(dataRgMae);
+                    responsavelMae.setNome(txtNomeMae.getName());
+                    responsavelMae.setOrgaoExpedidorRg(txtOrgaoExpedidorMae.getText());
+                    responsavelMae.setProfissao(txtProfissaoMae.getText());
+                    this.gestaoAlunoController.save(responsavelPai);
+                    this.gestaoAlunoController.save(responsavelMae);
+                    novoAluno.setPai(responsavelPai);
+                    novoAluno.setMae(responsavelMae);
+                }
                 List<AlunosPrincipal> alunos = this.gestaoAlunoController.findAll();
                 for(AlunosPrincipal aluno: alunos){
                     //Verificação da existência e algum aluno com o mesmo código do escolhido pelo usuário
@@ -1075,7 +1073,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
                     }
                     
                     
-                    if(!(cbxResponsavelEscolha.getSelectedItem().equals("  "))){
+                    if(!(cbxResponsavelEscolha.getSelectedItem().equals(" "))){
                         if(cbxResponsavelEscolha.getSelectedItem().equals("Outro")){
                             if(aluno.getReponsavelLegal().getCpf().equals(txtCpfResponsavelOutro.getText())){
                                 JOptionPane.showConfirmDialog(null, "Aluno Não Cadastrado: CPF de Responsavel Existente", "ERRO", JOptionPane.WARNING_MESSAGE);
