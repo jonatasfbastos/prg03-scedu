@@ -30,11 +30,10 @@
                   <Component id="btnDisciplina" pref="127" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btnCurso" pref="119" max="32767" attributes="0"/>
-                  <Component id="btnAvaliacoes" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace pref="1469" max="32767" attributes="0"/>
+              <Component id="btnCurso" min="-2" pref="119" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="295" max="-2" attributes="0"/>
+              <Component id="btnAvaliacoes" min="-2" pref="119" max="-2" attributes="0"/>
+              <EmptySpace pref="1055" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -43,15 +42,15 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btnCurso" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnCurso" alignment="3" max="32767" attributes="0"/>
+                      <Component id="btnAvaliacoes" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
+                  </Group>
                   <Component id="btnDisciplina" pref="43" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="bntFaltas" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
-                  <Component id="btnAvaliacoes" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="845" max="32767" attributes="0"/>
+              <Component id="bntFaltas" min="-2" pref="42" max="-2" attributes="0"/>
+              <EmptySpace pref="846" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
