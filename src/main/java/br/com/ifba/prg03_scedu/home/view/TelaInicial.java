@@ -6,6 +6,8 @@ package br.com.ifba.prg03_scedu.home.view;
 
 import br.com.ifba.prg03_scedu.disciplina.view.DisciplinaListar;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.curriculo.controller.CurriculoIController;
+import br.com.ifba.prg03_scedu.curriculo.view.CurriculoListar;
 import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
 import br.com.ifba.prg03_scedu.curso.view.CursoListar;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
@@ -22,20 +24,20 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 public class TelaInicial extends javax.swing.JFrame {
 
-    private final CursoIController cursoController;
+    private final CurriculoIController curriculoController;
     private final DisciplinaIController disciplinaController;
     private final GestaoFaltasIController gestaoFaltasController;
     private final UsuarioIController usuarioController;
 
     public TelaInicial(
         DisciplinaIController disciplinaController,
-        CursoIController cursoController,
+        CurriculoIController curriculoController,
         GestaoFaltasIController gestaoFaltasController,
         UsuarioIController usuarioController
     ) {
         initComponents();
         this.disciplinaController = disciplinaController;
-        this.cursoController = cursoController;
+        this.curriculoController = curriculoController;
         this.gestaoFaltasController = gestaoFaltasController;
         this.usuarioController = usuarioController;
     }
@@ -46,8 +48,9 @@ public class TelaInicial extends javax.swing.JFrame {
 
         btnDisciplina = new javax.swing.JButton();
         bntFaltas = new javax.swing.JButton();
-        btnCurso = new javax.swing.JButton();
+        btnCurriculo = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        btnCurso1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -66,10 +69,10 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
-        btnCurso.setText("Curso");
-        btnCurso.addActionListener(new java.awt.event.ActionListener() {
+        btnCurriculo.setText("Curriculo");
+        btnCurriculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCursoActionPerformed(evt);
+                btnCurriculoActionPerformed(evt);
             }
         });
 
@@ -77,6 +80,13 @@ public class TelaInicial extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnCurso1.setText("Curso");
+        btnCurso1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCurso1ActionPerformed(evt);
             }
         });
 
@@ -88,25 +98,34 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bntFaltas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDisciplina, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
+                    .addComponent(btnDisciplina, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                    .addComponent(btnCurriculo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(130, 130, 130)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jButton1)
                 .addContainerGap(1458, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(342, 342, 342)
+                    .addComponent(btnCurso1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(1448, 1448, 1448)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(84, 84, 84)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDisciplina, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
+                .addComponent(btnDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bntFaltas, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(845, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(btnCurriculo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(767, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(94, 94, 94)
+                    .addComponent(btnCurso1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(943, 943, 943)))
         );
 
         pack();
@@ -120,12 +139,12 @@ public class TelaInicial extends javax.swing.JFrame {
         listar.toFront();
     }//GEN-LAST:event_btnDisciplinaActionPerformed
 
-    private void btnCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoActionPerformed
+    private void btnCurriculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCurriculoActionPerformed
         // TODO add your handling code here:
-        CursoListar listar = new CursoListar(cursoController);
-        listar.setVisible(true);
-        listar.toFront();
-    }//GEN-LAST:event_btnCursoActionPerformed
+        CurriculoListar curriculoListar = new CurriculoListar(curriculoController, disciplinaController);
+        curriculoListar.setVisible(true);
+        curriculoListar.toFront();
+    }//GEN-LAST:event_btnCurriculoActionPerformed
 
     private void bntFaltasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntFaltasMouseClicked
         FaltasListar listar = new FaltasListar(gestaoFaltasController);
@@ -138,6 +157,10 @@ public class TelaInicial extends javax.swing.JFrame {
         usuarioListar.setVisible(true);
         usuarioListar.toFront();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnCurso1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCurso1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCurso1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,7 +202,8 @@ public class TelaInicial extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntFaltas;
-    private javax.swing.JButton btnCurso;
+    private javax.swing.JButton btnCurriculo;
+    private javax.swing.JButton btnCurso1;
     private javax.swing.JButton btnDisciplina;
     private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables

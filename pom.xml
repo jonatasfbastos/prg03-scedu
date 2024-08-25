@@ -27,7 +27,7 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>22S</java.version>
+		<java.version>21</java.version>
 		<start-class>br.com.ifba.Prg03SceduApplication</start-class>
 	</properties>
 	<dependencies>

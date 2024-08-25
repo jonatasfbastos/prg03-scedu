@@ -6,6 +6,7 @@ package br.com.ifba.prg03_scedu.usuario.view;
 
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.curriculo.controller.CurriculoIController;
 import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
 import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
 import br.com.ifba.prg03_scedu.home.view.TelaInicial;
@@ -23,7 +24,7 @@ public class TelaLogin extends javax.swing.JFrame {
     /**
      * Creates new form TelaLogin
      */
-    private final CursoIController cursoController;
+    private final CurriculoIController curriculoController;
     private final UsuarioIController usuarioController;
     private final CredenciaisManager credenciaisManager;
     private final DisciplinaIController disciplinaController;
@@ -33,13 +34,13 @@ public class TelaLogin extends javax.swing.JFrame {
             UsuarioIController usuarioController, 
             CredenciaisManager credenciaisManager, 
             DisciplinaIController disciplinaController,
-            CursoIController cursoController,
+            CurriculoIController curriculoController,
             GestaoFaltasIController gestaoFaltasController
     ) {
         this.usuarioController = usuarioController;
         this.credenciaisManager = credenciaisManager;
         this.disciplinaController = disciplinaController;
-        this.cursoController = cursoController;
+        this.curriculoController = curriculoController;
         this.gestaoFaltasController = gestaoFaltasController;
     }
 
@@ -261,7 +262,7 @@ public class TelaLogin extends javax.swing.JFrame {
             // Limpa o array de caracteres após o uso para segurança
             Arrays.fill(senhaArray, ' ');*/
 
-            TelaInicial telaInicial = new TelaInicial(disciplinaController, cursoController, gestaoFaltasController, usuarioController);
+            TelaInicial telaInicial = new TelaInicial(disciplinaController, curriculoController, gestaoFaltasController, usuarioController);
             telaInicial.setVisible(true);
             telaInicial.toFront();
             this.dispose();
