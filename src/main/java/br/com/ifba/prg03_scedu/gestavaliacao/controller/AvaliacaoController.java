@@ -23,37 +23,31 @@ public class AvaliacaoController implements AvaliacaoIController{
     
     @Override
     public Avaliacao save(Avaliacao avaliacao) throws RuntimeException {
-        // Chama o método save do serviço de curso
         return avaliacaoIservice.save(avaliacao);
     }
     
     @Override
     public Avaliacao update(Avaliacao avaliacao) throws RuntimeException {
-        // Chama o método update do serviço de curso
         return avaliacaoIservice.update(avaliacao);
     }
     
     @Override
     public Avaliacao findById(Long id) throws RuntimeException {
-        // Chama o método findById do serviço de curso
         return avaliacaoIservice.findById(id);
     }
     
     @Override
     public void delete(Avaliacao avaliacao) throws RuntimeException {
-        // Chama o método delete do serviço de curso
         avaliacaoIservice.delete(avaliacao);
     }
     
     @Override
     public List<Avaliacao> findAll() throws RuntimeException {
-        // Chama o método findAll do serviço de curso
         return avaliacaoIservice.findAll();
     }
     
     @Override
     public List<Avaliacao> findByData(LocalDate data) {
-        // Chama o método findByNome do serviço de curso
         return avaliacaoIservice.findByData(data);
     }
 
