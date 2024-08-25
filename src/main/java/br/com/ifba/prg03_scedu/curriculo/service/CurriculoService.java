@@ -93,5 +93,13 @@ public class CurriculoService implements CurriculoIService{
         }
     }
 
+    public void deleteById(long id) throws RuntimeException {
+        if (!curriculoRepository.existsById(id)) {
+            throw new RuntimeException("Curriculo não encontrado");
+        } else {
+            log.info("Um curriculo foi deletado!");
+            curriculoRepository.deleteById(id);
+        }
+    }
     
 }

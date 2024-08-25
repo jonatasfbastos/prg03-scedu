@@ -23,5 +23,6 @@ public interface CurriculoIService {
 
     List<Curriculo> findAll() throws RuntimeException;
 
-  
+    void deleteById(long id) throws RuntimeException;
+    
 }

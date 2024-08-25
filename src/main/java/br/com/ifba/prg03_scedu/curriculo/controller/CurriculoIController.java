@@ -23,4 +23,6 @@ public interface CurriculoIController {
     
     Curriculo findById(long id) throws RuntimeException;
     
+    void deleteById(long id);
+    
 }

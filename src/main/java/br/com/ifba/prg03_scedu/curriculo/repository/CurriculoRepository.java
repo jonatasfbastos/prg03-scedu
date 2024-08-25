@@ -5,7 +5,6 @@
 package br.com.ifba.prg03_scedu.curriculo.repository;
 
 import br.com.ifba.prg03_scedu.curriculo.entity.Curriculo;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author Gabriel
  */
+
 @Repository
 public interface CurriculoRepository extends JpaRepository<Curriculo, Long>{
     

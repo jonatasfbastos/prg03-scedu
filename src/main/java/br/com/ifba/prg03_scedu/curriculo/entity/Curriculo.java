@@ -4,16 +4,20 @@
  */
 package br.com.ifba.prg03_scedu.curriculo.entity;
 
-import br.com.ifba.disciplina.entity.Disciplina;
-import br.com.ifba.infrastructure.entity.PersistenceEntity;
+import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
+import br.com.ifba.prg03_scedu.infrastructure.entity.PersistenceEntity;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -21,17 +25,31 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(name="curriculo")
-@NoArgsConstructor
-@AllArgsConstructor
+@Component
 @Data
-public class Curriculo extends PersistenceEntity implements Serializable{
+public class Curriculo{
     
-    private Long codigoCurriculo;
+    //private Long codigoCurriculo;
 
+    //Adicionado o codigoCurriculo é o ID do curriculo
+    @Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
     private Long codigoEscola;
 
     private Long codigoSerie;
 
-    private List<Disciplina> disciplinas;
+    //Adicionado uma variavel que contem todas as disciplinas separadas por virgulas
+    @Column(name = "disciplinas", columnDefinition = "LONGBLOB")
+    private List<Disciplina> disciplinas = new ArrayList<>();
+ 
     
+    //Editado o modo que pega as disciplinas para travar ela nula
+    public List<Disciplina> getDisciplinas() {
+        if (disciplinas == null) {
+            disciplinas = new ArrayList<>();
+        }
+        return disciplinas;
+    }
 }

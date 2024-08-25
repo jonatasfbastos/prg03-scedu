@@ -51,4 +51,8 @@ public class CurriculoController implements CurriculoIController{
         return curriculoService.findAll();
     }
     
+    public void deleteById(long id) {
+        curriculoService.deleteById(id);
+    }
+    
 }
