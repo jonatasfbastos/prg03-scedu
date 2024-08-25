@@ -5,8 +5,10 @@
 package br.com.ifba.prg03_scedu.disciplina.entity;
 
 import br.com.ifba.prg03_scedu.infrastructure.entity.PersistenceEntity;
+import br.com.ifba.prg03_scedu.professor.entity.Professor;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,6 +40,7 @@ import lombok.NoArgsConstructor;
 
 public class Disciplina extends PersistenceEntity{
     
+    private List<Professor> professor;
     private int cargaHoraria;
     private String nome;
     private String nomeAbreviado;
