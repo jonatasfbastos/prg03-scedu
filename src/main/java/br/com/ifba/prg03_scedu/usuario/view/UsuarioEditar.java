@@ -5,7 +5,7 @@
 package br.com.ifba.prg03_scedu.usuario.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
-import br.com.ifba.prg03_scedu.usuario.controller.UsuarioController;
+import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
 import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
 import javax.swing.JOptionPane;
 import org.springframework.context.ApplicationContext;
@@ -14,10 +14,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class UsuarioEditar extends javax.swing.JFrame {
 
-    private final UsuarioController usuarioController;
+    private final UsuarioIController usuarioController;
     private final Usuario usuario;
 
-    public UsuarioEditar(UsuarioController usuarioController, Usuario usuario) {
+    public UsuarioEditar(UsuarioIController usuarioController, Usuario usuario) {
             this.usuarioController = usuarioController;
             this.usuario = usuario; // Armazena o usuário
             initComponents();

@@ -5,7 +5,7 @@
 package br.com.ifba.prg03_scedu.usuario.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
-import br.com.ifba.prg03_scedu.usuario.controller.UsuarioController;
+import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
 import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -14,14 +14,14 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class UsuarioListar extends javax.swing.JFrame {
 
-    private final UsuarioController usuarioController;
+    private final UsuarioIController usuarioController;
     
-
-    public UsuarioListar(UsuarioController usuarioController) {
+    public UsuarioListar(UsuarioIController usuarioController) {
         this.usuarioController = usuarioController;
         initComponents();
         carregarUsuarios();

@@ -42,4 +42,19 @@ public class UsuarioController implements UsuarioIController {
     public boolean existsByEmail(String email) {
         return usuarioService.existsByEmail(email);
     }
+
+    @Override
+    public boolean existsBySenha(String senha) {
+        return usuarioService.existsBySenha(senha);
+    }
+
+    @Override
+    public void recuperarSenha(String email) {
+        usuarioService.recuperarSenha(email);
+    }
+
+    @Override
+    public Usuario login(String email, String senha) {
+        return usuarioService.login(email, senha);
+    }
 }
