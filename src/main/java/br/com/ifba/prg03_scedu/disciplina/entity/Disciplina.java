@@ -40,6 +40,7 @@ import lombok.NoArgsConstructor;
 
 public class Disciplina extends PersistenceEntity{
     
+    //Será importante para configurar na telaProfessor
     private List<Professor> professor;
     private int cargaHoraria;
     private String nome;
