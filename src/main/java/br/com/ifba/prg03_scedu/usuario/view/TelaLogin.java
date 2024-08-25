@@ -8,6 +8,7 @@ import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
 import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
+import br.com.ifba.prg03_scedu.gestavaliacao.controller.AvaliacaoIController;
 import br.com.ifba.prg03_scedu.home.view.TelaInicial;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
 import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
@@ -35,19 +36,22 @@ public class TelaLogin extends javax.swing.JFrame {
     private final CredenciaisManager credenciaisManager;
     private final DisciplinaIController disciplinaController;
     private final GestaoFaltasIController gestaoFaltasController;
+    private final AvaliacaoIController avaliacaoIController;
 
     public TelaLogin(
             UsuarioIController usuarioController, 
             CredenciaisManager credenciaisManager, 
             DisciplinaIController disciplinaController,
             CursoIController cursoController,
-            GestaoFaltasIController gestaoFaltasController
+            GestaoFaltasIController gestaoFaltasController,
+            AvaliacaoIController avaliacaoIController
     ) {
         this.usuarioController = usuarioController;
         this.credenciaisManager = credenciaisManager;
         this.disciplinaController = disciplinaController;
         this.cursoController = cursoController;
         this.gestaoFaltasController = gestaoFaltasController;
+        this.avaliacaoIController = avaliacaoIController;
     }
 
     @PostConstruct
@@ -272,7 +276,7 @@ public class TelaLogin extends javax.swing.JFrame {
             // Limpa o array de caracteres após o uso para segurança
             Arrays.fill(senhaArray, ' ');*/
 
-            TelaInicial telaInicial = new TelaInicial(disciplinaController, cursoController, gestaoFaltasController);
+            TelaInicial telaInicial = new TelaInicial(disciplinaController, cursoController, gestaoFaltasController, avaliacaoIController);
             telaInicial.setVisible(true);
             telaInicial.toFront();
             this.dispose();
