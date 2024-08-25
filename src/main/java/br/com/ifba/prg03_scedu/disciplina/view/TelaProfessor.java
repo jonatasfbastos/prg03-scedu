@@ -16,6 +16,8 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 public class TelaProfessor extends javax.swing.JFrame {
     
+    // Essa parte só será configurada na segunda parte do projeto
+    //Logo Está no mode de espera até que comece
     private final DisciplinaIController disciplinaController;
     private Professor professor = new Professor();
 
