@@ -375,7 +375,8 @@ private void carregarTabela() {
 
     private void btnProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfessorActionPerformed
         // TODO add your handling code here:
-        
+        TelaProfessor tela = new TelaProfessor(disciplinaController);
+        tela.setVisible(true);
     }//GEN-LAST:event_btnProfessorActionPerformed
 
     /**
