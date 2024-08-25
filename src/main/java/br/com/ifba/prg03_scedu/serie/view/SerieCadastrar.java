@@ -2,11 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.com.ifba.serie.view;
+package br.com.ifba.prg03_scedu.serie.view;
 
-import br.com.ifba.serie.controller.SerieController;
-import br.com.ifba.serie.entity.Serie;
+import br.com.ifba.prg03_scedu.serie.controller.SerieController;
+import br.com.ifba.prg03_scedu.serie.controller.SerieIController;
+import br.com.ifba.prg03_scedu.serie.service.SerieService;
+import br.com.ifba.prg03_sceu.serie.entity.Serie;
 import java.awt.Color;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,22 +20,27 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SerieCadastrar extends javax.swing.JFrame {
+            
+    private final SerieListar serieListar;
     
-    @Autowired
-    private SerieListar serieListar;
+    private final SerieIController serieController;
     
-    @Autowired
-    private SerieController serieController;
-    
-    Serie serie = new Serie();
+   /* @Autowired
+    private SerieService serieService;
+   */ 
 
     /**
      * Creates new form SerieTela
      */
-    public SerieCadastrar() {
-       // this.serieController = serieController;
+    @Autowired
+    public SerieCadastrar(SerieListar serieListar, SerieIController serieController) {
+      
+        this.serieController = serieController;
+        this.serieListar = serieListar;
         initComponents();
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+         
+        //Nao encerra o programa ao fechar a tela
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         //Cor de fundo da tela
         getContentPane().setBackground(new java.awt.Color(8, 102, 255));
@@ -185,12 +193,15 @@ public class SerieCadastrar extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
-        
+        long id = Long.parseLong(txtIdSerie.getText());
+        long curriculoId = Long.parseLong(txtIdCurriculo.getText());
         //Logica para cadastrar no banco de dados
+        
+       Serie serie = new Serie();
         try {
-           // serie.setId(txtIdSerie.getText());
+            serie.setId(id);
             serie.setNome(txtNomeSerie.getText());
-           // serie.setCurriculoId(txtIdCurriculo.getText());
+            serie.setCurriculoId(curriculoId);
            serieController.save(serie);
         } catch (Exception error) {
             JOptionPane.showMessageDialog(null, error, "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
@@ -201,10 +212,7 @@ public class SerieCadastrar extends javax.swing.JFrame {
     private void btnListarSerieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarSerieActionPerformed
         // TODO add your handling code here:
         
-        //Verifica se a tela de listar eh null e cria uma instancia
-        if(serieListar == null){
-            serieListar = new SerieListar();
-        }
+        
         //A tela eh aberta
         serieListar.setVisible(true);
     }//GEN-LAST:event_btnListarSerieActionPerformed
@@ -215,7 +223,7 @@ public class SerieCadastrar extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SerieCadastrar().setVisible(true);
+              //  new SerieCadastrar().setVisible(true);
             }
         });
     }

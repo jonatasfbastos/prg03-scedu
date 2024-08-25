@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package br.com.ifba.serie.controller;
+package br.com.ifba.prg03_scedu.serie.controller;
 
-import br.com.ifba.serie.entity.Serie;
+import br.com.ifba.prg03_sceu.serie.entity.Serie;
 import java.util.List;
 
 /**

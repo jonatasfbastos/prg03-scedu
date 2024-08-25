@@ -2,11 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.com.ifba.serie.view;
+package br.com.ifba.prg03_scedu.serie.view;
 
-import br.com.ifba.serie.entity.Serie;
+import br.com.ifba.prg03_scedu.serie.controller.SerieController;
+import br.com.ifba.prg03_sceu.serie.entity.Serie;
 import java.awt.Color;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,12 +21,18 @@ public class SerieListar extends javax.swing.JFrame {
     
     @Autowired
     Serie serie = new Serie();
+    
+    @Autowired
+    private SerieController controller;
 
     /**
      * Creates new form SerieListar
      */
     public SerieListar() {
+        this.controller = controller;
         initComponents();
+        
+        //Nao encerra o programa ao fechar a tela
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //Cor de fundo da tela
         getContentPane().setBackground(new java.awt.Color(8, 102, 255));
@@ -90,6 +98,11 @@ public class SerieListar extends javax.swing.JFrame {
         btnRemover.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnRemover.setForeground(new java.awt.Color(255, 255, 255));
         btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -146,6 +159,19 @@ public class SerieListar extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        // TODO add your handling code here:
+        int selectRow = tblSerie.getSelectedRow();
+        
+        if (selectRow != -1) {
+            DefaultTableModel dtmSerie = (DefaultTableModel) tblSerie.getModel();
+            serie = controller.findById((Long) dtmSerie.getValueAt(tblSerie.getSelectedRow(), 0));
+            controller.delete(serie);
+            
+            dtmSerie.removeRow(tblSerie.getSelectedRow());
+        }
+    }//GEN-LAST:event_btnRemoverActionPerformed
 
     /**
      * @param args the command line arguments
