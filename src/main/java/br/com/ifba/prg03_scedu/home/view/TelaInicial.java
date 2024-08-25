@@ -11,6 +11,8 @@ import br.com.ifba.prg03_scedu.curriculo.view.CurriculoListar;
 import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
 import br.com.ifba.prg03_scedu.curso.view.CursoListar;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
+import br.com.ifba.prg03_scedu.escola.controller.EscolaIController;
+import br.com.ifba.prg03_scedu.escola.view.ListaEscola;
 import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
 import br.com.ifba.prg03_scedu.faltas.view.FaltasListar;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
@@ -29,13 +31,15 @@ public class TelaInicial extends javax.swing.JFrame {
     private final DisciplinaIController disciplinaController;
     private final GestaoFaltasIController gestaoFaltasController;
     private final UsuarioIController usuarioController;
+    private final EscolaIController escolaController;
 
     public TelaInicial(
         DisciplinaIController disciplinaController,
         CurriculoIController curriculoController,
         GestaoFaltasIController gestaoFaltasController,
         CursoIController cursoController,
-        UsuarioIController usuarioController
+        UsuarioIController usuarioController,
+        EscolaIController escolaController
     ) {
         initComponents();
         this.curriculoController = curriculoController;
@@ -43,6 +47,7 @@ public class TelaInicial extends javax.swing.JFrame {
         this.cursoController = cursoController;
         this.gestaoFaltasController = gestaoFaltasController;
         this.usuarioController = usuarioController;
+        this.escolaController = escolaController;
     }
 
     @SuppressWarnings("unchecked")
@@ -54,6 +59,7 @@ public class TelaInicial extends javax.swing.JFrame {
         btnCurriculo = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         btnCurso1 = new javax.swing.JButton();
+        btnEscolas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -93,6 +99,13 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
+        btnEscolas.setText("Escolas");
+        btnEscolas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEscolasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,7 +117,9 @@ public class TelaInicial extends javax.swing.JFrame {
                     .addComponent(btnDisciplina, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                     .addComponent(btnCurriculo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(130, 130, 130)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEscolas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(1458, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -122,8 +137,10 @@ public class TelaInicial extends javax.swing.JFrame {
                     .addComponent(bntFaltas, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
-                .addComponent(btnCurriculo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(767, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCurriculo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEscolas, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(766, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(94, 94, 94)
@@ -166,6 +183,12 @@ public class TelaInicial extends javax.swing.JFrame {
         listar.setVisible(true);
         listar.toFront();
     }//GEN-LAST:event_btnCurso1ActionPerformed
+
+    private void btnEscolasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEscolasActionPerformed
+        ListaEscola listaEscola = new ListaEscola(escolaController);
+        listaEscola.setVisible(true);
+        listaEscola.toFront();
+    }//GEN-LAST:event_btnEscolasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,6 +233,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JButton btnCurriculo;
     private javax.swing.JButton btnCurso1;
     private javax.swing.JButton btnDisciplina;
+    private javax.swing.JButton btnEscolas;
     private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
