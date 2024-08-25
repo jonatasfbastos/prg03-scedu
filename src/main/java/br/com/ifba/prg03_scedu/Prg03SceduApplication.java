@@ -1,23 +1,28 @@
 package br.com.ifba.prg03_scedu;
 
-import br.com.ifba.gestaoescolas.view.ListaEscola;
+import br.com.ifba.prg03_scedu.usuario.view.TelaLogin;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-  @SpringBootApplication(scanBasePackages = "br.com.ifba.gestaoescolas.view")
-  //@EnableJpaRepositories(basePackages = "br.com.ifba.gestaoescolas.repository")
-  //@EntityScan(basePackages = "br.com.ifba.gestaoescolas.entity")  
-  public class Prg03SceduApplication {
+@SpringBootApplication
+//@SpringBootApplication(scanBasePackages = "br.com.ifba")
+//@EnableJpaRepositories(basePackages = "br.com.ifba.disciplina.repository")
+public class Prg03SceduApplication {
 
     public static void main(String[] args) {
-    //SpringApplication.run(Prg03SceduApplication.class, args);
-        ConfigurableApplicationContext context = 
-            new SpringApplicationBuilder(Prg03SceduApplication.class).headless(false).run(args); // Configura e inicia o contexto da aplicação Spring, desabilit
-            
-        ListaEscola listaEscola = context.getBean(ListaEscola.class); // Obtém o bean CursoListar do
-        listaEscola.setVisible(true); // Define a visibilidade da tela Cursolistar como verdadeira
+        // Cria e configura o contexto da aplicação Spring
+        ConfigurableApplicationContext context = new SpringApplicationBuilder(Prg03SceduApplication.class)
+                .headless(false)  // Permite que a aplicação use uma interface gráfica, desativando o modo "headless".
+                .run(args);       // Inicializa o contexto da aplicação Spring com os argumentos fornecidos.
+
+        // Obtém o bean `TelaLogin` do contexto Spring
+        TelaLogin telaLogin = context.getBean(TelaLogin.class);
+
+        // Torna a tela de login visível para o usuário
+        telaLogin.setVisible(true);
+
+        // Traz a tela de login para a frente, garantindo que ela esteja no topo das outras janelas abertas
+        telaLogin.toFront();
     }
- }
+}
