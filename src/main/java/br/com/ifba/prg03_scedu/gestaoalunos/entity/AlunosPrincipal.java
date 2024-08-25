@@ -16,9 +16,10 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-public class Alunos extends Pessoa{
+public class AlunosPrincipal extends Pessoa{
     private String nomeSocial;
     private String genero;
+    private String sexo;
     
     @Column(unique = true)
     private String tituloEleitor;

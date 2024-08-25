@@ -34,7 +34,10 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jButton1" max="32767" attributes="0"/>
                   <Component id="btnEscolas" max="32767" attributes="0"/>
+                  <Component id="btnCurso1" alignment="0" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
+              <Component id="btnGestaoAluno" min="-2" pref="118" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
@@ -42,24 +45,33 @@
               <Component id="btnAva" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="724" max="-2" attributes="0"/>
           </Group>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="342" max="-2" attributes="0"/>
-                  <Component id="btnCurso1" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="1448" max="-2" attributes="0"/>
-              </Group>
-          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
-              <Component id="btnDisciplina" min="-2" pref="43" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="bntFaltas" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
-                  <Component id="jButton1" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnDisciplina" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
+                          <Component id="btnCurso1" alignment="3" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                      <Component id="btnGestaoAluno" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                      <Component id="jButton1" min="-2" pref="42" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                      <Component id="bntFaltas" min="-2" pref="42" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -68,14 +80,7 @@
               </Group>
               <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
               <Component id="btnAva" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="670" max="32767" attributes="0"/>
-          </Group>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
-                  <Component id="btnCurso1" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="943" max="-2" attributes="0"/>
-              </Group>
+              <EmptySpace min="-2" pref="670" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -138,6 +143,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAvaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnGestaoAluno">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Alunos"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGestaoAlunoActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -3,8 +3,7 @@ package br.com.ifba.prg03_scedu.gestaoalunos.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
-import br.com.ifba.prg03_scedu.gestaoalunos.entity.Alunos;
-import br.com.ifba.prg03_scedu.infrastructure.util.StringUtil;
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import javax.swing.JOptionPane;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -30,20 +29,20 @@ public class TelaEditarAluno extends javax.swing.JFrame {
     private void carregarDados(){
         try{
             // Encontra o aluno no banco de dados usando o ID fornecido
-            Alunos alunoEncontrado = this.gestaoAlunoController.findById(idAlunoEscolhido);
+            AlunosPrincipal alunoEncontrado = this.gestaoAlunoController.findById(idAlunoEscolhido);
             txtNomeAluno.setText(alunoEncontrado.getNome());
             txtNomeSocial.setText(alunoEncontrado.getNomeSocial());
             txtRg.setText(alunoEncontrado.getRg());
-            txtOrgaoExpedidor.setText(alunoEncontrado.getOrgaoExpedidor());
+            txtOrgaoExpedidor.setText(alunoEncontrado.getOrgaoExpedidorRg());
             txtDataEmissao.setText(alunoEncontrado.getDataEmissaoRg().toString());
             txtCpf.setText(alunoEncontrado.getCpf());
             txtTituloEleitor.setText(alunoEncontrado.getTituloEleitor());
-            txtDataNascimento.setText(alunoEncontrado.getDataNascimento().toString());
+            txtDataNascimento.setText(alunoEncontrado.getNascimento().toString());
             txtNacionalidade.setText(alunoEncontrado.getNacionalidade());
             txtNaturalidade.setText(alunoEncontrado.getNaturalidade());
             cbxSexo.setSelectedItem(alunoEncontrado.getSexo());
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, StringUtil.getFindByIdError(this.idAlunoEscolhido), "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao procurar o aluno pelo id", "ERRO", JOptionPane.ERROR_MESSAGE);
             dispose();
         }
     }
@@ -104,7 +103,7 @@ public class TelaEditarAluno extends javax.swing.JFrame {
         pnlSalvar = new javax.swing.JPanel();
         btnSalvar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         pnlDadosPessoais.setBackground(new java.awt.Color(8, 102, 255));
 
@@ -470,7 +469,7 @@ public class TelaEditarAluno extends javax.swing.JFrame {
         try{
             log.info("Iniciando ação de alterar");
 
-            Alunos novoAluno = this.gestaoAlunoController.findById(idAlunoEscolhido);
+            AlunosPrincipal novoAluno = this.gestaoAlunoController.findById(idAlunoEscolhido);
             if (!(txtEmail.getText().isEmpty())) {
                 novoAluno.setEmail(txtEmail.getText());
                 log.info("Email do aluno atualizado para: {0}", txtEmail.getText());
@@ -508,7 +507,7 @@ public class TelaEditarAluno extends javax.swing.JFrame {
             log.info("Janela fechada");
         } catch (Exception e) {
             log.info("Erro ao salvar o aluno", e);
-            JOptionPane.showMessageDialog(null, StringUtil.getUPDATE_ERROR(), "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao alterar os dados do aluno", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 

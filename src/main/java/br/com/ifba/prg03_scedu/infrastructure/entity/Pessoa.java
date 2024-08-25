@@ -23,9 +23,20 @@ public abstract class Pessoa {
     
     private String nome;
     
+    private String orgaoExpedidorRg;
+    
+    private String Telefone;
+    
     @Column(unique = true)
     private String cpf;
     
+    @Column(unique = true)
+    private String rg;
+    
     @Temporal(TemporalType.DATE) 
     private Date nascimento;
+    
+    @Temporal(TemporalType.DATE) 
+    private Date dataEmissaoRg;
+    
 }

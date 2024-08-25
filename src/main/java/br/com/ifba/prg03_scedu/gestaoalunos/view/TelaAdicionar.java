@@ -2,8 +2,7 @@
 package br.com.ifba.prg03_scedu.gestaoalunos.view;
 
 import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
-import br.com.ifba.prg03_scedu.gestaoalunos.entity.Alunos;
-import br.com.ifba.prg03_scedu.infrastructure.util.StringUtil;
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.Responsaveis;
 import java.text.SimpleDateFormat;
@@ -148,7 +147,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
         lblMedicamentosOutro = new javax.swing.JLabel();
         txtMedicamentosOutro = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         pnlDadosPessoais.setBackground(new java.awt.Color(8, 102, 255));
@@ -989,11 +988,11 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
         if(txtNomeAluno.getText().isEmpty() || txtEmail.getText().isEmpty() || txtRg.getText().isEmpty() || txtOrgaoExpedidor.getText().isEmpty() || txtDataEmissao.getText().isEmpty() || txtCpf.getText().isEmpty() || txtTituloEleitor.getText().isEmpty() || txtDataNascimento.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, StringUtil.getNullCourseError(), "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Dados do aluno não preenchidos", "ERRO", JOptionPane.ERROR_MESSAGE);
             log.error("Erro ao salvar: Campos obrigatórios não preenchidos");
         }else{
             try{
-                Alunos novoAluno = new Alunos();
+                AlunosPrincipal novoAluno = new AlunosPrincipal();
                 Responsaveis responsavelMae = new Responsaveis();
                 Responsaveis responsavelPai = new Responsaveis();
                 Responsaveis responsavelLegal = new Responsaveis();
@@ -1006,7 +1005,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 novoAluno.setDataEmissaoRg(dataRg);
                 
                 Date dataNascimento = sdf.parse(txtDataNascimento.getText()); // Converte a String para Date
-                novoAluno.setDataNascimento(dataNascimento);
+                novoAluno.setNascimento(dataNascimento);
                 
                 novoAluno.setGenero(cbxGenero.getSelectedItem().toString());
                 novoAluno.setSexo(cbxSexo.getSelectedItem().toString());
@@ -1018,12 +1017,12 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 Date dataRgPai = sdf.parse(txtDataEmissao.getText()); // Converte a String para Date
                 responsavelPai.setDataEmissaoRg(dataRgPai);
                 responsavelPai.setNome(txtNomePai.getName());
-                responsavelPai.setOrgaoExpedidor(txtOrgaoExpedidorPai.getText());
+                responsavelPai.setOrgaoExpedidorRg(txtOrgaoExpedidorPai.getText());
                 responsavelPai.setProfissao(txtProfissaoPai.getText());
                 Date dataRgMae = sdf.parse(txtDataEmissao.getText()); // Converte a String para Date
                 responsavelMae.setDataEmissaoRg(dataRgMae);
                 responsavelMae.setNome(txtNomeMae.getName());
-                responsavelMae.setOrgaoExpedidor(txtOrgaoExpedidorMae.getText());
+                responsavelMae.setOrgaoExpedidorRg(txtOrgaoExpedidorMae.getText());
                 responsavelMae.setProfissao(txtProfissaoMae.getText());
                 this.gestaoAlunoController.save(responsavelPai);
                 this.gestaoAlunoController.save(responsavelMae);
@@ -1032,8 +1031,8 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 novoAluno.setMae(responsavelMae);
                 //novoAluno.setReponsavelLegal(responsavelLegal);
                 
-                List<Alunos> alunos = this.gestaoAlunoController.findAll();
-                for(Alunos aluno: alunos){
+                List<AlunosPrincipal> alunos = this.gestaoAlunoController.findAll();
+                for(AlunosPrincipal aluno: alunos){
                     //Verificação da existência e algum aluno com o mesmo código do escolhido pelo usuário
                     if(aluno.getCpf().equals(txtCpf.getText())){
                         JOptionPane.showConfirmDialog(null, "Aluno Não Cadastrado: CPF de Aluno Existente", "ERRO", JOptionPane.WARNING_MESSAGE);
@@ -1128,7 +1127,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 this.dispose();
             }catch(Exception e){
                 log.error("Erro ao salvar o aluno: ", e);
-                JOptionPane.showMessageDialog(null, StringUtil.getSaveError(), "ERRO", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro ao salvar o aluno", "ERRO", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed

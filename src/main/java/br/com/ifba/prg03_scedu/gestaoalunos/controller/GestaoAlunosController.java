@@ -1,7 +1,7 @@
 
 package br.com.ifba.prg03_scedu.gestaoalunos.controller;
 
-import br.com.ifba.prg03_scedu.gestaoalunos.entity.Alunos;
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.Responsaveis;
 import br.com.ifba.prg03_scedu.gestaoalunos.service.GestaoAlunoIService;
 import java.util.List;
@@ -14,37 +14,37 @@ public class GestaoAlunosController implements GestaoAlunoIController{
     private final GestaoAlunoIService gestaoAlunoService; // Injeta o serviço de alunos.
 
     @Override
-    public Alunos save(Alunos aluno) throws RuntimeException {
+    public AlunosPrincipal save(AlunosPrincipal aluno) throws RuntimeException {
         // Chama o serviço para salvar um aluno.
         return gestaoAlunoService.save(aluno);
     }
 
     @Override
-    public Alunos update(Alunos aluno) throws RuntimeException {
+    public AlunosPrincipal update(AlunosPrincipal aluno) throws RuntimeException {
         // Chama o serviço para atualizar um aluno.
         return gestaoAlunoService.update(aluno);
     }
 
     @Override
-    public void delete(Alunos aluno) throws RuntimeException {
+    public void delete(AlunosPrincipal aluno) throws RuntimeException {
         // Chama o serviço para deletar um aluno.
         gestaoAlunoService.delete(aluno);
     }
 
     @Override
-    public Alunos findById(Long id) throws RuntimeException {
+    public AlunosPrincipal findById(Long id) throws RuntimeException {
         // Chama o serviço para encontrar um aluno pelo ID.
         return gestaoAlunoService.findById(id);
     }
 
     @Override
-    public List<Alunos> findByNome(String nome) throws RuntimeException {
+    public List<AlunosPrincipal> findByNome(String nome) throws RuntimeException {
         // Chama o serviço para encontrar alunos pelo nome.
         return gestaoAlunoService.findByNome(nome);
     }
 
     @Override
-    public List<Alunos> findAll() throws RuntimeException {
+    public List<AlunosPrincipal> findAll() throws RuntimeException {
         // Chama o serviço para listar todos os alunos.
         return gestaoAlunoService.findAll();
     }

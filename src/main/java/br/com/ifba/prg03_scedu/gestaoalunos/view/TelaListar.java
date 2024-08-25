@@ -2,8 +2,7 @@
 package br.com.ifba.prg03_scedu.gestaoalunos.view;
 
 import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
-import br.com.ifba.prg03_scedu.gestaoalunos.entity.Alunos;
-import br.com.ifba.prg03_scedu.infrastructure.util.StringUtil;
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import jakarta.persistence.NoResultException;
 import java.awt.event.WindowEvent;
@@ -33,7 +32,7 @@ public class TelaListar extends javax.swing.JFrame {
         try{
             log.info("Carregando dados da tabela de alunos");
             // Cria uma consulta JPQL para selecionar todos os registros da entidade Alunos
-            List<Alunos> dadosTabela = this.gestaoAlunoController.findAll();
+            List<AlunosPrincipal> dadosTabela = this.gestaoAlunoController.findAll();
 
             // Obtém o modelo da tabela associado ao componente tblAlunos
             DefaultTableModel dtmAlunos = (DefaultTableModel)tblAlunos.getModel();
@@ -41,9 +40,9 @@ public class TelaListar extends javax.swing.JFrame {
             // Remove todas as linhas existentes no modelo da tabela
             dtmAlunos.setRowCount(0);
 
-            for(Alunos lista: dadosTabela){
+            for(AlunosPrincipal lista: dadosTabela){
                 // Cria um array de objetos contendo os dados de cada aluno
-                Object[] dados = {lista.getId(),lista.getNomeSocial(), lista.getPai().getNome(), lista.getEmail(), lista.getDataNascimento()};
+                Object[] dados = {lista.getId(),lista.getNomeSocial(), lista.getPai().getNome(), lista.getEmail(), lista.getNascimento()};
 
                 // Adiciona uma nova linha no modelo da tabela com os dados do aluno
                 dtmAlunos.addRow(dados);
@@ -51,7 +50,7 @@ public class TelaListar extends javax.swing.JFrame {
             dtmAlunos.fireTableDataChanged();
         }catch(Exception e){
             log.error("Erro ao carregar dados da tabela", e);
-            JOptionPane.showMessageDialog(null, StringUtil.getFindAllError(), "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao buscar todos os alunos", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -75,7 +74,7 @@ public class TelaListar extends javax.swing.JFrame {
         slpTabela = new javax.swing.JScrollPane();
         tblAlunos = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         pnlFuncoes.setBackground(new java.awt.Color(8, 102, 255));
@@ -235,12 +234,12 @@ public class TelaListar extends javax.swing.JFrame {
                     Object idAlunoRemover = tblAlunos.getValueAt(tblAlunos.getSelectedRow(), 0);
                     log.info("Excluindo aluno com ID: {}", idAlunoRemover);
                     //Encontra o aluno
-                    Alunos alunoRemover = this.gestaoAlunoController.findById((Long)idAlunoRemover);
+                    AlunosPrincipal alunoRemover = this.gestaoAlunoController.findById((Long)idAlunoRemover);
                     //Exclui o aluno
                     this.gestaoAlunoController.delete(alunoRemover);
                     log.info("Aluno excluído com sucesso");
                 }catch(Exception e){
-                    JOptionPane.showMessageDialog(null, StringUtil.getDELETE_ERROR(), "ERRO", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Erro ao deletar o aluno", "ERRO", JOptionPane.ERROR_MESSAGE);
                     log.error("Erro ao excluir aluno", e);
                 }
             }else{
@@ -261,7 +260,7 @@ public class TelaListar extends javax.swing.JFrame {
         // Obtém o nome do aluno que o usuário deseja pesquisar
         log.info("Ação de pesquisa de aluno iniciada");
         String busca = txtProcura.getText();
-        List<Alunos> alunosBuscados;
+        List<AlunosPrincipal> alunosBuscados;
         try {
             log.info("Procurando alunos com texto: {}", busca);
             // Tenta obter a lista de resultados da consulta
@@ -275,9 +274,9 @@ public class TelaListar extends javax.swing.JFrame {
             DefaultTableModel dtmAlunos = (DefaultTableModel) tblAlunos.getModel();
             dtmAlunos.setRowCount(0);  // Limpa todos os dados da tabela
 
-            for(Alunos lista: alunosBuscados){
+            for(AlunosPrincipal lista: alunosBuscados){
                 // Cria um array de objetos contendo os dados de cada aluno
-                Object[] dados = {lista.getId(),lista.getNomeSocial(), lista.getPai().getNome(), lista.getEmail(), lista.getDataNascimento()};
+                Object[] dados = {lista.getId(),lista.getNomeSocial(), lista.getPai().getNome(), lista.getEmail(), lista.getNascimento()};
 
                 // Adiciona uma nova linha no modelo da tabela com os dados do aluno
                 dtmAlunos.addRow(dados);
@@ -286,7 +285,7 @@ public class TelaListar extends javax.swing.JFrame {
             txtProcura.setText("");
         } else {
             log.error("Aluno com texto: {} não encontrado", busca);
-            JOptionPane.showMessageDialog(null, StringUtil.getFindByNameError(busca), "Erro", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao procurar o aluno pelo nome " + busca, "Erro", JOptionPane.WARNING_MESSAGE);
             refresh();
         }
     }//GEN-LAST:event_btnProcuraActionPerformed
@@ -316,7 +315,7 @@ public class TelaListar extends javax.swing.JFrame {
             }
         }catch(Exception e){
             log.error("Aluno com ID: {} não encontrado para edição",e);
-            JOptionPane.showMessageDialog(null, StringUtil.getUPDATE_ERROR(), "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao alterar os dados do aluno", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
