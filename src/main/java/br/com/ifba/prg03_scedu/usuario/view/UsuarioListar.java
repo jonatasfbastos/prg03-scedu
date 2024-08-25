@@ -14,9 +14,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.stereotype.Component;
 
-@Component
 public class UsuarioListar extends javax.swing.JFrame {
 
     private final UsuarioIController usuarioController;
