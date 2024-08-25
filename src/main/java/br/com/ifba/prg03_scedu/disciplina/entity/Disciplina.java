@@ -6,7 +6,12 @@ package br.com.ifba.prg03_scedu.disciplina.entity;
 
 import br.com.ifba.prg03_scedu.infrastructure.entity.PersistenceEntity;
 import br.com.ifba.prg03_scedu.professor.entity.Professor;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -41,6 +46,13 @@ import lombok.NoArgsConstructor;
 public class Disciplina extends PersistenceEntity{
     
     //Será importante para configurar na telaProfessor
+    // Mapeia a relação Many-to-Many com a entidade Professor
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "Disciplina_Professor",
+        joinColumns = @JoinColumn(name = "disciplina_id"),
+        inverseJoinColumns = @JoinColumn(name = "professor_id")
+    )
     private List<Professor> professor;
     private int cargaHoraria;
     private String nome;

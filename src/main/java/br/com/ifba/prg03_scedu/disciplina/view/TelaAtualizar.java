@@ -88,7 +88,7 @@ public class TelaAtualizar extends javax.swing.JFrame {
         try {
       
         //Dando um update no banco de dados
-        disciplinaController.delete(disciplinaNew);
+        //disciplinaController.delete(disciplinaNew);
         disciplinaController.update(disciplina);
         
         

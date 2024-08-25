@@ -15,7 +15,7 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name="Professor")
+@Table(name="Professores")
 public class Professor extends Pessoa{
     
     public String materia;

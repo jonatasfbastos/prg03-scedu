@@ -6,6 +6,7 @@ package br.com.ifba.prg03_scedu.disciplina.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
+import br.com.ifba.prg03_scedu.professor.entity.Professor;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -16,6 +17,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class TelaProfessor extends javax.swing.JFrame {
     
     private final DisciplinaIController disciplinaController;
+    private Professor professor = new Professor();
 
     /**
      * Creates new form TelaProfessor
