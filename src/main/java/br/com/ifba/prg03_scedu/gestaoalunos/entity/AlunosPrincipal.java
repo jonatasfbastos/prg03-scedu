@@ -1,9 +1,11 @@
 
 package br.com.ifba.prg03_scedu.gestaoalunos.entity;
 
+import br.com.ifba.prg03_scedu.escola.entity.Escola;
 import br.com.ifba.prg03_scedu.infrastructure.entity.Pessoa;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -39,7 +41,8 @@ public class AlunosPrincipal extends Pessoa{
     @JoinColumn(name = "reponsavel_legal_id")
     private Responsaveis reponsavelLegal;
     
-    private String endereco;
+    
+    //private Escola escolaOrigem;
     private String escolaOrigem;
     private String regiaoMoradia;
     private String nacionalidade;
