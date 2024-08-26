@@ -31,7 +31,14 @@ build/
 
 ### VS Code ###
 .vscode/
+<<<<<<< HEAD
 
 ### Arquviso Ignorados ###
 /src/main/resources/application.properties
 pom.xml
+=======
+/src/main/resources/icons/
+
+### Exclude application.properties ###
+application.properties
+>>>>>>> origin/master
