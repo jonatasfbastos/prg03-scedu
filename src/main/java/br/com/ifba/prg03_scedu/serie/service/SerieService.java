@@ -9,7 +9,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.ifba.prg03_scedu.serie.repository.SerieRepository;
+import java.util.logging.Logger;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,22 +23,50 @@ public class SerieService implements SerieIService {
     
     private final SerieRepository repositorySerie;
     
-
+    private static final Logger log = (Logger) LoggerFactory.getLogger(Serie.class);
+    
+    //Metodo para cadastrar uma serie
     @Override
-    public Serie save(Serie serie) {
-        return repositorySerie.save(serie);
+    public Serie save(Serie serie) throws RuntimeException{
+        
+        //Verifica se todos os dados foram preenchidos e se serie ja existe
+        if (serie == null) {
+            throw new RuntimeException("Dados da serie não preenchidos.");
+        } else if (repositorySerie.existsById(serie.getId())) {
+            throw new RuntimeException("Serie ja cadastrado.");
+        } else {
+            log.info("Serie cadastrada com sucesso!");
+            return repositorySerie.save(serie);
+        }
     }
 
     //Metodo para alterar dados da serie
     @Override
     public Serie update(Serie serie) {
-        return repositorySerie.save(serie);
+        
+        //Verifica se os dados foram preenchidos e se serie existe e atualiza
+        if (serie == null) {
+            throw new RuntimeException("Dados da serie não preenchidos.");
+        } else if (repositorySerie.existsById(serie.getId())) {
+           throw new RuntimeException ("Serie nao encontrada.");
+        } else {
+            log.info("Serie atualizada com sucesso!");
+            return repositorySerie.save(serie);
+        }
     }
 
     //Metodo para excluir uma serie
     @Override
-    public void delete(Serie serie) {   
-        repositorySerie.delete(serie);
+    public void delete(Serie serie) { 
+        //Verifica se os dados foram preenchidos e atualiza
+        if (serie == null) {
+            throw new RuntimeException("Dados da serie não preenchidos.");
+        } else if (!repositorySerie.existsById(serie.getId())) {
+           throw new RuntimeException ("Serie nao encontrada.");
+        } else {
+            log.info("Serie removida com sucesso!");
+            repositorySerie.delete(serie);
+        }
     }
 
     @Override
