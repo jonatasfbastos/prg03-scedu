@@ -32,14 +32,14 @@ public class DisciplinaService implements DisciplinaIService{
 
     // Salva uma disciplina utilizando o DAO e retorna a disciplina salva
     @Override
-    public Disciplina save(Disciplina disciplina) /*throws RuntimeException*/ {
+    public Disciplina save(Disciplina disciplina) throws RuntimeException {
         // Verifica se a disciplina é nula
         if (disciplina == null) {
-            throw new RuntimeException(/*StringUtil.getNullDisciplinaError()*/"Erro de null");
+            throw new RuntimeException("Erro, disciplina é igual à null !!!");
         }
         // Verifica se a disciplina já existe (tem um ID)
         else if (disciplina.getId() != null) {
-            throw new RuntimeException(/*StringUtil.getExistingDisciplinaError()*/"Erro de null");
+            throw new RuntimeException("Erro, disciplina já existe no banco");
         } 
         // Salva a disciplina no banco de dados
         else {
@@ -51,10 +51,10 @@ public class DisciplinaService implements DisciplinaIService{
 
     // Atualiza uma disciplina utilizando o DAO e retorna a disciplina atualizada
     @Override
-    public Disciplina update(Disciplina disciplina) /*throws RuntimeException*/ {
+    public Disciplina update(Disciplina disciplina) throws RuntimeException {
         // Verifica se a disciplina é nula
         if (disciplina == null) {
-            throw new RuntimeException(/*StringUtil.getNullDisciplinaError()*/"Erro de null");
+            throw new RuntimeException("Erro, disciplina é nula");
         } 
         // Atualiza a disciplina no banco de dados
         else {
@@ -66,10 +66,10 @@ public class DisciplinaService implements DisciplinaIService{
 
     // Exclui uma disciplina utilizando o DAO
     @Override
-    public void delete(Disciplina disciplina) /*throws RuntimeException*/ {
+    public void delete(Disciplina disciplina) throws RuntimeException {
         // Verifica se a disciplina é nula
         if (disciplina == null) {
-            throw new RuntimeException(/*StringUtil.getNullDisciplinaError()*/"Erro de null");
+            throw new RuntimeException("Erro, disciplina é nula");
         } 
         // Exclui a disciplina do banco de dados
         else {
@@ -81,10 +81,10 @@ public class DisciplinaService implements DisciplinaIService{
 
     // Busca uma disciplina pelo seu ID utilizando o DAO e retorna a disciplina encontrada
     @Override
-    public Disciplina findById(Long id) /*throws RuntimeException*/ {
+    public Disciplina findById(Long id) throws RuntimeException {
         // Verifica se o ID é nulo
         if (id == null) {
-            throw new RuntimeException(/*StringUtil.getNullIdError()*/"Erro de null");
+            throw new RuntimeException("Erro, disciplina é nula");
         } 
         // Busca a disciplina pelo ID no banco de dados
         else {
@@ -98,10 +98,10 @@ public class DisciplinaService implements DisciplinaIService{
 
     // Busca disciplinas pelo nome utilizando o DAO e retorna a lista de disciplinas encontradas
     @Override
-    public List<Disciplina> findByNome(String nome) /*throws RuntimeException*/ {
+    public List<Disciplina> findByNome(String nome) throws RuntimeException {
         // Verifica se o nome é nulo ou vazio
         if (nome == null || nome.isEmpty()) {
-            throw new RuntimeException(/*StringUtil.getNullNameError()*/ "Erro de null");
+            throw new RuntimeException("Erro, disciplina é nula ou vazia");
         } 
         // Busca disciplinas pelo nome no banco de dados
         else {
@@ -114,7 +114,7 @@ public class DisciplinaService implements DisciplinaIService{
 
     // Retorna uma lista com todas as disciplinas utilizando o DAO
     @Override
-    public List<Disciplina> findAll() /*throws RuntimeException*/ {
+    public List<Disciplina> findAll() throws RuntimeException {
         // Registra uma mensagem informativa no log, indicando que o processo de busca total de uma disciplina está em andamento
         log.info("Buscando todas as disciplinas");
         return disciplinaRepository.findAll();

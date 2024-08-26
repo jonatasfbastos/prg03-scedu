@@ -25,11 +25,25 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="bntFaltas" max="32767" attributes="0"/>
-                  <Component id="btnDisciplina" pref="127" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="btnAva" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="bntFaltas" max="32767" attributes="0"/>
+                          <Component id="btnDisciplina" pref="127" max="32767" attributes="0"/>
+                          <Component id="btnCurriculo" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jButton1" max="32767" attributes="0"/>
+                          <Component id="btnEscolas" max="32767" attributes="0"/>
+                          <Component id="btnCurso1" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace pref="1718" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
+              <Component id="btnGestaoAluno" min="-2" pref="133" max="-2" attributes="0"/>
+              <EmptySpace pref="1207" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -37,10 +51,24 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
-              <Component id="btnDisciplina" min="-2" pref="43" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="btnDisciplina" pref="43" max="32767" attributes="0"/>
+                  <Component id="btnCurso1" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnGestaoAluno" alignment="0" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-              <Component id="bntFaltas" min="-2" pref="42" max="-2" attributes="0"/>
-              <EmptySpace pref="846" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="bntFaltas" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
+                  <Component id="jButton1" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnCurriculo" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
+                  <Component id="btnEscolas" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+              <Component id="btnAva" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="714" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,6 +89,57 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Faltas"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bntFaltasMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCurriculo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Curriculo"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCurriculoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Gest&#xe3;o de Usu&#xe1;rios"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCurso1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Curso"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCurso1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnEscolas">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Escolas"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEscolasActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnAva">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="GestaoAvaliacoes"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAvaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnGestaoAluno">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Alunos"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGestaoAlunoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

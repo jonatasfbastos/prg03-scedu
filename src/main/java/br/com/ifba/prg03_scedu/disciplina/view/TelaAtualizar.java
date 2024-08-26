@@ -30,91 +30,113 @@ public class TelaAtualizar extends javax.swing.JFrame {
     // Limpa todos os dados da tabela
     dtmDisciplinas.setRowCount(0);
 
-    // Verifica se um curso foi encontrado
+    // Verifica se uma disciplina foi encontrada
     if (newDisciplina != null) {
-        // Cria um array com os dados do curso encontrado
+        // Cria um array com os dados da disciplina encontrada
         Object[] dados = {newDisciplina.getId(), newDisciplina.getNome(), newDisciplina.getNomeAbreviado(), 
                         newDisciplina.getCargaHoraria(), newDisciplina.getBaseCurricular(), newDisciplina.isEstado()};
         
-        // Adiciona uma linha na tabela com os dados do curso
+        // Adiciona uma linha na tabela com os dados da disciplina
         dtmDisciplinas.addRow(dados);
     } else {
-        // Se nenhum curso foi encontrado, exibe uma mensagem de aviso
+        // Se nenhuma disciplina foi encontrada, exibe uma mensagem de aviso
         JOptionPane.showMessageDialog(this, "Curso não encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
     }
 }
     
     private void atualizarDisciplina(Disciplina disciplina){
-        
+        // Define o nome da disciplina com base no texto inserido no campo de texto 'txtNome'
         disciplina.setNome(txtNome.getText());
+
+        // Define o nome abreviado da disciplina com base no texto inserido no campo de texto 'txtNomeAbreviado'
         disciplina.setNomeAbreviado(txtNomeAbreviado.getText());
+
+        // Define a carga horária da disciplina com base no texto inserido no campo de texto 'txtCargaHoraria'
+        // O texto é convertido para um inteiro usando 'Integer.parseInt'
         disciplina.setCargaHoraria(Integer.parseInt(txtCargaHoraria.getText()));
-        
-        
+
+        // Obtém a base curricular selecionada no combo box 'cmbBaseCurricular'
         String baseCurricular = cmbBaseCurricular.getSelectedItem().toString();
-        
-        
+
+        // Usa um switch case para definir o campo 'baseCurricular' da disciplina de acordo com a seleção do usuário
         switch (baseCurricular) {
             case "Nacional": 
                 disciplina.setBaseCurricular("Nacional");
                 break;
-            
+
             case "Diversificada": 
                 disciplina.setBaseCurricular("Diversificada");
                 break;
-            
+
             case "Profissional": 
                 disciplina.setBaseCurricular("Profissional");
                 break;
-            
+
             case "Religiosa": 
                 disciplina.setBaseCurricular("Religiosa");
                 break;
-            
+
             default:
-                // Pode ser interessante tratar um valor inválido ou lançar uma exceção se for necessário
+                // Trata um valor inválido; lança uma exceção se a base curricular selecionada não for válida
                 throw new IllegalArgumentException("Base Curricular inválida: " + baseCurricular);
         }
 
+        // Define o estado da disciplina (ativa ou inativa) com base na seleção feita no combo box 'cmbEstado'
         String estado = cmbEstado.getSelectedItem().toString();
-        
-        if(estado.equals("ATIVO")){
+
+        if (estado.equals("ATIVO")) {
+            // Define o estado como ativo (true) se o estado selecionado for "ATIVO"
             disciplina.setEstado(true);
-        }
-        else
+        } else {
+            // Define o estado como inativo (false) para qualquer outra opção
             disciplina.setEstado(false);
-        
-        
-        
+        }
+
         try {
-      
-        //Dando um update no banco de dados
-        disciplinaController.update(disciplina);
-        
-    } catch (Exception e) {
-      
-        // Trata a exceção (geralmente loga ou mostra uma mensagem de erro)
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Erro ao alterar a disciplina.", "Erro", JOptionPane.ERROR_MESSAGE);
-        
-    } 
+            // Tenta atualizar os dados da disciplina no banco de dados usando o controlador 'disciplinaController'
+            disciplinaController.update(disciplina);
+        } catch (Exception e) {
+            // Se ocorrer uma exceção durante a atualização, ela é capturada e tratada aqui.
+
+            // Imprime a pilha de rastreamento da exceção para o console, útil para depuração
+            e.printStackTrace();
+
+            // Mostra uma mensagem de erro para o usuário em uma caixa de diálogo
+            JOptionPane.showMessageDialog(null, "Erro ao alterar a disciplina.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     
-    /**
-     * Creates new form TelaAtualizar
-     */
-    public TelaAtualizar(DisciplinaIController disciplinaController, Disciplina disciplina) {
-        initComponents();
-        this.disciplinaController = disciplinaController;
-        disciplinaNew.setNome(disciplina.getNome());
-        disciplinaNew.setNomeAbreviado(disciplina.getNomeAbreviado());
-        disciplinaNew.setCargaHoraria(disciplina.getCargaHoraria());
-        disciplinaNew.setBaseCurricular(disciplina.getBaseCurricular());
-        disciplinaNew.setEstado(disciplina.isEstado());
-        
-        carregarTabela(disciplina);
-    }
+   /**
+ * Construtor da classe TelaAtualizar.
+ * Este construtor cria uma nova instância de TelaAtualizar, inicializa os componentes da interface gráfica
+ * e carrega os dados da disciplina que será atualizada.
+ * 
+ * @param disciplinaController instância do controlador de disciplina para gerenciar as operações.
+ * @param disciplina a instância da disciplina que será atualizada.
+ */
+public TelaAtualizar(DisciplinaIController disciplinaController, Disciplina disciplina) {
+    // Inicializa os componentes da interface gráfica (geralmente gerado automaticamente pelo IDE).
+    initComponents();
+    
+    // Atribui o controlador de disciplina passado como argumento ao campo disciplinaController.
+    this.disciplinaController = disciplinaController;
+    
+    // Copia os dados da disciplina fornecida para uma nova instância de Disciplina (disciplinaNew).
+    // Isso permite que os dados sejam exibidos na interface gráfica para que o usuário possa editá-los.
+    disciplinaNew.setId(disciplina.getId()); // Define o ID da nova disciplina com o ID da disciplina fornecida.
+    disciplinaNew.setNome(disciplina.getNome()); // Define o nome.
+    disciplinaNew.setNomeAbreviado(disciplina.getNomeAbreviado()); // Define o nome abreviado.
+    disciplinaNew.setCargaHoraria(disciplina.getCargaHoraria()); // Define a carga horária.
+    disciplinaNew.setBaseCurricular(disciplina.getBaseCurricular()); // Define a base curricular.
+    disciplinaNew.setEstado(disciplina.isEstado()); // Define o estado (ativo/inativo).
+
+    // Carrega a tabela (ou outros elementos da interface) com os dados da disciplina.
+    // Esse método provavelmente preenche os campos da interface com os dados da disciplina a ser atualizada.
+    carregarTabela(disciplina);
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -307,12 +329,15 @@ public class TelaAtualizar extends javax.swing.JFrame {
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         // TODO add your handling code here:
+        //Fecha a tela TelaAtualizar
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         // TODO add your handling code here:
+        //Chamada do metodo de atualizar a disciplina
         atualizarDisciplina(disciplinaNew);
+        //Fecha a tela TelaAtualizar
         this.dispose();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 

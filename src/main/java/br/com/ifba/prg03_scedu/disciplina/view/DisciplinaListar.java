@@ -23,14 +23,23 @@ public class DisciplinaListar extends javax.swing.JFrame {
     /**
      * Creates new form DisciplinaListar
      */
-    //inserções da variaveis 
-    private final DisciplinaIController disciplinaController;
     
-    public DisciplinaListar(br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController disciplinaController) {
-        initComponents();
-        this.disciplinaController = disciplinaController;
-        carregarTabela();
-    }
+    // Declaração de um campo privado e final para o controlador de disciplina.
+// A palavra-chave 'final' significa que este campo deve ser inicializado no construtor e não pode ser alterado depois.
+private final DisciplinaIController disciplinaController;
+
+// Construtor da classe DisciplinaListar, que recebe uma instância de DisciplinaIController como argumento.
+public DisciplinaListar(DisciplinaIController disciplinaController) {
+    // Inicializa os componentes da interface gráfica (geralmente gerado automaticamente pelo IDE).
+    initComponents();
+    
+    // Inicializa o campo disciplinaController com o valor passado ao construtor.
+    this.disciplinaController = disciplinaController;
+    
+    // Chama o método carregarTabela, que provavelmente carrega os dados das disciplinas em uma tabela na interface gráfica.
+    carregarTabela();
+}
+
     
     // Método para carregar os dados da tabela
 private void carregarTabela() {
@@ -86,6 +95,7 @@ private void carregarTabela() {
         btnAtualizar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
+        btnProfessor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -146,30 +156,41 @@ private void carregarTabela() {
             }
         });
 
+        btnProfessor.setText("Professor");
+        btnProfessor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProfessorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100)
+                        .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)
+                        .addComponent(btnProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(105, 105, 105)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100)
-                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,8 +202,9 @@ private void carregarTabela() {
                     .addComponent(txtPesquisa)
                     .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnProfessor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -232,12 +254,12 @@ private void carregarTabela() {
         
         try {
 
-            // Busca o curso pelo ID
+            // Busca a disciplina pelo ID
             Disciplina disciplina = new Disciplina();
             disciplina = disciplinaController.findById(id);
             
             if (disciplina != null) {
-                // Pergunta ao usuário se deseja remover o curso
+                // Pergunta ao usuário se deseja remover a disciplina
                 int resposta = JOptionPane.showConfirmDialog(null, "Deseja remover a disciplina?", "Confirmar Remoção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                 if (resposta == JOptionPane.YES_OPTION) {
@@ -249,11 +271,10 @@ private void carregarTabela() {
                     
                 } else {
                     // Cancelar a operação
-                    //em.getTransaction().rollback();
                     JOptionPane.showMessageDialog(null, "Remoção cancelada.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
-                // Curso não encontrado, lidar com isso apropriadamente
+                // Disciplina não encontrada, lidar com isso apropriadamente
                 JOptionPane.showMessageDialog(null, "Disciplina não encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
@@ -271,35 +292,37 @@ private void carregarTabela() {
 */
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
+        // Carrega todos os dados na tabela
         carregarTabela();
         
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         // TODO add your handling code here:
+        //Fecha a tela DisciplinaListar
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         // TODO add your handling code here:
         
-        // Obtém o nome do curso a ser pesquisado
+        // Obtém o nome da disciplina a ser pesquisado
         String nomeDisciplina = txtPesquisa.getText().trim(); // Use trim() para remover espaços em branco desnecessários
 
         // Criação da variável para dar início à pesquisa
         List<Disciplina> disciplinas;
 
         try {
-            //Passsa as informações caso encontre o curso
+            //Passsa as informações caso encontre a discipina
             disciplinas = disciplinaController.findByNome(nomeDisciplina);
 
-            // Se encontrado, atualiza a tabela com os cursos encontrados
+            // Se encontrado, atualiza a tabela com as disciplinas encontradas
             DefaultTableModel dtmCursos = (DefaultTableModel) tblDados.getModel();
             dtmCursos.setRowCount(0);  // Limpa todos os dados da tabela
 
             if (disciplinas.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Curso nao encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
-                carregarTabela(); // Carregar tabela com todos os cursos após a pesquisa
+                carregarTabela(); // Carregar tabela com todas as disciplinas após a pesquisa
             } else {
                 for (Disciplina disciplina : disciplinas) {
                     Object[] dados = {disciplina.getId(), disciplina.getNome(), disciplina.getNomeAbreviado(), 
@@ -308,7 +331,7 @@ private void carregarTabela() {
                 }
             }
         } catch (NoResultException e) {
-            carregarTabela(); // Carregar tabela com todos os cursos após a pesquisa
+            carregarTabela(); // Carregar tabela com todas as disciplinas após a pesquisa
             JOptionPane.showMessageDialog(null, "Curso nao encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
         } catch (Exception e) {
             e.printStackTrace();
@@ -321,16 +344,16 @@ private void carregarTabela() {
         // Obtém a linha selecionada na tabela
         int row = tblDados.getSelectedRow(); // Obtém o índice da linha selecionada na tabela
         if (row != -1) { // Verifica se uma linha foi realmente selecionada
-            // Supondo que o ID esteja na primeira coluna, obtém o ID do curso
+            // Supondo que o ID esteja na primeira coluna, obtém o ID da disciplina
             long id = (long) tblDados.getValueAt(row, 0); // Obtém o valor da célula da primeira coluna e converte para long
 
             try {
                 Disciplina disciplina = new Disciplina();
-                disciplina = disciplinaController.findById(id); // Busca o curso no banco de dados pelo ID
+                disciplina = disciplinaController.findById(id); // Busca a disciplina no banco de dados pelo ID
 
-                if (disciplina != null) { // Verifica se o curso foi encontrado
-                    // Abre a tela de edição e passa o curso como parâmetro
-                    TelaAtualizar newFrame = new TelaAtualizar(disciplinaController,disciplina); // Cria uma nova instância da tela de edição, passando o curso encontrado
+                if (disciplina != null) { // Verifica se a disciplina foi encontrada
+                    // Abre a tela de edição e passa a disciplina como parâmetro
+                    TelaAtualizar newFrame = new TelaAtualizar(disciplinaController,disciplina); // Cria uma nova instância da tela de edição, passando a disciplina encontrada
                     newFrame.setVisible(true); // Torna a tela de edição visível
 
                     // Adiciona um ouvinte para quando a janela de edição for fechada
@@ -343,7 +366,7 @@ private void carregarTabela() {
                     });
 
                 } else {
-                    // Se o curso não for encontrado, exibe uma mensagem de aviso
+                    // Se a disciplina não for encontrada, exibe uma mensagem de aviso
                     JOptionPane.showMessageDialog(null, "Curso não encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
                     carregarTabela(); // Recarrega a tabela para garantir que todos os cursos estejam atualizados
                 }
@@ -359,6 +382,13 @@ private void carregarTabela() {
             JOptionPane.showMessageDialog(null, "Nenhum curso selecionado.", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfessorActionPerformed
+        // TODO add your handling code here:
+        //Será configurada na segunda parte do projeto
+        TelaProfessor tela = new TelaProfessor(disciplinaController);
+        tela.setVisible(true);
+    }//GEN-LAST:event_btnProfessorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -407,6 +437,7 @@ private void carregarTabela() {
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnPesquisar;
+    private javax.swing.JButton btnProfessor;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnRemover;
     private javax.swing.JButton btnVoltar;

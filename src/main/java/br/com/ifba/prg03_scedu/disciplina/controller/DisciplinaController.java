@@ -14,8 +14,9 @@ import org.springframework.stereotype.Controller;
  *
  * @author Flavio Junior
  */
-
+//Injeção para gerenciamente spring, onde reconhece como Controller
 @Controller
+//Injeção Lombok, onde cria um construtor implementando o final
 @RequiredArgsConstructor
 public class DisciplinaController implements DisciplinaIController{
  
@@ -24,37 +25,37 @@ public class DisciplinaController implements DisciplinaIController{
 
     // Salva uma disciplina utilizando o serviço e retorna a disciplina salva
     @Override
-    public Disciplina save(Disciplina disciplina) /*throws RuntimeException*/ {
+    public Disciplina save(Disciplina disciplina) throws RuntimeException {
         return disciplinaService.save(disciplina);
     }
 
     // Atualiza uma disciplina utilizando o serviço e retorna a disciplina atualizada
     @Override
-    public Disciplina update(Disciplina disciplina) /*throws RuntimeException*/ {
+    public Disciplina update(Disciplina disciplina) throws RuntimeException{
         return disciplinaService.update(disciplina);
     }
 
     // Exclui uma disciplina utilizando o serviço
     @Override
-    public void delete(Disciplina disciplina) /*throws RuntimeException*/ {
+    public void delete(Disciplina disciplina) throws RuntimeException {
         disciplinaService.delete(disciplina);
     }
 
     // Busca uma disciplina pelo seu ID utilizando o serviço e retorna a disciplina encontrada
     @Override
-    public Disciplina findById(Long id) /*throws RuntimeException*/ {
+    public Disciplina findById(Long id) throws RuntimeException {
         return disciplinaService.findById(id);
     }
 
     // Busca disciplinas pelo nome utilizando o serviço e retorna a lista de disciplinas encontradas
     @Override
-    public List<Disciplina> findByNome(String nome) /*throws RuntimeException*/ {
+    public List<Disciplina> findByNome(String nome) throws RuntimeException {
         return disciplinaService.findByNome(nome);
     }
 
     // Retorna uma lista com todas as disciplinas utilizando o serviço
     @Override
-    public List<Disciplina> findAll() /*throws RuntimeException*/ {
+    public List<Disciplina> findAll() throws RuntimeException {
         return disciplinaService.findAll();
     }
 }
