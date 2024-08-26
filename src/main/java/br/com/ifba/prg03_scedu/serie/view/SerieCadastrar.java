@@ -4,10 +4,8 @@
  */
 package br.com.ifba.prg03_scedu.serie.view;
 
-import br.com.ifba.prg03_scedu.serie.controller.SerieController;
 import br.com.ifba.prg03_scedu.serie.controller.SerieIController;
-import br.com.ifba.prg03_scedu.serie.service.SerieService;
-import br.com.ifba.prg03_sceu.serie.entity.Serie;
+import br.com.ifba.prg03_scedu.serie.entity.Serie;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -20,23 +18,19 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SerieCadastrar extends javax.swing.JFrame {
-            
-    private final SerieListar serieListar;
+      
+    @Autowired
+    private SerieListar serieListar;
     
-    private final SerieIController serieController;
+    @Autowired
+    private SerieIController serieController;
     
-   /* @Autowired
-    private SerieService serieService;
-   */ 
-
+    Serie serie = new Serie();
     /**
      * Creates new form SerieTela
      */
-    @Autowired
-    public SerieCadastrar(SerieListar serieListar, SerieIController serieController) {
-      
-        this.serieController = serieController;
-        this.serieListar = serieListar;
+    public SerieCadastrar() {
+
         initComponents();
          
         //Nao encerra o programa ao fechar a tela
@@ -197,12 +191,12 @@ public class SerieCadastrar extends javax.swing.JFrame {
         long curriculoId = Long.parseLong(txtIdCurriculo.getText());
         //Logica para cadastrar no banco de dados
         
-       Serie serie = new Serie();
         try {
             serie.setId(id);
             serie.setNome(txtNomeSerie.getText());
             serie.setCurriculoId(curriculoId);
            serieController.save(serie);
+           
         } catch (Exception error) {
             JOptionPane.showMessageDialog(null, error, "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
         }
@@ -221,10 +215,12 @@ public class SerieCadastrar extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-              //  new SerieCadastrar().setVisible(true);
+                new SerieCadastrar().setVisible(true);
             }
+            
         });
     }
 

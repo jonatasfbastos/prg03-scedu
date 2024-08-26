@@ -4,8 +4,8 @@
  */
 package br.com.ifba.prg03_scedu.serie.view;
 
-import br.com.ifba.prg03_scedu.serie.controller.SerieController;
-import br.com.ifba.prg03_sceu.serie.entity.Serie;
+import br.com.ifba.prg03_scedu.serie.controller.SerieIController;
+import br.com.ifba.prg03_scedu.serie.entity.Serie;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
@@ -23,7 +23,7 @@ public class SerieListar extends javax.swing.JFrame {
     Serie serie = new Serie();
     
     @Autowired
-    private SerieController controller;
+    private SerieIController controller;
 
     /**
      * Creates new form SerieListar
@@ -34,6 +34,7 @@ public class SerieListar extends javax.swing.JFrame {
         
         //Nao encerra o programa ao fechar a tela
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
         //Cor de fundo da tela
         getContentPane().setBackground(new java.awt.Color(8, 102, 255));
         

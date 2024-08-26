@@ -4,7 +4,7 @@
  */
 package br.com.ifba.prg03_scedu.serie.service;
 
-import br.com.ifba.prg03_sceu.serie.entity.Serie;
+import br.com.ifba.prg03_scedu.serie.entity.Serie;
 import java.util.List;
 
 /**
