@@ -7,6 +7,7 @@ package br.com.ifba.prg03_scedu.serie.controller;
 import br.com.ifba.prg03_scedu.serie.entity.Serie;
 import br.com.ifba.prg03_scedu.serie.service.SerieIService;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -15,10 +16,10 @@ import org.springframework.stereotype.Controller;
  * @author geovana
  */
 @Controller
+@RequiredArgsConstructor
 public class SerieController implements SerieIController{
     
-    @Autowired
-    private SerieIService serieService;
+    private final SerieIService serieService;
 
     @Override
     public List<Serie> findAll() {

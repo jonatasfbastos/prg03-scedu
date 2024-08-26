@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -19,18 +20,19 @@ import lombok.Data;
  */
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name="serie")
 public class Serie {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "serie_seq")
-    @SequenceGenerator(name="serie_seq", sequenceName = "serie_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   //@SequenceGenerator(name="serie_seq", sequenceName = "serie_seq", allocationSize = 1)
     private Long id;
     
-    @Column(name = "nome")
+   // @Column(name = "nome")
     private String nome;
     
-    @Column(name = "curriculoId")
+   // @Column(name = "curriculoId")
     private Long curriculoId;
     
    // private List<Turma> listaTurma;
