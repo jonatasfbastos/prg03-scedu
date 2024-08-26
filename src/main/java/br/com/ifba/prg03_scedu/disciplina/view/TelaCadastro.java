@@ -16,14 +16,25 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 public class TelaCadastro extends javax.swing.JFrame {
 
+    // Declaração de um campo privado e final para o controlador de disciplina.
+    // O modificador 'final' indica que este campo deve ser inicializado no construtor
+    // e não pode ser alterado depois.
     private final DisciplinaIController disciplinaController;
+
     /**
-     * Creates new form TelaCadastro
+     * Construtor da classe TelaCadastro.
+     * Inicializa a nova instância de TelaCadastro e recebe uma instância de DisciplinaIController como argumento.
+     * 
+     * @param disciplinaController instância de DisciplinaIController para gerenciamento de disciplinas.
      */
     public TelaCadastro(DisciplinaIController disciplinaController) {
+        // Inicializa os componentes da interface gráfica (geralmente gerado automaticamente pelo IDE).
         initComponents();
+
+        // Atribui o controlador de disciplina passado como argumento ao campo disciplinaController.
         this.disciplinaController = disciplinaController;
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -192,59 +203,68 @@ public class TelaCadastro extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        //Fecha da tela TelaCadastro
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // TODO add your handling code here:
-        // Cria uma nova instância da classe Curso e define seus atributos com base nos campos da interface gráfica
+        
+        // Cria uma nova instância da classe Disciplina e define seus atributos com base nos campos da interface gráfica
         Disciplina disciplina = new Disciplina();
 
+        // Define o nome da disciplina com base no texto inserido no campo de texto 'txtNome'
         disciplina.setNome(txtNome.getText());
+
+        // Define o nome abreviado da disciplina com base no texto inserido no campo de texto 'txtAbreviado'
         disciplina.setNomeAbreviado(txtAbreviado.getText());
+
+        // Define a carga horária da disciplina com base no texto inserido no campo de texto 'txtCargaHoraria'
+        // O texto é convertido para um inteiro usando 'Integer.parseInt'
         disciplina.setCargaHoraria(Integer.parseInt(txtCargaHoraria.getText()));
-        //disciplina.setBaseCurricular();
-        
-        
+
+        // Define a base curricular da disciplina com base na seleção feita pelo usuário no combo box 'cmbBaseCurricular'
         String baseCurricular = cmbBaseCurricular.getSelectedItem().toString();
-        
-        
+
+        // Usa um switch case para definir o campo 'baseCurricular' da disciplina de acordo com a seleção do usuário
         switch (baseCurricular) {
             case "Nacional": 
                 disciplina.setBaseCurricular("Nacional");
                 break;
-            
+
             case "Diversificada": 
                 disciplina.setBaseCurricular("Diversificada");
                 break;
-            
+
             case "Profissional": 
                 disciplina.setBaseCurricular("Profissional");
                 break;
-            
+
             case "Religioso": 
                 disciplina.setBaseCurricular("Religiosa");
                 break;
-            
+
             default:
-                // Pode ser interessante tratar um valor inválido ou lançar uma exceção se for necessário
+                // Trata um valor inválido; lança uma exceção se a base curricular selecionada não for válida
                 throw new IllegalArgumentException("Base Curricular inválida: " + baseCurricular);
         }
 
+        // Define o estado da disciplina (ativa ou inativa) com base na seleção feita no combo box 'cmbEstado'
         String estado = cmbEstado.getSelectedItem().toString();
-        
-        if(estado.equals("ATIVO")){
-            disciplina.setEstado(true);
-        }
-        else
-            disciplina.setEstado(false);
 
-        
-        
+        if (estado.equals("ATIVO")) {
+            // Define o estado como ativo (true) se o estado selecionado for "ATIVO"
+            disciplina.setEstado(true);
+        } else {
+            // Define o estado como inativo (false) para qualquer outra opção
+            disciplina.setEstado(false);
+        }
+
+        // Salva a nova disciplina no banco de dados usando o controlador 'disciplinaController'
         disciplinaController.save(disciplina);
-        
+
         // Fecha a janela atual após a operação de inserção ter sido concluída com sucesso
         this.dispose();
+
      
     }//GEN-LAST:event_btnCadastrarActionPerformed
 

@@ -14,8 +14,9 @@ import org.springframework.stereotype.Controller;
  *
  * @author Flavio Junior
  */
-
+//Injeção para gerenciamente spring, onde reconhece como Controller
 @Controller
+//Injeção Lombok, onde cria um construtor implementando o final
 @RequiredArgsConstructor
 public class DisciplinaController implements DisciplinaIController{
  

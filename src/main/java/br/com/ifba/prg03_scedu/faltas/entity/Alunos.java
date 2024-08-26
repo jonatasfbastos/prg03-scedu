@@ -2,6 +2,7 @@ package br.com.ifba.prg03_scedu.faltas.entity;
 
 import br.com.ifba.prg03_scedu.infrastructure.entity.Pessoa;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.util.Date;
@@ -11,7 +12,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "pessoas")
+//@Table(name = "pessoas")
+@DiscriminatorValue("RESPONSAVEIS")
 public class Alunos extends Pessoa {
 
     private String nomeSocial;
