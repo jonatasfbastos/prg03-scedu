@@ -6,7 +6,7 @@ package br.com.ifba.prg03_scedu.disciplina.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
-import br.com.ifba.prg03_scedu.professor.entity.Professor;
+import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 

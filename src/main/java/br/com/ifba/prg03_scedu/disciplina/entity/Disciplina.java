@@ -4,8 +4,8 @@
  */
 package br.com.ifba.prg03_scedu.disciplina.entity;
 
+import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
 import br.com.ifba.prg03_scedu.infrastructure.entity.PersistenceEntity;
-import br.com.ifba.prg03_scedu.professor.entity.Professor;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
