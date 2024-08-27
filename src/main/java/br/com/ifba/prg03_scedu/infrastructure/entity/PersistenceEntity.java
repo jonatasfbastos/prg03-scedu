@@ -18,6 +18,6 @@ public class PersistenceEntity {
 
     // Declaração do campo que representa a chave primária da entidade
     @Id // Indica que este campo é a chave primária da entidade
-    @GeneratedValue(strategy = GenerationType.AUTO) // Define a estratégia de geração automática do valor do ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Define a estratégia de geração automática do valor do ID
     private Long id; // Campo que armazena o ID da entidade
 }

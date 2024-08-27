@@ -5,6 +5,7 @@ import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.Responsaveis;
+import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,267 @@ public class TelaAdicionar extends javax.swing.JFrame {
         pnlMedicamentosOutro.setVisible(false);
         pnlResponsavelOutro.setVisible(false);
         pnlReponsaveis.setVisible(false);
+    }
+    
+    private boolean validarCampos(){
+        int verificacao = 0;
+        if(txtNomeAluno.getText().isEmpty()){
+            txtNomeAluno.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtNomeAluno.setBackground(Color.WHITE);
+        }
+        if(txtEmail.getText().isEmpty()){
+            txtEmail.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtEmail.setBackground(Color.WHITE);
+        }
+        if(txtRg.getText().isEmpty()){
+            txtRg.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtRg.setBackground(Color.WHITE);
+        }
+        if(txtOrgaoExpedidor.getText().isEmpty()){
+            txtOrgaoExpedidor.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtOrgaoExpedidor.setBackground(Color.WHITE);
+        }
+        if(txtDataEmissao.getText().isEmpty()){
+            txtDataEmissao.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtDataEmissao.setBackground(Color.WHITE);
+        }
+        if(txtCpf.getText().isEmpty()){
+            txtCpf.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtCpf.setBackground(Color.WHITE);
+        }
+        if(txtTituloEleitor.getText().isEmpty()){
+            txtTituloEleitor.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtTituloEleitor.setBackground(Color.WHITE);
+        }
+        if(txtDataNascimento.getText().isEmpty()){
+            txtDataNascimento.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtDataNascimento.setBackground(Color.WHITE);
+        }
+        if(txtTelefone.getText().isEmpty()){
+            txtTelefone.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtTelefone.setBackground(Color.WHITE);
+        }
+        if(txtTelefoneResponsavel.getText().isEmpty()){
+            txtTelefoneResponsavel.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtTelefoneResponsavel.setBackground(Color.WHITE);
+        }
+        
+        if(cbxResponsavelEscolha.getSelectedItem().equals(" ")){
+            cbxResponsavelEscolha.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            cbxResponsavelEscolha.setBackground(Color.WHITE);
+            if(cbxResponsavelEscolha.getSelectedItem().equals("Outro")){
+                txtNomePai.setBackground(Color.WHITE);
+                txtCpfPai.setBackground(Color.WHITE);
+                txtRg.setBackground(Color.WHITE);
+                txtOrgaoExpedidorPai.setBackground(Color.WHITE);
+                txtDataEmissaoPai.setBackground(Color.WHITE);
+                txtProfissaoPai.setBackground(Color.WHITE);
+                
+                txtNomeMae.setBackground(Color.WHITE);
+                txtCpfMae.setBackground(Color.WHITE);
+                txtRgMae.setBackground(Color.WHITE);
+                txtOrgaoExpedidorMae.setBackground(Color.WHITE);
+                txtDataEmissaoMae.setBackground(Color.WHITE);
+                txtProfissaoMae.setBackground(Color.WHITE);
+                
+                if(txtTipoResponsavel.getText().isEmpty()){
+                    txtTipoResponsavel.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtTipoResponsavel.setBackground(Color.WHITE);
+                }
+                if(txtNomeResponsavelOutro.getText().isEmpty()){
+                    txtNomeResponsavelOutro.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtNomeResponsavelOutro.setBackground(Color.WHITE);
+                }
+                if(txtCpfResponsavelOutro.getText().isEmpty()){
+                    txtCpfResponsavelOutro.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtCpfResponsavelOutro.setBackground(Color.WHITE);
+                }
+            }
+            if(cbxResponsavelEscolha.getSelectedItem().equals("Pai")){
+                txtNomeResponsavelOutro.setBackground(Color.WHITE);
+                txtTipoResponsavel.setBackground(Color.WHITE);
+                txtCpfResponsavelOutro.setBackground(Color.WHITE);
+                
+                txtNomeMae.setBackground(Color.WHITE);
+                txtCpfMae.setBackground(Color.WHITE);
+                txtRgMae.setBackground(Color.WHITE);
+                txtOrgaoExpedidorMae.setBackground(Color.WHITE);
+                txtDataEmissaoMae.setBackground(Color.WHITE);
+                txtProfissaoMae.setBackground(Color.WHITE);
+                
+                if(txtNomePai.getText().isEmpty()){
+                    txtNomePai.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtNomePai.setBackground(Color.WHITE);
+                }
+                if(txtCpfPai.getText().isEmpty()){
+                    txtCpfPai.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtCpfPai.setBackground(Color.WHITE);
+                }
+                if(txtRgPai.getText().isEmpty()){
+                    txtRgPai.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtRgPai.setBackground(Color.WHITE);
+                }
+                if(txtOrgaoExpedidorPai.getText().isEmpty()){
+                    txtOrgaoExpedidorPai.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtOrgaoExpedidorPai.setBackground(Color.WHITE);
+                }
+                if(txtDataEmissaoPai.getText().isEmpty()){
+                    txtDataEmissaoPai.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtDataEmissaoPai.setBackground(Color.WHITE);
+                }
+                if(txtProfissaoPai.getText().isEmpty()){
+                    txtProfissaoPai.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtProfissaoPai.setBackground(Color.WHITE);
+                }
+            }
+            if(cbxResponsavelEscolha.getSelectedItem().equals("Mãe")){
+                txtNomeResponsavelOutro.setBackground(Color.WHITE);
+                txtTipoResponsavel.setBackground(Color.WHITE);
+                txtCpfResponsavelOutro.setBackground(Color.WHITE);
+                
+                txtNomePai.setBackground(Color.WHITE);
+                txtCpfPai.setBackground(Color.WHITE);
+                txtRgPai.setBackground(Color.WHITE);
+                txtOrgaoExpedidorPai.setBackground(Color.WHITE);
+                txtDataEmissaoPai.setBackground(Color.WHITE);
+                txtProfissaoPai.setBackground(Color.WHITE);
+                
+                if(txtNomeMae.getText().isEmpty()){
+                    txtNomeMae.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtNomeMae.setBackground(Color.WHITE);
+                }
+                if(txtCpfMae.getText().isEmpty()){
+                    txtCpfMae.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtCpfMae.setBackground(Color.WHITE);
+                }
+                if(txtRgMae.getText().isEmpty()){
+                    txtRgMae.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtRgMae.setBackground(Color.WHITE);
+                }
+                if(txtOrgaoExpedidorMae.getText().isEmpty()){
+                    txtOrgaoExpedidorMae.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtOrgaoExpedidorMae.setBackground(Color.WHITE);
+                }
+                if(txtDataEmissaoMae.getText().isEmpty()){
+                    txtDataEmissaoMae.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtDataEmissaoMae.setBackground(Color.WHITE);
+                }
+                if(txtProfissaoMae.getText().isEmpty()){
+                    txtProfissaoMae.setBackground(Color.RED);
+                    verificacao = 1;
+                }else{
+                    txtProfissaoMae.setBackground(Color.WHITE);
+                }
+            }
+        }
+        if(txtCep.getText().isEmpty()){
+            txtCep.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtCep.setBackground(Color.WHITE);
+        }
+        if(txtRua.getText().isEmpty()){
+            txtRua.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtRua.setBackground(Color.WHITE);
+        }
+        if(txtCidade.getText().isEmpty()){
+            txtCidade.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtCidade.setBackground(Color.WHITE);
+        }
+        if(txtBairro.getText().isEmpty()){
+            txtBairro.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtBairro.setBackground(Color.WHITE);
+        }
+        if(cbxUf.getSelectedItem().equals(" ")){
+            cbxUf.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            cbxUf.setBackground(Color.WHITE);
+        }
+        if(cbxDeficiencia.getSelectedItem().equals("Outro")){
+            txtDeficienciaOutro.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtDeficienciaOutro.setBackground(Color.WHITE);
+        }
+        if(cbxAlergia.getSelectedItem().equals("Outro")){
+            txtAlergiaOutro.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtAlergiaOutro.setBackground(Color.WHITE);
+        }
+        if(cbxCondicoesMedicas.getSelectedItem().equals("Outro")){
+            txtCondicoesMedicasOutro.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtCondicoesMedicasOutro.setBackground(Color.WHITE);
+        }
+        if(cbxMedicamentos.getSelectedItem().equals("Outro")){
+            txtMedicamentosOutro.setBackground(Color.RED);
+            verificacao = 1;
+        }else{
+            txtMedicamentosOutro.setBackground(Color.WHITE);
+        }
+        if(verificacao == 1){
+            return false;
+        }
+        return true;
     }
     
     /**
@@ -681,7 +943,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
 
         cbxRegiaoMoradia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Urbana", "Rural" }));
 
-        cbxUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "   ", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+        cbxUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
         javax.swing.GroupLayout pnlDadosEnderecoLayout = new javax.swing.GroupLayout(pnlDadosEndereco);
         pnlDadosEndereco.setLayout(pnlDadosEnderecoLayout);
@@ -762,7 +1024,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
         lblMedicamentos.setForeground(new java.awt.Color(255, 255, 255));
         lblMedicamentos.setText("Medicamentos");
 
-        cbxDeficiencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "    ", "Paraplegia", "Tetraplegia", "Paralisia Cerebral", "Membro Perdido", "Visual", "Auditiva", "Outro" }));
+        cbxDeficiencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Paraplegia", "Tetraplegia", "Paralisia Cerebral", "Membro Perdido", "Visual", "Auditiva", "Outro" }));
         cbxDeficiencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxDeficienciaActionPerformed(evt);
@@ -796,7 +1058,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        cbxAlergia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "  ", "Pólen", "Ácaros", "Pelos de Animais", "Mofo", "Antibióticos", "Anti-inflamatorios", "Leite", "Ovos", "Amendoim e Nozes", "Frutos do Mar", "Trigo e Soja", "Dermatite de Contato", "Tintas", "Outro", " " }));
+        cbxAlergia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Pólen", "Ácaros", "Pelos de Animais", "Mofo", "Antibióticos", "Anti-inflamatorios", "Leite", "Ovos", "Amendoim e Nozes", "Frutos do Mar", "Trigo e Soja", "Dermatite de Contato", "Tintas", "Outro", " " }));
         cbxAlergia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxAlergiaActionPerformed(evt);
@@ -864,7 +1126,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 .addGap(0, 6, Short.MAX_VALUE))
         );
 
-        cbxMedicamentos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "   ", "Paracetamol", "Ibuprofeno", "Loratadina", "Amoxicilina", "Insulina", "Omeprazol", "Diazepam", "Outro", " " }));
+        cbxMedicamentos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Paracetamol", "Ibuprofeno", "Loratadina", "Amoxicilina", "Insulina", "Omeprazol", "Diazepam", "Outro", " " }));
         cbxMedicamentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxMedicamentosActionPerformed(evt);
@@ -987,7 +1249,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
-        if(txtNomeAluno.getText().isEmpty() || txtEmail.getText().isEmpty() || txtRg.getText().isEmpty() || txtOrgaoExpedidor.getText().isEmpty() || txtDataEmissao.getText().isEmpty() || txtCpf.getText().isEmpty() || txtTituloEleitor.getText().isEmpty() || txtDataNascimento.getText().isEmpty()){
+        if(!validarCampos()){
             JOptionPane.showMessageDialog(null, "Dados do aluno não preenchidos", "ERRO", JOptionPane.ERROR_MESSAGE);
             log.error("Erro ao salvar: Campos obrigatórios não preenchidos");
         }else{

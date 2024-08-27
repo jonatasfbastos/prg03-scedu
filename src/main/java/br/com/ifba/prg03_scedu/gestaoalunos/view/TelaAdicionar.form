@@ -1209,7 +1209,7 @@
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="28">
-                <StringItem index="0" value="   "/>
+                <StringItem index="0" value=" "/>
                 <StringItem index="1" value="AC"/>
                 <StringItem index="2" value="AL"/>
                 <StringItem index="3" value="AP"/>
@@ -1367,7 +1367,7 @@
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="8">
-                <StringItem index="0" value="    "/>
+                <StringItem index="0" value=" "/>
                 <StringItem index="1" value="Paraplegia"/>
                 <StringItem index="2" value="Tetraplegia"/>
                 <StringItem index="3" value="Paralisia Cerebral"/>
@@ -1441,7 +1441,7 @@
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="16">
-                <StringItem index="0" value="  "/>
+                <StringItem index="0" value=" "/>
                 <StringItem index="1" value="P&#xf3;len"/>
                 <StringItem index="2" value="&#xc1;caros"/>
                 <StringItem index="3" value="Pelos de Animais"/>
@@ -1604,7 +1604,7 @@
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="10">
-                <StringItem index="0" value="   "/>
+                <StringItem index="0" value=" "/>
                 <StringItem index="1" value="Paracetamol"/>
                 <StringItem index="2" value="Ibuprofeno"/>
                 <StringItem index="3" value="Loratadina"/>
