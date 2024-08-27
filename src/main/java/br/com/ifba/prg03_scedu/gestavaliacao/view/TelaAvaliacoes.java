@@ -31,7 +31,7 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
         DefaultTableModel dtmAvalicoes = (DefaultTableModel) tableInfo.getModel();
         
         dtmAvalicoes.setRowCount(0);
-        
+        //lista todos objetos encontrados pelo findAll
         for (Avaliacao lista: dadosTabela){
             Object[] dados = {lista.getId(), lista.getData(), lista.getDisciplina(), lista.getTipo(), 
                 lista.getPeso(), lista.getDescricao(), lista.getProfessor(),lista.isStatus()};
@@ -41,7 +41,6 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
             }
         dtmAvalicoes.fireTableDataChanged();
     } else {
-        // Exiba uma mensagem de erro ou faça um log
         System.err.println("Erro: AvaliacaoIController nao foi inicializado.");
     }
     }
@@ -56,14 +55,6 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
         //initComponents();
     }
     
-//    @PostConstruct
-//    private void init() {
-//        // Chama o método que inicializa os componentes da interface gráfica
-//        initComponents();
-//        // Chama o método que carrega os dados na tabela
-//        carregarTabela();
-//    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -268,20 +259,24 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
         if (avaliacoes.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Avaliacao não encontrada.", "Aviso", JOptionPane.WARNING_MESSAGE);
         }else {
-            Avaliacao avaliacao = avaliacoes.get(0);
+            //Avaliacao avaliacao = avaliacoes.get(0);
             DefaultTableModel dtmAvaliacoes = (DefaultTableModel) tableInfo.getModel();
             // Limpa todos os dados da tabela
             dtmAvaliacoes.setRowCount(0);  
-            Object[] dados = {avaliacao.getId(), avaliacao.getData(), avaliacao.getDisciplina(), avaliacao.getTipo(), 
-                avaliacao.getPeso(), avaliacao.getDescricao(), avaliacao.getProfessor(),avaliacao.isStatus()};
+            //lista todos os objetos adquiridos com findByDisciplina
+            for (Avaliacao lista: avaliacoes){
+            Object[] dados = {lista.getId(), lista.getData(), lista.getDisciplina(), lista.getTipo(), 
+                lista.getPeso(), lista.getDescricao(), lista.getProfessor(),lista.isStatus()};
             
             dtmAvaliacoes.addRow(dados);
+        
+            }
         }
     }//GEN-LAST:event_btnBuscaActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
-        carregarTabela();
+        carregarTabela();//atualiza a tabela
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
@@ -295,16 +290,16 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
             if (resposta_user == JOptionPane.YES_OPTION) {
                 // Verifica se o usuário clicou em "Sim" na caixa de diálogo de confirmação
                 try {
-                    // Obtém o valor do ID do curso a ser removido da tabela, na coluna 2 da linha selecionada
+                    // Obtém o valor do ID do curso a ser removido da tabela, na coluna 0 da linha selecionada
                     Object idAvaRemover = tableInfo.getValueAt(tableInfo.getSelectedRow(), 0);
-                    // Recupera o objeto Curso correspondente ao ID obtido usando o controlador de curso
+                    // Recupera o objeto Avaliacao correspondente ao ID obtido usando o controlador de avaliacoes
                     Avaliacao removeAvaliacao = avaliacaoController.findById((Long) idAvaRemover);
-                    // Remove o curso do banco de dados usando o controlador de curso
+                    // Remove a avaliacao do banco de dados usando o controlador de curso
                     avaliacaoController.delete(removeAvaliacao);
-                // Exibe uma mensagem informando que o curso foi excluído com sucesso
+                // Exibe uma mensagem informando que a avaliacao foi excluída com sucesso
                 JOptionPane.showMessageDialog(this, "Avaliacao excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception e) {
-                // Exibe uma mensagem de erro informando que houve um problema ao excluir o curso, junto com a mensagem da exceção
+                // Exibe uma mensagem de erro informando que houve um problema ao excluir a avaliacao, junto com a mensagem da exceção
                 JOptionPane.showMessageDialog(this, "Erro ao excluir avaliação: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
