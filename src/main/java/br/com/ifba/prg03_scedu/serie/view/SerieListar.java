@@ -18,13 +18,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SerieListar extends javax.swing.JFrame {
-    
-    @Autowired
-    Serie serie = new Serie();
-    
+        
     @Autowired
     private SerieIController controller;
 
+    private Serie serie;
     /**
      * Creates new form SerieListar
      */

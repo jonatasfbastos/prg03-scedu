@@ -9,29 +9,24 @@ import br.com.ifba.prg03_scedu.serie.entity.Serie;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  *
  * @author geovana
  */
-@Component
 public class SerieCadastrar extends javax.swing.JFrame {
       
-    @Autowired
     private SerieListar serieListar;
     
-    @Autowired
-    private SerieIController serieController;
+    private final SerieIController serieController;
     
-    Serie serie = new Serie();
     /**
      * Creates new form SerieTela
      */
-    public SerieCadastrar() {
+    public SerieCadastrar(SerieIController serieController) {
 
         initComponents();
+        this.serieController = serieController;
          
         //Nao encerra o programa ao fechar a tela
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -56,10 +51,8 @@ public class SerieCadastrar extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         lblCadastrarSerie = new javax.swing.JLabel();
-        lblIdSerie = new javax.swing.JLabel();
         lblNomeSerie = new javax.swing.JLabel();
         lblIdCurriculo = new javax.swing.JLabel();
-        txtIdSerie = new javax.swing.JTextField();
         txtNomeSerie = new javax.swing.JTextField();
         txtIdCurriculo = new javax.swing.JTextField();
         btnCadastrar = new javax.swing.JButton();
@@ -73,20 +66,11 @@ public class SerieCadastrar extends javax.swing.JFrame {
         lblCadastrarSerie.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCadastrarSerie.setText("CADASTRAR SERIE");
 
-        lblIdSerie.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblIdSerie.setText("Id:");
-
         lblNomeSerie.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblNomeSerie.setText("Nome:");
 
         lblIdCurriculo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblIdCurriculo.setText("Id Curriculo:");
-
-        txtIdSerie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdSerieActionPerformed(evt);
-            }
-        });
 
         btnCadastrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnCadastrar.setText("Cadastrar");
@@ -115,12 +99,10 @@ public class SerieCadastrar extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblIdSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNomeSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblIdCurriculo))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtIdSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNomeSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtIdCurriculo, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(57, Short.MAX_VALUE))
@@ -136,17 +118,13 @@ public class SerieCadastrar extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(lblCadastrarSerie)
-                .addGap(50, 50, 50)
+                .addGap(78, 78, 78)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblIdSerie)
-                        .addGap(8, 8, 8)
                         .addComponent(lblNomeSerie)
                         .addGap(8, 8, 8)
                         .addComponent(lblIdCurriculo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtIdSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNomeSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addComponent(txtIdCurriculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -181,18 +159,13 @@ public class SerieCadastrar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtIdSerieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdSerieActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdSerieActionPerformed
-
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
-        long id = Long.parseLong(txtIdSerie.getText());
         long curriculoId = Long.parseLong(txtIdCurriculo.getText());
+        Serie serie = new Serie();
+
         //Logica para cadastrar no banco de dados
-        
         try {
-            serie.setId(id);
             serie.setNome(txtNomeSerie.getText());
             serie.setCurriculoId(curriculoId);
            serieController.save(serie);
@@ -206,7 +179,6 @@ public class SerieCadastrar extends javax.swing.JFrame {
     private void btnListarSerieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarSerieActionPerformed
         // TODO add your handling code here:
         
-        
         //A tela eh aberta
         serieListar.setVisible(true);
     }//GEN-LAST:event_btnListarSerieActionPerformed
@@ -218,7 +190,7 @@ public class SerieCadastrar extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SerieCadastrar().setVisible(true);
+               // new SerieCadastrar().setVisible(true);
             }
             
         });
@@ -232,10 +204,8 @@ public class SerieCadastrar extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCadastrarSerie;
     private javax.swing.JLabel lblIdCurriculo;
-    private javax.swing.JLabel lblIdSerie;
     private javax.swing.JLabel lblNomeSerie;
     private javax.swing.JTextField txtIdCurriculo;
-    private javax.swing.JTextField txtIdSerie;
     private javax.swing.JTextField txtNomeSerie;
     // End of variables declaration//GEN-END:variables
 }

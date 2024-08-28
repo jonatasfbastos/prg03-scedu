@@ -67,13 +67,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblIdSerie" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
                       <Component id="lblNomeSerie" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="lblIdCurriculo" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtIdSerie" alignment="0" min="-2" pref="259" max="-2" attributes="0"/>
                       <Component id="txtNomeSerie" alignment="0" min="-2" pref="260" max="-2" attributes="0"/>
                       <Component id="txtIdCurriculo" alignment="0" min="-2" pref="260" max="-2" attributes="0"/>
                   </Group>
@@ -93,18 +91,14 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Component id="lblCadastrarSerie" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="lblIdSerie" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Component id="lblNomeSerie" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Component id="lblIdCurriculo" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="txtIdSerie" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtNomeSerie" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                           <Component id="txtIdCurriculo" min="-2" max="-2" attributes="0"/>
@@ -130,14 +124,6 @@
             <Property name="text" type="java.lang.String" value="CADASTRAR SERIE"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblIdSerie">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Id:"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="lblNomeSerie">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -153,11 +139,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Id Curriculo:"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtIdSerie">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIdSerieActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNomeSerie">
         </Component>

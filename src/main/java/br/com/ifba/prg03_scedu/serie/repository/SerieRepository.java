@@ -16,6 +16,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SerieRepository extends JpaRepository<Serie, Long> {
     
-   // public List<Serie> getAllSerie();
+    public List<Serie> findAll();
     
 }

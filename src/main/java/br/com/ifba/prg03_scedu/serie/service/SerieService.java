@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.ifba.prg03_scedu.serie.repository.SerieRepository;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +23,7 @@ public class SerieService implements SerieIService {
     
     private final SerieRepository repositorySerie;
     
-    private static final Logger log = (Logger) LoggerFactory.getLogger(Serie.class);
+    private static final Logger log = LoggerFactory.getLogger(Serie.class);
     
     //Metodo para cadastrar uma serie
     @Override
@@ -32,7 +32,7 @@ public class SerieService implements SerieIService {
         //Verifica se todos os dados foram preenchidos e se serie ja existe
         if (serie == null) {
             throw new RuntimeException("Dados da serie não preenchidos.");
-        } else if (repositorySerie.existsById(serie.getId())) {
+        } if (serie.getId() != null && repositorySerie.existsById(serie.getId())) {
             throw new RuntimeException("Serie ja cadastrado.");
         } else {
             log.info("Serie cadastrada com sucesso!");
