@@ -54,6 +54,7 @@ public class TelaLogin extends javax.swing.JFrame {
             GestaoAlunoIController gestaoAlunoController,
             ProfessorIController professorController,
             SerieController serieController
+
     ) {
         this.curriculoController = curriculoController;
         this.usuarioController = usuarioController;
@@ -288,6 +289,7 @@ public class TelaLogin extends javax.swing.JFrame {
             Arrays.fill(senhaArray, ' ');*/
 
             TelaInicial telaInicial = new TelaInicial(disciplinaController, curriculoController, gestaoFaltasController, cursoController, usuarioController, escolaController, avaliacaoController, gestaoAlunoController, professorController, serieController);
+
             telaInicial.setVisible(true);
             telaInicial.toFront();
             this.dispose();

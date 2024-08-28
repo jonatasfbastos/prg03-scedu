@@ -41,6 +41,7 @@
                       </Group>
                   </Group>
               </Group>
+<<<<<<< HEAD
               <EmptySpace min="96" pref="96" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -48,6 +49,12 @@
                       <Component id="btnProfessor" min="-2" pref="155" max="-2" attributes="0"/>
                   </Group>
                   <Component id="btnSerie" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
+=======
+              <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="btnGestaoAluno" min="-2" pref="133" max="-2" attributes="0"/>
+                  <Component id="btnProfessor" min="-2" pref="155" max="-2" attributes="0"/>
+>>>>>>> master
               </Group>
               <EmptySpace pref="163" max="32767" attributes="0"/>
           </Group>
@@ -157,6 +164,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProfessorActionPerformed"/>
       </Events>
     </Component>
+<<<<<<< HEAD
     <Component class="javax.swing.JButton" name="btnSerie">
       <Properties>
         <Property name="text" type="java.lang.String" value="Serie"/>
@@ -165,5 +173,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSerieActionPerformed"/>
       </Events>
     </Component>
+=======
+>>>>>>> master
   </SubComponents>
 </Form>

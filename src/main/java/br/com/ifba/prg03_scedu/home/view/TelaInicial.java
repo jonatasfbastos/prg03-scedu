@@ -44,6 +44,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private final GestaoAlunoIController gestaoAlunoController;
     private final ProfessorIController professorController;
     private final SerieIController serieController;
+
     
     public TelaInicial(
         DisciplinaIController disciplinaController,
@@ -56,6 +57,7 @@ public class TelaInicial extends javax.swing.JFrame {
         GestaoAlunoIController gestaoAlunoController,
         ProfessorIController professorController,
         SerieIController serieController
+
     ) {
         initComponents();
         this.curriculoController = curriculoController;
@@ -68,6 +70,7 @@ public class TelaInicial extends javax.swing.JFrame {
         this.gestaoAlunoController = gestaoAlunoController;
         this.professorController = professorController;
         this.serieController = serieController;
+
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
@@ -159,6 +162,7 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -183,6 +187,9 @@ public class TelaInicial extends javax.swing.JFrame {
                         .addComponent(btnGestaoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnSerie, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnGestaoAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(163, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -273,6 +280,7 @@ public class TelaInicial extends javax.swing.JFrame {
         SerieCadastrar telaSerie = new SerieCadastrar(serieController);
         telaSerie.setVisible(true);
     }//GEN-LAST:event_btnSerieActionPerformed
+
 
     /**
      * @param args the command line arguments
