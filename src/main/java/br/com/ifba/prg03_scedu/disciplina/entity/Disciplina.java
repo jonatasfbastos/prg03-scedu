@@ -4,8 +4,8 @@
  */
 package br.com.ifba.prg03_scedu.disciplina.entity;
 
+import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
 import br.com.ifba.prg03_scedu.infrastructure.entity.PersistenceEntity;
-import br.com.ifba.prg03_scedu.professor.entity.Professor;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -45,20 +45,14 @@ import lombok.NoArgsConstructor;
 
 public class Disciplina extends PersistenceEntity{
     
-    // Mapeia a relação Many-to-Many com a entidade Professor.
-    // O fetch type LAZY indica que os dados dos professores associados serão carregados 
-    // apenas quando forem acessados pela primeira vez.
-    // O cascade ALL propaga todas as operações (persist, merge, remove, etc.) realizadas em Disciplina para Professor.
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    
-    // Cria uma tabela de junção para armazenar as relações Many-to-Many entre Disciplina e Professor.
-    // "disciplina_id" se refere à chave estrangeira de Disciplina, e "professor_id" à chave estrangeira de Professor.
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
         name = "Disciplina_Professor",
         joinColumns = @JoinColumn(name = "disciplina_id"),
         inverseJoinColumns = @JoinColumn(name = "professor_id")
     )
     private List<Professor> professor;
+
 
     // Carga horária da disciplina em horas.
     private int cargaHoraria;

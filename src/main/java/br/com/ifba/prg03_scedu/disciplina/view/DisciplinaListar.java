@@ -7,6 +7,7 @@ package br.com.ifba.prg03_scedu.disciplina.view;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
+import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
 import jakarta.persistence.NoResultException;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -27,9 +28,10 @@ public class DisciplinaListar extends javax.swing.JFrame {
     // Declaração de um campo privado e final para o controlador de disciplina.
 // A palavra-chave 'final' significa que este campo deve ser inicializado no construtor e não pode ser alterado depois.
 private final DisciplinaIController disciplinaController;
+private final ProfessorIController professorController;
 
 // Construtor da classe DisciplinaListar, que recebe uma instância de DisciplinaIController como argumento.
-public DisciplinaListar(DisciplinaIController disciplinaController) {
+public DisciplinaListar(DisciplinaIController disciplinaController,ProfessorIController professorController) {
     // Inicializa os componentes da interface gráfica (geralmente gerado automaticamente pelo IDE).
     initComponents();
     
@@ -38,6 +40,7 @@ public DisciplinaListar(DisciplinaIController disciplinaController) {
     
     // Chama o método carregarTabela, que provavelmente carrega os dados das disciplinas em uma tabela na interface gráfica.
     carregarTabela();
+    this.professorController = professorController;
 }
 
     
@@ -321,7 +324,7 @@ private void carregarTabela() {
             dtmCursos.setRowCount(0);  // Limpa todos os dados da tabela
 
             if (disciplinas.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Curso nao encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Disciplina nao encontrada.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 carregarTabela(); // Carregar tabela com todas as disciplinas após a pesquisa
             } else {
                 for (Disciplina disciplina : disciplinas) {
@@ -332,10 +335,10 @@ private void carregarTabela() {
             }
         } catch (NoResultException e) {
             carregarTabela(); // Carregar tabela com todas as disciplinas após a pesquisa
-            JOptionPane.showMessageDialog(null, "Curso nao encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Disciplina nao encontrada.", "Aviso", JOptionPane.WARNING_MESSAGE);
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao buscar curso: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao buscar disciplina: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }    
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
@@ -386,7 +389,7 @@ private void carregarTabela() {
     private void btnProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfessorActionPerformed
         // TODO add your handling code here:
         //Será configurada na segunda parte do projeto
-        TelaProfessor tela = new TelaProfessor(disciplinaController);
+        TelaProfessor tela = new TelaProfessor(disciplinaController, professorController);
         tela.setVisible(true);
     }//GEN-LAST:event_btnProfessorActionPerformed
 
