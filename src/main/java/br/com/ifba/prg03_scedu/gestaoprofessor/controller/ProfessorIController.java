@@ -17,4 +17,5 @@ public interface ProfessorIController {
     Professor  save(Professor usuario);
     Professor update(Professor usuario);
     void delete(Long id);
+    public List<Professor> findbyname(String nome);
 }

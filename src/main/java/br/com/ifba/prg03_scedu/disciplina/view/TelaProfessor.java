@@ -6,6 +6,8 @@ package br.com.ifba.prg03_scedu.disciplina.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
+import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
+import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
 import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -19,14 +21,17 @@ public class TelaProfessor extends javax.swing.JFrame {
     // Essa parte só será configurada na segunda parte do projeto
     //Logo Está no mode de espera até que comece
     private final DisciplinaIController disciplinaController;
+    private final ProfessorIController professorController;
     private Professor professor = new Professor();
+    private Disciplina disciplina = new Disciplina();
 
     /**
      * Creates new form TelaProfessor
      */
-    public TelaProfessor(DisciplinaIController disciplinaController) {
+    public TelaProfessor(DisciplinaIController disciplinaController,ProfessorIController professorController) {
         initComponents();
         this.disciplinaController = disciplinaController;
+        this.professorController = professorController;
     }
 
     /**
@@ -83,6 +88,11 @@ public class TelaProfessor extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblDados);
 
         btnCadastrar.setText("Cadastrar");
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -192,6 +202,20 @@ public class TelaProfessor extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        // TODO add your handling code here:
+        String nomeProfessor = txtProfessor.getText();
+        String nomeDisciplina = txtDisciplina.getText();
+        
+        
+        try {
+            
+            
+        } catch (Exception e) {
+            
+        }
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
