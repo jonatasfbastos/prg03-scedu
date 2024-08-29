@@ -28,8 +28,8 @@ import lombok.NoArgsConstructor;
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Pessoa {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(unique = true)
+    private String cpf;
     
     private String nome;
     private String orgaoExpedidorRg;
@@ -42,9 +42,6 @@ public abstract class Pessoa {
         inverseJoinColumns = @JoinColumn(name = "endereco_id")
     )
     private Set<Endereco> enderecos;
-            
-    @Column(unique = true)
-    private String cpf;
     
     @Column(unique = true)
     private String rg;

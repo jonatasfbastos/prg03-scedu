@@ -5,7 +5,6 @@ import br.com.ifba.prg03_scedu.escola.entity.Escola;
 import br.com.ifba.prg03_scedu.infrastructure.entity.Pessoa;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -42,8 +41,10 @@ public class AlunosPrincipal extends Pessoa{
     private Responsaveis reponsavelLegal;
     
     
-    //private Escola escolaOrigem;
-    private String escolaOrigem;
+    @ManyToOne
+    @JoinColumn(name = "escola_id")
+    private Escola escolaOrigem;
+    
     private String regiaoMoradia;
     private String nacionalidade;
     private String naturalidade;

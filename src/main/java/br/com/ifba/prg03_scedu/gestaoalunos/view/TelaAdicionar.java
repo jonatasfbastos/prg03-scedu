@@ -295,6 +295,10 @@ public class TelaAdicionar extends javax.swing.JFrame {
         return true;
     }
     
+    private void exibirErroELog(String campo) {
+        JOptionPane.showConfirmDialog(null, "Aluno Não Cadastrado: " + campo + " de Aluno Existente", "ERRO", JOptionPane.WARNING_MESSAGE);
+        log.warn("Aluno não cadastrado: " + campo + " de aluno existente");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1253,19 +1257,17 @@ public class TelaAdicionar extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Dados do aluno não preenchidos", "ERRO", JOptionPane.ERROR_MESSAGE);
             log.error("Erro ao salvar: Campos obrigatórios não preenchidos");
         }else{
+            AlunosPrincipal novoAluno = new AlunosPrincipal();
+            Responsaveis responsavelMae = new Responsaveis();
+            Responsaveis responsavelPai = new Responsaveis();
+            Responsaveis responsavelLegal = new Responsaveis();
             try{
-                AlunosPrincipal novoAluno = new AlunosPrincipal();
-                Responsaveis responsavelMae = new Responsaveis();
-                Responsaveis responsavelPai = new Responsaveis();
-                Responsaveis responsavelLegal = new Responsaveis();
-                
                 novoAluno.setNome(txtNomeAluno.getText());
-                novoAluno.setNomeSocial(txtOrgaoExpedidor.getText());
+                novoAluno.setNomeSocial(txtNomeSocial.getText());
                 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 Date dataRg = sdf.parse(txtDataEmissao.getText()); // Converte a String para Date
                 novoAluno.setDataEmissaoRg(dataRg);
-                
                 Date dataNascimento = sdf.parse(txtDataNascimento.getText()); // Converte a String para Date
                 novoAluno.setNascimento(dataNascimento);
                 
@@ -1275,111 +1277,115 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 novoAluno.setAlergia(cbxAlergia.getSelectedItem().toString());
                 novoAluno.setCondicoesMedicas(cbxCondicoesMedicas.getSelectedItem().toString());
                 novoAluno.setMedicamentos(cbxMedicamentos.getSelectedItem().toString());
+                
+                List<Responsaveis> responsaveis = gestaoAlunoController.findAllResponsavel();
                 if(!(cbxResponsavelEscolha.getSelectedItem().equals(" "))){
-                    Date dataRgPai = sdf.parse(txtDataEmissao.getText()); // Converte a String para Date
-                    responsavelPai.setDataEmissaoRg(dataRgPai);
-                    responsavelPai.setNome(txtNomePai.getName());
-                    responsavelPai.setOrgaoExpedidorRg(txtOrgaoExpedidorPai.getText());
-                    responsavelPai.setProfissao(txtProfissaoPai.getText());
-                    Date dataRgMae = sdf.parse(txtDataEmissao.getText()); // Converte a String para Date
-                    responsavelMae.setDataEmissaoRg(dataRgMae);
-                    responsavelMae.setNome(txtNomeMae.getName());
-                    responsavelMae.setOrgaoExpedidorRg(txtOrgaoExpedidorMae.getText());
-                    responsavelMae.setProfissao(txtProfissaoMae.getText());
-                    this.gestaoAlunoController.save(responsavelPai);
-                    this.gestaoAlunoController.save(responsavelMae);
+                    if(cbxResponsavelEscolha.getSelectedItem().equals("Outro")){
+                        for(Responsaveis responsavel: responsaveis){
+                            if(responsavel.getCpf().equals(txtCpfResponsavelOutro.getText())){
+                                exibirErroELog("CPF do Responsável Legal");
+                                return;
+                            }
+                        }
+                        responsavelLegal = gestaoAlunoController.findByIdResponsavel(Long.valueOf(txtCpfResponsavelOutro.getText()));
+                        if(responsavelLegal == null){
+                            responsavelLegal = new Responsaveis();
+                            responsavelLegal.setTipo(txtTipoResponsavel.getText());
+                            responsavelLegal.setNome(txtNomeResponsavelOutro.getText());
+                            responsavelLegal.setCpf(txtCpfResponsavelOutro.getText());
+                            responsavelLegal.setTelefone(txtTelefoneResponsavel.getText());
+                            gestaoAlunoController.save(responsavelLegal);
+                        }
+                    }else{
+                        for(Responsaveis responsavel: responsaveis){
+                            if (responsavel.getCpf().equals(txtCpfPai.getText())) {
+                                exibirErroELog("CPF do Pai");
+                                return;
+                            }
+                            if (responsavel.getCpf().equals(txtCpfMae.getText())) {
+                                exibirErroELog("CPF da Mãe");
+                                return;
+                            }
+                            if (responsavel.getRg().equals(txtRgPai.getText())) {
+                                exibirErroELog("RG do Pai");
+                                return;
+                            }
+                            if (responsavel.getRg().equals(txtRgMae.getText())) {
+                                exibirErroELog("RG da Mãe");
+                                return;
+                            }
+                        }
+                        responsavelPai = gestaoAlunoController.findByIdResponsavel(Long.valueOf(txtCpfPai.getText()));
+                        if(responsavelPai == null){
+                            //Configuracoes Pai
+                            responsavelPai = new Responsaveis();
+                            responsavelPai.setNome(txtNomePai.getText());
+                            responsavelPai.setCpf(txtCpfPai.getText());
+                            responsavelPai.setRg(txtRgPai.getText());
+                            responsavelPai.setOrgaoExpedidorRg(txtOrgaoExpedidorPai.getText());
+                            responsavelPai.setProfissao(txtProfissaoPai.getText());
+                            Date dataRgPai = sdf.parse(txtDataEmissao.getText());
+                            responsavelPai.setDataEmissaoRg(dataRgPai);
+                            gestaoAlunoController.save(responsavelPai);
+                        }
+                        
+                        responsavelMae = gestaoAlunoController.findByIdResponsavel(Long.valueOf(txtCpfMae.getText()));
+                        if(responsavelMae == null){
+                            //Configuracoes Mae
+                            responsavelMae = new Responsaveis();
+                            responsavelMae.setNome(txtNomeMae.getText());
+                            responsavelMae.setCpf(txtCpfMae.getText());
+                            responsavelMae.setRg(txtRgMae.getText());
+                            responsavelMae.setOrgaoExpedidorRg(txtOrgaoExpedidorMae.getText());
+                            responsavelMae.setProfissao(txtProfissaoMae.getText());
+                            Date dataRgMae = sdf.parse(txtDataEmissao.getText());
+                            responsavelMae.setDataEmissaoRg(dataRgMae);
+                            gestaoAlunoController.save(responsavelMae);
+                        }
+
+                        if(cbxResponsavelEscolha.getSelectedItem().equals("Pai")){
+                            responsavelLegal.setTipo("Pai");
+                        }else{
+                            responsavelLegal.setTipo("Mãe");
+                        }
+                        responsavelLegal.setTelefone(txtTelefoneResponsavel.getText());
+                    }
+                    
                     novoAluno.setPai(responsavelPai);
                     novoAluno.setMae(responsavelMae);
+                    novoAluno.setReponsavelLegal(responsavelLegal);
                 }
+                
                 List<AlunosPrincipal> alunos = this.gestaoAlunoController.findAll();
+                String cpf = txtCpf.getText();
+                String email = txtEmail.getText();
+                String rg = txtRg.getText();
+                String tituloEleitor = txtTituloEleitor.getText();
+                String telefone = txtTelefone.getText();
                 for(AlunosPrincipal aluno: alunos){
                     //Verificação da existência e algum aluno com o mesmo código do escolhido pelo usuário
-                    if(aluno.getCpf().equals(txtCpf.getText())){
-                        JOptionPane.showConfirmDialog(null, "Aluno Não Cadastrado: CPF de Aluno Existente", "ERRO", JOptionPane.WARNING_MESSAGE);
-                        log.warn("Aluno não cadastrado: Código de aluno existente");
+                    if (aluno.getCpf().equals(cpf)) {
+                        exibirErroELog("CPF");
                         return;
-                    }else{
-                        novoAluno.setCpf(txtCpf.getText());
                     }
-                    
-                    if(aluno.getEmail().equals(txtEmail.getText())){
-                        JOptionPane.showConfirmDialog(null, "Aluno Não Cadastrado: Email de Aluno Existente", "ERRO", JOptionPane.WARNING_MESSAGE);
-                        log.warn("Aluno não cadastrado: Email de aluno existente");
+                    if (aluno.getEmail().equals(email)) {
+                        exibirErroELog("Email");
                         return;
-                    }else{
-                        novoAluno.setEmail(txtEmail.getText());
                     }
-                    
-                    if(aluno.getRg().equals(txtRg.getText())){
-                        JOptionPane.showConfirmDialog(null, "Aluno Não Cadastrado: RG de Aluno Existente", "ERRO", JOptionPane.WARNING_MESSAGE);
-                        log.warn("Aluno não cadastrado: RG de aluno existente");
+                    if (aluno.getRg().equals(rg)) {
+                        exibirErroELog("RG");
                         return;
-                    }else{
-                        novoAluno.setRg(txtRg.getText());
                     }
-                    
-                    if(aluno.getTituloEleitor().equals(txtTituloEleitor.getText())){
-                        JOptionPane.showConfirmDialog(null, "Aluno Não Cadastrado: Título de Eleitor de Aluno Existente", "ERRO", JOptionPane.WARNING_MESSAGE);
-                        log.warn("Aluno não cadastrado: Título de Eleitor de aluno existente");
+                    if (aluno.getTituloEleitor().equals(tituloEleitor)) {
+                        exibirErroELog("Título de Eleitor");
                         return;
-                    }else{
-                        novoAluno.setTituloEleitor(txtTituloEleitor.getText());
                     }
-                    
-                    if(aluno.getTelefone().equals(txtTelefone.getText())){
-                        JOptionPane.showConfirmDialog(null, "Aluno Não Cadastrado: Telefone de Aluno Existente", "ERRO", JOptionPane.WARNING_MESSAGE);
-                        log.warn("Aluno não cadastrado: Telefone de aluno existente");
+                    if (aluno.getTelefone().equals(telefone)) {
+                        exibirErroELog("Telefone");
                         return;
-                    }else{
-                        novoAluno.setTelefone(txtTelefone.getText());
                     }
-                    
-                    
-                    if(!(cbxResponsavelEscolha.getSelectedItem().equals(" "))){
-                        if(cbxResponsavelEscolha.getSelectedItem().equals("Outro")){
-                            if(aluno.getReponsavelLegal().getCpf().equals(txtCpfResponsavelOutro.getText())){
-                                JOptionPane.showConfirmDialog(null, "Aluno Não Cadastrado: CPF de Responsavel Existente", "ERRO", JOptionPane.WARNING_MESSAGE);
-                                log.warn("Aluno não cadastrado: Código de aluno existente");
-                                return;
-                            }else{
-                                novoAluno.getReponsavelLegal().setCpf(txtCpfResponsavelOutro.getText());
-                            }   
-                        }else{
-                            if(aluno.getPai().getCpf().equals(txtCpfPai.getText())){
-                                JOptionPane.showConfirmDialog(null, "Aluno Não Cadastrado: CPF de Responsavel Existente", "ERRO", JOptionPane.WARNING_MESSAGE);
-                                log.warn("Aluno não cadastrado: Código de aluno existente");
-                                return;
-                            }else{
-                                responsavelPai.setCpf(txtCpfPai.getText());
-                            }
-                            
-                            if(aluno.getMae().getCpf().equals(txtCpfMae.getText())){
-                                JOptionPane.showConfirmDialog(null, "Aluno Não Cadastrado: CPF de Responsavel Existente", "ERRO", JOptionPane.WARNING_MESSAGE);
-                                log.warn("Aluno não cadastrado: Código de aluno existente");
-                                return;
-                            }else{
-                                responsavelMae.setCpf(txtCpfMae.getText());
-                            }
-                            
-                            if(aluno.getPai().getRg().equals(txtRgPai.getText())){
-                                JOptionPane.showConfirmDialog(null, "Aluno Não Cadastrado: RG de Aluno Existente", "ERRO", JOptionPane.WARNING_MESSAGE);
-                                log.warn("Aluno não cadastrado: RG de aluno existente");
-                                return;
-                            }else{
-                                responsavelPai.setRg(txtRgPai.getText());
-                            }
-                            if(aluno.getMae().getRg().equals(txtRgMae.getText())){
-                                JOptionPane.showConfirmDialog(null, "Aluno Não Cadastrado: RG de Aluno Existente", "ERRO", JOptionPane.WARNING_MESSAGE);
-                                log.warn("Aluno não cadastrado: RG de aluno existente");
-                                return;
-                            }else{
-                                responsavelMae.setRg(txtRgMae.getText());
-                    }
-                            
-                        }
-                    }
-                    
                 }
+
                 //Salva o aluno no Banco de Dados
                 this.gestaoAlunoController.save(novoAluno);
                 log.info("Aluno salvo com sucesso: {}", novoAluno);
@@ -1395,10 +1401,14 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private void cbxResponsavelEscolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxResponsavelEscolhaActionPerformed
         // TODO add your handling code here:
         if(!(cbxResponsavelEscolha.getSelectedItem().equals("  "))){
-            if(cbxResponsavelEscolha.getSelectedItem().equals("Outro"))
+            if(cbxResponsavelEscolha.getSelectedItem().equals("Outro")){
                 pnlResponsavelOutro.setVisible(true);
-            else
+                pnlReponsaveis.setVisible(false);
+            }    
+            else{
                 pnlReponsaveis.setVisible(true);
+                pnlResponsavelOutro.setVisible(false);
+            }
         }
     }//GEN-LAST:event_cbxResponsavelEscolhaActionPerformed
 

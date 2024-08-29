@@ -42,7 +42,7 @@ public class TelaListar extends javax.swing.JFrame {
 
             for(AlunosPrincipal lista: dadosTabela){
                 // Cria um array de objetos contendo os dados de cada aluno
-                Object[] dados = {lista.getId(), lista.getNomeSocial(), lista.getReponsavelLegal(), lista.getTelefone(), lista.getEmail(), lista.getNascimento()};
+                Object[] dados = {lista.getCpf(), lista.getNomeSocial(), lista.getReponsavelLegal(), lista.getTelefone(), lista.getEmail(), lista.getNascimento()};
 
                 // Adiciona uma nova linha no modelo da tabela com os dados do aluno
                 dtmAlunos.addRow(dados);
@@ -278,7 +278,7 @@ public class TelaListar extends javax.swing.JFrame {
 
             for(AlunosPrincipal lista: alunosBuscados){
                 // Cria um array de objetos contendo os dados de cada aluno
-                Object[] dados = {lista.getId(),lista.getNomeSocial(), lista.getPai().getNome(), lista.getEmail(), lista.getNascimento()};
+                Object[] dados = {lista.getCpf(),lista.getNomeSocial(), lista.getPai().getNome(), lista.getEmail(), lista.getNascimento()};
 
                 // Adiciona uma nova linha no modelo da tabela com os dados do aluno
                 dtmAlunos.addRow(dados);

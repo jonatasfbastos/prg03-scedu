@@ -63,4 +63,22 @@ public class GestaoAlunosController implements GestaoAlunoIController{
     public void delete(Responsaveis responsavel) throws RuntimeException {
         gestaoAlunoService.delete(responsavel);
     }
+    
+    @Override
+    public Responsaveis findByIdResponsavel(Long id) throws RuntimeException {
+        // Chama o serviço para encontrar um aluno pelo ID.
+        return gestaoAlunoService.findByIdResponsavel(id);
+    }
+
+    @Override
+    public List<Responsaveis> findByNomeResponsavel(String nome) throws RuntimeException {
+        // Chama o serviço para encontrar alunos pelo nome.
+        return gestaoAlunoService.findByNomeResponsavel(nome);
+    }
+    
+    @Override
+    public List<Responsaveis> findAllResponsavel() throws RuntimeException {
+        // Chama o serviço para listar todos os alunos.
+        return gestaoAlunoService.findAllResponsavel();
+    }
 }
