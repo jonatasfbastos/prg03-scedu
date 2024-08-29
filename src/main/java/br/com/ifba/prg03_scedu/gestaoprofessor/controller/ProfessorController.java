@@ -36,4 +36,9 @@ public class ProfessorController implements ProfessorIController{
     public void delete(Long id) {
         professorService.delete(id);
     }
+
+    @Override
+    public List<Professor> findByNome(String nome) {
+       return professorService.findbyname(nome);
+    }
 }

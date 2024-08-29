@@ -7,6 +7,7 @@ package br.com.ifba.prg03_scedu.gestaoprofessor.service;
 import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
 import br.com.ifba.prg03_scedu.gestaoprofessor.repository.ProfessorRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import static org.hibernate.bytecode.BytecodeLogging.LOGGER;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,10 @@ public class ProfessorService implements ProfessorIService{
 
     @Override
     public Professor findById(Long id) {
-        return null;
+        //Optional -> Permete tratar valores não nulos, ou seja sendo uma possibilidade ser nulo
+        //Essa Função pega a referência do Id e Coloca na tela
+        Optional<Professor> professor = professorRepository.findById(id);
+        return professor.orElse(null); // Retorna null se não for encontrado
     }
     
 
@@ -51,7 +55,7 @@ public class ProfessorService implements ProfessorIService{
 
     @Override
     public List<Professor> findbyname(String nome) {
-      return professorRepository.findByNome(nome);
+        return professorRepository.findByNome(nome);
     }
 
     
