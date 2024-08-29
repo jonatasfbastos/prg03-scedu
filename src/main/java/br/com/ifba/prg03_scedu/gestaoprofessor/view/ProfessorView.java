@@ -7,7 +7,9 @@ package br.com.ifba.prg03_scedu.gestaoprofessor.view;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
 import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
+import br.com.ifba.prg03_scedu.gestaoprofessor.service.ProfessorService;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -65,6 +67,7 @@ public class ProfessorView extends javax.swing.JFrame {
         btnExcluir = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
+        txtPesquisar = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,7 +118,7 @@ public class ProfessorView extends javax.swing.JFrame {
             }
         });
 
-        btnPesquisar.setText("PESQUISAR PROFESSOR");
+        btnPesquisar.setText("Pesquisar");
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPesquisarActionPerformed(evt);
@@ -143,49 +146,57 @@ public class ProfessorView extends javax.swing.JFrame {
             }
         });
 
+        txtPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPesquisarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(512, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(74, 74, 74)
+                        .addComponent(txtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 963, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(133, 133, 133)
-                            .addComponent(txtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(19, 19, 19)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 963, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(127, 127, 127)
+                            .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(152, 152, 152)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(txtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisar)
+                    .addComponent(txtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSair)
                     .addComponent(btnAtualizar))
@@ -200,12 +211,17 @@ public class ProfessorView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        //Chamando a classe de cadastrar e Tornando o a interface Visível
         new ProfessorCadastrar(professorControler).setVisible(true);
+        //Atualizando a Página caso tenha alguma alterção 
+        listarProfessor();
+        //Mensagem de atualização da Lista
+        JOptionPane.showInternalInputDialog(null, "Lista Atualizada!");
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        
-        new ProfessorPesquisar(professorControler).setVisible(true);
+        pesquisarProfessor();
+       
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -223,10 +239,13 @@ public class ProfessorView extends javax.swing.JFrame {
         new ProfessorEditar().setVisible(true);
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void txtPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPesquisarActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    
     
     public void listarProfessor(){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -247,6 +266,51 @@ public class ProfessorView extends javax.swing.JFrame {
                professor.getFormado()
             });
         }
+    }
+    
+    private void pesquisarProfessor(){
+    
+        Professor professor = null;
+        String idstr = txtPesquisar.getText();
+        
+
+        if (idstr == null || idstr.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, insira corretamente o nome/id do professor.");
+            return;
+        }
+
+        try {
+            long id;
+            id = Long.parseLong(idstr);
+            professor = professorControler.findById(id);
+            
+            if(professor == null){
+               JOptionPane.showMessageDialog(this, "ID inválido.");
+            }
+        } catch (NumberFormatException e) {
+            
+         List<Professor> professores = professorControler.findByNome(idstr);
+        }
+
+        if (professor == null) {
+            JOptionPane.showMessageDialog(this, "Professor não encontrado.");
+        } else {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+            // Apagar todos os dados
+            model.setRowCount(0);
+
+            // Adicionar nova linha com os dados do professor
+            model.addRow(new Object[]{
+                professor.getId(),
+                professor.getNome(),
+                professor.getCpf(),
+                professor.getMateria(),
+                professor.getNascimento(),
+                professor.getFormado()
+            });
+        }
+
     }
     
     public static void main(String args[]) {     
@@ -272,6 +336,7 @@ public class ProfessorView extends javax.swing.JFrame {
     private javax.swing.JButton btnSair;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtPesquisar;
     private javax.swing.JLabel txtn1;
     // End of variables declaration//GEN-END:variables
 

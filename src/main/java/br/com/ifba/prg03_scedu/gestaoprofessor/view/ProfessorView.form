@@ -24,53 +24,55 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="512" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="btnSair" min="-2" pref="225" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="btnAtualizar" min="-2" pref="225" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <Group type="103" groupAlignment="1" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="btnAdicionar" min="-2" pref="225" max="-2" attributes="0"/>
+                      <Component id="txtPesquisar" min="-2" pref="158" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnPesquisar" min="-2" pref="225" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnExcluir" min="-2" pref="225" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnEditar" min="-2" pref="234" max="-2" attributes="0"/>
+                      <Component id="btnPesquisar" min="-2" pref="102" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+                      <Component id="txtn1" min="-2" pref="291" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
-                          <Component id="txtn1" min="-2" pref="618" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" min="-2" pref="963" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jScrollPane1" min="-2" pref="963" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="btnAdicionar" min="-2" pref="225" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
+                          <Component id="btnExcluir" min="-2" pref="225" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="152" max="-2" attributes="0"/>
+                          <Component id="btnEditar" min="-2" pref="234" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="19" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-              <Component id="txtn1" min="-2" pref="68" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="txtPesquisar" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="btnPesquisar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtn1" alignment="3" min="-2" pref="68" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnAdicionar" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
-                  <Component id="btnPesquisar" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   <Component id="btnExcluir" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
                   <Component id="btnEditar" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="337" max="-2" attributes="0"/>
-              <EmptySpace pref="30" max="32767" attributes="0"/>
+              <EmptySpace pref="21" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnSair" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnAtualizar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -134,7 +136,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnPesquisar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="PESQUISAR PROFESSOR"/>
+        <Property name="text" type="java.lang.String" value="Pesquisar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPesquisarActionPerformed"/>
@@ -162,6 +164,11 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtPesquisar">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPesquisarActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

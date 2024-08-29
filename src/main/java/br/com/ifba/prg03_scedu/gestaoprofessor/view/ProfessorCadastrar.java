@@ -89,6 +89,7 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
 
         jLabel5.setText("Data de Nascimento");
 
+        lblNascimento.setText("01/01/1900");
         lblNascimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lblNascimentoActionPerformed(evt);
@@ -245,37 +246,32 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
         professor.setMateria(materia);
 
         // Verificação e conversão da data de nascimento 
-        /*SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
         Date nascimentostr = nascimento.parse(lblNascimento.getText()); // Converte a String para Date
-*/
-       /* try { 
+        
+        //Verificando Erro na chamada no método
+       try { 
             professor.setNascimento(nascimentostr);
         } catch (Exception e) {
             JOptionPane.showInternalMessageDialog(null, "Data de Nascimento Inválida");
             return;
-        }*/
+        }
 
-        // Verificando se o professor é formado
+        // Salvando se o professor é formado
         professor.setFormado(lblFormado.isSelected());
 
         // Salvando o professor no banco de dados
-      
         this.professorControler.save(professor);
         
         
 
         // Mensagem de confirmação
         JOptionPane.showInternalMessageDialog(null, "Salvo com sucesso!");
-        dispose();
-        
-       
-       
-       
-        
+        dispose();  
+        return;
     }
     
-    public static void main(String args[]) {
-       
+    public static void main(String args[]) { 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
