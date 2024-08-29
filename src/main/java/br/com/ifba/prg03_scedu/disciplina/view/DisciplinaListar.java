@@ -324,7 +324,7 @@ private void carregarTabela() {
             dtmCursos.setRowCount(0);  // Limpa todos os dados da tabela
 
             if (disciplinas.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Curso nao encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Disciplina nao encontrada.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 carregarTabela(); // Carregar tabela com todas as disciplinas após a pesquisa
             } else {
                 for (Disciplina disciplina : disciplinas) {
@@ -335,10 +335,10 @@ private void carregarTabela() {
             }
         } catch (NoResultException e) {
             carregarTabela(); // Carregar tabela com todas as disciplinas após a pesquisa
-            JOptionPane.showMessageDialog(null, "Curso nao encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Disciplina nao encontrada.", "Aviso", JOptionPane.WARNING_MESSAGE);
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao buscar curso: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao buscar disciplina: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }    
     }//GEN-LAST:event_btnPesquisarActionPerformed
 

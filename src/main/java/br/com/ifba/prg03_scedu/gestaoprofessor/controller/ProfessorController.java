@@ -38,7 +38,8 @@ public class ProfessorController implements ProfessorIController{
     }
 
     @Override
-    public List<Professor> findbyname(String nome) {
+    public List<Professor> findByNome(String nome) {
        return professorService.findbyname(nome);
     }
+
 }
