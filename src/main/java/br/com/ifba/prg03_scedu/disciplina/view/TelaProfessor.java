@@ -131,7 +131,7 @@ public class TelaProfessor extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblDados);
 
-        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.setText("Vincular");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarActionPerformed(evt);
@@ -290,6 +290,8 @@ public class TelaProfessor extends javax.swing.JFrame {
 
                     // Atualiza a disciplina com o novo professor
                     disciplinaController.update(disciplinaEncontrada);
+                    //Carrega e mostra o novo vinculo feito
+                    carregarTabela();
                 } else {
                     JOptionPane.showMessageDialog(this, "Disciplina não encontrada. Verifique o nome e tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
@@ -311,6 +313,12 @@ public class TelaProfessor extends javax.swing.JFrame {
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         // TODO add your handling code here:
         // TODO add your handling code here:
+        
+        
+        
+        List<Professor> professores;
+        
+        
         // Obtém a linha selecionada na tabela
         int row = tblDados.getSelectedRow();
         if (row != -1) {
@@ -328,14 +336,48 @@ public class TelaProfessor extends javax.swing.JFrame {
 
                 if (disciplina != null) {
                     // Pergunta ao usuário se deseja remover a disciplina
-                    int resposta = JOptionPane.showConfirmDialog(null, "Deseja remover a disciplina?", "Confirmar Remoção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int resposta = JOptionPane.showConfirmDialog(null, "Deseja modificar o professor da disciplina?", "Confirmar Remoção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                     if (resposta == JOptionPane.YES_OPTION) {
-                        disciplinaController.delete(disciplina);
-                        JOptionPane.showMessageDialog(null, "Disciplina removida com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                        
+                        String nomeProfessor = JOptionPane.showInputDialog("Digite o nome do novo professor:");
+                        
+                        
+                        
+                      try {
+                        // Busca por professores com o nome informado
+                        professores = professorController.findByNome(nomeProfessor);
 
-                        // Atualiza a tabela de dados (implementação não fornecida)
-                        carregarTabela();
+                        if (professores != null && !professores.isEmpty()) {
+                            Professor professorNovo = professores.get(0); // Pega o primeiro professor encontrado
+
+                            // Remove o professor antigo da disciplina
+                            List<Professor> professoresAntigos = disciplina.getProfessor();
+                            if (professoresAntigos != null) {
+                                professoresAntigos.clear(); // Limpa os professores antigos
+                                disciplina.setProfessor(professoresAntigos);
+                            }
+
+                            // Adiciona o novo professor à disciplina
+                            disciplina.getProfessor().add(professorNovo);
+
+                            // Atualiza a disciplina no banco de dados
+                            disciplinaController.update(disciplina);
+
+                            JOptionPane.showMessageDialog(null, "Disciplina atualizada com sucesso com o novo professor.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                            // Atualiza a tabela de dados
+                            carregarTabela();
+
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Professor não encontrado. Verifique o nome e tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "Ocorreu um erro ao buscar o professor: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                        e.printStackTrace(); // Opcional: útil para depuração
+                    } 
+                        
 
                     } else {
                         // Cancelar a operação
@@ -343,14 +385,14 @@ public class TelaProfessor extends javax.swing.JFrame {
                     }
                 } else {
                     // Disciplina não encontrada, lidar com isso apropriadamente
-                    JOptionPane.showMessageDialog(null, "Disciplina não encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Disciplina não encontrada.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Erro ao remover a disciplina.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Nenhuma disciplina selecionado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nenhuma disciplina selecionada.", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
 
     }//GEN-LAST:event_btnAtualizarActionPerformed
