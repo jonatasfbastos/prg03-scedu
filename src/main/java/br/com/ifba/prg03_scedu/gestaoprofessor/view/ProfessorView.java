@@ -7,13 +7,13 @@ package br.com.ifba.prg03_scedu.gestaoprofessor.view;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
 import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
-import br.com.ifba.prg03_scedu.gestaoprofessor.service.ProfessorService;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 import org.springframework.stereotype.Component;
 
 /**
@@ -216,17 +216,29 @@ public class ProfessorView extends javax.swing.JFrame {
         //Atualizando a Página caso tenha alguma alterção 
         listarProfessor();
         //Mensagem de atualização da Lista
-        JOptionPane.showInternalInputDialog(null, "Lista Atualizada!");
+        JOptionPane.showMessageDialog(null, "Lista Atualizada!");
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         pesquisarProfessor();
-       
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
-        new ProfessorExcluir().setVisible(true);
+
+       // new ProfessorExcluir().setVisible(true);
+       int selectedRom = jTable1.getSelectedRow();
+       if(selectedRom != -1){
+           
+           int ColunaId = jTable1.getColumn("ID").getModelIndex();
+           
+           Long id = (long) jTable1.getValueAt(selectedRom, ColunaId);
+           
+          
+       }
+        JOptionPane.showMessageDialog(null, id) ;
+       
+       
+       
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
@@ -270,56 +282,81 @@ public class ProfessorView extends javax.swing.JFrame {
     
     private void pesquisarProfessor(){
     
-        Professor professor = null;
+        Professor professorBusca = null;
         String idstr = txtPesquisar.getText();
         
-
+        //Verificando Caso tenha 
         if (idstr == null || idstr.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, insira corretamente o nome/id do professor.");
             return;
         }
 
         try {
+            //Pesquisando pelo ID
             long id;
-            id = Long.parseLong(idstr);
-            professor = professorControler.findById(id);
             
-            if(professor == null){
-               JOptionPane.showMessageDialog(this, "ID inválido.");
+            //Convertendo para Pesquisar pelo Id
+            id = Long.parseLong(idstr);
+            
+            //Verificando No Banco de dados chamando o controler
+            professorBusca = professorControler.findById(id);
+            
+            //Verificando se não achou o professor
+            if (professorBusca == null) {
+                JOptionPane.showMessageDialog(this, "Professor não encontrado.");
+            } else {
+
+                //Criando a Tabela de dados do banco de dados
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+                // Apagar todos os dados
+                model.setRowCount(0);
+
+                // Adicionar nova linha com os dados do professor
+                model.addRow(new Object[]{
+                    professorBusca.getId(),
+                    professorBusca.getNome(),
+                    professorBusca.getCpf(),
+                    professorBusca.getMateria(),
+                    professorBusca.getNascimento(),
+                    professorBusca.getFormado()
+                });
             }
         } catch (NumberFormatException e) {
+            //Pesquisando pelo nome procurando no banco chamando no controller
+            List<Professor> professores = professorControler.findByNome(idstr);
+        
+            //Verificando se encontrou o professor
+            if(professores == null){
+                JOptionPane.showMessageDialog(null, "Professor não encontrado");
+                return;
+            }
             
-         List<Professor> professores = professorControler.findByNome(idstr);
-        }
-
-        if (professor == null) {
-            JOptionPane.showMessageDialog(this, "Professor não encontrado.");
-        } else {
+            //Criando a tabela de dados de banco de dados
+            
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-
-            // Apagar todos os dados
             model.setRowCount(0);
-
-            // Adicionar nova linha com os dados do professor
-            model.addRow(new Object[]{
-                professor.getId(),
-                professor.getNome(),
-                professor.getCpf(),
-                professor.getMateria(),
-                professor.getNascimento(),
-                professor.getFormado()
-            });
+            
+            //Adicionando cada Professor encontrado à tabela
+            for(Professor p : professores){
+                model.addRow(new Object[]{
+                    p.getId(),
+                    p.getNome(),
+                    p.getCpf(),
+                    p.getMateria(),
+                    p.getNascimento(),
+                    p.getFormado()
+                });
+            }
+            return;
         }
-
+        
     }
     
     public static void main(String args[]) {     
         
         
-               ConfigurableApplicationContext context = 
-        new SpringApplicationBuilder(Prg03SceduApplication.class)
-        .headless(false)
-        .run(args);
+        ConfigurableApplicationContext context = new SpringApplicationBuilder(Prg03SceduApplication.class).headless(false).run(args);
 
         ProfessorView professorView = context.getBean(ProfessorView.class);
         professorView.setVisible(true);
