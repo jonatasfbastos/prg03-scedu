@@ -27,6 +27,7 @@ public class SerieCadastrar extends javax.swing.JFrame {
 
         initComponents();
         this.serieController = serieController;
+        this.serieListar = new SerieListar();
          
         //Nao encerra o programa ao fechar a tela
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -180,7 +181,7 @@ public class SerieCadastrar extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         //A tela eh aberta
-        serieListar.setVisible(true);
+       this.serieListar.setVisible(true);
     }//GEN-LAST:event_btnListarSerieActionPerformed
 
     /**
