@@ -5,9 +5,12 @@
 package br.com.ifba.prg03_scedu.gestavaliacao.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
+import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
 import br.com.ifba.prg03_scedu.gestavaliacao.controller.AvaliacaoIController;
 import br.com.ifba.prg03_scedu.gestavaliacao.entity.Avaliacao;
 import java.time.LocalDate;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -18,16 +21,20 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 public class CadastroAvaliacao extends javax.swing.JFrame {
     
-    private final AvaliacaoIController avaController;
+    private final AvaliacaoIController avaController; // Controlador para gerenciar as operações de Avaliação
+    private final DisciplinaIController disciplinaController; // Controlador para gerenciar as operações de Disciplina
 
-    /**
-     * Creates new form CadastroAvaliacao
-     */
-    
-    public CadastroAvaliacao(AvaliacaoIController avaController) {
-        this.avaController = avaController;
-        initComponents();
-    }
+/**
+ * Cria uma nova instância do formulário CadastroAvaliacao.
+ * 
+ * @param avaController O controlador responsável pelas operações de avaliação.
+ * @param disciplinaController O controlador responsável pelas operações de disciplina.
+ */
+public CadastroAvaliacao(AvaliacaoIController avaController, DisciplinaIController disciplinaController) {
+    this.avaController = avaController; // Inicializa o controlador de avaliação
+    this.disciplinaController = disciplinaController; // Inicializa o controlador de disciplina
+    initComponents(); // Inicializa os componentes da interface gráfica
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -225,39 +232,52 @@ public class CadastroAvaliacao extends javax.swing.JFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
-        setVisible(false);
+        setVisible(false);//cancela a operação
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastroActionPerformed
         // TODO add your handling code here:
-        Avaliacao ava = new Avaliacao();
-        
-        // Pegando os valores dos spinners
-        int dia = (int) spinDia.getValue();
-        int mes = (int) spinMes.getValue();
-        int ano = (int) spinAno.getValue();
-        // Criando a data a partir dos valores dos spinners
-        LocalDate dataAvaliacao = LocalDate.of(ano, mes, dia);
-        ava.setData(dataAvaliacao);
-        
-        ava.setDisciplina(txtDisci.getText());
-        
-        String tipoSelecionado = (String) boxTipo.getSelectedItem();
-        ava.setTipo(tipoSelecionado);
-        
-        ava.setPeso(Integer.parseInt(spinPeso.getValue().toString()));
-        
-        ava.setProfessor(txtProf.getText());
-        
-        ava.setDescricao(txtDescri.getText());
-                
+        Avaliacao ava = new Avaliacao(); // Cria uma nova instância da entidade Avaliacao
         try {
-            avaController.save(ava);
-        } catch (Exception error){
+            // Pegando os valores dos spinners
+            int dia = (int) spinDia.getValue(); // Obtém o valor do spinner para o dia
+            int mes = (int) spinMes.getValue(); // Obtém o valor do spinner para o mês
+            int ano = (int) spinAno.getValue(); // Obtém o valor do spinner para o ano
+
+            // Criando a data a partir dos valores dos spinners
+            LocalDate dataAvaliacao = LocalDate.of(ano, mes, dia); // Constrói a data com ano, mês e dia
+            ava.setData(dataAvaliacao); // Define a data da avaliação
+
+            String nomeDisciplina = txtDisci.getText(); // Obtém o nome da disciplina do campo de texto
+            List<Disciplina> disciplinas = disciplinaController.findByNome(nomeDisciplina); // Busca a disciplina pelo nome
+            if (!disciplinas.isEmpty()) { // Verifica se a lista de disciplinas não está vazia
+                Disciplina disciplina = disciplinas.get(0); // Obtém a primeira disciplina da lista
+                ava.setDisciplinas(disciplina); // Define a disciplina na avaliação
+                ava.setDisciplina(txtDisci.getText()); // Define o nome da disciplina na avaliação
+            } else {
+                // Se a disciplina não for encontrada, exibe uma mensagem de erro
+                JOptionPane.showMessageDialog(this, "Disciplina não encontrada. Verifique o nome e tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Disciplina nao encontrada ou nao existente");
+                return; // Interrompe o processamento se a disciplina não for encontrada
+            }
+
+            String tipoSelecionado = (String) boxTipo.getSelectedItem(); // Obtém o tipo selecionado no combo box
+            ava.setTipo(tipoSelecionado); // Define o tipo na avaliação
+
+            ava.setPeso(Integer.parseInt(spinPeso.getValue().toString())); // Define o peso da avaliação
+
+            ava.setProfessor(txtProf.getText()); // Define o nome do professor
+
+            ava.setDescricao(txtDescri.getText()); // Define a descrição da avaliação
+
+            avaController.save(ava); // Salva a avaliação usando o controlador
+            // Exibe uma mensagem de sucesso para o usuário
+            JOptionPane.showMessageDialog(this, "Avaliacao cadastrada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception error) {
             // Se ocorrer uma exceção durante o processo de salvamento, exibe uma mensagem de erro para o usuário
-        JOptionPane.showMessageDialog(null, error, "Erro ao cadastrar a avaliacao", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, error, "Erro ao cadastrar a avaliacao", JOptionPane.ERROR_MESSAGE);
         }
-        this.dispose();
+        this.dispose(); // Fecha o formulário
     }//GEN-LAST:event_btnCadastroActionPerformed
 
     /**

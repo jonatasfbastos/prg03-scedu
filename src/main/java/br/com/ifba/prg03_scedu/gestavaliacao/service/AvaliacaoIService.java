@@ -13,17 +13,25 @@ import java.util.List;
  * @author rian1
  */
 public interface AvaliacaoIService {
-    public abstract Avaliacao save(Avaliacao avaliacao) throws RuntimeException;
 
-    public abstract Avaliacao update(Avaliacao avaliacao) throws RuntimeException;
+    public abstract Avaliacao save(Avaliacao avaliacao) throws RuntimeException; 
+    // Salva uma nova Avaliação e retorna a instância salva.
 
-    public abstract Avaliacao findById(Long id) throws RuntimeException;
+    public abstract Avaliacao update(Avaliacao avaliacao) throws RuntimeException; 
+    // Atualiza uma Avaliação existente e retorna a instância atualizada.
 
-    public abstract void delete(Avaliacao avaliacao) throws RuntimeException;
+    public abstract Avaliacao findById(Long id) throws RuntimeException; 
+    // Busca uma Avaliação pelo ID e retorna a instância correspondente.
 
-    public abstract List<Avaliacao> findAll() throws RuntimeException;
+    public abstract void delete(Avaliacao avaliacao) throws RuntimeException; 
+    // Exclui uma Avaliação existente.
+
+    public abstract List<Avaliacao> findAll() throws RuntimeException; 
+    // Retorna uma lista com todas as Avaliações.
 
     public abstract List<Avaliacao> findByData(LocalDate data); 
-    
-    public abstract List<Avaliacao> findByDisciplina(String disciplina);
+    // Busca Avaliações por data e retorna uma lista com as instâncias encontradas.
+
+    public abstract List<Avaliacao> findByDisciplina(String disciplina); 
+    // Busca Avaliações por disciplina e retorna uma lista com as instâncias encontradas.
 }

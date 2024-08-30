@@ -15,44 +15,44 @@ import org.springframework.stereotype.Controller;
  *
  * @author rian1
  */
-@Controller //Anotação que indica que esta classe é um controlador do Spring.
-@RequiredArgsConstructor // Anotação do Lombok que gera um construtor com todos os campos finais (final) como parâmetros, facilitando a injeção de dependências.
+@Controller // Indica que esta classe é um controlador do Spring, responsável por gerenciar as requisições HTTP.
+@RequiredArgsConstructor // Anotação do Lombok que gera um construtor com todos os campos finais (final), facilitando a injeção de dependências.
 public class AvaliacaoController implements AvaliacaoIController{
-    
-    private final AvaliacaoIService avaliacaoIservice;
-    
+
+    private final AvaliacaoIService avaliacaoIservice; // Injeção de dependência do serviço de Avaliação
+
     @Override
     public Avaliacao save(Avaliacao avaliacao) throws RuntimeException {
-        return avaliacaoIservice.save(avaliacao);
+        return avaliacaoIservice.save(avaliacao); // Chama o serviço para salvar uma nova avaliação
     }
-    
+
     @Override
     public Avaliacao update(Avaliacao avaliacao) throws RuntimeException {
-        return avaliacaoIservice.update(avaliacao);
+        return avaliacaoIservice.update(avaliacao); // Chama o serviço para atualizar uma avaliação existente
     }
-    
+
     @Override
     public Avaliacao findById(Long id) throws RuntimeException {
-        return avaliacaoIservice.findById(id);
+        return avaliacaoIservice.findById(id); // Chama o serviço para encontrar uma avaliação pelo ID
     }
-    
+
     @Override
     public void delete(Avaliacao avaliacao) throws RuntimeException {
-        avaliacaoIservice.delete(avaliacao);
+        avaliacaoIservice.delete(avaliacao); // Chama o serviço para excluir uma avaliação
     }
-    
+
     @Override
     public List<Avaliacao> findAll() throws RuntimeException {
-        return avaliacaoIservice.findAll();
+        return avaliacaoIservice.findAll(); // Chama o serviço para listar todas as avaliações
     }
-    
+
     @Override
     public List<Avaliacao> findByData(LocalDate data) {
-        return avaliacaoIservice.findByData(data);
+        return avaliacaoIservice.findByData(data); // Chama o serviço para listar avaliações por data
     }
 
     @Override
     public List<Avaliacao> findByDisciplina(String disciplina) {
-        return avaliacaoIservice.findByDisciplina(disciplina);
+        return avaliacaoIservice.findByDisciplina(disciplina); // Chama o serviço para listar avaliações por disciplina
     }
 }
