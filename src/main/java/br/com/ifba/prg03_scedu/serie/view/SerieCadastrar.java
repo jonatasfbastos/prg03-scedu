@@ -9,11 +9,13 @@ import br.com.ifba.prg03_scedu.serie.entity.Serie;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author geovana
  */
+@Component
 public class SerieCadastrar extends javax.swing.JFrame {
       
     private SerieListar serieListar;
@@ -27,7 +29,7 @@ public class SerieCadastrar extends javax.swing.JFrame {
 
         initComponents();
         this.serieController = serieController;
-        this.serieListar = new SerieListar();
+        this.serieListar = new SerieListar(serieController);
          
         //Nao encerra o programa ao fechar a tela
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

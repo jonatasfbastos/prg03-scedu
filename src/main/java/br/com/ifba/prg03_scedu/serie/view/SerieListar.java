@@ -7,6 +7,7 @@ package br.com.ifba.prg03_scedu.serie.view;
 import br.com.ifba.prg03_scedu.serie.controller.SerieIController;
 import br.com.ifba.prg03_scedu.serie.entity.Serie;
 import java.awt.Color;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +21,16 @@ import org.springframework.stereotype.Component;
 public class SerieListar extends javax.swing.JFrame {
         
     @Autowired
-    private SerieIController controller;
+    private final SerieIController controller;
 
     private Serie serie;
     /**
      * Creates new form SerieListar
      */
-    public SerieListar() {
-        this.controller = controller;
+    public SerieListar(SerieIController serieController) {
         initComponents();
-        
+        this.controller = serieController;
+
         //Nao encerra o programa ao fechar a tela
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
@@ -189,6 +190,7 @@ public class SerieListar extends javax.swing.JFrame {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         // TODO add your handling code here:
+        atualizarTabela();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     /**
@@ -221,7 +223,7 @@ public class SerieListar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SerieListar().setVisible(true);
+               // new SerieListar().setVisible(true);
             }
         });
     }
@@ -235,4 +237,19 @@ public class SerieListar extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblSerie;
     // End of variables declaration//GEN-END:variables
+
+    private void atualizarTabela(){
+        List<Serie> series = controller.findAll();
+        DefaultTableModel dtmSerie = (DefaultTableModel) tblSerie.getModel();
+        dtmSerie.setRowCount(0);
+        
+        for (Serie serie : series) {
+           dtmSerie.addRow(new Object[] {
+              serie.getId(),
+              serie.getNome(),
+              serie.getCurriculoId()
+        });
+        }
+    }
+
 }
