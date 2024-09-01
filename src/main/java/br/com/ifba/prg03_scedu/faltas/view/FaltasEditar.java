@@ -1,5 +1,6 @@
 package br.com.ifba.prg03_scedu.faltas.view;
 
+import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
 import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
 import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
 import br.com.ifba.prg03_scedu.faltas.entity.Falta;
@@ -21,6 +22,7 @@ public class FaltasEditar extends JDialog {
         setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
         postAluno();
         getAlunos();
+        getDisciplinas();//carregar disciplinas
     }
     
      public FaltasEditar(FaltasListar parent, GestaoFaltasIController gestaoFaltasController, Falta falta) {
@@ -31,6 +33,7 @@ public class FaltasEditar extends JDialog {
         setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
         postAluno();
         getAlunos();
+        getDisciplinas();//carregar disciplinas
         populateFields();
     }
      
@@ -82,6 +85,24 @@ public class FaltasEditar extends JDialog {
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Ocorreu um erro ao buscar os alunos.", "Sucesso", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void getDisciplinas() {
+        try {
+            // Buscar a lista de disciplinas do banco de dados
+            List<String> disciplinasList = gestaoFaltasController.getAllDisciplinas();
+
+            // Limpar os itens existentes no JComboBox
+            jComboBox1.removeAllItems();
+
+            // Adicionar as disciplinas ao JComboBox
+            for (String disciplina : disciplinasList) {
+                jComboBox1.addItem(disciplina);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao buscar as disciplinas.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -266,13 +287,13 @@ public class FaltasEditar extends JDialog {
         try {
             // Obter os dados da interface
             String alunoName = jComboBox2.getSelectedItem().toString();
-            String disciplina = jComboBox1.getSelectedItem().toString();
+            String disciplinaName = jComboBox1.getSelectedItem().toString();
             String data = jTextField1.getText();
             boolean justificada = jCheckBox1.isSelected();
             String observacoes = jTextArea1.getText();
 
             // Verificação básica de campos obrigatórios
-            if (alunoName.isEmpty() || disciplina.isEmpty() || data.isEmpty()) {
+            if (alunoName.isEmpty() || disciplinaName.isEmpty() || data.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos obrigatórios.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -281,6 +302,9 @@ public class FaltasEditar extends JDialog {
             Date dataEmissao = sdf.parse(data);
 
             Alunos aluno = buscarAlunoPorNome(alunoName);
+            
+             // Buscar disciplina pelo nome
+            Disciplina disciplina = gestaoFaltasController.buscarDisciplinaPorNome(disciplinaName);
 
             if (faltaAtual == null) {
                 System.out.println("Adicionando nova falta.");

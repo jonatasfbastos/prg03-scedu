@@ -1,5 +1,6 @@
 package br.com.ifba.prg03_scedu.faltas.entity;
 
+import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -27,14 +28,15 @@ public class Falta {
     @Column(length = 500)
     private String observacoes;
 
-    @Column(nullable = false)
-    private String disciplina;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "disciplina_id", referencedColumnName = "id")
+    private Disciplina disciplina;
 
     // Construtores, getters e setters
     public Falta() {
     }
 
-    public Falta(Alunos aluno, Date data, String aula, boolean justificada, String observacoes, String disciplina) {
+    public Falta(Alunos aluno, Date data, String aula, boolean justificada, String observacoes, Disciplina disciplina) {
         this.aluno = aluno;
         this.data = data;
         this.aula = aula;
@@ -91,11 +93,11 @@ public class Falta {
         this.observacoes = observacoes;
     }
 
-    public String getDisciplina() {
+    public Disciplina getDisciplina() {
         return disciplina;
     }
 
-    public void setDisciplina(String disciplina) {
+    public void setDisciplina(Disciplina disciplina) {
         this.disciplina = disciplina;
     }
 }

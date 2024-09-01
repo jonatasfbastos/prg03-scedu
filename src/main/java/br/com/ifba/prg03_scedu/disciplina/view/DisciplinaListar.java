@@ -67,6 +67,7 @@ public class DisciplinaListar extends javax.swing.JFrame {
         // Itera sobre a lista de disciplinas obtida do banco de dados
         for (Disciplina lista : dadosTabela) {
 
+            //Inicia uma String vazia
             String nomeCurso = "";
     
             // Verifica se a lista de cursos não é nula e não está vazia
