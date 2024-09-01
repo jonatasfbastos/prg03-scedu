@@ -1,9 +1,12 @@
 package br.com.ifba.prg03_scedu.faltas.controller;
 
+import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
+import br.com.ifba.prg03_scedu.disciplina.service.DisciplinaIService;
 import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
 import br.com.ifba.prg03_scedu.faltas.entity.Falta;
 import br.com.ifba.prg03_scedu.faltas.service.AlunosIService;
 import br.com.ifba.prg03_scedu.faltas.service.GestaoFaltasIService;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,9 @@ public class GestaoFaltasController implements GestaoFaltasIController {
     public Alunos saveAluno(Alunos aluno) {
         return alunosService.save(aluno);
     }
+    
+    @Autowired
+    private DisciplinaIService disciplinaService;
 
     @Override
     public List<Alunos> getAllAlunos() throws RuntimeException {
@@ -75,4 +81,34 @@ public class GestaoFaltasController implements GestaoFaltasIController {
         }
         return null;
     }
+
+     @Override
+    public Disciplina buscarDisciplinaPorNome(String nome) throws RuntimeException {
+    if (nome == null || nome.isEmpty()) {
+        throw new IllegalArgumentException("Nome da disciplina não pode ser nulo ou vazio.");
+    }
+
+    // Buscar todas as disciplinas usando o serviço
+    List<Disciplina> disciplinasList = disciplinaService.findAll(); // Utilize o método adequado para buscar todas as disciplinas
+
+    // Procurar a disciplina pelo nome
+    for (Disciplina disciplina : disciplinasList) {
+        if (disciplina.getNome().equalsIgnoreCase(nome)) {
+            return disciplina;
+        }
+    }
+
+    // Lançar exceção se a disciplina não for encontrada
+    throw new RuntimeException("Disciplina não encontrada: " + nome);
+}
+    
+    @Override
+    public List<String> getAllDisciplinas() {
+    List<Disciplina> disciplinas = disciplinaService.findAll();
+    List<String> nomesDisciplinas = new ArrayList<>();
+    for (Disciplina disciplina : disciplinas) {
+        nomesDisciplinas.add(disciplina.getNome());
+    }
+    return nomesDisciplinas;
+}
 }

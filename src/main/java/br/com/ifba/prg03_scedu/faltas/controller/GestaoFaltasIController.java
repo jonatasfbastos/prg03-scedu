@@ -1,5 +1,6 @@
 package br.com.ifba.prg03_scedu.faltas.controller;
 
+import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
 import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
 import br.com.ifba.prg03_scedu.faltas.entity.Falta;
 import java.util.List;
@@ -23,4 +24,8 @@ public interface GestaoFaltasIController {
     public List<Falta> findAll() throws RuntimeException;
 
     public Alunos getAlunoByNome(String nomeAluno);
+    
+    public Disciplina buscarDisciplinaPorNome(String nome) throws RuntimeException;
+
+    public List<String> getAllDisciplinas();
 }
