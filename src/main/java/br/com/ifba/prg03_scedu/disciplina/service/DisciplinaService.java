@@ -35,11 +35,11 @@ public class DisciplinaService implements DisciplinaIService{
     public Disciplina save(Disciplina disciplina) throws RuntimeException {
         // Verifica se a disciplina é nula
         if (disciplina == null) {
-            throw new RuntimeException(/*StringUtil.getNullDisciplinaError()*/"Erro de null");
+            throw new RuntimeException("Erro, disciplina é igual à null !!!");
         }
         // Verifica se a disciplina já existe (tem um ID)
         else if (disciplina.getId() != null) {
-            throw new RuntimeException(/*StringUtil.getExistingDisciplinaError()*/"Erro de null");
+            throw new RuntimeException("Erro, disciplina já existe no banco");
         } 
         // Salva a disciplina no banco de dados
         else {
@@ -54,7 +54,7 @@ public class DisciplinaService implements DisciplinaIService{
     public Disciplina update(Disciplina disciplina) throws RuntimeException {
         // Verifica se a disciplina é nula
         if (disciplina == null) {
-            throw new RuntimeException(/*StringUtil.getNullDisciplinaError()*/"Erro de null");
+            throw new RuntimeException("Erro, disciplina é nula");
         } 
         // Atualiza a disciplina no banco de dados
         else {
@@ -69,7 +69,7 @@ public class DisciplinaService implements DisciplinaIService{
     public void delete(Disciplina disciplina) throws RuntimeException {
         // Verifica se a disciplina é nula
         if (disciplina == null) {
-            throw new RuntimeException(/*StringUtil.getNullDisciplinaError()*/"Erro de null");
+            throw new RuntimeException("Erro, disciplina é nula");
         } 
         // Exclui a disciplina do banco de dados
         else {
@@ -84,7 +84,7 @@ public class DisciplinaService implements DisciplinaIService{
     public Disciplina findById(Long id) throws RuntimeException {
         // Verifica se o ID é nulo
         if (id == null) {
-            throw new RuntimeException(/*StringUtil.getNullIdError()*/"Erro de null");
+            throw new RuntimeException("Erro, disciplina é nula");
         } 
         // Busca a disciplina pelo ID no banco de dados
         else {
@@ -101,7 +101,7 @@ public class DisciplinaService implements DisciplinaIService{
     public List<Disciplina> findByNome(String nome) throws RuntimeException {
         // Verifica se o nome é nulo ou vazio
         if (nome == null || nome.isEmpty()) {
-            throw new RuntimeException(/*StringUtil.getNullNameError()*/ "Erro de null");
+            throw new RuntimeException("Erro, disciplina é nula ou vazia");
         } 
         // Busca disciplinas pelo nome no banco de dados
         else {

@@ -6,7 +6,14 @@ package br.com.ifba.prg03_scedu.disciplina.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
-import br.com.ifba.prg03_scedu.professor.entity.Professor;
+import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
+import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
+import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
+import jakarta.persistence.NoResultException;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.Hibernate;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -16,16 +23,61 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 public class TelaProfessor extends javax.swing.JFrame {
     
+    // Essa parte só será configurada na segunda parte do projeto
+    //Logo Está no mode de espera até que comece
     private final DisciplinaIController disciplinaController;
+    private final ProfessorIController professorController;
     private Professor professor = new Professor();
+    private Disciplina disciplina = new Disciplina();
 
     /**
      * Creates new form TelaProfessor
      */
-    public TelaProfessor(DisciplinaIController disciplinaController) {
+    public TelaProfessor(DisciplinaIController disciplinaController,ProfessorIController professorController) {
         initComponents();
         this.disciplinaController = disciplinaController;
+        this.professorController = professorController;
+        carregarTabela();
     }
+    
+    
+    private void carregarTabela() {
+        // Verifica se o disciplinaController foi inicializado corretamente
+        if (disciplinaController == null) {
+            // Lança uma exceção ou loga um erro se disciplinaController não estiver inicializado
+            throw new IllegalStateException("O controlador da disciplina não foi inicializado.");
+        }
+
+        // Obtém todas as disciplinas do banco de dados
+        List<Disciplina> dadosTabela = disciplinaController.findAll();
+
+        // Obtém o modelo da tabela (DefaultTableModel) da tabela exibida na interface gráfica
+        DefaultTableModel dtmDisciplinas = (DefaultTableModel) tblDados.getModel();
+        // Limpa todas as linhas atuais da tabela para preparar a inserção de novos dados
+        dtmDisciplinas.setRowCount(0);
+
+        // Itera sobre a lista de disciplinas obtida do banco de dados
+        for (Disciplina disciplina : dadosTabela) {
+            // Obtém o nome do professor associado à disciplina
+            String nomeProfessor = "";
+            if (disciplina.getProfessor() != null && !disciplina.getProfessor().isEmpty()) {
+                nomeProfessor = disciplina.getProfessor().get(0).getNome(); // Obtém o nome do primeiro professor
+            }
+
+            // Cria um array de objetos contendo os dados de cada disciplina
+            Object[] dados = {
+                nomeProfessor,
+                disciplina.getNome()
+            };
+
+            // Adiciona os dados da disciplina como uma nova linha no modelo da tabela
+            dtmDisciplinas.addRow(dados);
+        }
+        // Notifica a tabela que os dados foram atualizados para que a interface gráfica seja atualizada
+        dtmDisciplinas.fireTableDataChanged();
+    }
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,29 +89,179 @@ public class TelaProfessor extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        lblProfessor = new javax.swing.JLabel();
+        lblDisciplina = new javax.swing.JLabel();
+        txtProfessor = new javax.swing.JTextField();
+        txtDisciplina = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblDados = new javax.swing.JTable();
+        btnCadastrar = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
+        btnAtualizar = new javax.swing.JButton();
+        txtPesquisar = new javax.swing.JTextField();
+        btnPesquisar = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
+        btnRemover = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 204));
 
+        lblProfessor.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblProfessor.setForeground(new java.awt.Color(255, 255, 255));
+        lblProfessor.setText("Digite o nome do professor:");
+
+        lblDisciplina.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblDisciplina.setForeground(new java.awt.Color(255, 255, 255));
+        lblDisciplina.setText("Digite o nome da disciplina:");
+
+        txtProfessor.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        txtDisciplina.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        tblDados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Professor", "Disciplina"
+            }
+        ));
+        jScrollPane1.setViewportView(tblDados);
+
+        btnCadastrar.setText("Vincular");
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
+
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+
+        btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
+
+        btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
+
+        btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
+        btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Digite o nome da disciplina:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1001, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblProfessor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblDisciplina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(82, 82, 82)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnRemover, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(179, 179, 179)
+                                .addComponent(jLabel1)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 958, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 471, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addComponent(btnRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtProfessor)
+                            .addComponent(lblProfessor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(73, 73, 73)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDisciplina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnRefresh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -70,6 +272,250 @@ public class TelaProfessor extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        String nomeProfessor = txtProfessor.getText();
+        String nomeDisciplina = txtDisciplina.getText();
+
+        List<Professor> professores;
+        List<Disciplina> disciplinas;
+
+        try {
+            // Busca por professores com o nome informado
+            professores = professorController.findByNome(nomeProfessor);
+
+            if (professores != null && !professores.isEmpty()) {
+                // Professor encontrado
+                Professor professorEncontrado = professores.get(0); // Pega o primeiro professor encontrado
+
+                // Busca por disciplinas com o nome informado
+                disciplinas = disciplinaController.findByNome(nomeDisciplina);
+
+                if (disciplinas != null && !disciplinas.isEmpty()) {
+                    // Disciplina encontrada
+                    Disciplina disciplinaEncontrada = disciplinas.get(0); // Pega a primeira disciplina encontrada
+
+                    // Adiciona o professor à lista de professores da disciplina
+                    if (!disciplinaEncontrada.getProfessor().contains(professorEncontrado)) {
+                        disciplinaEncontrada.getProfessor().add(professorEncontrado);
+                    }
+
+                    // Atualiza a disciplina com o novo professor
+                    disciplinaController.update(disciplinaEncontrada);
+                    //Carrega e mostra o novo vinculo feito
+                    carregarTabela();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Disciplina não encontrada. Verifique o nome e tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Professor não encontrado. Verifique o nome e tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao buscar o professor ou disciplina: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); // Opcional: útil para depuração
+        }
+    }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+        carregarTabela();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        
+        
+        
+        List<Professor> professores;
+        
+        
+        // Obtém a linha selecionada na tabela
+        int row = tblDados.getSelectedRow();
+        if (row != -1) {
+            String nome = (String) tblDados.getValueAt(row, 1); // Supondo que o ID esteja na primeira coluna
+
+
+            try {
+
+                // Busca a disciplina pelo ID
+                Disciplina disciplina = new Disciplina();
+                List<Disciplina> disciplinas;
+                disciplinas = disciplinaController.findByNome(nome);
+                disciplina = disciplinas.get(0);
+                
+
+                if (disciplina != null) {
+                    // Pergunta ao usuário se deseja remover a disciplina
+                    int resposta = JOptionPane.showConfirmDialog(null, "Deseja modificar o professor da disciplina?", "Confirmar Remoção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        
+                        String nomeProfessor = JOptionPane.showInputDialog("Digite o nome do novo professor:");
+                        
+                        
+                        
+                      try {
+                        // Busca por professores com o nome informado
+                        professores = professorController.findByNome(nomeProfessor);
+
+                        if (professores != null && !professores.isEmpty()) {
+                            Professor professorNovo = professores.get(0); // Pega o primeiro professor encontrado
+
+                            // Remove o professor antigo da disciplina
+                            List<Professor> professoresAntigos = disciplina.getProfessor();
+                            if (professoresAntigos != null) {
+                                professoresAntigos.clear(); // Limpa os professores antigos
+                                disciplina.setProfessor(professoresAntigos);
+                            }
+
+                            // Adiciona o novo professor à disciplina
+                            disciplina.getProfessor().add(professorNovo);
+
+                            // Atualiza a disciplina no banco de dados
+                            disciplinaController.update(disciplina);
+
+                            JOptionPane.showMessageDialog(null, "Disciplina atualizada com sucesso com o novo professor.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                            // Atualiza a tabela de dados
+                            carregarTabela();
+
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Professor não encontrado. Verifique o nome e tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "Ocorreu um erro ao buscar o professor: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                        e.printStackTrace(); // Opcional: útil para depuração
+                    } 
+                        
+
+                    } else {
+                        // Cancelar a operação
+                        JOptionPane.showMessageDialog(null, "Remoção cancelada.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    // Disciplina não encontrada, lidar com isso apropriadamente
+                    JOptionPane.showMessageDialog(null, "Disciplina não encontrada.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao remover a disciplina.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhuma disciplina selecionada.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        // TODO add your handling code here:
+        
+        
+        /*
+        
+        -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-USAR COM CONSCIENCIA, POIS REMOVE TANTO DE PROFESSOR, QUANTO DE DISCIPLINA-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+        
+        */
+        
+        
+        // Obtém a linha selecionada na tabela
+        int row = tblDados.getSelectedRow();
+        if (row != -1) {
+            String nome = (String) tblDados.getValueAt(row, 1); // Supondo que o ID esteja na primeira coluna
+
+
+            try {
+
+                // Busca a disciplina pelo ID
+                Disciplina disciplina = new Disciplina();
+                List<Disciplina> disciplinas;
+                disciplinas = disciplinaController.findByNome(nome);
+                disciplina = disciplinas.get(0);
+                
+
+                if (disciplina != null) {
+                    // Pergunta ao usuário se deseja remover a disciplina
+                    int resposta = JOptionPane.showConfirmDialog(null, "Deseja remover a disciplina?", "Confirmar Remoção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        disciplinaController.delete(disciplina);
+                        JOptionPane.showMessageDialog(null, "Disciplina removida com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                        // Atualiza a tabela de dados (implementação não fornecida)
+                        carregarTabela();
+
+                    } else {
+                        // Cancelar a operação
+                        JOptionPane.showMessageDialog(null, "Remoção cancelada.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    // Disciplina não encontrada, lidar com isso apropriadamente
+                    JOptionPane.showMessageDialog(null, "Disciplina não encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao remover a disciplina.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhuma disciplina selecionado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        
+        // Obtém o nome da disciplina a ser pesquisado
+        String nomeDisciplina = txtPesquisar.getText().trim(); // Use trim() para remover espaços em branco desnecessários
+
+        // Criação da variável para dar início à pesquisa
+        List<Disciplina> disciplinas;
+
+        try {
+            //Passsa as informações caso encontre a discipina
+            disciplinas = disciplinaController.findByNome(nomeDisciplina);
+
+            // Se encontrado, atualiza a tabela com as disciplinas encontradas
+            DefaultTableModel dtmCursos = (DefaultTableModel) tblDados.getModel();
+            dtmCursos.setRowCount(0);  // Limpa todos os dados da tabela
+
+            if (disciplinas.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Disciplina nao encontrada.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                carregarTabela(); // Carregar tabela com todas as disciplinas após a pesquisa
+            } else {
+                for (Disciplina disciplina : disciplinas) {
+                    // Obtém o nome do professor associado à disciplina
+                    String nomeProfessor = "";
+                    if (disciplina.getProfessor() != null && !disciplina.getProfessor().isEmpty()) {
+                        nomeProfessor = disciplina.getProfessor().get(0).getNome(); // Obtém o nome do primeiro professor
+                    }
+
+                    // Cria um array de objetos contendo os dados de cada disciplina
+                    Object[] dados = {
+                        nomeProfessor,
+                        disciplina.getNome()
+                    };
+                    dtmCursos.addRow(dados);
+                }
+                
+            }
+        } catch (NoResultException e) {
+            carregarTabela(); // Carregar tabela com todas as disciplinas após a pesquisa
+            JOptionPane.showMessageDialog(null, "Disciplina nao encontrada.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao buscar disciplina: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -115,6 +561,20 @@ public class TelaProfessor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtualizar;
+    private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnPesquisar;
+    private javax.swing.JButton btnRefresh;
+    private javax.swing.JButton btnRemover;
+    private javax.swing.JButton btnVoltar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblDisciplina;
+    private javax.swing.JLabel lblProfessor;
+    private javax.swing.JTable tblDados;
+    private javax.swing.JTextField txtDisciplina;
+    private javax.swing.JTextField txtPesquisar;
+    private javax.swing.JTextField txtProfessor;
     // End of variables declaration//GEN-END:variables
 }

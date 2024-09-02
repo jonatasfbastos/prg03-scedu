@@ -10,6 +10,8 @@ import br.com.ifba.prg03_scedu.curriculo.controller.CurriculoIController;
 import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
 import br.com.ifba.prg03_scedu.escola.controller.EscolaIController;
 import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
+import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
+import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
 import br.com.ifba.prg03_scedu.gestavaliacao.controller.AvaliacaoIController;
 import br.com.ifba.prg03_scedu.home.view.TelaInicial;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
@@ -33,9 +35,11 @@ public class TelaLogin extends javax.swing.JFrame {
     private final CursoIController cursoController;
     private final GestaoFaltasIController gestaoFaltasController;
     private final EscolaIController escolaController;
-    
     private final AvaliacaoIController avaliacaoController;
-
+    private final GestaoAlunoIController gestaoAlunoController;
+    private final ProfessorIController professorController;
+    
+    
     public TelaLogin(
             CurriculoIController curriculoController,
             UsuarioIController usuarioController, 
@@ -44,8 +48,9 @@ public class TelaLogin extends javax.swing.JFrame {
             CursoIController cursoController,
             GestaoFaltasIController gestaoFaltasController,
             EscolaIController escolaController,
-            
-            AvaliacaoIController avaliacaoController
+            AvaliacaoIController avaliacaoController,
+            GestaoAlunoIController gestaoAlunoController,
+            ProfessorIController professorController
     ) {
         this.curriculoController = curriculoController;
         this.usuarioController = usuarioController;
@@ -54,8 +59,10 @@ public class TelaLogin extends javax.swing.JFrame {
         this.cursoController = cursoController;
         this.gestaoFaltasController = gestaoFaltasController;
         this.escolaController = escolaController;
-        
+        this.gestaoAlunoController = gestaoAlunoController;
         this.avaliacaoController = avaliacaoController;
+        this.professorController = professorController;
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     @PostConstruct
@@ -276,7 +283,7 @@ public class TelaLogin extends javax.swing.JFrame {
             // Limpa o array de caracteres após o uso para segurança
             Arrays.fill(senhaArray, ' ');*/
 
-            TelaInicial telaInicial = new TelaInicial(disciplinaController, curriculoController, gestaoFaltasController, cursoController, usuarioController, escolaController, avaliacaoController);
+            TelaInicial telaInicial = new TelaInicial(disciplinaController, curriculoController, gestaoFaltasController, cursoController, usuarioController, escolaController, avaliacaoController, gestaoAlunoController, professorController);
             telaInicial.setVisible(true);
             telaInicial.toFront();
             this.dispose();

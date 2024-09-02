@@ -4,8 +4,9 @@
  */
 package br.com.ifba.prg03_scedu.disciplina.entity;
 
+import br.com.ifba.prg03_scedu.curso.entity.Curso;
+import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
 import br.com.ifba.prg03_scedu.infrastructure.entity.PersistenceEntity;
-import br.com.ifba.prg03_scedu.professor.entity.Professor;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -45,18 +46,35 @@ import lombok.NoArgsConstructor;
 
 public class Disciplina extends PersistenceEntity{
     
-    //Será importante para configurar na telaProfessor
-    // Mapeia a relação Many-to-Many com a entidade Professor
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
         name = "Disciplina_Professor",
         joinColumns = @JoinColumn(name = "disciplina_id"),
         inverseJoinColumns = @JoinColumn(name = "professor_id")
     )
     private List<Professor> professor;
+
+    
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "Disciplina_Curso",
+        joinColumns = @JoinColumn(name = "disciplina_id"),
+        inverseJoinColumns = @JoinColumn(name = "curso_id")
+    )
+    private List<Curso> curso;
+
+    // Carga horária da disciplina em horas.
     private int cargaHoraria;
+    
+    // Nome completo da disciplina.
     private String nome;
+    
+    // Nome abreviado da disciplina, útil para exibição em listas e relatórios.
     private String nomeAbreviado;
+    
+    // Base curricular associada à disciplina, podendo conter a estrutura ou diretrizes educacionais.
     private String baseCurricular;
+    
+    // Estado da disciplina, pode indicar se a disciplina está ativa ou inativa no sistema.
     private boolean estado;
 }
