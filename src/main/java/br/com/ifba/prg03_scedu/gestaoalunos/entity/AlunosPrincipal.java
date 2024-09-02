@@ -3,6 +3,7 @@ package br.com.ifba.prg03_scedu.gestaoalunos.entity;
 
 import br.com.ifba.prg03_scedu.escola.entity.Escola;
 import br.com.ifba.prg03_scedu.infrastructure.entity.Pessoa;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -28,20 +29,19 @@ public class AlunosPrincipal extends Pessoa{
     @Column(unique = true)
     private String email;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "pai_id")
     private Responsaveis pai;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "mae_id")
     private Responsaveis mae;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "reponsavel_legal_id")
     private Responsaveis reponsavelLegal;
     
-    
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "escola_id")
     private Escola escolaOrigem;
     

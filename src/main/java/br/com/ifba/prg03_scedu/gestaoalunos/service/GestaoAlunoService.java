@@ -23,10 +23,6 @@ public class GestaoAlunoService implements GestaoAlunoIService {
             log.error("Erro ao salvar aluno: aluno é nulo"); // Registra um erro se o aluno for nulo.
             throw new RuntimeException("Dados do aluno não preenchidos"); // Lança uma exceção com uma mensagem de erro apropriada.
         }
-        else if(aluno.getCpf()!= null){
-            log.error("Erro ao salvar aluno: aluno já existe"); // Registra um erro se o aluno já existir.
-            throw new RuntimeException("Aluno já existente no banco de dados"); // Lança uma exceção com uma mensagem de erro apropriada.
-        }
         else{
             log.info("Salvando o Objeto Alunos: {}", aluno); // Registra uma mensagem indicando que o aluno está sendo salvo.
             return gestaoAlunoRepository.save(aluno); // Salva o aluno no repositório.
@@ -95,10 +91,6 @@ public class GestaoAlunoService implements GestaoAlunoIService {
             log.error("Erro ao salvar Responsavel: Responsavel é nulo"); // Registra um erro se o aluno for nulo.
             throw new RuntimeException("Dados do Responsavel não preenchidos"); // Lança uma exceção com uma mensagem de erro apropriada.
         }
-        else if(responsavel.getCpf()!= null){
-            log.error("Erro ao salvar Responsavel: Responsavel já existe"); // Registra um erro se o responsável já existir.
-            throw new RuntimeException("Responsavel já existente no banco de dados"); // Lança uma exceção com uma mensagem de erro apropriada.
-        }
         else{
             log.info("Salvando o Objeto Responsavel: {}", responsavel); // Registra uma mensagem indicando que o responsável está sendo salvo.
             return gestaoAlunoRepositoryResponsaveis.save(responsavel); // Salva o responsável no repositório.
@@ -142,7 +134,7 @@ public class GestaoAlunoService implements GestaoAlunoIService {
     }
     
     @Override
-    public List<Responsaveis> findByNomeResponsavel(String nome) throws RuntimeException {
+    public Responsaveis findByNomeResponsavel(String nome) throws RuntimeException {
         if (nome == null || nome.isEmpty()) {
             log.error("Erro ao buscar responsável por nome: nome é nulo ou vazio"); // Registra um erro se o nome for nulo ou vazio.
             throw new RuntimeException("Erro ao procurar o responsável pelo nome " + nome); // Lança uma exceção com uma mensagem de erro apropriada.

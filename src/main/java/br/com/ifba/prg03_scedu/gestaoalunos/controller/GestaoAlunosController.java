@@ -71,7 +71,7 @@ public class GestaoAlunosController implements GestaoAlunoIController{
     }
 
     @Override
-    public List<Responsaveis> findByNomeResponsavel(String nome) throws RuntimeException {
+    public Responsaveis findByNomeResponsavel(String nome) throws RuntimeException {
         // Chama o serviço para encontrar alunos pelo nome.
         return gestaoAlunoService.findByNomeResponsavel(nome);
     }

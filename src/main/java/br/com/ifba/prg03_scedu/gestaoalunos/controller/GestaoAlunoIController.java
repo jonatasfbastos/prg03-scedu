@@ -17,6 +17,6 @@ public interface GestaoAlunoIController{
     public abstract Responsaveis update(Responsaveis responsavel) throws RuntimeException;
     public abstract void delete(Responsaveis responsavel) throws RuntimeException;
     public abstract Responsaveis findByIdResponsavel(Long id) throws RuntimeException;
-    public List<Responsaveis> findByNomeResponsavel(String nome) throws RuntimeException;
+    public Responsaveis findByNomeResponsavel(String nome) throws RuntimeException;
     public List<Responsaveis> findAllResponsavel() throws RuntimeException;
 }

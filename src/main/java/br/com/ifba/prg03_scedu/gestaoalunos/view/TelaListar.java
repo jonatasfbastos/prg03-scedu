@@ -6,7 +6,9 @@ import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import jakarta.persistence.NoResultException;
 import java.awt.event.WindowEvent;
+import java.util.Calendar;
 import java.util.List;
+import javax.print.DocFlavor;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.slf4j.Logger;
@@ -42,7 +44,14 @@ public class TelaListar extends javax.swing.JFrame {
 
             for(AlunosPrincipal lista: dadosTabela){
                 // Cria um array de objetos contendo os dados de cada aluno
-                Object[] dados = {lista.getCpf(), lista.getNomeSocial(), lista.getReponsavelLegal(), lista.getTelefone(), lista.getEmail(), lista.getNascimento()};
+                Calendar dataNascimento = Calendar.getInstance();
+                dataNascimento.setTime(lista.getNascimento());
+                Calendar dataAtual = Calendar.getInstance();
+                int anoNascimento = dataNascimento.get(Calendar.YEAR);
+                int anoAtual = dataAtual.get(Calendar.YEAR);
+
+                int idade = anoAtual - anoNascimento;
+                Object[] dados = {lista.getNome(), idade, lista.getEmail(), lista.getNascimento(), lista.getReponsavelLegal(), lista.getTelefone()};
 
                 // Adiciona uma nova linha no modelo da tabela com os dados do aluno
                 dtmAlunos.addRow(dados);
@@ -68,8 +77,8 @@ public class TelaListar extends javax.swing.JFrame {
         txtProcura = new javax.swing.JTextField();
         btnAdcionar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
         btnProcura = new javax.swing.JButton();
+        btnMaisInformacoes = new javax.swing.JButton();
         pnlTabela = new javax.swing.JPanel();
         slpTabela = new javax.swing.JScrollPane();
         tblAlunos = new javax.swing.JTable();
@@ -100,20 +109,19 @@ public class TelaListar extends javax.swing.JFrame {
             }
         });
 
-        btnEditar.setText("EDITAR");
-        btnEditar.setBorder(null);
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
-
         btnProcura.setBackground(new java.awt.Color(8, 102, 255));
         btnProcura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/lupav1.png"))); // NOI18N
         btnProcura.setBorder(null);
         btnProcura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProcuraActionPerformed(evt);
+            }
+        });
+
+        btnMaisInformacoes.setText("MAIS INFORMAÇÕES");
+        btnMaisInformacoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMaisInformacoesActionPerformed(evt);
             }
         });
 
@@ -126,13 +134,13 @@ public class TelaListar extends javax.swing.JFrame {
                 .addComponent(txtProcura, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnProcura)
-                .addGap(56, 56, 56)
-                .addComponent(btnAdcionar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
-                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70))
+                .addComponent(btnAdcionar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(116, 116, 116)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(120, 120, 120)
+                .addComponent(btnMaisInformacoes)
+                .addGap(110, 110, 110))
         );
         pnlFuncoesLayout.setVerticalGroup(
             pnlFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,7 +150,7 @@ public class TelaListar extends javax.swing.JFrame {
                     .addGroup(pnlFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAdcionar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnMaisInformacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlFuncoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(btnProcura)
                         .addComponent(txtProcura, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -157,7 +165,7 @@ public class TelaListar extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID Aluno", "Nome Social", "Nome Responsável", "Telefone", "Email", "Data de Nascimento"
+                "Nome", "Idade", "Email", "Data de Nascimento", "Nome Responsável", "Telefone"
             }
         ));
         tblAlunos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -171,15 +179,15 @@ public class TelaListar extends javax.swing.JFrame {
             pnlTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTabelaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(slpTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
+                .addComponent(slpTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 1055, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlTabelaLayout.setVerticalGroup(
             pnlTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTabelaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(slpTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(slpTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -189,17 +197,17 @@ public class TelaListar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlFuncoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlFuncoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(pnlFuncoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -233,12 +241,12 @@ public class TelaListar extends javax.swing.JFrame {
             if (resposta == JOptionPane.YES_OPTION) {
                 try{    
                     // Obtém o ID do aluno a ser removido da linha selecionada na tabela
-                    Object idAlunoRemover = tblAlunos.getValueAt(tblAlunos.getSelectedRow(), 0);
-                    log.info("Excluindo aluno com ID: {}", idAlunoRemover);
+                    String alunoRemover = (String) tblAlunos.getValueAt(tblAlunos.getSelectedRow(), 0);
                     //Encontra o aluno
-                    AlunosPrincipal alunoRemover = this.gestaoAlunoController.findById((Long)idAlunoRemover);
+                    AlunosPrincipal aluno = (AlunosPrincipal) gestaoAlunoController.findByNome(alunoRemover);
+                    log.info("Excluindo aluno com ID: {}", aluno.getId());
                     //Exclui o aluno
-                    this.gestaoAlunoController.delete(alunoRemover);
+                    this.gestaoAlunoController.delete(aluno);
                     log.info("Aluno excluído com sucesso");
                 }catch(Exception e){
                     JOptionPane.showMessageDialog(null, "Erro ao deletar o aluno", "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -291,36 +299,35 @@ public class TelaListar extends javax.swing.JFrame {
             refresh();
         }
     }//GEN-LAST:event_btnProcuraActionPerformed
-                            
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+
+    private void btnMaisInformacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaisInformacoesActionPerformed
+        // TODO add your handling code here:
         try{    
             // Verifica se há uma linha selecionada na tabela
             if(tblAlunos.getSelectedRow() != -1){
-                log.info("Ação de edição de aluno iniciada");
                 // Obtém o ID do aluno a ser removido da linha selecionada na tabela
-                Object alunoEditado = tblAlunos.getValueAt(tblAlunos.getSelectedRow(), 0);
+                String alunoEscolhido = (String) tblAlunos.getValueAt(tblAlunos.getSelectedRow(), 0);
+                AlunosPrincipal aluno = (AlunosPrincipal) gestaoAlunoController.findByNome(alunoEscolhido);
                 // Instanciamento da tela da de adição de alunos
-                log.info("Editando aluno com ID: {}", alunoEditado);
-                TelaEditarAluno novaTela = new TelaEditarAluno((Long)alunoEditado, this.gestaoAlunoController);
+                TelaDadosGerais novaTela = new TelaDadosGerais(this.gestaoAlunoController, aluno.getId());
                 novaTela.setVisible(true);
                 // Adiciona um ouvinte de eventos de janela à nova tela
                 novaTela.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosed(WindowEvent e) {
-                        log.info("Tela de edição de aluno fechada");
                         refresh();
                     }
                 });
             }else{
-                log.warn("Nenhum aluno selecionado para edição");
-                JOptionPane.showConfirmDialog(null, "Selecione um Aluno para Editar", "Erro", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                log.warn("Nenhum aluno selecionado");
+                JOptionPane.showConfirmDialog(null, "Selecione um Aluno para ver os Dados Gerais", "Erro", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             }
         }catch(Exception e){
-            log.error("Aluno com ID: {} não encontrado para edição",e);
-            JOptionPane.showMessageDialog(null, "Erro ao alterar os dados do aluno", "ERRO", JOptionPane.ERROR_MESSAGE);
+            log.error("Aluno com ID: {} não encontrado",e);
+            JOptionPane.showMessageDialog(null, "Erro ao procurar o aluno pelo nome", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnEditarActionPerformed
-
+    }//GEN-LAST:event_btnMaisInformacoesActionPerformed
+                            
     /**
      * @param args the command line arguments
      */
@@ -363,8 +370,8 @@ public class TelaListar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdcionar;
-    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnMaisInformacoes;
     private javax.swing.JButton btnProcura;
     private javax.swing.JPanel pnlFuncoes;
     private javax.swing.JPanel pnlTabela;
