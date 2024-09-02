@@ -1,7 +1,7 @@
 package br.com.ifba.prg03_scedu.faltas.service;
 
-import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
 import br.com.ifba.prg03_scedu.faltas.repository.AlunosRepository;
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,27 +15,27 @@ public class AlunosService implements AlunosIService {
     private final AlunosRepository alunosRepository;
 
     @Override
-    public Alunos save(Alunos aluno) throws RuntimeException {
+    public AlunosPrincipal save(AlunosPrincipal aluno) throws RuntimeException {
         return alunosRepository.save(aluno);
     }
 
     @Override
-    public Alunos update(Alunos aluno) throws RuntimeException {
+    public AlunosPrincipal update(AlunosPrincipal aluno) throws RuntimeException {
         return alunosRepository.save(aluno);
     }
 
     @Override
-    public void delete(Alunos aluno) throws RuntimeException {
+    public void delete(AlunosPrincipal aluno) throws RuntimeException {
         alunosRepository.delete(aluno);
     }
 
     @Override
-    public Alunos findById(Long id) throws RuntimeException {
+    public AlunosPrincipal findById(Long id) throws RuntimeException {
         return alunosRepository.findById(id).orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
     }
 
     @Override
-    public List<Alunos> findAll() throws RuntimeException {
+    public List<AlunosPrincipal> findAll() throws RuntimeException {
         return alunosRepository.findAll();
     }
 }
