@@ -5,6 +5,7 @@
 package br.com.ifba.prg03_scedu.gestavaliacao.entity;
 
 import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
+import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -45,6 +46,11 @@ public class Avaliacao {
     private String disciplina; 
     // Variável utilizada para fazer consultas dentro da interface, correspondente ao nome da disciplina.
 
+    @ManyToOne// Indica uma relação de muitos-para-um com a entidade 'Professor'.
+    @JoinColumn(name = "professores_id", referencedColumnName = "id", nullable = false)
+    // Define a coluna de junção para a relação com a entidade 'Professor', vinculada pelo id do professor.
+    private Professor professores;// Referência ao professor associado.
+    
     private String professor; // Nome do professor responsável pela avaliação.
     private int peso; // Peso da avaliação na composição da nota final.
 }

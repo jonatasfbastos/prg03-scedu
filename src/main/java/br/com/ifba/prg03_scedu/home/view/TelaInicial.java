@@ -236,7 +236,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void btnAvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvaActionPerformed
         // TODO add your handling code here:
-        TelaAvaliacoes telaAva = new TelaAvaliacoes(avaliacaoController, disciplinaController);
+        TelaAvaliacoes telaAva = new TelaAvaliacoes(avaliacaoController, disciplinaController, professorController);
         telaAva.setVisible(true);
     }//GEN-LAST:event_btnAvaActionPerformed
 

@@ -7,6 +7,8 @@ package br.com.ifba.prg03_scedu.gestavaliacao.view;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
 import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
+import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
+import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
 import br.com.ifba.prg03_scedu.gestavaliacao.controller.AvaliacaoIController;
 import br.com.ifba.prg03_scedu.gestavaliacao.entity.Avaliacao;
 import java.time.LocalDate;
@@ -23,6 +25,7 @@ public class CadastroAvaliacao extends javax.swing.JFrame {
     
     private final AvaliacaoIController avaController; // Controlador para gerenciar as operações de Avaliação
     private final DisciplinaIController disciplinaController; // Controlador para gerenciar as operações de Disciplina
+    private final ProfessorIController profController; // Controlador para gerenciar as operações de Professor
 
 /**
  * Cria uma nova instância do formulário CadastroAvaliacao.
@@ -30,9 +33,12 @@ public class CadastroAvaliacao extends javax.swing.JFrame {
  * @param avaController O controlador responsável pelas operações de avaliação.
  * @param disciplinaController O controlador responsável pelas operações de disciplina.
  */
-public CadastroAvaliacao(AvaliacaoIController avaController, DisciplinaIController disciplinaController) {
+public CadastroAvaliacao(AvaliacaoIController avaController, 
+        DisciplinaIController disciplinaController,
+        ProfessorIController profController) {
     this.avaController = avaController; // Inicializa o controlador de avaliação
     this.disciplinaController = disciplinaController; // Inicializa o controlador de disciplina
+    this.profController = profController; // Inicializa o controlador de professor
     initComponents(); // Inicializa os componentes da interface gráfica
 }
 
@@ -260,13 +266,24 @@ public CadastroAvaliacao(AvaliacaoIController avaController, DisciplinaIControll
                 System.out.println("Disciplina nao encontrada ou nao existente");
                 return; // Interrompe o processamento se a disciplina não for encontrada
             }
-
+            
+            String idProf = txtProf.getText();//obtem o id do professor no campo de texto
+            Long idProfessor = Long.parseLong(idProf);//converte o valor para o tipo long
+            Professor professor = profController.findById(idProfessor);//utiliza op findById atrves do controller da classe professor
+            if(professor == null){
+                JOptionPane.showMessageDialog(this, "Professor não encontrado. Verifique o ID e tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Professor nao encontrado ou nao existente");
+                return; // Interrompe o processamento se o professor não for encontrado
+            }else{
+                //Professor professor = professores.get(0);
+                ava.setProfessores(professor);//define o professor na avaliacao
+            }
+            //ava.setProfessor(txtProf.getText()); // Define o nome do professor
+            
             String tipoSelecionado = (String) boxTipo.getSelectedItem(); // Obtém o tipo selecionado no combo box
             ava.setTipo(tipoSelecionado); // Define o tipo na avaliação
 
             ava.setPeso(Integer.parseInt(spinPeso.getValue().toString())); // Define o peso da avaliação
-
-            ava.setProfessor(txtProf.getText()); // Define o nome do professor
 
             ava.setDescricao(txtDescri.getText()); // Define a descrição da avaliação
 

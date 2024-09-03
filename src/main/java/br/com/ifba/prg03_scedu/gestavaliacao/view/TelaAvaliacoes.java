@@ -9,6 +9,7 @@ import br.com.ifba.prg03_scedu.gestavaliacao.entity.Avaliacao;
 import br.com.ifba.prg03_scedu.gestavaliacao.view.TelaEditar;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
+import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +24,7 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
     
     private final AvaliacaoIController avaliacaoController; // Controlador para gerenciar as operações de avaliação
     private final DisciplinaIController disciplinaController; // Controlador para gerenciar as operações de disciplina
+    private final ProfessorIController profController; // Controlador para gerenciar as operações de Professor
 
     private void carregarTabela() {
         // Método responsável por carregar e exibir os dados na tabela
@@ -60,9 +62,12 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
     /**
      * Creates new form TelaInicial
      */
-    public TelaAvaliacoes(AvaliacaoIController avaliacaoController, DisciplinaIController disciplinaController) {
+    public TelaAvaliacoes(AvaliacaoIController avaliacaoController, 
+            DisciplinaIController disciplinaController,
+            ProfessorIController profController) {
     this.avaliacaoController = avaliacaoController; // Inicializa o controlador de avaliação
     this.disciplinaController = disciplinaController; // Inicializa o controlador de disciplina
+    this.profController = profController; // Inicializa o controlador de professor
     initComponents(); // Inicializa os componentes da interface gráfica
     carregarTabela(); // Carrega os dados na tabela usando o controlador de avaliação
 }
@@ -234,7 +239,7 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
             Avaliacao ava = avaliacaoController.findById((Long) idAvaliacaoBuscar);
 
             // Cria uma nova instância da tela de edição, passando a avaliação, o controlador de avaliação e o controlador de disciplina
-            TelaEditar telaEditar = new TelaEditar(ava, avaliacaoController, disciplinaController);
+            TelaEditar telaEditar = new TelaEditar(ava, avaliacaoController, disciplinaController, profController);
             telaEditar.setVisible(true); // Torna a tela de edição visível
 
             // Adiciona um listener para atualizar a tabela quando a janela de edição for fechada
@@ -255,7 +260,8 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
 
     private void btnCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadActionPerformed
         // TODO add your handling code here:
-        CadastroAvaliacao telaCad = new CadastroAvaliacao(avaliacaoController, disciplinaController); // Cria uma nova instância do formulário CadastroAvaliacao, passando os controladores
+        CadastroAvaliacao telaCad = new CadastroAvaliacao(avaliacaoController, 
+                disciplinaController, profController); // Cria uma nova instância do formulário CadastroAvaliacao, passando os controladores
         telaCad.setVisible(true); // Torna a tela de cadastro visível
 
         // Adiciona um listener para atualizar a tabela quando a janela de cadastro for fechada

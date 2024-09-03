@@ -6,6 +6,8 @@ package br.com.ifba.prg03_scedu.gestavaliacao.view;
 
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
 import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
+import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
+import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
 import br.com.ifba.prg03_scedu.gestavaliacao.controller.AvaliacaoIController;
 import br.com.ifba.prg03_scedu.gestavaliacao.entity.Avaliacao;
 import java.time.LocalDate;
@@ -22,14 +24,17 @@ public class TelaEditar extends javax.swing.JFrame {
 
     private final AvaliacaoIController avaController; // Controlador para gerenciar as operações de avaliação
     private final DisciplinaIController disciplinaController; // Controlador para gerenciar as operações de disciplina
-
+    private final ProfessorIController profController; // Controlador para gerenciar as operações de Professor
     /**
      * Creates new form TelaEditar
      */
-    public TelaEditar(Avaliacao ava, AvaliacaoIController avaController, DisciplinaIController disciplinaController) {
+    public TelaEditar(Avaliacao ava, AvaliacaoIController avaController
+            , DisciplinaIController disciplinaController,
+            ProfessorIController profController) {
         this.avaController = avaController; // Inicializa o controlador de avaliação
         this.ava = ava; // Inicializa a avaliação a ser editada
         this.disciplinaController = disciplinaController; // Inicializa o controlador de disciplina
+        this.profController = profController; // Inicializa o controlador de professor
         initComponents(); // Inicializa os componentes da interface gráfica
     }
 
@@ -264,7 +269,7 @@ public class TelaEditar extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        ava.setProfessor(txtProf.getText()); // Define o professor da avaliação com o texto do campo de entrada
+        //ava.setProfessor(txtProf.getText()); // Define o professor da avaliação com o texto do campo de entrada
 
         // Obtém os valores dos spinners para dia, mês e ano
         int dia = (int) spinDia.getValue();
@@ -302,11 +307,23 @@ public class TelaEditar extends javax.swing.JFrame {
         }
 
         // Obtém o texto inserido nos campos para o professor e a disciplina
-        String prof = txtProf.getText();
+//        String prof = txtProf.getText();
         String disc = txtDisci.getText();
+        
+        String idProf = txtProf.getText();//obtem o id do professor no campo de texto
+            Long idProfessor = Long.parseLong(idProf);//converte o valor para o tipo long
+            Professor professor = profController.findById(idProfessor);//utiliza op findById atrves do controller da classe professor
+            if(professor == null){
+                JOptionPane.showMessageDialog(this, "Professor não encontrado. Verifique o ID e tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Professor nao encontrado ou nao existente");
+                return; // Interrompe o processamento se o professor não for encontrado
+            }else{
+                //Professor professor = professores.get(0);
+                ava.setProfessores(professor);//define o professor na avaliacao
+            }
 
         // Verifica se algum dos campos está vazio
-        if (prof.isEmpty() || disc.isEmpty()) {
+        if (idProf.isEmpty() || disc.isEmpty()) {
             // Exibe uma mensagem informando ao usuário que todos os campos devem ser preenchidos
             JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Preencha os campos", JOptionPane.INFORMATION_MESSAGE);
             // Interrompe a execução do método se algum campo estiver vazio
