@@ -9,6 +9,7 @@ import br.com.ifba.prg03_scedu.serie.entity.Serie;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,21 +17,23 @@ import org.springframework.stereotype.Component;
  * @author geovana
  */
 @Component
-public class SerieCadastrar extends javax.swing.JFrame {
-      
-    private SerieListar serieListar;
+public class SerieEditar extends javax.swing.JFrame {
     
-    private final SerieIController serieController;
+   // @Autowired
+    private final SerieIController controller;
     
-    /**
-     * Creates new form SerieTela
-     */
-    public SerieCadastrar(SerieIController serieController) {
 
+    private Serie s = new Serie();
+    private Serie teste = new Serie();
+    /**
+     * Creates new form SerieEditar
+     */
+    public SerieEditar(SerieIController serieController) {
+        
+        this.controller = serieController;
         initComponents();
-        this.serieController = serieController;
-        this.serieListar = new SerieListar(serieController);
-         
+       
+        
         //Nao encerra o programa ao fechar a tela
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
@@ -50,24 +53,19 @@ public class SerieCadastrar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         lblCadastrarSerie = new javax.swing.JLabel();
         lblNomeSerie = new javax.swing.JLabel();
         lblIdCurriculo = new javax.swing.JLabel();
         txtNomeSerie = new javax.swing.JTextField();
         txtIdCurriculo = new javax.swing.JTextField();
-        btnCadastrar = new javax.swing.JButton();
-        btnListarSerie = new javax.swing.JButton();
-
-        jButton1.setText("jButton1");
+        btnEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblCadastrarSerie.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblCadastrarSerie.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCadastrarSerie.setText("CADASTRAR SERIE");
+        lblCadastrarSerie.setText("EDITAR SERIE");
 
         lblNomeSerie.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblNomeSerie.setText("Nome:");
@@ -75,19 +73,11 @@ public class SerieCadastrar extends javax.swing.JFrame {
         lblIdCurriculo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblIdCurriculo.setText("Id Curriculo:");
 
-        btnCadastrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnCadastrar.setText("Cadastrar");
-        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+        btnEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastrarActionPerformed(evt);
-            }
-        });
-
-        btnListarSerie.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnListarSerie.setText("Listar Series");
-        btnListarSerie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnListarSerieActionPerformed(evt);
+                btnEditarActionPerformed(evt);
             }
         });
 
@@ -100,21 +90,20 @@ public class SerieCadastrar extends javax.swing.JFrame {
                 .addComponent(lblCadastrarSerie)
                 .addGap(139, 139, 139))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNomeSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblIdCurriculo))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNomeSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtIdCurriculo, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(57, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnListarSerie)
-                .addGap(74, 74, 74))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNomeSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblIdCurriculo))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNomeSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtIdCurriculo, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(135, 135, 135)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,11 +120,9 @@ public class SerieCadastrar extends javax.swing.JFrame {
                         .addComponent(txtNomeSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addComponent(txtIdCurriculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(64, 64, 64)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnListarSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addGap(56, 56, 56)
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(164, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -143,71 +130,89 @@ public class SerieCadastrar extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(113, 113, 113)
+                .addGap(129, 129, 129)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(170, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        long curriculoId = Long.parseLong(txtIdCurriculo.getText());
-        Serie serie = new Serie();
-
-        //Logica para cadastrar no banco de dados
-        try {
-            //Seta os dados e usa o controller para salvar no banco
-            serie.setNome(txtNomeSerie.getText());
-            serie.setCurriculoId(curriculoId);
-           serieController.save(serie); 
-        } catch (Exception error) {
-            //Tratamento de execoes
-            JOptionPane.showMessageDialog(null, error, "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
+        /*long curriculoId = Long.parseLong(txtIdCurriculo.getText());
+        
+        if (s.getId() == null) {
+            JOptionPane.showMessageDialog(null, "Erro id nulo");
+            return;
         }
         
-        JOptionPane.showMessageDialog(this, "Serie cadastrada com sucesso!");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//nao fecha a janela ao encerrar o programa
-
-    }//GEN-LAST:event_btnCadastrarActionPerformed
-
-    private void btnListarSerieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarSerieActionPerformed
-        // TODO add your handling code here:
+        if (!txtNomeSerie.getText().isEmpty()) {
+            s.setNome(txtNomeSerie.getText());
+            s.setCurriculoId(curriculoId);
+            
+            try {
+                controller.update(s);
+                JOptionPane.showMessageDialog(this, "Série editada com sucesso!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao editar");
+            }
+        } else {
+           JOptionPane.showMessageDialog(null, "Você precisa preencher todos os campos!");         
+        }*/
         
-        //A tela eh aberta
-       this.serieListar.setVisible(true);
-    }//GEN-LAST:event_btnListarSerieActionPerformed
+        teste = controller.findById(s.getId());
+        long curriculoId = Long.parseLong(txtIdCurriculo.getText());
+        teste.setNome(txtNomeSerie.getText());
+        teste.setCurriculoId(curriculoId);
+        controller.save(teste);
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(SerieEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(SerieEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(SerieEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(SerieEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               // new SerieCadastrar().setVisible(true);
+               // new SerieEditar(serieController).setVisible(true);
             }
-            
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCadastrar;
-    private javax.swing.JButton btnListarSerie;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCadastrarSerie;
     private javax.swing.JLabel lblIdCurriculo;
@@ -215,6 +220,9 @@ public class SerieCadastrar extends javax.swing.JFrame {
     private javax.swing.JTextField txtIdCurriculo;
     private javax.swing.JTextField txtNomeSerie;
     // End of variables declaration//GEN-END:variables
+
+    public Serie exportarDados(Serie series) {
+        this.s = series;
+        return s;
+    }
 }
-
-

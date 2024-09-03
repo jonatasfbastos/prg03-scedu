@@ -9,9 +9,11 @@ import br.com.ifba.prg03_scedu.serie.entity.Serie;
 import java.awt.Color;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -20,8 +22,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class SerieListar extends javax.swing.JFrame {
         
-    @Autowired
     private final SerieIController controller;
+    
+    private SerieEditar serieEditar;
 
     private Serie serie;
     /**
@@ -30,6 +33,7 @@ public class SerieListar extends javax.swing.JFrame {
     public SerieListar(SerieIController serieController) {
         initComponents();
         this.controller = serieController;
+        this.serieEditar = new SerieEditar(serieController);
 
         //Nao encerra o programa ao fechar a tela
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -173,6 +177,22 @@ public class SerieListar extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
+        
+        serieEditar.exportarDados(serie);
+        serieEditar.setVisible(true);
+        editarSerie();
+        
+       // int selectedRow = tblSerie.getSelectedRow();
+        
+       /* if (selectedRow != -1) {
+            DefaultTableModel dtmSerie = (DefaultTableModel) tblSerie.getModel();
+            Number value = (Number) dtmSerie.getValueAt(selectedRow, 0);
+            Long id = value.longValue();
+            serie.setId(id);
+            serieEditar.exportarDados(serie);
+        } else {
+            JOptionPane.showMessageDialog(null,"Voce precisa preencher todos os campos!");
+        }*/
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
@@ -248,7 +268,24 @@ public class SerieListar extends javax.swing.JFrame {
               serie.getId(),
               serie.getNome(),
               serie.getCurriculoId()
-        });
+            });
+        }
+    }
+    
+    public void editarSerie() {
+        int selectedRow = tblSerie.getSelectedRow();
+        
+        if (selectedRow != -1) {
+            DefaultTableModel dtmSerie = (DefaultTableModel) tblSerie.getModel();
+            Number value = (Number) dtmSerie.getValueAt(selectedRow, 0);
+            Long id = value.longValue();
+            
+            Serie serie = new Serie();
+            serie.setId(id);
+            serie = controller.findById(id);
+            
+            serieEditar.exportarDados(serie);
+            this.serieEditar.setVisible(true);
         }
     }
 
