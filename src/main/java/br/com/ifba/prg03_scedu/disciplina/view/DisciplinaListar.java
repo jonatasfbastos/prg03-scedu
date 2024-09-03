@@ -6,6 +6,8 @@ package br.com.ifba.prg03_scedu.disciplina.view;
 
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
+import br.com.ifba.prg03_scedu.curso.entity.Curso;
 import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
 import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
 import jakarta.persistence.NoResultException;
@@ -26,57 +28,69 @@ public class DisciplinaListar extends javax.swing.JFrame {
      */
     
     // Declaração de um campo privado e final para o controlador de disciplina.
-// A palavra-chave 'final' significa que este campo deve ser inicializado no construtor e não pode ser alterado depois.
-private final DisciplinaIController disciplinaController;
-private final ProfessorIController professorController;
+    // A palavra-chave 'final' significa que este campo deve ser inicializado no construtor e não pode ser alterado depois.
+    private final DisciplinaIController disciplinaController;
+    private final ProfessorIController professorController;
+    private final CursoIController cursoController;
 
-// Construtor da classe DisciplinaListar, que recebe uma instância de DisciplinaIController como argumento.
-public DisciplinaListar(DisciplinaIController disciplinaController,ProfessorIController professorController) {
-    // Inicializa os componentes da interface gráfica (geralmente gerado automaticamente pelo IDE).
-    initComponents();
-    
-    // Inicializa o campo disciplinaController com o valor passado ao construtor.
-    this.disciplinaController = disciplinaController;
-    
-    // Chama o método carregarTabela, que provavelmente carrega os dados das disciplinas em uma tabela na interface gráfica.
-    carregarTabela();
-    this.professorController = professorController;
-}
+    // Construtor da classe DisciplinaListar, que recebe uma instância de DisciplinaIController como argumento.
+    public DisciplinaListar(DisciplinaIController disciplinaController, ProfessorIController professorController,CursoIController cursoController) {
+        // Inicializa os componentes da interface gráfica (geralmente gerado automaticamente pelo IDE).
+        initComponents();
+
+        // Inicializa o campo disciplinaController com o valor passado ao construtor.
+        this.disciplinaController = disciplinaController;
+
+        // Chama o método carregarTabela, que provavelmente carrega os dados das disciplinas em uma tabela na interface gráfica.
+        carregarTabela();
+        this.professorController = professorController;
+        this.cursoController = cursoController;
+    }
 
     
     // Método para carregar os dados da tabela
-private void carregarTabela() {
-    // Verifica se o disciplinaController foi inicializado corretamente
-    if (disciplinaController == null) {
-        // Lança uma exceção ou loga um erro se disciplinaController não estiver inicializado
-        throw new IllegalStateException("O controlador da disciplina não foi inicializado.");
-    }
+    private void carregarTabela() {
+        // Verifica se o disciplinaController foi inicializado corretamente
+        if (disciplinaController == null) {
+            // Lança uma exceção ou loga um erro se disciplinaController não estiver inicializado
+            throw new IllegalStateException("O controlador da disciplina não foi inicializado.");
+        }
 
-    // Obtém todas as disciplinas do banco de dados
-    List<Disciplina> dadosTabela = disciplinaController.findAll();
+        // Obtém todas as disciplinas do banco de dados
+        List<Disciplina> dadosTabela = disciplinaController.findAll();
+
+        // Obtém o modelo da tabela (DefaultTableModel) da tabela exibida na interface gráfica
+        DefaultTableModel dtmDisciplinas = (DefaultTableModel) tblDados.getModel();
+        // Limpa todas as linhas atuais da tabela para preparar a inserção de novos dados
+        dtmDisciplinas.setRowCount(0);
+
+        // Itera sobre a lista de disciplinas obtida do banco de dados
+        for (Disciplina lista : dadosTabela) {
+
+            //Inicia uma String vazia
+            String nomeCurso = "";
     
-    // Obtém o modelo da tabela (DefaultTableModel) da tabela exibida na interface gráfica
-    DefaultTableModel dtmDisciplinas = (DefaultTableModel) tblDados.getModel();
-    // Limpa todas as linhas atuais da tabela para preparar a inserção de novos dados
-    dtmDisciplinas.setRowCount(0);
-    
-    // Itera sobre a lista de disciplinas obtida do banco de dados
-    for (Disciplina lista : dadosTabela) {
-        // Cria um array de objetos contendo os dados de cada disciplina
-        Object[] dados = {
-            lista.getId(),
-            lista.getNome(),
-            lista.getNomeAbreviado(),
-            lista.getCargaHoraria(),
-            lista.getBaseCurricular(),
-            lista.isEstado()
-        };
-        // Adiciona os dados da disciplina como uma nova linha no modelo da tabela
-        dtmDisciplinas.addRow(dados);
+            // Verifica se a lista de cursos não é nula e não está vazia
+            if (lista.getCurso() != null && !lista.getCurso().isEmpty()) {
+                nomeCurso = lista.getCurso().get(0).getNome(); // Obtém o nome do primeiro curso
+            }
+
+            // Cria um array de objetos contendo os dados de cada disciplina
+            Object[] dados = {
+                lista.getId(),
+                lista.getNome(),
+                lista.getNomeAbreviado(),
+                lista.getCargaHoraria(),
+                lista.getBaseCurricular(),
+                lista.isEstado(),
+                nomeCurso
+            };
+            // Adiciona os dados da disciplina como uma nova linha no modelo da tabela
+            dtmDisciplinas.addRow(dados);
+        }
+        // Notifica a tabela que os dados foram atualizados para que a interface gráfica seja atualizada
+        dtmDisciplinas.fireTableDataChanged();
     }
-    // Notifica a tabela que os dados foram atualizados para que a interface gráfica seja atualizada
-    dtmDisciplinas.fireTableDataChanged();
-}
 
 
     /**
@@ -99,6 +113,7 @@ private void carregarTabela() {
         btnVoltar = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
         btnProfessor = new javax.swing.JButton();
+        btnCurso = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,15 +128,23 @@ private void carregarTabela() {
 
         tblDados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nome", "NomeAbreviado", "CargaHoraria", "BaseCurricular", "Estado"
+                "Id", "Nome", "NomeAbreviado", "CargaHoraria", "BaseCurricular", "Estado", "Curso"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblDados);
 
         btnRemover.setText("Remover");
@@ -166,6 +189,13 @@ private void carregarTabela() {
             }
         });
 
+        btnCurso.setText("Curso");
+        btnCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCursoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -191,8 +221,10 @@ private void carregarTabela() {
                         .addGap(15, 15, 15)
                         .addComponent(btnProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(105, 105, 105)))
+                        .addComponent(btnCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(90, 90, 90)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -207,6 +239,7 @@ private void carregarTabela() {
                     .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnProfessor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -393,6 +426,91 @@ private void carregarTabela() {
         tela.setVisible(true);
     }//GEN-LAST:event_btnProfessorActionPerformed
 
+    private void btnCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoActionPerformed
+        // TODO add your handling code here:
+        
+        
+        List<Curso> cursos;
+        
+        
+        // Obtém a linha selecionada na tabela
+        int row = tblDados.getSelectedRow();
+        if (row != -1) {
+            String nome = (String) tblDados.getValueAt(row, 1); // Supondo que o ID esteja na primeira coluna
+
+
+            try {
+
+                // Busca a disciplina pelo ID
+                Disciplina disciplina = new Disciplina();
+                List<Disciplina> disciplinas;
+                disciplinas = disciplinaController.findByNome(nome);
+                disciplina = disciplinas.get(0);
+                
+
+                if (disciplina != null) {
+                    // Pergunta ao usuário se deseja remover a disciplina
+                    int resposta = JOptionPane.showConfirmDialog(null, "Deseja vincular ou atualizar o curso da disciplina?", "Confirmar Remoção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        
+                        String nomecurso = JOptionPane.showInputDialog("Digite o nome do novo curso:");
+                        
+                        
+                        
+                      try {
+                        // Busca por professores com o nome informado
+                        cursos = cursoController.findByNome(nomecurso);
+
+                        if (cursos != null && !cursos.isEmpty()) {
+                            Curso cursoNovo = cursos.get(0); // Pega o primeiro professor encontrado
+
+                            // Remove o professor antigo da disciplina
+                            List<Curso> cursosAntigos = disciplina.getCurso();
+                            if (cursosAntigos != null) {
+                                cursosAntigos.clear(); // Limpa os professores antigos
+                                disciplina.setCurso(cursosAntigos);
+                            }
+
+                            // Adiciona o novo professor à disciplina
+                            disciplina.getCurso().add(cursoNovo);
+
+                            // Atualiza a disciplina no banco de dados
+                            disciplinaController.update(disciplina);
+
+                            JOptionPane.showMessageDialog(null, "Disciplina atualizada com sucesso com o novo curso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+                            // Atualiza a tabela de dados
+                            carregarTabela();
+
+                        } else {
+                            JOptionPane.showMessageDialog(this, "curso não encontrado. Verifique o nome e tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "Ocorreu um erro ao buscar o curso: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                        e.printStackTrace(); // Opcional: útil para depuração
+                    } 
+                        
+
+                    } else {
+                        // Cancelar a operação
+                        JOptionPane.showMessageDialog(null, "Remoção cancelada.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    // Disciplina não encontrada, lidar com isso apropriadamente
+                    JOptionPane.showMessageDialog(null, "Disciplina não encontrada.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao remover a disciplina.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhuma disciplina selecionada.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnCursoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -439,6 +557,7 @@ private void carregarTabela() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnCurso;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnProfessor;
     private javax.swing.JButton btnRefresh;

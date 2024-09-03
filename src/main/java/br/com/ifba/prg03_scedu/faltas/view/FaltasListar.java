@@ -1,7 +1,6 @@
 package br.com.ifba.prg03_scedu.faltas.view;
 
 import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
-import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
 import br.com.ifba.prg03_scedu.faltas.entity.Falta;
 
 import java.util.List;
@@ -9,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -233,7 +233,7 @@ public class FaltasListar extends javax.swing.JFrame {
 
         try {
             // Busca o aluno pelo nome
-            Alunos aluno = gestaoFaltasController.getAlunoByNome(nomeAluno);
+            AlunosPrincipal aluno = gestaoFaltasController.getAlunoByNome(nomeAluno);
 
             // Busca a falta correspondente
             List<Falta> faltas = gestaoFaltasController.findAll();
@@ -271,7 +271,7 @@ public class FaltasListar extends javax.swing.JFrame {
 
         try {
             // Buscar o aluno pelo nome
-            Alunos aluno = gestaoFaltasController.getAlunoByNome(nomeAluno);
+            AlunosPrincipal aluno = gestaoFaltasController.getAlunoByNome(nomeAluno);
 
             // Buscar a falta correspondente
             List<Falta> faltas = gestaoFaltasController.findAll();
@@ -333,7 +333,7 @@ public class FaltasListar extends javax.swing.JFrame {
                 }
             } else {
                 // Se não houver resultados, pesquise no banco de dados
-                Alunos aluno = new Alunos();
+                AlunosPrincipal aluno = new AlunosPrincipal();
                 aluno.setNome(alunoNome);
 
                 // Pesquisar no banco de dados

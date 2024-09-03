@@ -4,6 +4,7 @@
  */
 package br.com.ifba.prg03_scedu.disciplina.entity;
 
+import br.com.ifba.prg03_scedu.curso.entity.Curso;
 import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
 import br.com.ifba.prg03_scedu.infrastructure.entity.PersistenceEntity;
 import jakarta.persistence.CascadeType;
@@ -53,6 +54,14 @@ public class Disciplina extends PersistenceEntity{
     )
     private List<Professor> professor;
 
+    
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "Disciplina_Curso",
+        joinColumns = @JoinColumn(name = "disciplina_id"),
+        inverseJoinColumns = @JoinColumn(name = "curso_id")
+    )
+    private List<Curso> curso;
 
     // Carga horária da disciplina em horas.
     private int cargaHoraria;

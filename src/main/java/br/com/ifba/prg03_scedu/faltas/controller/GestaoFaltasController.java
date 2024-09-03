@@ -1,11 +1,14 @@
 package br.com.ifba.prg03_scedu.faltas.controller;
 
-import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
+import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
+import br.com.ifba.prg03_scedu.disciplina.service.DisciplinaIService;
 import br.com.ifba.prg03_scedu.faltas.entity.Falta;
 import br.com.ifba.prg03_scedu.faltas.service.AlunosIService;
 import br.com.ifba.prg03_scedu.faltas.service.GestaoFaltasIService;
+import java.util.ArrayList;
 import java.util.List;
 
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -19,12 +22,15 @@ public class GestaoFaltasController implements GestaoFaltasIController {
     private GestaoFaltasIService attendanceService;
 
     @Override
-    public Alunos saveAluno(Alunos aluno) {
+    public AlunosPrincipal saveAluno(AlunosPrincipal aluno) {
         return alunosService.save(aluno);
     }
+    
+    @Autowired
+    private DisciplinaIService disciplinaService;
 
     @Override
-    public List<Alunos> getAllAlunos() throws RuntimeException {
+    public List<AlunosPrincipal> getAllAlunos() throws RuntimeException {
         return alunosService.findAll();
     }
 
@@ -54,7 +60,7 @@ public class GestaoFaltasController implements GestaoFaltasIController {
 
     // Busca faltas pelo NOME do aluno utilizando o serviço e retorna a lista de faltas encontradas
     @Override
-    public List<Falta> findByAluno(Alunos aluno) { // Update method name here
+    public List<Falta> findByAluno(AlunosPrincipal aluno) { // Update method name here
         return attendanceService.findByAluno(aluno);
     }
 
@@ -66,13 +72,43 @@ public class GestaoFaltasController implements GestaoFaltasIController {
 
     // Busca todos os alunos usando o serviço de alunos
     @Override
-    public Alunos getAlunoByNome(String nome) {
-        List<Alunos> alunos = alunosService.findAll();
-        for (Alunos aluno : alunos) {
+    public AlunosPrincipal getAlunoByNome(String nome) {
+        List<AlunosPrincipal> alunos = alunosService.findAll();
+        for (AlunosPrincipal aluno : alunos) {
             if (aluno.getNomeSocial().equalsIgnoreCase(nome)) {
                 return aluno;
             }
         }
         return null;
     }
+
+     @Override
+    public Disciplina buscarDisciplinaPorNome(String nome) throws RuntimeException {
+    if (nome == null || nome.isEmpty()) {
+        throw new IllegalArgumentException("Nome da disciplina não pode ser nulo ou vazio.");
+    }
+
+    // Buscar todas as disciplinas usando o serviço
+    List<Disciplina> disciplinasList = disciplinaService.findAll(); // Utilize o método adequado para buscar todas as disciplinas
+
+    // Procurar a disciplina pelo nome
+    for (Disciplina disciplina : disciplinasList) {
+        if (disciplina.getNome().equalsIgnoreCase(nome)) {
+            return disciplina;
+        }
+    }
+
+    // Lançar exceção se a disciplina não for encontrada
+    throw new RuntimeException("Disciplina não encontrada: " + nome);
+}
+    
+    @Override
+    public List<String> getAllDisciplinas() {
+    List<Disciplina> disciplinas = disciplinaService.findAll();
+    List<String> nomesDisciplinas = new ArrayList<>();
+    for (Disciplina disciplina : disciplinas) {
+        nomesDisciplinas.add(disciplina.getNome());
+    }
+    return nomesDisciplinas;
+}
 }

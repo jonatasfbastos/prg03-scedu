@@ -7,13 +7,13 @@ package br.com.ifba.prg03_scedu.gestaoprofessor.view;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
 import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
-import br.com.ifba.prg03_scedu.gestaoprofessor.service.ProfessorService;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 import org.springframework.stereotype.Component;
 
 /**
@@ -216,36 +216,85 @@ public class ProfessorView extends javax.swing.JFrame {
         //Atualizando a Página caso tenha alguma alterção 
         listarProfessor();
         //Mensagem de atualização da Lista
-        JOptionPane.showInternalInputDialog(null, "Lista Atualizada!");
+        JOptionPane.showMessageDialog(null, "Lista Atualizada!");
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         pesquisarProfessor();
-       
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
-        new ProfessorExcluir().setVisible(true);
+
+       // new ProfessorExcluir().setVisible(true);
+       int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow != -1) {
+            // Verifica se o valor na coluna 0 pode ser convertido para Long, sendo essa coluna ID
+            try {
+                //Pego o valor Selecionando pelo usuário
+                Long id = (Long) jTable1.getValueAt(selectedRow, 0);
+                
+                //Verifico se encontra o professor informado
+                Professor professor = professorControler.findById(id);
+
+                if (professor != null) {
+                    //Confirmo a exclusão dos dados
+                    int resposta = JOptionPane.showConfirmDialog(null, "Deseja excluir as informações do Professor(a): " 
+                            + professor.getNome() + " ?","Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        //Chama a camada de controle para realizar a exclusão pelo id informado
+                        professorControler.delete(id);
+                        //Informo que a realização da exclusão foi realizada com sucesso
+                        JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
+
+                        //Atualizo a lista
+                        listarProfessor(); // Atualiza a lista de professores
+                    }
+                    //Tratos as exceções 
+                } else {
+                    JOptionPane.showMessageDialog(null, "Professor não encontrado!");
+                }
+            } catch (ClassCastException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao converter o ID. Verifique o tipo de dado na tabela.");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir professor: " + e.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhuma linha ou ID encontrado!");
+        }
+       
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        // TODO add your handling code here:
+        
         listarProfessor();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
-        new ProfessorEditar().setVisible(true);
+       
+        int selectedRow = jTable1.getSelectedRow();
+        
+        if(selectedRow != -1){
+            long id = (long) jTable1.getValueAt(selectedRow, 0);
+            
+            Professor professor = professorControler.findById(id);
+            
+            if(professor != null){
+                new ProfessorEditar(professorControler, professor).setVisible(true);
+                listarProfessor();
+            }else{
+                JOptionPane.showMessageDialog(null, "Professor não encontrado!");
+            }
+        }else {
+            JOptionPane.showMessageDialog(null, "Nenhuma linha ou ID encontrado!");
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void txtPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisarActionPerformed
-        // TODO add your handling code here:
+       //Chama o método de atualizar a tabela
+        pesquisarProfessor();
     }//GEN-LAST:event_txtPesquisarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     
     public void listarProfessor(){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -270,56 +319,81 @@ public class ProfessorView extends javax.swing.JFrame {
     
     private void pesquisarProfessor(){
     
-        Professor professor = null;
+        Professor professorBusca = null;
         String idstr = txtPesquisar.getText();
         
-
+        //Verificando Caso tenha 
         if (idstr == null || idstr.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, insira corretamente o nome/id do professor.");
+            JOptionPane.showMessageDialog(this, "Por favor, insira corretamente o nome/id do professor(a).");
             return;
         }
 
         try {
+            //Pesquisando pelo ID
             long id;
-            id = Long.parseLong(idstr);
-            professor = professorControler.findById(id);
             
-            if(professor == null){
-               JOptionPane.showMessageDialog(this, "ID inválido.");
+            //Convertendo para Pesquisar pelo Id
+            id = Long.parseLong(idstr);
+            
+            //Verificando No Banco de dados chamando o controler
+            professorBusca = professorControler.findById(id);
+            
+            //Verificando se não achou o professor
+            if (professorBusca == null) {
+                JOptionPane.showMessageDialog(this, "Professor não encontrado.");
+            } else {
+
+                //Criando a Tabela de dados do banco de dados
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+                // Apagar todos os dados
+                model.setRowCount(0);
+
+                // Adicionar nova linha com os dados do professor
+                model.addRow(new Object[]{
+                    professorBusca.getId(),
+                    professorBusca.getNome(),
+                    professorBusca.getCpf(),
+                    professorBusca.getMateria(),
+                    professorBusca.getNascimento(),
+                    professorBusca.getFormado()
+                });
             }
         } catch (NumberFormatException e) {
+            //Pesquisando pelo nome procurando no banco chamando no controller
+            List<Professor> professores = professorControler.findByNome(idstr);
+        
+            //Verificando se encontrou o professor
+            if(professores == null){
+                JOptionPane.showMessageDialog(null, "Professor não encontrado");
+                return;
+            }
             
-         List<Professor> professores = professorControler.findByNome(idstr);
-        }
-
-        if (professor == null) {
-            JOptionPane.showMessageDialog(this, "Professor não encontrado.");
-        } else {
+            //Criando a tabela de dados de banco de dados
+            
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-
-            // Apagar todos os dados
             model.setRowCount(0);
-
-            // Adicionar nova linha com os dados do professor
-            model.addRow(new Object[]{
-                professor.getId(),
-                professor.getNome(),
-                professor.getCpf(),
-                professor.getMateria(),
-                professor.getNascimento(),
-                professor.getFormado()
-            });
+            
+            //Adicionando cada Professor encontrado à tabela
+            for(Professor p : professores){
+                model.addRow(new Object[]{
+                    p.getId(),
+                    p.getNome(),
+                    p.getCpf(),
+                    p.getMateria(),
+                    p.getNascimento(),
+                    p.getFormado()
+                });
+            }
+            return;
         }
-
+        
     }
     
     public static void main(String args[]) {     
         
         
-               ConfigurableApplicationContext context = 
-        new SpringApplicationBuilder(Prg03SceduApplication.class)
-        .headless(false)
-        .run(args);
+        ConfigurableApplicationContext context = new SpringApplicationBuilder(Prg03SceduApplication.class).headless(false).run(args);
 
         ProfessorView professorView = context.getBean(ProfessorView.class);
         professorView.setVisible(true);
