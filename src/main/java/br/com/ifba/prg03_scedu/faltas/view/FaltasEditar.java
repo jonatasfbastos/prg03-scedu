@@ -1,8 +1,10 @@
 package br.com.ifba.prg03_scedu.faltas.view;
 
+import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
 import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
-import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
 import br.com.ifba.prg03_scedu.faltas.entity.Falta;
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
+
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
@@ -21,6 +23,7 @@ public class FaltasEditar extends JDialog {
         setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
         postAluno();
         getAlunos();
+        getDisciplinas();//carregar disciplinas
     }
     
      public FaltasEditar(FaltasListar parent, GestaoFaltasIController gestaoFaltasController, Falta falta) {
@@ -31,6 +34,7 @@ public class FaltasEditar extends JDialog {
         setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
         postAluno();
         getAlunos();
+        getDisciplinas();//carregar disciplinas
         populateFields();
     }
      
@@ -47,14 +51,12 @@ public class FaltasEditar extends JDialog {
 
     public void postAluno() {
         Date agora = new Date();
-        Alunos aluno = new Alunos();
+        AlunosPrincipal aluno = new AlunosPrincipal();
 
         aluno.setNomeSocial("Vittorio");
-        aluno.setSexo('M');
+        aluno.setSexo("M");
         aluno.setGenero("Masculino");
         aluno.setRg("523456789");
-        aluno.setOrgaoExpedidor("SSP");
-        aluno.setDataEmissao(agora);
         aluno.setTituloEleitor("5234567890");
 
         try {
@@ -70,13 +72,13 @@ public class FaltasEditar extends JDialog {
     public void getAlunos() {
         try {
             // Buscar a lista de alunos do banco de dados
-            List<Alunos> alunosList = gestaoFaltasController.getAllAlunos();
+            List<AlunosPrincipal> alunosList = gestaoFaltasController.getAllAlunos();
 
             // Limpar os itens existentes no JComboBox
             jComboBox2.removeAllItems();
-
+            System.out.println(alunosList);
             // Adicionar os alunos ao JComboBox
-            for (Alunos aluno : alunosList) {
+            for (AlunosPrincipal aluno : alunosList) {
                 jComboBox2.addItem(aluno.getNomeSocial());
             }
         } catch (Exception e) {
@@ -84,13 +86,31 @@ public class FaltasEditar extends JDialog {
             JOptionPane.showMessageDialog(this, "Ocorreu um erro ao buscar os alunos.", "Sucesso", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    public void getDisciplinas() {
+        try {
+            // Buscar a lista de disciplinas do banco de dados
+            List<String> disciplinasList = gestaoFaltasController.getAllDisciplinas();
 
-    private Alunos buscarAlunoPorNome(String nome) throws RuntimeException {
+            // Limpar os itens existentes no JComboBox
+            jComboBox1.removeAllItems();
+
+            // Adicionar as disciplinas ao JComboBox
+            for (String disciplina : disciplinasList) {
+                jComboBox1.addItem(disciplina);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao buscar as disciplinas.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private AlunosPrincipal buscarAlunoPorNome(String nome) throws RuntimeException {
         // Buscar todos os alunos
-        List<Alunos> alunosList = gestaoFaltasController.getAllAlunos();
+        List<AlunosPrincipal> alunosList = gestaoFaltasController.getAllAlunos();
 
         // Procurar o aluno pelo nome
-        for (Alunos aluno : alunosList) {
+        for (AlunosPrincipal aluno : alunosList) {
             if (aluno.getNomeSocial().equals(nome)) {
                 return aluno;
             }
@@ -266,13 +286,13 @@ public class FaltasEditar extends JDialog {
         try {
             // Obter os dados da interface
             String alunoName = jComboBox2.getSelectedItem().toString();
-            String disciplina = jComboBox1.getSelectedItem().toString();
+            String disciplinaName = jComboBox1.getSelectedItem().toString();
             String data = jTextField1.getText();
             boolean justificada = jCheckBox1.isSelected();
             String observacoes = jTextArea1.getText();
 
             // Verificação básica de campos obrigatórios
-            if (alunoName.isEmpty() || disciplina.isEmpty() || data.isEmpty()) {
+            if (alunoName.isEmpty() || disciplinaName.isEmpty() || data.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos obrigatórios.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -280,7 +300,10 @@ public class FaltasEditar extends JDialog {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date dataEmissao = sdf.parse(data);
 
-            Alunos aluno = buscarAlunoPorNome(alunoName);
+            AlunosPrincipal aluno = buscarAlunoPorNome(alunoName);
+            
+             // Buscar disciplina pelo nome
+            Disciplina disciplina = gestaoFaltasController.buscarDisciplinaPorNome(disciplinaName);
 
             if (faltaAtual == null) {
                 System.out.println("Adicionando nova falta.");

@@ -45,12 +45,24 @@ public class ProfessorService implements ProfessorIService{
 
     @Override
     public Professor update(Professor usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(usuario == null){
+            throw new RuntimeException("Erro, disciplina é nula");
+        }
+        return professorRepository.save(usuario);
     }
 
     @Override
     public void delete(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //Criando a classe Professor para encontrar o tipo da entidade do professor
+         Professor professor = professorRepository.findById(id).orElse(null);
+         
+         //Verificando ser encontrou o professor
+         if(professor != null){
+             //Deletando Professor
+             professorRepository.delete(professor);
+         }else{
+             throw new RuntimeException("Professor não encontrado com o ID: " + id);
+         }
     }
 
     @Override

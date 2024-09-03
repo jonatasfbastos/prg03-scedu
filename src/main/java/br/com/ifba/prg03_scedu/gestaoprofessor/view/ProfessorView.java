@@ -226,38 +226,75 @@ public class ProfessorView extends javax.swing.JFrame {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
 
        // new ProfessorExcluir().setVisible(true);
-       int selectedRom = jTable1.getSelectedRow();
-       if(selectedRom != -1){
-           
-           int ColunaId = jTable1.getColumn("ID").getModelIndex();
-           
-           Long id = (long) jTable1.getValueAt(selectedRom, ColunaId);
-           
-          
-       }
-        JOptionPane.showMessageDialog(null, id) ;
-       
-       
+       int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow != -1) {
+            // Verifica se o valor na coluna 0 pode ser convertido para Long, sendo essa coluna ID
+            try {
+                //Pego o valor Selecionando pelo usuário
+                Long id = (Long) jTable1.getValueAt(selectedRow, 0);
+                
+                //Verifico se encontra o professor informado
+                Professor professor = professorControler.findById(id);
+
+                if (professor != null) {
+                    //Confirmo a exclusão dos dados
+                    int resposta = JOptionPane.showConfirmDialog(null, "Deseja excluir as informações do Professor(a): " 
+                            + professor.getNome() + " ?","Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        //Chama a camada de controle para realizar a exclusão pelo id informado
+                        professorControler.delete(id);
+                        //Informo que a realização da exclusão foi realizada com sucesso
+                        JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
+
+                        //Atualizo a lista
+                        listarProfessor(); // Atualiza a lista de professores
+                    }
+                    //Tratos as exceções 
+                } else {
+                    JOptionPane.showMessageDialog(null, "Professor não encontrado!");
+                }
+            } catch (ClassCastException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao converter o ID. Verifique o tipo de dado na tabela.");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir professor: " + e.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhuma linha ou ID encontrado!");
+        }
        
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        // TODO add your handling code here:
+        
         listarProfessor();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
-        new ProfessorEditar().setVisible(true);
+       
+        int selectedRow = jTable1.getSelectedRow();
+        
+        if(selectedRow != -1){
+            long id = (long) jTable1.getValueAt(selectedRow, 0);
+            
+            Professor professor = professorControler.findById(id);
+            
+            if(professor != null){
+                new ProfessorEditar(professorControler, professor).setVisible(true);
+                listarProfessor();
+            }else{
+                JOptionPane.showMessageDialog(null, "Professor não encontrado!");
+            }
+        }else {
+            JOptionPane.showMessageDialog(null, "Nenhuma linha ou ID encontrado!");
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void txtPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisarActionPerformed
-        // TODO add your handling code here:
+       //Chama o método de atualizar a tabela
+        pesquisarProfessor();
     }//GEN-LAST:event_txtPesquisarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     
     public void listarProfessor(){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -287,7 +324,7 @@ public class ProfessorView extends javax.swing.JFrame {
         
         //Verificando Caso tenha 
         if (idstr == null || idstr.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, insira corretamente o nome/id do professor.");
+            JOptionPane.showMessageDialog(this, "Por favor, insira corretamente o nome/id do professor(a).");
             return;
         }
 
