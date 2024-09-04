@@ -5,6 +5,7 @@
 package br.com.ifba.prg03_scedu.usuario.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.home.view.TelaInicial;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
 import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
 import java.util.List;
@@ -137,6 +138,7 @@ private void atualizarTabela() {
         jLabel2 = new javax.swing.JLabel();
         cadastroButtom = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        voltarBtm = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -300,6 +302,13 @@ private void atualizarTabela() {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("Gestão de Usuários");
 
+        voltarBtm.setText("Voltar");
+        voltarBtm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                voltarBtmActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -308,7 +317,11 @@ private void atualizarTabela() {
                 .addGap(29, 29, 29)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(voltarBtm, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -337,7 +350,8 @@ private void atualizarTabela() {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(RemoverButtom, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editarButtom, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(editarButtom, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(voltarBtm, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15))
         );
 
@@ -444,6 +458,15 @@ private void atualizarTabela() {
         atualizarTabela();
     }//GEN-LAST:event_nivelAcessSelectBtmActionPerformed
 
+    private void voltarBtmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarBtmActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        // Abrir a TelaInicial
+        ConfigurableApplicationContext context = new SpringApplicationBuilder(Prg03SceduApplication.class).headless(false).run();
+        TelaInicial telaInicial = context.getBean(TelaInicial.class);
+        telaInicial.setVisible(true);
+    }//GEN-LAST:event_voltarBtmActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -476,5 +499,6 @@ private void atualizarTabela() {
     private javax.swing.JRadioButton nivelAcessSelectBtm;
     private javax.swing.JRadioButton nomeSelectBtm;
     private javax.swing.JTextField pesquisaTextf;
+    private javax.swing.JButton voltarBtm;
     // End of variables declaration//GEN-END:variables
 }
