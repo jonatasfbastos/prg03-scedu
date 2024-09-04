@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 public class UsuarioController implements UsuarioIController {
     
     private final UsuarioIService usuarioService;
+    private static Usuario usuarioLogado;
 
     @Override
     public List<Usuario> findAll() {
@@ -53,8 +54,18 @@ public class UsuarioController implements UsuarioIController {
         usuarioService.recuperarSenha(email);
     }
 
-    @Override
-    public Usuario login(String email, String senha) {
-        return usuarioService.login(email, senha);
+@Override
+public Usuario login(String email, String senha) {
+    Usuario usuario = usuarioService.login(email, senha);
+    if (usuario != null) {
+        usuarioLogado = usuario; // Armazena o usuário logado
     }
+    return usuario;
+}
+    
+  public static Usuario getUsuarioLogado() {
+    System.out.println("Usuário logado: " + usuarioLogado); // Adicione um log para depuração
+    return usuarioLogado;
+}
+    
 }

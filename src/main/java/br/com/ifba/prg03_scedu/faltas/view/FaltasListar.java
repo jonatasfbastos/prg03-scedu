@@ -1,7 +1,6 @@
 package br.com.ifba.prg03_scedu.faltas.view;
 
 import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
-import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
 import br.com.ifba.prg03_scedu.faltas.entity.Falta;
 
 import java.util.List;
@@ -9,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -43,7 +43,7 @@ public class FaltasListar extends javax.swing.JFrame {
 
         // Adicionar os dados à tabela
         for (Falta falta : faltas) {
-            model.addRow(new Object[]{falta.getAluno().getNomeSocial(), falta.getDisciplina(), falta.isJustificada()});
+            model.addRow(new Object[]{falta.getAluno().getNomeSocial(), falta.getDisciplina().getNome(), falta.isJustificada()});
         }
     }
 
@@ -60,8 +60,6 @@ public class FaltasListar extends javax.swing.JFrame {
         bnt_remover = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_list = new javax.swing.JTable();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 255));
 
@@ -233,13 +231,13 @@ public class FaltasListar extends javax.swing.JFrame {
 
         try {
             // Busca o aluno pelo nome
-            Alunos aluno = gestaoFaltasController.getAlunoByNome(nomeAluno);
+            AlunosPrincipal aluno = gestaoFaltasController.getAlunoByNome(nomeAluno);
 
             // Busca a falta correspondente
             List<Falta> faltas = gestaoFaltasController.findAll();
             Falta faltaToEdit = null;
             for (Falta falta : faltas) {
-                if (falta.getAluno().equals(aluno) && falta.getDisciplina().equals(disciplina)) {
+                if (falta.getAluno().equals(aluno) && falta.getDisciplina().getNome().equals(disciplina)) {
                     faltaToEdit = falta;
                     break;
                 }
@@ -271,13 +269,13 @@ public class FaltasListar extends javax.swing.JFrame {
 
         try {
             // Buscar o aluno pelo nome
-            Alunos aluno = gestaoFaltasController.getAlunoByNome(nomeAluno);
+            AlunosPrincipal aluno = gestaoFaltasController.getAlunoByNome(nomeAluno);
 
             // Buscar a falta correspondente
             List<Falta> faltas = gestaoFaltasController.findAll();
             Falta faltaToRemove = null;
             for (Falta falta : faltas) {
-                if (falta.getAluno().equals(aluno) && falta.getDisciplina().equals(disciplina)) {
+                if (falta.getAluno().equals(aluno) && falta.getDisciplina().getNome().equals(disciplina)) {
                     faltaToRemove = falta;
                     break;
                 }
@@ -310,30 +308,28 @@ public class FaltasListar extends javax.swing.JFrame {
         model.setRowCount(0); // Limpar a tabela antes de carregar novos dados
 
         if (!alunoNome.isEmpty()) {
-            System.out.println("Não está vazio");
-
             // Carregar a lista de faltas
             List<Falta> faltas = loadFaltas();
 
             // Filtrar as faltas pelo nome do aluno
             List<Falta> faltasFiltradas = faltas.stream()
                     .filter(falta -> falta.getAluno() != null
-                            && falta.getAluno().getNome() != null
-                            && falta.getAluno().getNome().equalsIgnoreCase(alunoNome))
+                            && falta.getAluno().getNomeSocial()!= null
+                            && falta.getAluno().getNomeSocial().equalsIgnoreCase(alunoNome))
                     .collect(Collectors.toList());
 
             // Exibir resultados na tabela
             if (!faltasFiltradas.isEmpty()) {
                 for (Falta falta : faltasFiltradas) {
                     model.addRow(new Object[]{
-                            falta.getAluno() != null ? falta.getAluno().getNome() : "Nome não disponível",
-                            falta.getDisciplina(),
+                            falta.getAluno() != null ? falta.getAluno().getNomeSocial() : "Nome não disponível",
+                            falta.getDisciplina().getNome(),
                             falta.isJustificada()
                     });
                 }
             } else {
                 // Se não houver resultados, pesquise no banco de dados
-                Alunos aluno = new Alunos();
+                AlunosPrincipal aluno = new AlunosPrincipal();
                 aluno.setNome(alunoNome);
 
                 // Pesquisar no banco de dados
@@ -342,8 +338,8 @@ public class FaltasListar extends javax.swing.JFrame {
                 if (!faltasBanco.isEmpty()) {
                     for (Falta falta : faltasBanco) {
                         model.addRow(new Object[]{
-                                falta.getAluno() != null ? falta.getAluno().getNome() : "Nome não disponível",
-                                falta.getDisciplina(),
+                                falta.getAluno() != null ? falta.getAluno().getNomeSocial() : "Nome não disponível",
+                                falta.getDisciplina().getNome(),
                                 falta.isJustificada()
                         });
                     }

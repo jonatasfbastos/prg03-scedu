@@ -478,14 +478,20 @@ public class TelaEditarAluno extends javax.swing.JFrame {
                 novoAluno.setTelefone(txtTelefone.getText());
                 log.info("Telefone do aluno atualizado para: {0}", txtTelefone.getText());
             }
-            if (!(txtCep.getText().isEmpty() && txtRua.getText().isEmpty() && txtNumero.getText().isEmpty() 
-                    && txtCidade.getText().isEmpty() && txtBairro.getText().isEmpty() 
-                    && cbxRegiaoMoradia.getSelectedItem().equals(" ") && cbxUf.getSelectedItem().equals(" "))){
+            if (!(txtCep.getText().isEmpty() || txtRua.getText().isEmpty() 
+                    ||  txtCidade.getText().isEmpty() || txtBairro.getText().isEmpty() 
+                    || cbxRegiaoMoradia.getSelectedItem().equals(" ") || cbxUf.getSelectedItem().equals(" "))){
                 
                 JOptionPane.showConfirmDialog(null, "Todos os campos de endereço devem ser preenchidos", "Aviso", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
                 return;
             }else{
-                //Editar após a implementação da classe Endereço
+                novoAluno.getEnderecos().setCep(txtCep.getText());
+                novoAluno.getEnderecos().setRua(txtRua.getText());
+                novoAluno.getEnderecos().setNumero(Integer.parseInt(txtCep.getText()));
+                novoAluno.getEnderecos().setCidade(txtCidade.getText());
+                novoAluno.getEnderecos().setBairro(txtBairro.getText());
+                novoAluno.getEnderecos().setUf(cbxUf.getSelectedItem().toString());
+                novoAluno.setRegiaoMoradia(cbxRegiaoMoradia.getSelectedItem().toString());
             }
             if (!(cbxGenero.getSelectedItem().equals(" "))) {
                 novoAluno.setGenero(cbxGenero.getSelectedItem().toString());

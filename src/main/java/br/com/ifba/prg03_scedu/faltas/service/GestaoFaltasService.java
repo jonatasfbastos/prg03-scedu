@@ -1,11 +1,11 @@
 package br.com.ifba.prg03_scedu.faltas.service;
 
-import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
 import br.com.ifba.prg03_scedu.faltas.repository.GestaoFaltasRepository;
 import br.com.ifba.prg03_scedu.faltas.entity.Falta;
 
 import java.util.List;
 
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +37,7 @@ public class GestaoFaltasService implements GestaoFaltasIService {
     }
 
     @Override
-    public List<Falta> findByAluno(Alunos aluno) {
+    public List<Falta> findByAluno(AlunosPrincipal aluno) {
         return gestaoFaltasRepository.findByAluno(aluno);
     }
     @Override

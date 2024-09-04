@@ -14,8 +14,8 @@ import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
 import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
 import br.com.ifba.prg03_scedu.gestavaliacao.controller.AvaliacaoIController;
 import br.com.ifba.prg03_scedu.home.view.TelaInicial;
-import br.com.ifba.prg03_scedu.serie.controller.SerieController;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
+import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
 import br.com.ifba.prg03_scedu.util.CredenciaisManager;
 import jakarta.annotation.PostConstruct;
 import javax.swing.JOptionPane;
@@ -39,7 +39,6 @@ public class TelaLogin extends javax.swing.JFrame {
     private final AvaliacaoIController avaliacaoController;
     private final GestaoAlunoIController gestaoAlunoController;
     private final ProfessorIController professorController;
-    private final SerieController serieController;
     
     
     public TelaLogin(
@@ -52,9 +51,7 @@ public class TelaLogin extends javax.swing.JFrame {
             EscolaIController escolaController,
             AvaliacaoIController avaliacaoController,
             GestaoAlunoIController gestaoAlunoController,
-            ProfessorIController professorController,
-            SerieController serieController
-
+            ProfessorIController professorController
     ) {
         this.curriculoController = curriculoController;
         this.usuarioController = usuarioController;
@@ -66,7 +63,6 @@ public class TelaLogin extends javax.swing.JFrame {
         this.gestaoAlunoController = gestaoAlunoController;
         this.avaliacaoController = avaliacaoController;
         this.professorController = professorController;
-        this.serieController = serieController;
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
@@ -269,36 +265,36 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        /*try {
-
-            // Obtém a senha do JPasswordField como um array de caracteres
-            char[] senhaArray = pfSenha.getPassword();
-
-            // Converte o array de caracteres em uma string
-            String senha = new String(senhaArray);
             String email = tfEmail.getText();
-            Usuario usuario = usuarioController.login(email, senha);
-            
-            if (cbLembrarDeMim.isSelected()) {
-                credenciaisManager.salvarCredenciais(email, senha);
-            } else {
-                credenciaisManager.limparCredenciais();
+            String senha = new String(pfSenha.getPassword());
+
+            if (email.isEmpty() || senha.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.", "Erro de Login", JOptionPane.ERROR_MESSAGE);
+                return;
             }
 
-            // Limpa o array de caracteres após o uso para segurança
-            Arrays.fill(senhaArray, ' ');*/
+            try {
+                // Chama o método de login do UsuarioController
+                Usuario usuario = usuarioController.login(email, senha);
 
-            TelaInicial telaInicial = new TelaInicial(disciplinaController, curriculoController, gestaoFaltasController, cursoController, usuarioController, escolaController, avaliacaoController, gestaoAlunoController, professorController, serieController);
+                if (usuario != null) {
+                    // Armazena ou limpa as credenciais conforme a seleção do usuário
+                    if (cbLembrarDeMim.isSelected()) {
+                        credenciaisManager.salvarCredenciais(email, senha);
+                    } else {
+                        credenciaisManager.limparCredenciais();
+                    }
 
-            telaInicial.setVisible(true);
-            telaInicial.toFront();
-            this.dispose();
-
-        /*} catch (RuntimeException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro no login", JOptionPane.WARNING_MESSAGE);
-        }
-        */
-            this.dispose();
+                    // Redireciona para a tela inicial
+                    TelaInicial telaInicial = new TelaInicial(disciplinaController, curriculoController, gestaoFaltasController, cursoController, usuarioController, escolaController, avaliacaoController, gestaoAlunoController, professorController);
+                    telaInicial.setVisible(true);
+                    telaInicial.toFront();
+                    this.dispose();
+                }
+            } catch (RuntimeException ex) {
+                // Mostra uma mensagem de erro caso o login falhe
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro de Login", JOptionPane.ERROR_MESSAGE);
+            }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarContaActionPerformed
