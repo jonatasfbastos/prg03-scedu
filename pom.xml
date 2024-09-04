@@ -64,6 +64,12 @@
                     <version>1.9.3</version>
                         <type>jar</type>
                 </dependency>
+
+	 <dependency>
+	  <groupId>org.netbeans.external</groupId>
+	  <artifactId>AbsoluteLayout</artifactId>
+	  <version>RELEASE220</version>
+	 </dependency>
 	</dependencies>
 
 	<build>

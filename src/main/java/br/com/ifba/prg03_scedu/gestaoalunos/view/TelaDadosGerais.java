@@ -1,30 +1,88 @@
 
 package br.com.ifba.prg03_scedu.gestaoalunos.view;
 
+import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
-import br.com.ifba.prg03_scedu.Prg03SceduApplication;
-import br.com.ifba.prg03_scedu.gestaoalunos.entity.Responsaveis;
-import java.awt.Color;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import br.com.ifba.prg03_scedu.infrastructure.entity.Endereco;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
+public class TelaDadosGerais extends javax.swing.JFrame {
 
-//@RequiredArgsConstructor
-public class TelaAdicionar extends javax.swing.JFrame {
-    //Atributo usado na classe
-    private static final Logger log = LoggerFactory.getLogger(TelaAdicionar.class);
+    private static final Logger log = LoggerFactory.getLogger(TelaDadosGerais.class);
     private final GestaoAlunoIController gestaoAlunoController;
-
-    public TelaAdicionar(GestaoAlunoIController gestaoAlunoController) {
-        this.gestaoAlunoController = gestaoAlunoController;
-        log.info("Inicializando componentes da tela de listagem de alunos");
+    @Getter private final Long idAlunoEscolhido;
+    
+    private void carregarDados(){
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try{
+            // Encontra o aluno no banco de dados usando o ID fornecido
+            AlunosPrincipal alunoEncontrado = this.gestaoAlunoController.findById(idAlunoEscolhido);
+            txtNomeAluno.setText(alunoEncontrado.getNome());
+            txtNomeSocial.setText(alunoEncontrado.getNomeSocial());
+            txtEmail.setText(alunoEncontrado.getEmail());
+            cbxSexo.setSelectedItem(alunoEncontrado.getSexo());
+            cbxGenero.setSelectedItem(alunoEncontrado.getGenero());
+            txtRg.setText(alunoEncontrado.getRg());
+            txtOrgaoExpedidor.setText(alunoEncontrado.getOrgaoExpedidorRg());
+            txtDataEmissao.setText(alunoEncontrado.getDataEmissaoRg().toString());
+            txtCpf.setText(alunoEncontrado.getCpf());
+            txtTituloEleitor.setText(alunoEncontrado.getTituloEleitor());
+            txtDataNascimento.setText(alunoEncontrado.getNascimento().toString());
+            txtNacionalidade.setText(alunoEncontrado.getNacionalidade());
+            txtNaturalidade.setText(alunoEncontrado.getNaturalidade());
+            txtTelefone.setText(alunoEncontrado.getTelefone());
+            if(alunoEncontrado.getReponsavelLegal().getTipo().equals("Pai")){
+                pnlDadosReponsaveis.setVisible(true);
+                cbxResponsavelEscolha.setSelectedItem("Pai");
+                txtNomePai.setText(alunoEncontrado.getPai().getNome());
+                txtCpfPai.setText(alunoEncontrado.getPai().getCpf());
+                txtRgPai.setText(alunoEncontrado.getPai().getRg());
+                txtOrgaoExpedidorPai.setText(alunoEncontrado.getPai().getOrgaoExpedidorRg());
+                txtDataEmissaoPai.setText(alunoEncontrado.getPai().getDataEmissaoRg().toString());
+                txtProfissaoPai.setText(alunoEncontrado.getPai().getProfissao());
+            }else if(alunoEncontrado.getReponsavelLegal().getTipo().equals("Pai")){
+                pnlDadosReponsaveis.setVisible(true);
+                cbxResponsavelEscolha.setSelectedItem("Mãe");
+                txtNomeMae.setText(alunoEncontrado.getMae().getNome());
+                txtCpfMae.setText(alunoEncontrado.getMae().getCpf());
+                txtRgMae.setText(alunoEncontrado.getMae().getRg());
+                txtOrgaoExpedidorMae.setText(alunoEncontrado.getMae().getOrgaoExpedidorRg());
+                txtDataEmissaoMae.setText(alunoEncontrado.getMae().getDataEmissaoRg().toString());
+                txtProfissaoMae.setText(alunoEncontrado.getMae().getProfissao());
+            }else{
+                pnlResponsavelOutro.setVisible(true);
+                cbxResponsavelEscolha.setSelectedItem("Outro");
+                txtTipoResponsavel.setText(alunoEncontrado.getReponsavelLegal().getTipo());
+                txtNomeResponsavelOutro.setText(alunoEncontrado.getReponsavelLegal().getNome());
+                txtCpfResponsavelOutro.setText(alunoEncontrado.getReponsavelLegal().getCpf());
+            }
+            
+            txtCep.setText(alunoEncontrado.getEnderecos().getCep());
+            txtRua.setText(alunoEncontrado.getEnderecos().getRua());
+            txtNumero.setText(Integer.toString(alunoEncontrado.getEnderecos().getNumero()));
+            txtCidade.setText(alunoEncontrado.getEnderecos().getCidade());
+            txtBairro.setText(alunoEncontrado.getEnderecos().getBairro());
+            cbxRegiaoMoradia.setSelectedItem(alunoEncontrado.getRegiaoMoradia());
+            cbxUf.setSelectedItem(alunoEncontrado.getEnderecos().getUf());
+            cbxDeficiencia.setSelectedItem(alunoEncontrado.getDeficiencia());
+            cbxAlergia.setSelectedItem(alunoEncontrado.getAlergia());
+            cbxCondicoesMedicas.setSelectedItem(alunoEncontrado.getCondicoesMedicas());
+            cbxMedicamentos.setSelectedItem(alunoEncontrado.getMedicamentos());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao procurar o aluno pelo id", "ERRO", JOptionPane.ERROR_MESSAGE);
+            dispose();
+        }
+    }
+    
+    public TelaDadosGerais(GestaoAlunoIController gestaoAlunoController, Long idAlunoEscolhido) {
         initComponents();
         pnlAlergiaOutro.setVisible(false);
         pnlCondicoesMedicasOutro.setVisible(false);
@@ -32,278 +90,12 @@ public class TelaAdicionar extends javax.swing.JFrame {
         pnlMedicamentosOutro.setVisible(false);
         pnlResponsavelOutro.setVisible(false);
         pnlReponsaveis.setVisible(false);
+        this.gestaoAlunoController = gestaoAlunoController;
+        this.idAlunoEscolhido = idAlunoEscolhido;
+        carregarDados();
     }
+
     
-    private boolean validarCampos(){
-        int verificacao = 0;
-        if(txtNomeAluno.getText().isEmpty()){
-            txtNomeAluno.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtNomeAluno.setBackground(Color.WHITE);
-        }
-        if(txtEmail.getText().isEmpty()){
-            txtEmail.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtEmail.setBackground(Color.WHITE);
-        }
-        if(txtRg.getText().isEmpty()){
-            txtRg.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtRg.setBackground(Color.WHITE);
-        }
-        if(txtOrgaoExpedidor.getText().isEmpty()){
-            txtOrgaoExpedidor.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtOrgaoExpedidor.setBackground(Color.WHITE);
-        }
-        if(txtDataEmissao.getText().isEmpty()){
-            txtDataEmissao.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtDataEmissao.setBackground(Color.WHITE);
-        }
-        if(txtCpf.getText().isEmpty()){
-            txtCpf.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtCpf.setBackground(Color.WHITE);
-        }
-        if(txtTituloEleitor.getText().isEmpty()){
-            txtTituloEleitor.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtTituloEleitor.setBackground(Color.WHITE);
-        }
-        if(txtDataNascimento.getText().isEmpty()){
-            txtDataNascimento.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtDataNascimento.setBackground(Color.WHITE);
-        }
-        if(txtTelefone.getText().isEmpty()){
-            txtTelefone.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtTelefone.setBackground(Color.WHITE);
-        }
-        if(txtTelefoneResponsavel.getText().isEmpty()){
-            txtTelefoneResponsavel.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtTelefoneResponsavel.setBackground(Color.WHITE);
-        }
-        
-        if(cbxResponsavelEscolha.getSelectedItem().equals(" ")){
-            cbxResponsavelEscolha.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            cbxResponsavelEscolha.setBackground(Color.WHITE);
-            if(cbxResponsavelEscolha.getSelectedItem().equals("Outro")){
-                txtNomePai.setBackground(Color.WHITE);
-                txtCpfPai.setBackground(Color.WHITE);
-                txtRg.setBackground(Color.WHITE);
-                txtOrgaoExpedidorPai.setBackground(Color.WHITE);
-                txtDataEmissaoPai.setBackground(Color.WHITE);
-                txtProfissaoPai.setBackground(Color.WHITE);
-                
-                txtNomeMae.setBackground(Color.WHITE);
-                txtCpfMae.setBackground(Color.WHITE);
-                txtRgMae.setBackground(Color.WHITE);
-                txtOrgaoExpedidorMae.setBackground(Color.WHITE);
-                txtDataEmissaoMae.setBackground(Color.WHITE);
-                txtProfissaoMae.setBackground(Color.WHITE);
-                
-                if(txtTipoResponsavel.getText().isEmpty()){
-                    txtTipoResponsavel.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtTipoResponsavel.setBackground(Color.WHITE);
-                }
-                if(txtNomeResponsavelOutro.getText().isEmpty()){
-                    txtNomeResponsavelOutro.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtNomeResponsavelOutro.setBackground(Color.WHITE);
-                }
-                if(txtCpfResponsavelOutro.getText().isEmpty()){
-                    txtCpfResponsavelOutro.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtCpfResponsavelOutro.setBackground(Color.WHITE);
-                }
-            }
-            if(cbxResponsavelEscolha.getSelectedItem().equals("Pai")){
-                txtNomeResponsavelOutro.setBackground(Color.WHITE);
-                txtTipoResponsavel.setBackground(Color.WHITE);
-                txtCpfResponsavelOutro.setBackground(Color.WHITE);
-                
-                txtNomeMae.setBackground(Color.WHITE);
-                txtCpfMae.setBackground(Color.WHITE);
-                txtRgMae.setBackground(Color.WHITE);
-                txtOrgaoExpedidorMae.setBackground(Color.WHITE);
-                txtDataEmissaoMae.setBackground(Color.WHITE);
-                txtProfissaoMae.setBackground(Color.WHITE);
-                
-                if(txtNomePai.getText().isEmpty()){
-                    txtNomePai.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtNomePai.setBackground(Color.WHITE);
-                }
-                if(txtCpfPai.getText().isEmpty()){
-                    txtCpfPai.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtCpfPai.setBackground(Color.WHITE);
-                }
-                if(txtRgPai.getText().isEmpty()){
-                    txtRgPai.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtRgPai.setBackground(Color.WHITE);
-                }
-                if(txtOrgaoExpedidorPai.getText().isEmpty()){
-                    txtOrgaoExpedidorPai.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtOrgaoExpedidorPai.setBackground(Color.WHITE);
-                }
-                if(txtDataEmissaoPai.getText().isEmpty()){
-                    txtDataEmissaoPai.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtDataEmissaoPai.setBackground(Color.WHITE);
-                }
-                if(txtProfissaoPai.getText().isEmpty()){
-                    txtProfissaoPai.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtProfissaoPai.setBackground(Color.WHITE);
-                }
-            }
-            if(cbxResponsavelEscolha.getSelectedItem().equals("Mãe")){
-                txtNomeResponsavelOutro.setBackground(Color.WHITE);
-                txtTipoResponsavel.setBackground(Color.WHITE);
-                txtCpfResponsavelOutro.setBackground(Color.WHITE);
-                
-                txtNomePai.setBackground(Color.WHITE);
-                txtCpfPai.setBackground(Color.WHITE);
-                txtRgPai.setBackground(Color.WHITE);
-                txtOrgaoExpedidorPai.setBackground(Color.WHITE);
-                txtDataEmissaoPai.setBackground(Color.WHITE);
-                txtProfissaoPai.setBackground(Color.WHITE);
-                
-                if(txtNomeMae.getText().isEmpty()){
-                    txtNomeMae.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtNomeMae.setBackground(Color.WHITE);
-                }
-                if(txtCpfMae.getText().isEmpty()){
-                    txtCpfMae.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtCpfMae.setBackground(Color.WHITE);
-                }
-                if(txtRgMae.getText().isEmpty()){
-                    txtRgMae.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtRgMae.setBackground(Color.WHITE);
-                }
-                if(txtOrgaoExpedidorMae.getText().isEmpty()){
-                    txtOrgaoExpedidorMae.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtOrgaoExpedidorMae.setBackground(Color.WHITE);
-                }
-                if(txtDataEmissaoMae.getText().isEmpty()){
-                    txtDataEmissaoMae.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtDataEmissaoMae.setBackground(Color.WHITE);
-                }
-                if(txtProfissaoMae.getText().isEmpty()){
-                    txtProfissaoMae.setBackground(Color.RED);
-                    verificacao = 1;
-                }else{
-                    txtProfissaoMae.setBackground(Color.WHITE);
-                }
-            }
-        }
-        if(txtCep.getText().isEmpty()){
-            txtCep.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtCep.setBackground(Color.WHITE);
-        }
-        if(txtRua.getText().isEmpty()){
-            txtRua.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtRua.setBackground(Color.WHITE);
-        }
-        if(txtCidade.getText().isEmpty()){
-            txtCidade.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtCidade.setBackground(Color.WHITE);
-        }
-        if(txtBairro.getText().isEmpty()){
-            txtBairro.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtBairro.setBackground(Color.WHITE);
-        }
-        if(cbxUf.getSelectedItem().equals(" ")){
-            cbxUf.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            cbxUf.setBackground(Color.WHITE);
-        }
-        if(cbxDeficiencia.getSelectedItem().equals("Outro")){
-            txtDeficienciaOutro.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtDeficienciaOutro.setBackground(Color.WHITE);
-        }
-        if(cbxAlergia.getSelectedItem().equals("Outro")){
-            txtAlergiaOutro.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtAlergiaOutro.setBackground(Color.WHITE);
-        }
-        if(cbxCondicoesMedicas.getSelectedItem().equals("Outro")){
-            txtCondicoesMedicasOutro.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtCondicoesMedicasOutro.setBackground(Color.WHITE);
-        }
-        if(cbxMedicamentos.getSelectedItem().equals("Outro")){
-            txtMedicamentosOutro.setBackground(Color.RED);
-            verificacao = 1;
-        }else{
-            txtMedicamentosOutro.setBackground(Color.WHITE);
-        }
-        if(verificacao == 1){
-            return false;
-        }
-        return true;
-    }
-    
-    private void exibirErroELog(String campo) {
-        JOptionPane.showConfirmDialog(null, "Aluno Não Cadastrado: " + campo + " de Aluno Existente", "ERRO", JOptionPane.WARNING_MESSAGE);
-        log.warn("Aluno não cadastrado: " + campo + " de aluno existente");
-    }
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -337,10 +129,8 @@ public class TelaAdicionar extends javax.swing.JFrame {
         lblDataNascimento = new javax.swing.JLabel();
         txtDataNascimento = new javax.swing.JTextField();
         cbxSexo = new javax.swing.JComboBox<>();
-        lblEscolaOrigem = new javax.swing.JLabel();
-        txtscolaOrigem = new javax.swing.JTextField();
-        pnlSalvar = new javax.swing.JPanel();
-        btnSalvar = new javax.swing.JButton();
+        pnlEditar = new javax.swing.JPanel();
+        btnEditar = new javax.swing.JButton();
         pnlDadosReponsaveis = new javax.swing.JPanel();
         lblResponsavelEscolha = new javax.swing.JLabel();
         cbxResponsavelEscolha = new javax.swing.JComboBox<>();
@@ -414,9 +204,12 @@ public class TelaAdicionar extends javax.swing.JFrame {
         pnlMedicamentosOutro = new javax.swing.JPanel();
         lblMedicamentosOutro = new javax.swing.JLabel();
         txtMedicamentosOutro = new javax.swing.JTextField();
+        lblDadosPessoais = new javax.swing.JLabel();
+        lblDadosReponsaveis = new javax.swing.JLabel();
+        lblDadosEndereco = new javax.swing.JLabel();
+        lblDadosMedicos = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         pnlDadosPessoais.setBackground(new java.awt.Color(8, 102, 255));
 
@@ -481,10 +274,6 @@ public class TelaAdicionar extends javax.swing.JFrame {
 
         cbxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Masculino", "Feminino", "Nenhum" }));
 
-        lblEscolaOrigem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblEscolaOrigem.setForeground(new java.awt.Color(255, 255, 255));
-        lblEscolaOrigem.setText("Escola Origem");
-
         javax.swing.GroupLayout pnlDadosPessoaisLayout = new javax.swing.GroupLayout(pnlDadosPessoais);
         pnlDadosPessoais.setLayout(pnlDadosPessoaisLayout);
         pnlDadosPessoaisLayout.setHorizontalGroup(
@@ -503,7 +292,12 @@ public class TelaAdicionar extends javax.swing.JFrame {
                                 .addGap(369, 369, 369)
                                 .addComponent(lblOrgaoExpedidor)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblDataEmissão)))
+                                .addComponent(lblDataEmissão))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDadosPessoaisLayout.createSequentialGroup()
+                                .addGap(341, 341, 341)
+                                .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNomeSocial)
+                                    .addComponent(txtNomeSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(18, 18, 18)
                         .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -511,7 +305,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTituloEleitor)
-                            .addComponent(txtTituloEleitor, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)))
+                            .addComponent(txtTituloEleitor)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDadosPessoaisLayout.createSequentialGroup()
                         .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -553,39 +347,26 @@ public class TelaAdicionar extends javax.swing.JFrame {
                             .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtNomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblNomeAluno)))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNomeSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNomeSocial))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblEmail))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
-                                .addComponent(txtscolaOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
-                                .addComponent(lblEscolaOrigem)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(lblEmail)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(13, 13, 13))
         );
         pnlDadosPessoaisLayout.setVerticalGroup(
             pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNomeAluno)
-                    .addComponent(lblNomeSocial)
-                    .addComponent(lblEmail)
-                    .addComponent(lblEscolaOrigem))
+                    .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblEmail)
+                        .addComponent(lblNomeSocial)))
                 .addGap(2, 2, 2)
                 .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNomeSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtscolaOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNomeSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -633,30 +414,30 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 .addGap(6, 6, 6))
         );
 
-        pnlSalvar.setBackground(new java.awt.Color(8, 102, 255));
+        pnlEditar.setBackground(new java.awt.Color(8, 102, 255));
 
-        btnSalvar.setText("SALVAR");
-        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+        btnEditar.setText("Editar Dados");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarActionPerformed(evt);
+                btnEditarActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout pnlSalvarLayout = new javax.swing.GroupLayout(pnlSalvar);
-        pnlSalvar.setLayout(pnlSalvarLayout);
-        pnlSalvarLayout.setHorizontalGroup(
-            pnlSalvarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlSalvarLayout.createSequentialGroup()
-                .addGap(429, 429, 429)
-                .addComponent(btnSalvar)
+        javax.swing.GroupLayout pnlEditarLayout = new javax.swing.GroupLayout(pnlEditar);
+        pnlEditar.setLayout(pnlEditarLayout);
+        pnlEditarLayout.setHorizontalGroup(
+            pnlEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEditarLayout.createSequentialGroup()
+                .addGap(432, 432, 432)
+                .addComponent(btnEditar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        pnlSalvarLayout.setVerticalGroup(
-            pnlSalvarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlSalvarLayout.createSequentialGroup()
+        pnlEditarLayout.setVerticalGroup(
+            pnlEditarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEditarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnSalvar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pnlDadosReponsaveis.setBackground(new java.awt.Color(8, 102, 255));
@@ -674,10 +455,11 @@ public class TelaAdicionar extends javax.swing.JFrame {
         });
 
         pnlResponsavelOutro.setBackground(new java.awt.Color(8, 102, 255));
+        pnlResponsavelOutro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblTipoResponsavel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblTipoResponsavel.setForeground(new java.awt.Color(255, 255, 255));
-        lblTipoResponsavel.setText("Informe quem é o seu responsável");
+        lblTipoResponsavel.setText("Responsável Legal");
 
         lblNomeResponsavelOutro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblNomeResponsavelOutro.setForeground(new java.awt.Color(255, 255, 255));
@@ -721,6 +503,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
         );
 
         pnlReponsaveis.setBackground(new java.awt.Color(8, 102, 255));
+        pnlReponsaveis.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         pnlReponsaveis.setForeground(new java.awt.Color(255, 255, 255));
 
         lblDataEmissaoPai.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -898,12 +681,12 @@ public class TelaAdicionar extends javax.swing.JFrame {
                             .addGroup(pnlDadosReponsaveisLayout.createSequentialGroup()
                                 .addComponent(cbxResponsavelEscolha, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtTelefoneResponsavel, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
+                                .addComponent(txtTelefoneResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlDadosReponsaveisLayout.createSequentialGroup()
                                 .addComponent(lblResponsavelEscolha)
                                 .addGap(90, 90, 90)
                                 .addComponent(lblTelefoneResponsavel)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 31, Short.MAX_VALUE)
                         .addComponent(pnlResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)))
                 .addGap(6, 6, 6))
@@ -1048,6 +831,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
         });
 
         pnlDeficienciaOutro.setBackground(new java.awt.Color(8, 102, 255));
+        pnlDeficienciaOutro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblDeficienciaOutro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblDeficienciaOutro.setForeground(new java.awt.Color(255, 255, 255));
@@ -1081,6 +865,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
         });
 
         pnlAlergiaOutro.setBackground(new java.awt.Color(8, 102, 255));
+        pnlAlergiaOutro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblAlergiaOutro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblAlergiaOutro.setForeground(new java.awt.Color(255, 255, 255));
@@ -1103,7 +888,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 .addComponent(lblAlergiaOutro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtAlergiaOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         cbxCondicoesMedicas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Ansiedade", "Depressão", "Escoliose", "Asma", "Diabete", "Hipertensão", "Epilepsia", "TDAH", "Síndrome de Down", "Autismo", "Anemia", "Obesidade", "Outro", " " }));
@@ -1114,6 +899,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
         });
 
         pnlCondicoesMedicasOutro.setBackground(new java.awt.Color(8, 102, 255));
+        pnlCondicoesMedicasOutro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblCondicoesMedicasOutro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCondicoesMedicasOutro.setForeground(new java.awt.Color(255, 255, 255));
@@ -1136,7 +922,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 .addComponent(lblCondicoesMedicasOutro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCondicoesMedicasOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         cbxMedicamentos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Paracetamol", "Ibuprofeno", "Loratadina", "Amoxicilina", "Insulina", "Omeprazol", "Diazepam", "Outro", " " }));
@@ -1147,6 +933,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
         });
 
         pnlMedicamentosOutro.setBackground(new java.awt.Color(8, 102, 255));
+        pnlMedicamentosOutro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblMedicamentosOutro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblMedicamentosOutro.setForeground(new java.awt.Color(255, 255, 255));
@@ -1194,7 +981,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
                             .addComponent(pnlCondicoesMedicasOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblCondicoesMedicas)
                             .addComponent(cbxCondicoesMedicas, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(pnlDadosMedicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblMedicamentos)
                     .addComponent(cbxMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1225,6 +1012,18 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        lblDadosPessoais.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblDadosPessoais.setText(" Dados Pessoais");
+
+        lblDadosReponsaveis.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblDadosReponsaveis.setText("Dados dos Responsáveis");
+
+        lblDadosEndereco.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblDadosEndereco.setText("Dados do Endereço");
+
+        lblDadosMedicos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblDadosMedicos.setText("Dados Médicos");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1232,193 +1031,68 @@ public class TelaAdicionar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlSalvar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlDadosEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlDadosPessoais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlDadosReponsaveis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlDadosMedicos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(lblDadosMedicos)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(pnlDadosMedicos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlDadosEndereco, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlDadosReponsaveis, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlDadosPessoais, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDadosPessoais)
+                            .addComponent(lblDadosReponsaveis)
+                            .addComponent(lblDadosEndereco))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(pnlEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblDadosPessoais)
+                .addGap(2, 2, 2)
                 .addComponent(pnlDadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblDadosReponsaveis)
+                .addGap(1, 1, 1)
                 .addComponent(pnlDadosReponsaveis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblDadosEndereco)
+                .addGap(1, 1, 1)
                 .addComponent(pnlDadosEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlDadosMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblDadosMedicos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlDadosMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        if(!validarCampos()){
-            JOptionPane.showMessageDialog(null, "Dados do aluno não preenchidos", "ERRO", JOptionPane.ERROR_MESSAGE);
-            log.error("Erro ao salvar: Campos obrigatórios não preenchidos");
-        }else{
-            AlunosPrincipal novoAluno = new AlunosPrincipal();
-            Responsaveis responsavelMae = new Responsaveis();
-            Responsaveis responsavelPai = new Responsaveis();
-            Responsaveis responsavelLegal = new Responsaveis();
-            Responsaveis responsavelMaeSave = new Responsaveis();
-            Responsaveis responsavelPaiSave = new Responsaveis();
-            Responsaveis responsavelLegalSave = new Responsaveis();
-            try{
-                novoAluno.setNome(txtNomeAluno.getText());
-                novoAluno.setNomeSocial(txtNomeSocial.getText());
-                
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                
-                Date dataRg = sdf.parse(txtDataEmissao.getText()); // Converte a String para Date
-                novoAluno.setDataEmissaoRg(dataRg);
-                Date dataNascimento = sdf.parse(txtDataNascimento.getText()); // Converte a String para Date
-                novoAluno.setNascimento(dataNascimento);
-                
-                novoAluno.setGenero(cbxGenero.getSelectedItem().toString());
-                novoAluno.setSexo(cbxSexo.getSelectedItem().toString());
-                novoAluno.setDeficiencia(cbxDeficiencia.getSelectedItem().toString());
-                novoAluno.setAlergia(cbxAlergia.getSelectedItem().toString());
-                novoAluno.setCondicoesMedicas(cbxCondicoesMedicas.getSelectedItem().toString());
-                novoAluno.setMedicamentos(cbxMedicamentos.getSelectedItem().toString());
-                
-                List<Responsaveis> responsaveis = gestaoAlunoController.findAllResponsavel();
-                if(!(cbxResponsavelEscolha.getSelectedItem().equals(" "))){
-                    if(cbxResponsavelEscolha.getSelectedItem().equals("Outro")){
-                        for(Responsaveis responsavel: responsaveis){
-                            if(responsavel.getCpf().equals(txtCpfResponsavelOutro.getText())){
-                                exibirErroELog("CPF do Responsável Legal");
-                                return;
-                            }
-                            if (responsavel.getTelefone().equals(txtTelefone.getText())) {
-                                exibirErroELog("Telefone do responsável");
-                                return;
-                            }
-                        }
-                        responsavelLegal = gestaoAlunoController.findByNomeResponsavel(txtNomeResponsavelOutro.getText());
-                        if(responsavelLegal == null){
-                            responsavelLegalSave.setTipo(txtTipoResponsavel.getText());
-                            responsavelLegalSave.setNome(txtNomeResponsavelOutro.getText());
-                            responsavelLegalSave.setCpf(txtCpfResponsavelOutro.getText());
-                            responsavelLegalSave.setTelefone(txtTelefoneResponsavel.getText());
-                            gestaoAlunoController.save(responsavelLegalSave);
-                            novoAluno.setReponsavelLegal(responsavelLegalSave);
-                        }else{
-                            novoAluno.setReponsavelLegal(responsavelLegal);
-                        }
-                    }else{
-                        for(Responsaveis responsavel: responsaveis){
-                            if (responsavel.getCpf().equals(txtCpfPai.getText())) {
-                                exibirErroELog("CPF do Pai");
-                                return;
-                            }
-                            if (responsavel.getCpf().equals(txtCpfMae.getText())) {
-                                exibirErroELog("CPF da Mãe");
-                                return;
-                            }
-                            if (responsavel.getRg().equals(txtRgPai.getText())) {
-                                exibirErroELog("RG do Pai");
-                                return;
-                            }
-                            if (responsavel.getRg().equals(txtRgMae.getText())) {
-                                exibirErroELog("RG da Mãe");
-                                return;
-                            }
-                            if (responsavel.getTelefone().equals(txtTelefone.getText())) {
-                                exibirErroELog("Telefone do responsável");
-                                return;
-                            }
-                        }
-                        responsavelPai = gestaoAlunoController.findByNomeResponsavel(txtNomePai.getText());
-                        if(responsavelPai == null){
-                            //Configuracoes Pai
-                            responsavelPaiSave.setNome(txtNomePai.getText());
-                            responsavelPaiSave.setCpf(txtCpfPai.getText());
-                            responsavelPaiSave.setRg(txtRgPai.getText());
-                            responsavelPaiSave.setOrgaoExpedidorRg(txtOrgaoExpedidorPai.getText());
-                            responsavelPaiSave.setProfissao(txtProfissaoPai.getText());
-                            Date dataRgPai = sdf.parse(txtDataEmissao.getText());
-                            responsavelPaiSave.setDataEmissaoRg(dataRgPai);
-                            gestaoAlunoController.save(responsavelPaiSave);
-                            novoAluno.setPai(responsavelPaiSave);
-                        }else{
-                            novoAluno.setPai(responsavelPai);
-                        }
-                        
-                        responsavelMae = (Responsaveis) gestaoAlunoController.findByNomeResponsavel(txtNomeMae.getText());
-                        if(responsavelMae == null){
-                            //Configuracoes Mae
-                            responsavelMaeSave.setNome(txtNomeMae.getText());
-                            responsavelMaeSave.setCpf(txtCpfMae.getText());
-                            responsavelMaeSave.setRg(txtRgMae.getText());
-                            responsavelMaeSave.setOrgaoExpedidorRg(txtOrgaoExpedidorMae.getText());
-                            responsavelMaeSave.setProfissao(txtProfissaoMae.getText());
-                            Date dataRgMae = sdf.parse(txtDataEmissao.getText());
-                            responsavelMaeSave.setDataEmissaoRg(dataRgMae);
-                            gestaoAlunoController.save(responsavelMaeSave);
-                            novoAluno.setMae(responsavelMaeSave);
-                        }else{
-                            novoAluno.setMae(responsavelMae);
-                        }
-
-                        if(cbxResponsavelEscolha.getSelectedItem().equals("Pai")){
-                            responsavelLegal.setTipo("Pai");
-                        }else{
-                            responsavelLegal.setTipo("Mãe");
-                        }
-                        responsavelLegal.setTelefone(txtTelefoneResponsavel.getText());
-                    }
-                }
-                
-                List<AlunosPrincipal> alunos = this.gestaoAlunoController.findAll();
-                String cpf = txtCpf.getText();
-                String email = txtEmail.getText();
-                String rg = txtRg.getText();
-                String tituloEleitor = txtTituloEleitor.getText();
-                String telefone = txtTelefone.getText();
-                for(AlunosPrincipal aluno: alunos){
-                    //Verificação da existência e algum aluno com o mesmo código do escolhido pelo usuário
-                    if (aluno.getCpf().equals(cpf)) {
-                        exibirErroELog("CPF");
-                        return;
-                    }
-                    if (aluno.getEmail().equals(email)) {
-                        exibirErroELog("Email");
-                        return;
-                    }
-                    if (aluno.getRg().equals(rg)) {
-                        exibirErroELog("RG");
-                        return;
-                    }
-                    if (aluno.getTituloEleitor().equals(tituloEleitor)) {
-                        exibirErroELog("Título de Eleitor");
-                        return;
-                    }
-                    if (aluno.getTelefone().equals(telefone)) {
-                        exibirErroELog("Telefone");
-                        return;
-                    }
-                }
-
-                //Salva o aluno no Banco de Dados
-                this.gestaoAlunoController.save(novoAluno);
-                log.info("Aluno salvo com sucesso: {}", novoAluno);
-                // Fecha a janela atual
-                this.dispose();
-            }catch(Exception e){
-                log.error("Erro ao salvar o aluno: ", e);
-                JOptionPane.showMessageDialog(null, "Erro ao salvar o aluno", "ERRO", JOptionPane.ERROR_MESSAGE);
+        // Instanciamento da tela da de adição de alunos
+        log.info("Editando aluno com ID: {}", this.idAlunoEscolhido);
+        TelaEditarAluno novaTela = new TelaEditarAluno(idAlunoEscolhido, this.gestaoAlunoController);
+        novaTela.setVisible(true);
+        // Adiciona um ouvinte de eventos de janela à nova tela
+        novaTela.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                log.info("Tela de edição de aluno fechada");
+                carregarDados();
             }
-        }
-    }//GEN-LAST:event_btnSalvarActionPerformed
+        });
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void cbxResponsavelEscolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxResponsavelEscolhaActionPerformed
         // TODO add your handling code here:
@@ -1426,7 +1100,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
             if(cbxResponsavelEscolha.getSelectedItem().equals("Outro")){
                 pnlResponsavelOutro.setVisible(true);
                 pnlReponsaveis.setVisible(false);
-            }    
+            }
             else{
                 pnlReponsaveis.setVisible(true);
                 pnlResponsavelOutro.setVisible(false);
@@ -1437,25 +1111,25 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private void cbxDeficienciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDeficienciaActionPerformed
         // TODO add your handling code here:
         if(cbxDeficiencia.getSelectedItem().equals("Outro"))
-                pnlDeficienciaOutro.setVisible(true);
+        pnlDeficienciaOutro.setVisible(true);
     }//GEN-LAST:event_cbxDeficienciaActionPerformed
 
     private void cbxAlergiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxAlergiaActionPerformed
         // TODO add your handling code here:
         if(cbxAlergia.getSelectedItem().equals("Outro"))
-                pnlAlergiaOutro.setVisible(true);
+        pnlAlergiaOutro.setVisible(true);
     }//GEN-LAST:event_cbxAlergiaActionPerformed
 
     private void cbxCondicoesMedicasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCondicoesMedicasActionPerformed
         // TODO add your handling code here:
         if(cbxCondicoesMedicas.getSelectedItem().equals("Outro"))
-                pnlCondicoesMedicasOutro.setVisible(true);
+        pnlCondicoesMedicasOutro.setVisible(true);
     }//GEN-LAST:event_cbxCondicoesMedicasActionPerformed
 
     private void cbxMedicamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxMedicamentosActionPerformed
         // TODO add your handling code here:
         if(cbxMedicamentos.getSelectedItem().equals("Outro"))
-                pnlMedicamentosOutro.setVisible(true);
+        pnlMedicamentosOutro.setVisible(true);
     }//GEN-LAST:event_cbxMedicamentosActionPerformed
 
     /**
@@ -1475,30 +1149,28 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaAdicionar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaDadosGerais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaAdicionar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaDadosGerais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaAdicionar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaDadosGerais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaAdicionar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaDadosGerais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        
-        /* Create and display the form*/
-        
-        ConfigurableApplicationContext context = 
-        new SpringApplicationBuilder(Prg03SceduApplication.class)
-        .headless(false)
-        .run(args);
 
-        TelaAdicionar telaAdd = context.getBean(TelaAdicionar.class);
-        telaAdd.setVisible(true);
+        /* Create and display the form */
+        ConfigurableApplicationContext context = 
+            new SpringApplicationBuilder(Prg03SceduApplication.class)
+            .headless(false)
+            .run(args);
+
+            TelaDadosGerais telaDadosGerais = context.getBean(TelaDadosGerais.class);
+            telaDadosGerais.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JComboBox<String> cbxAlergia;
     private javax.swing.JComboBox<String> cbxCondicoesMedicas;
     private javax.swing.JComboBox<String> cbxDeficiencia;
@@ -1519,6 +1191,10 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private javax.swing.JLabel lblCpfMae;
     private javax.swing.JLabel lblCpfPai;
     private javax.swing.JLabel lblCpfResponsavelOutro;
+    private javax.swing.JLabel lblDadosEndereco;
+    private javax.swing.JLabel lblDadosMedicos;
+    private javax.swing.JLabel lblDadosPessoais;
+    private javax.swing.JLabel lblDadosReponsaveis;
     private javax.swing.JLabel lblDataEmissaoMae;
     private javax.swing.JLabel lblDataEmissaoPai;
     private javax.swing.JLabel lblDataEmissão;
@@ -1526,7 +1202,6 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private javax.swing.JLabel lblDeficiencia;
     private javax.swing.JLabel lblDeficienciaOutro;
     private javax.swing.JLabel lblEmail;
-    private javax.swing.JLabel lblEscolaOrigem;
     private javax.swing.JLabel lblGenero;
     private javax.swing.JLabel lblMedicamentos;
     private javax.swing.JLabel lblMedicamentosOutro;
@@ -1562,10 +1237,10 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private javax.swing.JPanel pnlDadosPessoais;
     private javax.swing.JPanel pnlDadosReponsaveis;
     private javax.swing.JPanel pnlDeficienciaOutro;
+    private javax.swing.JPanel pnlEditar;
     private javax.swing.JPanel pnlMedicamentosOutro;
     private javax.swing.JPanel pnlReponsaveis;
     private javax.swing.JPanel pnlResponsavelOutro;
-    private javax.swing.JPanel pnlSalvar;
     private javax.swing.JTextField txtAlergiaOutro;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtCep;
@@ -1603,6 +1278,5 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefoneResponsavel;
     private javax.swing.JTextField txtTipoResponsavel;
     private javax.swing.JTextField txtTituloEleitor;
-    private javax.swing.JTextField txtscolaOrigem;
     // End of variables declaration//GEN-END:variables
 }
