@@ -1,6 +1,7 @@
 package br.com.ifba.prg03_scedu.faltas.entity;
 
 import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -13,7 +14,7 @@ public class Falta {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "rg", referencedColumnName = "rg")
-    private Alunos aluno;
+    private AlunosPrincipal aluno;
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
@@ -36,7 +37,7 @@ public class Falta {
     public Falta() {
     }
 
-    public Falta(Alunos aluno, Date data, String aula, boolean justificada, String observacoes, Disciplina disciplina) {
+    public Falta(AlunosPrincipal aluno, Date data, String aula, boolean justificada, String observacoes, Disciplina disciplina) {
         this.aluno = aluno;
         this.data = data;
         this.aula = aula;
@@ -53,11 +54,11 @@ public class Falta {
         this.id = id;
     }
 
-    public Alunos getAluno() {
+    public AlunosPrincipal getAluno() {
         return aluno;
     }
 
-    public void setAluno(Alunos aluno) {
+    public void setAluno(AlunosPrincipal aluno) {
         this.aluno = aluno;
     }
 

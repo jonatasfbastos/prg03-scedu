@@ -7,6 +7,7 @@ package br.com.ifba.prg03_scedu.disciplina.entity;
 import br.com.ifba.prg03_scedu.curriculo.entity.Curriculo;
 import br.com.ifba.prg03_scedu.curso.entity.Curso;
 import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
+import br.com.ifba.prg03_scedu.gestavaliacao.entity.Avaliacao;
 import br.com.ifba.prg03_scedu.infrastructure.entity.PersistenceEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -73,6 +74,16 @@ public class Disciplina extends PersistenceEntity{
         inverseJoinColumns = @JoinColumn(name = "disciplina_id")
     )
     private List<Curriculo> curriculo;
+    
+    
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "Disciplina_avaliacao",
+        joinColumns = @JoinColumn(name = "disciplina_id"),
+        inverseJoinColumns = @JoinColumn(name = "avaliacao_id")
+    )
+    private List<Avaliacao> avaliação;
+    
 
     // Carga horária da disciplina em horas.
     private int cargaHoraria;

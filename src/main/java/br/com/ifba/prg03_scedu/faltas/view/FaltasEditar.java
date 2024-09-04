@@ -2,8 +2,9 @@ package br.com.ifba.prg03_scedu.faltas.view;
 
 import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
 import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
-import br.com.ifba.prg03_scedu.faltas.entity.Alunos;
 import br.com.ifba.prg03_scedu.faltas.entity.Falta;
+import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
+
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
@@ -20,7 +21,7 @@ public class FaltasEditar extends JDialog {
         this.gestaoFaltasController = gestaoFaltasController;
         initComponents();
         setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
-        postAluno();
+        //postAluno();
         getAlunos();
         getDisciplinas();//carregar disciplinas
     }
@@ -31,7 +32,7 @@ public class FaltasEditar extends JDialog {
         this.faltaAtual = falta;
         initComponents();
         setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
-        postAluno();
+        //postAluno();
         getAlunos();
         getDisciplinas();//carregar disciplinas
         populateFields();
@@ -40,7 +41,7 @@ public class FaltasEditar extends JDialog {
      private void populateFields() {
         if (faltaAtual != null) {
             jComboBox2.setSelectedItem(faltaAtual.getAluno().getNomeSocial());
-            jComboBox1.setSelectedItem(faltaAtual.getDisciplina());
+            jComboBox1.setSelectedItem(faltaAtual.getDisciplina().getNome());
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             jTextField1.setText(sdf.format(faltaAtual.getData()));
             jCheckBox1.setSelected(faltaAtual.isJustificada());
@@ -50,15 +51,13 @@ public class FaltasEditar extends JDialog {
 
     public void postAluno() {
         Date agora = new Date();
-        Alunos aluno = new Alunos();
+        AlunosPrincipal aluno = new AlunosPrincipal();
 
-        aluno.setNomeSocial("Vittorio");
-        aluno.setSexo('M');
+        aluno.setNomeSocial("Vittorio Kevin Alves Mina");
+        aluno.setSexo("M");
         aluno.setGenero("Masculino");
-        aluno.setRg("523456789");
-        aluno.setOrgaoExpedidor("SSP");
-        aluno.setDataEmissao(agora);
-        aluno.setTituloEleitor("5234567890");
+        aluno.setRg("523456729");
+        aluno.setTituloEleitor("5234567870");
 
         try {
             gestaoFaltasController.saveAluno(aluno);
@@ -73,13 +72,13 @@ public class FaltasEditar extends JDialog {
     public void getAlunos() {
         try {
             // Buscar a lista de alunos do banco de dados
-            List<Alunos> alunosList = gestaoFaltasController.getAllAlunos();
+            List<AlunosPrincipal> alunosList = gestaoFaltasController.getAllAlunos();
 
             // Limpar os itens existentes no JComboBox
             jComboBox2.removeAllItems();
-
+            System.out.println(alunosList);
             // Adicionar os alunos ao JComboBox
-            for (Alunos aluno : alunosList) {
+            for (AlunosPrincipal aluno : alunosList) {
                 jComboBox2.addItem(aluno.getNomeSocial());
             }
         } catch (Exception e) {
@@ -106,12 +105,12 @@ public class FaltasEditar extends JDialog {
         }
     }
 
-    private Alunos buscarAlunoPorNome(String nome) throws RuntimeException {
+    private AlunosPrincipal buscarAlunoPorNome(String nome) throws RuntimeException {
         // Buscar todos os alunos
-        List<Alunos> alunosList = gestaoFaltasController.getAllAlunos();
+        List<AlunosPrincipal> alunosList = gestaoFaltasController.getAllAlunos();
 
         // Procurar o aluno pelo nome
-        for (Alunos aluno : alunosList) {
+        for (AlunosPrincipal aluno : alunosList) {
             if (aluno.getNomeSocial().equals(nome)) {
                 return aluno;
             }
@@ -301,7 +300,7 @@ public class FaltasEditar extends JDialog {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date dataEmissao = sdf.parse(data);
 
-            Alunos aluno = buscarAlunoPorNome(alunoName);
+            AlunosPrincipal aluno = buscarAlunoPorNome(alunoName);
             
              // Buscar disciplina pelo nome
             Disciplina disciplina = gestaoFaltasController.buscarDisciplinaPorNome(disciplinaName);
