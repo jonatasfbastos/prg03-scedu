@@ -1,6 +1,5 @@
 package br.com.ifba.prg03_scedu.curso.service;
 
-import br.com.ifba.prg03_scedu.curso.dao.CursoIDao;
 import br.com.ifba.prg03_scedu.curso.entity.Curso;
 import br.com.ifba.prg03_scedu.infrastructure.util.StringUtil;
 import jakarta.transaction.Transactional;
@@ -10,6 +9,7 @@ import org.slf4j.Logger;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import br.com.ifba.prg03_scedu.curso.repository.CursoRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class CursoService implements CursoIService {
 
     // Injeção de dependência para o DAO de Curso usando o Lombok @RequiredArgsConstructor
-    private final CursoIDao cursoDao;
+    private final CursoRepository cursoDao;
 
     // Logger para registrar atividades e eventos
     private static final Logger LOGGER = LoggerFactory.getLogger(CursoService.class);
