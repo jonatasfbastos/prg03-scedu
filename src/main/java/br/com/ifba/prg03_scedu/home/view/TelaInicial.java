@@ -28,7 +28,6 @@ import br.com.ifba.prg03_scedu.usuario.view.TelaLogin;
 import br.com.ifba.prg03_scedu.usuario.view.UsuarioListar;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-//import com.toedter.calendar.JCalendar;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.*;

@@ -18,6 +18,7 @@ import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
 import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
 import br.com.ifba.prg03_scedu.util.CredenciaisManager;
 import jakarta.annotation.PostConstruct;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -265,46 +266,44 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+             try {
+
+            // Obtém a senha do JPasswordField como um array de caracteres
+            char[] senhaArray = pfSenha.getPassword();
+
+            // Converte o array de caracteres em uma string
+            String senha = new String(senhaArray);
             String email = tfEmail.getText();
-            String senha = new String(pfSenha.getPassword());
-
-            if (email.isEmpty() || senha.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.", "Erro de Login", JOptionPane.ERROR_MESSAGE);
-                return;
+            Usuario usuario = usuarioController.login(email, senha);
+            
+            if (cbLembrarDeMim.isSelected()) {
+                credenciaisManager.salvarCredenciais(email, senha);
+            } else {
+                credenciaisManager.limparCredenciais();
             }
 
-            try {
-                // Chama o método de login do UsuarioController
-                Usuario usuario = usuarioController.login(email, senha);
+            // Limpa o array de caracteres após o uso para segurança
+            Arrays.fill(senhaArray, ' ');
 
-                if (usuario != null) {
-                    // Armazena ou limpa as credenciais conforme a seleção do usuário
-                    if (cbLembrarDeMim.isSelected()) {
-                        credenciaisManager.salvarCredenciais(email, senha);
-                    } else {
-                        credenciaisManager.limparCredenciais();
-                    }
+            TelaInicial telaInicial = new TelaInicial(disciplinaController, curriculoController, gestaoFaltasController, cursoController, usuarioController, escolaController, avaliacaoController, gestaoAlunoController, professorController);
+            telaInicial.setVisible(true);
+            telaInicial.toFront();
+            this.dispose();
 
-                    // Redireciona para a tela inicial
-                    TelaInicial telaInicial = new TelaInicial(disciplinaController, curriculoController, gestaoFaltasController, cursoController, usuarioController, escolaController, avaliacaoController, gestaoAlunoController, professorController);
-                    telaInicial.setVisible(true);
-                    telaInicial.toFront();
-                    this.dispose();
-                }
-            } catch (RuntimeException ex) {
-                // Mostra uma mensagem de erro caso o login falhe
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro de Login", JOptionPane.ERROR_MESSAGE);
-            }
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro no login", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarContaActionPerformed
         UsuarioCadastrar usuarioCadastrar = new UsuarioCadastrar(usuarioController);
+        
         usuarioCadastrar.setVisible(true);
         usuarioCadastrar.toFront();
     }//GEN-LAST:event_btnCriarContaActionPerformed
 
     private void btnEsqueceuASenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueceuASenhaActionPerformed
-        try{
+         try{
             usuarioController.recuperarSenha(tfEmail.getText());
                 JOptionPane.showMessageDialog(null, "Um e-mail com a sua senha atual foi enviado para " + tfEmail.getText(), "Solicitação Concluída", JOptionPane.INFORMATION_MESSAGE);
         }catch(RuntimeException e){
