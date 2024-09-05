@@ -21,7 +21,7 @@ public class FaltasEditar extends JDialog {
         this.gestaoFaltasController = gestaoFaltasController;
         initComponents();
         setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
-        postAluno();
+        //postAluno();
         getAlunos();
         getDisciplinas();//carregar disciplinas
     }
@@ -32,7 +32,7 @@ public class FaltasEditar extends JDialog {
         this.faltaAtual = falta;
         initComponents();
         setLocationRelativeTo(parent); // Centraliza o diálogo em relação à janela pai
-        postAluno();
+        //postAluno();
         getAlunos();
         getDisciplinas();//carregar disciplinas
         populateFields();
@@ -41,7 +41,7 @@ public class FaltasEditar extends JDialog {
      private void populateFields() {
         if (faltaAtual != null) {
             jComboBox2.setSelectedItem(faltaAtual.getAluno().getNomeSocial());
-            jComboBox1.setSelectedItem(faltaAtual.getDisciplina());
+            jComboBox1.setSelectedItem(faltaAtual.getDisciplina().getNome());
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             jTextField1.setText(sdf.format(faltaAtual.getData()));
             jCheckBox1.setSelected(faltaAtual.isJustificada());
@@ -53,11 +53,11 @@ public class FaltasEditar extends JDialog {
         Date agora = new Date();
         AlunosPrincipal aluno = new AlunosPrincipal();
 
-        aluno.setNomeSocial("Vittorio");
+        aluno.setNomeSocial("Vittorio Kevin Alves Mina");
         aluno.setSexo("M");
         aluno.setGenero("Masculino");
-        aluno.setRg("523456789");
-        aluno.setTituloEleitor("5234567890");
+        aluno.setRg("523456729");
+        aluno.setTituloEleitor("5234567870");
 
         try {
             gestaoFaltasController.saveAluno(aluno);

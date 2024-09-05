@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 @Service
 @RequiredArgsConstructor
@@ -153,7 +152,7 @@ public class UsuarioService implements UsuarioIService {
         return usuarioRepository.existsBySenha(senha);
     }
 
-        @Override
+         @Override
     public Usuario login(String email, String senha) {
         // Obtém o timestamp atual para incluir nos logs
         String timestamp = getTimestamp();
@@ -214,17 +213,18 @@ public class UsuarioService implements UsuarioIService {
 
         // Prepara a mensagem de e-mail com a senha atual do usuário
         String mensagem = String.format(
-            "Ola %s,\n\n" +
-            "Recebemos uma solicitacao de recuperacao de senha para a sua conta. Abaixo esta a sua senha atual:\n\n" +
+            "Olá %s,\n\n" +
+            "Recebemos uma solicitação de recuperação de senha para a sua conta. Abaixo está a sua senha atual:\n\n" +
             "Senha: %s\n\n" +
-            "Se voce nao fez essa solicitacao, por favor, ignore este e-mail.\n\n" +
-            "Este e-mail foi enviado automaticamente, portanto nao responda a ele. Se precisar de assistencia adicional, entre em contato com o nosso suporte tecnico.\n\n" +
+            "Se você não fez essa solicitação, por favor, ignore este e-mail.\n\n" +
+            "Este e-mail foi enviado automaticamente, portanto, não responda a ele. Se precisar de assistência adicional, entre em contato com o nosso suporte técnico.\n\n" +
             "Atenciosamente,\n" +
             "Sistema Educacional para Cidades Inteligentes\n" +
             "suportescedu@gmail.com",
             usuario.getNome(),
             usuario.getSenha()
         );
+
 
         try {
             // Log de envio do e-mail de recuperação de senha

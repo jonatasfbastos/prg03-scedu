@@ -1,5 +1,5 @@
 
-package br.com.ifba.prg03_scedu.curso.dao;
+package br.com.ifba.prg03_scedu.curso.repository;
 
 import br.com.ifba.prg03_scedu.curso.entity.Curso;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 //Interface que herda as informações de GenericIDao
 @Repository
-public interface CursoIDao extends JpaRepository<Curso, Long>{
+public interface CursoRepository extends JpaRepository<Curso, Long>{
     
     //Função de procurar na base de dados pelo nome
     public List<Curso> findByNome(String nomeCurso);
