@@ -4,7 +4,10 @@ package br.com.ifba.prg03_scedu.gestaoalunos.view;
 import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.endereco.controller.EnderecoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.Responsaveis;
+import br.com.ifba.prg03_scedu.endereco.entity.Endereco;
+import br.com.ifba.prg03_scedu.endereco.entity.EnderecoId;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,9 +24,11 @@ public class TelaAdicionar extends javax.swing.JFrame {
     //Atributo usado na classe
     private static final Logger log = LoggerFactory.getLogger(TelaAdicionar.class);
     private final GestaoAlunoIController gestaoAlunoController;
+    private final EnderecoIController enderecoController;
 
-    public TelaAdicionar(GestaoAlunoIController gestaoAlunoController) {
+    public TelaAdicionar(GestaoAlunoIController gestaoAlunoController, EnderecoIController enderecoController) {
         this.gestaoAlunoController = gestaoAlunoController;
+        this.enderecoController = enderecoController;
         log.info("Inicializando componentes da tela de listagem de alunos");
         initComponents();
         pnlAlergiaOutro.setVisible(false);
@@ -1266,12 +1271,6 @@ public class TelaAdicionar extends javax.swing.JFrame {
             log.error("Erro ao salvar: Campos obrigatórios não preenchidos");
         }else{
             AlunosPrincipal novoAluno = new AlunosPrincipal();
-            Responsaveis responsavelMae = new Responsaveis();
-            Responsaveis responsavelPai = new Responsaveis();
-            Responsaveis responsavelLegal = new Responsaveis();
-            Responsaveis responsavelMaeSave = new Responsaveis();
-            Responsaveis responsavelPaiSave = new Responsaveis();
-            Responsaveis responsavelLegalSave = new Responsaveis();
             try{
                 novoAluno.setNome(txtNomeAluno.getText());
                 novoAluno.setNomeSocial(txtNomeSocial.getText());
@@ -1303,17 +1302,15 @@ public class TelaAdicionar extends javax.swing.JFrame {
                                 return;
                             }
                         }
-                        responsavelLegal = gestaoAlunoController.findByNomeResponsavel(txtNomeResponsavelOutro.getText());
-                        if(responsavelLegal == null){
+                        Responsaveis responsavelLegalSave = gestaoAlunoController.findByNomeResponsavel(txtNomeResponsavelOutro.getText());
+                        if(gestaoAlunoController.findByNomeResponsavel(txtNomeResponsavelOutro.getText()) == null){
                             responsavelLegalSave.setTipo(txtTipoResponsavel.getText());
                             responsavelLegalSave.setNome(txtNomeResponsavelOutro.getText());
                             responsavelLegalSave.setCpf(txtCpfResponsavelOutro.getText());
                             responsavelLegalSave.setTelefone(txtTelefoneResponsavel.getText());
                             gestaoAlunoController.save(responsavelLegalSave);
-                            novoAluno.setReponsavelLegal(responsavelLegalSave);
-                        }else{
-                            novoAluno.setReponsavelLegal(responsavelLegal);
                         }
+                        novoAluno.setReponsavelLegal(responsavelLegalSave);
                     }else{
                         for(Responsaveis responsavel: responsaveis){
                             if (responsavel.getCpf().equals(txtCpfPai.getText())) {
@@ -1332,49 +1329,38 @@ public class TelaAdicionar extends javax.swing.JFrame {
                                 exibirErroELog("RG da Mãe");
                                 return;
                             }
-                            if (responsavel.getTelefone().equals(txtTelefone.getText())) {
-                                exibirErroELog("Telefone do responsável");
-                                return;
-                            }
                         }
-                        responsavelPai = gestaoAlunoController.findByNomeResponsavel(txtNomePai.getText());
-                        if(responsavelPai == null){
+                        Responsaveis responsavelPaiSave = gestaoAlunoController.findByNomeResponsavel(txtNomePai.getText());
+                        if(gestaoAlunoController.findByNomeResponsavel(txtNomePai.getText()) == null){
                             //Configuracoes Pai
+                            responsavelPaiSave.setTipo("Pai");
                             responsavelPaiSave.setNome(txtNomePai.getText());
                             responsavelPaiSave.setCpf(txtCpfPai.getText());
                             responsavelPaiSave.setRg(txtRgPai.getText());
+                            responsavelPaiSave.setTelefone(txtTelefoneResponsavel.getText());
                             responsavelPaiSave.setOrgaoExpedidorRg(txtOrgaoExpedidorPai.getText());
                             responsavelPaiSave.setProfissao(txtProfissaoPai.getText());
-                            Date dataRgPai = sdf.parse(txtDataEmissao.getText());
+                            Date dataRgPai = sdf.parse(txtDataEmissaoPai.getText());
                             responsavelPaiSave.setDataEmissaoRg(dataRgPai);
                             gestaoAlunoController.save(responsavelPaiSave);
-                            novoAluno.setPai(responsavelPaiSave);
-                        }else{
-                            novoAluno.setPai(responsavelPai);
                         }
+                        novoAluno.setPai(responsavelPaiSave);
                         
-                        responsavelMae = (Responsaveis) gestaoAlunoController.findByNomeResponsavel(txtNomeMae.getText());
-                        if(responsavelMae == null){
+                        Responsaveis responsavelMaeSave = gestaoAlunoController.findByNomeResponsavel(txtNomeMae.getText());
+                        if(gestaoAlunoController.findByNomeResponsavel(txtNomeMae.getText()) == null){
                             //Configuracoes Mae
+                            responsavelMaeSave.setTipo("Mãe");
                             responsavelMaeSave.setNome(txtNomeMae.getText());
                             responsavelMaeSave.setCpf(txtCpfMae.getText());
                             responsavelMaeSave.setRg(txtRgMae.getText());
+                            responsavelMaeSave.setTelefone(txtTelefoneResponsavel.getText());
                             responsavelMaeSave.setOrgaoExpedidorRg(txtOrgaoExpedidorMae.getText());
                             responsavelMaeSave.setProfissao(txtProfissaoMae.getText());
-                            Date dataRgMae = sdf.parse(txtDataEmissao.getText());
+                            Date dataRgMae = sdf.parse(txtDataEmissaoMae.getText());
                             responsavelMaeSave.setDataEmissaoRg(dataRgMae);
                             gestaoAlunoController.save(responsavelMaeSave);
-                            novoAluno.setMae(responsavelMaeSave);
-                        }else{
-                            novoAluno.setMae(responsavelMae);
                         }
-
-                        if(cbxResponsavelEscolha.getSelectedItem().equals("Pai")){
-                            responsavelLegal.setTipo("Pai");
-                        }else{
-                            responsavelLegal.setTipo("Mãe");
-                        }
-                        responsavelLegal.setTelefone(txtTelefoneResponsavel.getText());
+                        novoAluno.setMae(responsavelMaeSave);
                     }
                 }
                 
@@ -1407,6 +1393,18 @@ public class TelaAdicionar extends javax.swing.JFrame {
                         return;
                     }
                 }
+                
+                EnderecoId id = new EnderecoId(txtRua.getText(), Integer.parseInt(txtNumero.getText()), txtCep.getText());
+                Endereco endereco = this.enderecoController.findById(id);
+                if(this.enderecoController.findById(id) == null){
+                    endereco.setBairro(txtBairro.getText());
+                    endereco.setCep(txtCep.getText());
+                    endereco.setCidade(txtCidade.getText());
+                    endereco.setNumero(Integer.parseInt(txtNumero.getText()));
+                    endereco.setRua(txtRua.getText());
+                    endereco.setUf(cbxUf.getSelectedItem().toString());
+                }
+                novoAluno.setEnderecos(endereco);
 
                 //Salva o aluno no Banco de Dados
                 this.gestaoAlunoController.save(novoAluno);

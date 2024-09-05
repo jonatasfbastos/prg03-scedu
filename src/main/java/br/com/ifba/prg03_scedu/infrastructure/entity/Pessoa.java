@@ -1,5 +1,6 @@
 package br.com.ifba.prg03_scedu.infrastructure.entity;
 
+import br.com.ifba.prg03_scedu.endereco.entity.Endereco;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
@@ -10,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -29,26 +31,27 @@ public abstract class Pessoa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    private String nome;
+    
     @Column(unique = true)
     private String cpf;
-    
-    private String nome;
-    private String orgaoExpedidorRg;
+    @Column(unique = true)
     private String telefone;
-    
-    @ManyToOne
-    @JoinColumn(name = "endereco_id")
-    private Endereco enderecos;
-    
     @Column(unique = true)
     private String rg;
+    
+    private String orgaoExpedidorRg;
+    
+    @ManyToOne
+    @JoinColumns({
+        @JoinColumn(name = "rua_id"),
+        @JoinColumn(name = "cep_id"),
+        @JoinColumn(name = "numero_id")})
+    private Endereco enderecos;
     
     @Temporal(TemporalType.DATE) 
     private Date nascimento;
     
     @Temporal(TemporalType.DATE) 
     private Date dataEmissaoRg;
-    
-//    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'RESPONSAVEIS'")
-//    private String dtype;
 }

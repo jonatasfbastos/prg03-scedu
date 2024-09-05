@@ -4,11 +4,11 @@ package br.com.ifba.prg03_scedu.gestaoalunos.view;
 import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.endereco.controller.EnderecoIController;
 import jakarta.persistence.NoResultException;
 import java.awt.event.WindowEvent;
 import java.util.Calendar;
 import java.util.List;
-import javax.print.DocFlavor;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.slf4j.Logger;
@@ -20,11 +20,13 @@ public class TelaListar extends javax.swing.JFrame {
     //Atributos usados na classe
     private static final Logger log = LoggerFactory.getLogger(TelaListar.class);
     private final GestaoAlunoIController gestaoAlunoController;
+    private final EnderecoIController enderecoController;
 
-    public TelaListar(GestaoAlunoIController gestaoAlunoController) {
+    public TelaListar(GestaoAlunoIController gestaoAlunoController, EnderecoIController enderecoController) {
         log.info("Inicializando componentes da tela de listagem de alunos");
         initComponents();
         this.gestaoAlunoController = gestaoAlunoController;
+        this.enderecoController = enderecoController;
         refresh();
     }
     
@@ -219,7 +221,7 @@ public class TelaListar extends javax.swing.JFrame {
     private void btnAdcionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdcionarActionPerformed
         // Instanciamento da tela da de adição de alunos
         log.info("Ação de adicionar aluno iniciada");
-        TelaAdicionar novaTela = new TelaAdicionar(gestaoAlunoController);
+        TelaAdicionar novaTela = new TelaAdicionar(this.gestaoAlunoController, this.enderecoController);
         novaTela.setVisible(true);
         
         // Adiciona um ouvinte de eventos de janela à nova tela
@@ -309,7 +311,7 @@ public class TelaListar extends javax.swing.JFrame {
                 String alunoEscolhido = (String) tblAlunos.getValueAt(tblAlunos.getSelectedRow(), 0);
                 AlunosPrincipal aluno = (AlunosPrincipal) gestaoAlunoController.findByNome(alunoEscolhido);
                 // Instanciamento da tela da de adição de alunos
-                TelaDadosGerais novaTela = new TelaDadosGerais(this.gestaoAlunoController, aluno.getId());
+                TelaDadosGerais novaTela = new TelaDadosGerais(this.gestaoAlunoController, aluno.getId(), this.enderecoController);
                 novaTela.setVisible(true);
                 // Adiciona um ouvinte de eventos de janela à nova tela
                 novaTela.addWindowListener(new java.awt.event.WindowAdapter() {

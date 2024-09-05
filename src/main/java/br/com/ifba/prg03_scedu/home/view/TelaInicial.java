@@ -11,6 +11,7 @@ import br.com.ifba.prg03_scedu.curriculo.view.CurriculoListar;
 import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
 import br.com.ifba.prg03_scedu.curso.view.CursoListar;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
+import br.com.ifba.prg03_scedu.endereco.controller.EnderecoIController;
 import br.com.ifba.prg03_scedu.escola.controller.EscolaIController;
 import br.com.ifba.prg03_scedu.escola.view.ListaEscola;
 import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
@@ -41,6 +42,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private final AvaliacaoIController avaliacaoController;
     private final GestaoAlunoIController gestaoAlunoController;
     private final ProfessorIController professorController;
+    private final EnderecoIController enderecoController;
     
     public TelaInicial(
         DisciplinaIController disciplinaController,
@@ -51,7 +53,8 @@ public class TelaInicial extends javax.swing.JFrame {
         EscolaIController escolaController,
         AvaliacaoIController avaliacaoController,
         GestaoAlunoIController gestaoAlunoController,
-        ProfessorIController professorController
+        ProfessorIController professorController,
+        EnderecoIController enderecoController
     ) {
         initComponents();
         this.curriculoController = curriculoController;
@@ -63,6 +66,7 @@ public class TelaInicial extends javax.swing.JFrame {
         this.avaliacaoController = avaliacaoController;
         this.gestaoAlunoController = gestaoAlunoController;
         this.professorController = professorController;
+        this.enderecoController = enderecoController;
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
@@ -242,7 +246,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void btnGestaoAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestaoAlunoActionPerformed
         // TODO add your handling code here:
-        TelaListar telaAluno = new TelaListar(gestaoAlunoController);
+        TelaListar telaAluno = new TelaListar(gestaoAlunoController, enderecoController);
         telaAluno.setVisible(true);
     }//GEN-LAST:event_btnGestaoAlunoActionPerformed
 

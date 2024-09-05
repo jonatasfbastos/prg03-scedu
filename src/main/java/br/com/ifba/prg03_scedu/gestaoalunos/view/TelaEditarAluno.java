@@ -2,6 +2,7 @@
 package br.com.ifba.prg03_scedu.gestaoalunos.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.endereco.controller.EnderecoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import javax.swing.JOptionPane;
@@ -17,10 +18,12 @@ public class TelaEditarAluno extends javax.swing.JFrame {
     private static final Logger log = LoggerFactory.getLogger(TelaEditarAluno.class);
     @Getter private final Long idAlunoEscolhido;
     private final GestaoAlunoIController gestaoAlunoController;
+    private final EnderecoIController enderecoController;
 
-    public TelaEditarAluno(Long idAlunoEscolhido, GestaoAlunoIController gestaoAlunoController) {
+    public TelaEditarAluno(Long idAlunoEscolhido, GestaoAlunoIController gestaoAlunoController, EnderecoIController enderecoController) {
         this.idAlunoEscolhido = idAlunoEscolhido;
         this.gestaoAlunoController = gestaoAlunoController;
+        this.enderecoController = enderecoController;
         initComponents();
         carregarDados();
     }

@@ -2,9 +2,10 @@
 package br.com.ifba.prg03_scedu.gestaoalunos.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.endereco.controller.EnderecoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
-import br.com.ifba.prg03_scedu.infrastructure.entity.Endereco;
+import br.com.ifba.prg03_scedu.endereco.entity.Endereco;
 import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -18,6 +19,7 @@ public class TelaDadosGerais extends javax.swing.JFrame {
 
     private static final Logger log = LoggerFactory.getLogger(TelaDadosGerais.class);
     private final GestaoAlunoIController gestaoAlunoController;
+    private final EnderecoIController enderecoController;
     @Getter private final Long idAlunoEscolhido;
     
     private void carregarDados(){
@@ -82,7 +84,7 @@ public class TelaDadosGerais extends javax.swing.JFrame {
         }
     }
     
-    public TelaDadosGerais(GestaoAlunoIController gestaoAlunoController, Long idAlunoEscolhido) {
+    public TelaDadosGerais(GestaoAlunoIController gestaoAlunoController, Long idAlunoEscolhido, EnderecoIController enderecoController) {
         initComponents();
         pnlAlergiaOutro.setVisible(false);
         pnlCondicoesMedicasOutro.setVisible(false);
@@ -92,6 +94,7 @@ public class TelaDadosGerais extends javax.swing.JFrame {
         pnlReponsaveis.setVisible(false);
         this.gestaoAlunoController = gestaoAlunoController;
         this.idAlunoEscolhido = idAlunoEscolhido;
+        this.enderecoController = enderecoController;
         carregarDados();
     }
 
@@ -1082,7 +1085,7 @@ public class TelaDadosGerais extends javax.swing.JFrame {
         // TODO add your handling code here:
         // Instanciamento da tela da de adição de alunos
         log.info("Editando aluno com ID: {}", this.idAlunoEscolhido);
-        TelaEditarAluno novaTela = new TelaEditarAluno(idAlunoEscolhido, this.gestaoAlunoController);
+        TelaEditarAluno novaTela = new TelaEditarAluno(this.idAlunoEscolhido, this.gestaoAlunoController, this.enderecoController);
         novaTela.setVisible(true);
         // Adiciona um ouvinte de eventos de janela à nova tela
         novaTela.addWindowListener(new java.awt.event.WindowAdapter() {
