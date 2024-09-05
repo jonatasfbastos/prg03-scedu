@@ -4,11 +4,15 @@
  */
 package br.com.ifba.prg03_scedu.serie.view;
 
+import br.com.ifba.prg03_scedu.curriculo.controller.CurriculoIController;
+import br.com.ifba.prg03_scedu.curriculo.entity.Curriculo;
 import br.com.ifba.prg03_scedu.serie.controller.SerieIController;
 import br.com.ifba.prg03_scedu.serie.entity.Serie;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,15 +26,18 @@ public class SerieCadastrar extends javax.swing.JFrame {
     
     private final SerieIController serieController;
     
+    private final CurriculoIController curriculoController;
+    
     /**
      * Creates new form SerieTela
      */
-    public SerieCadastrar(SerieIController serieController) {
+    public SerieCadastrar(SerieIController serieController, CurriculoIController curriculoController) {
 
-        initComponents();
         this.serieController = serieController;
-        this.serieListar = new SerieListar(serieController);
-         
+        this.curriculoController = curriculoController;
+        this.serieListar = new SerieListar(serieController, curriculoController);
+        initComponents();
+        
         //Nao encerra o programa ao fechar a tela
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
@@ -164,14 +171,22 @@ public class SerieCadastrar extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
-        long curriculoId = Long.parseLong(txtIdCurriculo.getText());
+        long curriculo = Long.parseLong(txtIdCurriculo.getText());
+        Curriculo curriculoId = curriculoController.findById(curriculo);
+
         Serie serie = new Serie();
 
         //Logica para cadastrar no banco de dados
         try {
             //Seta os dados e usa o controller para salvar no banco
             serie.setNome(txtNomeSerie.getText());
-            serie.setCurriculoId(curriculoId);
+            
+            if(serie.getCurriculo() == null) {
+               serie.setCurriculo(new ArrayList<>());
+            }
+            
+            serie.getCurriculo().add(curriculoId);
+            
            serieController.save(serie); 
         } catch (Exception error) {
             //Tratamento de execoes

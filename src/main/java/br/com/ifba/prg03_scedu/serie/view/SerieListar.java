@@ -4,10 +4,13 @@
  */
 package br.com.ifba.prg03_scedu.serie.view;
 
+import br.com.ifba.prg03_scedu.curriculo.controller.CurriculoIController;
+import br.com.ifba.prg03_scedu.curriculo.entity.Curriculo;
 import br.com.ifba.prg03_scedu.serie.controller.SerieIController;
 import br.com.ifba.prg03_scedu.serie.entity.Serie;
 import java.awt.Color;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -24,16 +27,19 @@ public class SerieListar extends javax.swing.JFrame {
         
     private final SerieIController controller;
     
+    private final CurriculoIController curriculoController;
+    
     private SerieEditar serieEditar;
 
     private Serie serie;
     /**
      * Creates new form SerieListar
      */
-    public SerieListar(SerieIController serieController) {
+    public SerieListar(SerieIController serieController, CurriculoIController curriculoController) {
         initComponents();
         this.controller = serieController;
-        this.serieEditar = new SerieEditar(serieController);
+        this.curriculoController = curriculoController;
+        this.serieEditar = new SerieEditar(serieController, curriculoController);
 
         //Nao encerra o programa ao fechar a tela
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -259,15 +265,23 @@ public class SerieListar extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void atualizarTabela(){
+        //Obtem todas as series do controller
         List<Serie> series = controller.findAll();
+        //Modelo da tabela
         DefaultTableModel dtmSerie = (DefaultTableModel) tblSerie.getModel();
+        //Limpa os dados antes de preencher de novo
         dtmSerie.setRowCount(0);
         
         for (Serie serie : series) {
+            String curriculoString = serie.getCurriculo().isEmpty() 
+                    ? "Sem curriculo" : serie.getCurriculo().stream()
+                    .map(curriculo -> String.valueOf(curriculo.getId()))
+                    .collect(Collectors.joining(", "));
+            
            dtmSerie.addRow(new Object[] {
               serie.getId(),
               serie.getNome(),
-              serie.getCurriculoId()
+              curriculoString
             });
         }
     }

@@ -4,9 +4,12 @@
  */
 package br.com.ifba.prg03_scedu.serie.view;
 
+import br.com.ifba.prg03_scedu.curriculo.controller.CurriculoIController;
+import br.com.ifba.prg03_scedu.curriculo.entity.Curriculo;
 import br.com.ifba.prg03_scedu.serie.controller.SerieIController;
 import br.com.ifba.prg03_scedu.serie.entity.Serie;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +25,17 @@ public class SerieEditar extends javax.swing.JFrame {
    // @Autowired
     private final SerieIController controller;
     
-
+    private final CurriculoIController curriculoController;
+     
     private Serie s = new Serie();
     private Serie teste = new Serie();
     /**
      * Creates new form SerieEditar
      */
-    public SerieEditar(SerieIController serieController) {
+    public SerieEditar(SerieIController serieController, CurriculoIController curriculoController) {
         
         this.controller = serieController;
+        this.curriculoController = curriculoController;
         initComponents();
        
         
@@ -169,9 +174,17 @@ public class SerieEditar extends javax.swing.JFrame {
         }*/
         
         teste = controller.findById(s.getId());
-        long curriculoId = Long.parseLong(txtIdCurriculo.getText());
+        long curriculo = Long.parseLong(txtIdCurriculo.getText());
+        Curriculo curriculoId = curriculoController.findById(curriculo);
+
+
         teste.setNome(txtNomeSerie.getText());
-        teste.setCurriculoId(curriculoId);
+        
+        if(teste.getCurriculo() == null) {
+            teste.setCurriculo((new ArrayList<>()));
+        }
+        
+        teste.getCurriculo().add(curriculoId);
         controller.save(teste);
         
     }//GEN-LAST:event_btnEditarActionPerformed
