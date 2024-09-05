@@ -75,10 +75,10 @@
                                   <Component id="jLabel7" alignment="0" min="-2" pref="177" max="-2" attributes="0"/>
                                   <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jLabel8" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtProf" alignment="0" max="32767" attributes="0"/>
                                   <Component id="txtDisci" alignment="0" max="32767" attributes="0"/>
                                   <Component id="boxTipo" alignment="0" min="-2" pref="184" max="-2" attributes="0"/>
                                   <Component id="spinPeso" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
+                                  <Component id="txtProf" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -162,7 +162,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="PROFESSOR:"/>
+            <Property name="text" type="java.lang.String" value="ID DO PROFESSOR:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">

@@ -51,6 +51,6 @@ public class Avaliacao {
     // Define a coluna de junção para a relação com a entidade 'Professor', vinculada pelo id do professor.
     private Professor professores;// Referência ao professor associado.
     
-    private String professor; // Nome do professor responsável pela avaliação.
+    private String professor; // Variável utilizada para fazer consultas dentro da interface, correspondente ao ID do professor.
     private int peso; // Peso da avaliação na composição da nota final.
 }

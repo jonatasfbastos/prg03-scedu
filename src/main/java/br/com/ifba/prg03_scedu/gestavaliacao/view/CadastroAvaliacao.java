@@ -82,7 +82,7 @@ public CadastroAvaliacao(AvaliacaoIController avaController,
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("PROFESSOR:");
+        jLabel2.setText("ID DO PROFESSOR:");
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -170,10 +170,10 @@ public CadastroAvaliacao(AvaliacaoIController avaController,
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtProf)
                                 .addComponent(txtDisci)
                                 .addComponent(boxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(spinPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(spinPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtProf, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(btnCancel)
                 .addGap(22, 22, 22))
@@ -277,6 +277,7 @@ public CadastroAvaliacao(AvaliacaoIController avaController,
             }else{
                 //Professor professor = professores.get(0);
                 ava.setProfessores(professor);//define o professor na avaliacao
+                ava.setProfessor(idProf);
             }
             //ava.setProfessor(txtProf.getText()); // Define o nome do professor
             

@@ -80,7 +80,7 @@ public class TelaEditar extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("PROFESSOR:");
+        jLabel3.setText("ID DO PROFESSOR:");
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -168,10 +168,10 @@ public class TelaEditar extends javax.swing.JFrame {
                                         .addComponent(spinAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtProf)
                                     .addComponent(txtDisci, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(boxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6))))
+                                    .addComponent(jLabel6)
+                                    .addComponent(txtProf, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -320,6 +320,7 @@ public class TelaEditar extends javax.swing.JFrame {
             }else{
                 //Professor professor = professores.get(0);
                 ava.setProfessores(professor);//define o professor na avaliacao
+                ava.setProfessor(idProf);
             }
 
         // Verifica se algum dos campos está vazio
