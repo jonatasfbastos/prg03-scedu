@@ -46,7 +46,7 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
                     lista.getTipo(), // Tipo da avaliação
                     lista.getPeso(), // Peso da avaliação
                     lista.getDescricao(), // Descrição da avaliação
-                    lista.getProfessor(), // Nome do professor
+                    lista.getProfessores().getNome(), // Nome do professor
                     lista.isStatus() ? "Aplicado" : "Pendente" // Status da avaliação como string
                 };
 
@@ -150,7 +150,7 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Data", "Disciplina", "Tipo", "Peso", "Descrição", "Id Profº", "Status"
+                "ID", "Data", "Disciplina", "Tipo", "Peso", "Descrição", "Profº", "Status"
             }
         ));
         jScrollPane1.setViewportView(tableInfo);

@@ -192,7 +192,7 @@
                     <Column editable="true" title="Tipo" type="java.lang.Object"/>
                     <Column editable="true" title="Peso" type="java.lang.Object"/>
                     <Column editable="true" title="Descri&#xe7;&#xe3;o" type="java.lang.Object"/>
-                    <Column editable="true" title="Id Prof&#xba;" type="java.lang.Object"/>
+                    <Column editable="true" title="Prof&#xba;" type="java.lang.Object"/>
                     <Column editable="true" title="Status" type="java.lang.Object"/>
                   </Table>
                 </Property>
