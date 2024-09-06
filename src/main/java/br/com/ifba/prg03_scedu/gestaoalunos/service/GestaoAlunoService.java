@@ -23,10 +23,6 @@ public class GestaoAlunoService implements GestaoAlunoIService {
             log.error("Erro ao salvar aluno: aluno é nulo"); // Registra um erro se o aluno for nulo.
             throw new RuntimeException("Dados do aluno não preenchidos"); // Lança uma exceção com uma mensagem de erro apropriada.
         }
-        else if(aluno.getId() != null){
-            log.error("Erro ao salvar aluno: aluno já existe"); // Registra um erro se o aluno já existir.
-            throw new RuntimeException("Aluno já existente no banco de dados"); // Lança uma exceção com uma mensagem de erro apropriada.
-        }
         else{
             log.info("Salvando o Objeto Alunos: {}", aluno); // Registra uma mensagem indicando que o aluno está sendo salvo.
             return gestaoAlunoRepository.save(aluno); // Salva o aluno no repositório.
@@ -95,37 +91,64 @@ public class GestaoAlunoService implements GestaoAlunoIService {
             log.error("Erro ao salvar Responsavel: Responsavel é nulo"); // Registra um erro se o aluno for nulo.
             throw new RuntimeException("Dados do Responsavel não preenchidos"); // Lança uma exceção com uma mensagem de erro apropriada.
         }
-        else if(responsavel.getId() != null){
-            log.error("Erro ao salvar Responsavel: Responsavel já existe"); // Registra um erro se o aluno já existir.
-            throw new RuntimeException("Responsavel já existente no banco de dados"); // Lança uma exceção com uma mensagem de erro apropriada.
-        }
         else{
-            log.info("Salvando o Objeto Responsavel: {}", responsavel); // Registra uma mensagem indicando que o aluno está sendo salvo.
-            return gestaoAlunoRepositoryResponsaveis.save(responsavel); // Salva o aluno no repositório.
+            log.info("Salvando o Objeto Responsavel: {}", responsavel); // Registra uma mensagem indicando que o responsável está sendo salvo.
+            return gestaoAlunoRepositoryResponsaveis.save(responsavel); // Salva o responsável no repositório.
         }
     }
     
+    @Override
     public Responsaveis update(Responsaveis responsavel) throws RuntimeException {
         if(responsavel == null ){
-            log.error("Erro ao atualizar Responsavel: Responsavel é nulo"); // Registra um erro se o aluno for nulo.
+            log.error("Erro ao atualizar Responsavel: Responsavel é nulo"); // Registra um erro se o responsável for nulo.
             throw new RuntimeException("Dados do Responsavel não preenchidos"); // Lança uma exceção com uma mensagem de erro apropriada.
         }
         else{
-            log.info("Atualizando o Objeto Responsavel: {}", responsavel); // Registra uma mensagem indicando que o aluno está sendo atualizado.
-            return gestaoAlunoRepositoryResponsaveis.save(responsavel); // Atualiza o aluno no repositório.
+            log.info("Atualizando o Objeto Responsavel: {}", responsavel); // Registra uma mensagem indicando que o responsável está sendo atualizado.
+            return gestaoAlunoRepositoryResponsaveis.save(responsavel); // Atualiza o responsável no repositório.
         }
     }
 
     @Override
     public void delete(Responsaveis responsavel) throws RuntimeException {
         if(responsavel == null ){
-            log.error("Erro ao deletar Responsavel: Responsavel é nulo"); // Registra um erro se o aluno for nulo.
+            log.error("Erro ao deletar Responsavel: Responsavel é nulo"); // Registra um erro se o responsável for nulo.
             throw new RuntimeException("Dados do Responsavel não preenchidos"); // Lança uma exceção com uma mensagem de erro apropriada.
         }
         else {
-            log.info("Deletando o Objeto Responsaveis: {}", responsavel); // Registra uma mensagem indicando que o aluno está sendo deletado.
-            gestaoAlunoRepositoryResponsaveis.delete(responsavel); // Deleta o aluno do repositório.
+            log.info("Deletando o Objeto Responsaveis: {}", responsavel); // Registra uma mensagem indicando que o responsável está sendo deletado.
+            gestaoAlunoRepositoryResponsaveis.delete(responsavel); // Deleta o responsável do repositório.
         }
+    }
+    
+    @Override
+    public Responsaveis findByIdResponsavel(Long id) throws RuntimeException {
+        if (id == null) {
+            log.error("Erro ao buscar aluno por ID: ID é nulo"); // Registra um erro se o ID for nulo.
+            throw new RuntimeException("ID do Aluno não fornecido"); // Lança uma exceção com uma mensagem de erro apropriada.
+        }
+        else{
+            log.info("Buscando Alunos por ID: {}", id); // Registra uma mensagem indicando que o aluno está sendo buscado pelo ID.
+            return gestaoAlunoRepositoryResponsaveis.findById(id).orElse(null); // Busca o aluno no repositório pelo ID.
+        }
+    }
+    
+    @Override
+    public Responsaveis findByNomeResponsavel(String nome) throws RuntimeException {
+        if (nome == null || nome.isEmpty()) {
+            log.error("Erro ao buscar responsável por nome: nome é nulo ou vazio"); // Registra um erro se o nome for nulo ou vazio.
+            throw new RuntimeException("Erro ao procurar o responsável pelo nome " + nome); // Lança uma exceção com uma mensagem de erro apropriada.
+        }
+        else{
+            log.info("Buscando responsável por Nome: {}", nome); // Registra uma mensagem indicando que os responsável estão sendo buscados pelo nome.
+            return gestaoAlunoRepositoryResponsaveis.findByNome(nome); // Busca responsável no repositório pelo nome.
+        }
+    }
+    
+    @Override
+    public List<Responsaveis> findAllResponsavel() throws RuntimeException {
+        log.info("Buscando todos os Alunos"); // Registra uma mensagem indicando que todos os alunos estão sendo buscados.
+        return gestaoAlunoRepositoryResponsaveis.findAll(); // Busca todos os alunos no repositório.
     }
 }
 

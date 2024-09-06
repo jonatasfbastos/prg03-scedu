@@ -17,4 +17,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Responsaveis extends Pessoa{
     private String profissao;
+    private String tipo;
 }
