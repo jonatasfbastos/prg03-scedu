@@ -36,10 +36,9 @@ public abstract class Pessoa {
     @Column(unique = true)
     private String cpf;
     @Column(unique = true)
-    private String telefone;
-    @Column(unique = true)
     private String rg;
     
+    private String telefone;
     private String orgaoExpedidorRg;
     
     @ManyToOne
