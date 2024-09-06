@@ -171,31 +171,29 @@ public class SerieCadastrar extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
-        long curriculo = Long.parseLong(txtIdCurriculo.getText());
-        Curriculo curriculoId = curriculoController.findById(curriculo);
+        long curriculoId = Long.parseLong(txtIdCurriculo.getText());
+        Curriculo curriculo = curriculoController.findById(curriculoId);
 
         Serie serie = new Serie();
+        
+        //Verifica se o curriculo foi encontrado
+        if(curriculo == null) {
+            JOptionPane.showMessageDialog(null, "Curriculo nao encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
 
         //Logica para cadastrar no banco de dados
         try {
             //Seta os dados e usa o controller para salvar no banco
             serie.setNome(txtNomeSerie.getText());
-            
-            if(serie.getCurriculo() == null) {
-               serie.setCurriculo(new ArrayList<>());
-            }
-            
-            serie.getCurriculo().add(curriculoId);
-            
-           serieController.save(serie); 
+            serie.getCurriculo().add(curriculo);
+            serieController.save(serie);         
+            JOptionPane.showMessageDialog(this, "Serie cadastrada com sucesso!");
+
         } catch (Exception error) {
             //Tratamento de execoes
             JOptionPane.showMessageDialog(null, error, "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
         }
-        
-        JOptionPane.showMessageDialog(this, "Serie cadastrada com sucesso!");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//nao fecha a janela ao encerrar o programa
-
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnListarSerieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarSerieActionPerformed

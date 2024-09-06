@@ -41,7 +41,11 @@ public class Serie {
     private String nome;
     
    // @Column(name = "curriculoId")
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+    name = "serie_curriculo", 
+    joinColumns = @JoinColumn(name = "serie_id"), 
+    inverseJoinColumns = @JoinColumn(name = "curriculo_id"))
     private List<Curriculo> curriculo = new ArrayList<>();
     
    // private List<Turma> listaTurma;
