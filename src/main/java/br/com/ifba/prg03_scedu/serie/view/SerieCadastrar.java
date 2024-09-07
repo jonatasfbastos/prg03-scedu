@@ -185,10 +185,20 @@ public class SerieCadastrar extends javax.swing.JFrame {
         try {
             //Seta os dados e usa o controller para salvar no banco
             serie.setNome(txtNomeSerie.getText());
-            serie.getCurriculo().add(curriculo);
-            serieController.save(serie);         
-            JOptionPane.showMessageDialog(this, "Serie cadastrada com sucesso!");
+            
+            // Inicializa a lista de currículos se estiver nula
+            if (serie.getCurriculo() == null) {
+                serie.setCurriculo(new ArrayList<>());
+            }
 
+            // Verifica se o currículo já está na lista de currículos
+            if (!serie.getCurriculo().contains(curriculo)) {
+                  JOptionPane.showMessageDialog(null, "Este currículo já está associado a esta série.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else{
+                serie.getCurriculo().add(curriculo);
+                serieController.save(serie);         
+                JOptionPane.showMessageDialog(this, "Serie cadastrada com sucesso!");
+            }
         } catch (Exception error) {
             //Tratamento de execoes
             JOptionPane.showMessageDialog(null, error, "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
