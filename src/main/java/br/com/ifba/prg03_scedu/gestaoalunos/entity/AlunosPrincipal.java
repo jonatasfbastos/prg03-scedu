@@ -29,19 +29,19 @@ public class AlunosPrincipal extends Pessoa{
     @Column(unique = true)
     private String email;
     
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "pai_id")
     private Responsaveis pai;
     
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "mae_id")
     private Responsaveis mae;
     
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "reponsavel_legal_id")
     private Responsaveis reponsavelLegal;
     
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "escola_id")
     private Escola escolaOrigem;
     

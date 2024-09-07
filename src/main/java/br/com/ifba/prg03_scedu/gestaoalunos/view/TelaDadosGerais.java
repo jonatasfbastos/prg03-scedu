@@ -2,9 +2,10 @@
 package br.com.ifba.prg03_scedu.gestaoalunos.view;
 
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.endereco.controller.EnderecoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
-import br.com.ifba.prg03_scedu.infrastructure.entity.Endereco;
+import br.com.ifba.prg03_scedu.endereco.entity.Endereco;
 import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -18,6 +19,7 @@ public class TelaDadosGerais extends javax.swing.JFrame {
 
     private static final Logger log = LoggerFactory.getLogger(TelaDadosGerais.class);
     private final GestaoAlunoIController gestaoAlunoController;
+    private final EnderecoIController enderecoController;
     @Getter private final Long idAlunoEscolhido;
     
     private void carregarDados(){
@@ -82,7 +84,7 @@ public class TelaDadosGerais extends javax.swing.JFrame {
         }
     }
     
-    public TelaDadosGerais(GestaoAlunoIController gestaoAlunoController, Long idAlunoEscolhido) {
+    public TelaDadosGerais(GestaoAlunoIController gestaoAlunoController, Long idAlunoEscolhido, EnderecoIController enderecoController) {
         initComponents();
         pnlAlergiaOutro.setVisible(false);
         pnlCondicoesMedicasOutro.setVisible(false);
@@ -92,6 +94,7 @@ public class TelaDadosGerais extends javax.swing.JFrame {
         pnlReponsaveis.setVisible(false);
         this.gestaoAlunoController = gestaoAlunoController;
         this.idAlunoEscolhido = idAlunoEscolhido;
+        this.enderecoController = enderecoController;
         carregarDados();
     }
 
@@ -209,7 +212,7 @@ public class TelaDadosGerais extends javax.swing.JFrame {
         lblDadosEndereco = new javax.swing.JLabel();
         lblDadosMedicos = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         pnlDadosPessoais.setBackground(new java.awt.Color(8, 102, 255));
 
@@ -455,7 +458,6 @@ public class TelaDadosGerais extends javax.swing.JFrame {
         });
 
         pnlResponsavelOutro.setBackground(new java.awt.Color(8, 102, 255));
-        pnlResponsavelOutro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblTipoResponsavel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblTipoResponsavel.setForeground(new java.awt.Color(255, 255, 255));
@@ -503,7 +505,6 @@ public class TelaDadosGerais extends javax.swing.JFrame {
         );
 
         pnlReponsaveis.setBackground(new java.awt.Color(8, 102, 255));
-        pnlReponsaveis.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         pnlReponsaveis.setForeground(new java.awt.Color(255, 255, 255));
 
         lblDataEmissaoPai.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -686,7 +687,7 @@ public class TelaDadosGerais extends javax.swing.JFrame {
                                 .addComponent(lblResponsavelEscolha)
                                 .addGap(90, 90, 90)
                                 .addComponent(lblTelefoneResponsavel)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 31, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 33, Short.MAX_VALUE)
                         .addComponent(pnlResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)))
                 .addGap(6, 6, 6))
@@ -831,7 +832,6 @@ public class TelaDadosGerais extends javax.swing.JFrame {
         });
 
         pnlDeficienciaOutro.setBackground(new java.awt.Color(8, 102, 255));
-        pnlDeficienciaOutro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblDeficienciaOutro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblDeficienciaOutro.setForeground(new java.awt.Color(255, 255, 255));
@@ -865,7 +865,6 @@ public class TelaDadosGerais extends javax.swing.JFrame {
         });
 
         pnlAlergiaOutro.setBackground(new java.awt.Color(8, 102, 255));
-        pnlAlergiaOutro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblAlergiaOutro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblAlergiaOutro.setForeground(new java.awt.Color(255, 255, 255));
@@ -888,7 +887,7 @@ public class TelaDadosGerais extends javax.swing.JFrame {
                 .addComponent(lblAlergiaOutro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtAlergiaOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         cbxCondicoesMedicas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Ansiedade", "Depressão", "Escoliose", "Asma", "Diabete", "Hipertensão", "Epilepsia", "TDAH", "Síndrome de Down", "Autismo", "Anemia", "Obesidade", "Outro", " " }));
@@ -899,7 +898,6 @@ public class TelaDadosGerais extends javax.swing.JFrame {
         });
 
         pnlCondicoesMedicasOutro.setBackground(new java.awt.Color(8, 102, 255));
-        pnlCondicoesMedicasOutro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblCondicoesMedicasOutro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCondicoesMedicasOutro.setForeground(new java.awt.Color(255, 255, 255));
@@ -922,7 +920,7 @@ public class TelaDadosGerais extends javax.swing.JFrame {
                 .addComponent(lblCondicoesMedicasOutro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCondicoesMedicasOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         cbxMedicamentos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Paracetamol", "Ibuprofeno", "Loratadina", "Amoxicilina", "Insulina", "Omeprazol", "Diazepam", "Outro", " " }));
@@ -933,7 +931,6 @@ public class TelaDadosGerais extends javax.swing.JFrame {
         });
 
         pnlMedicamentosOutro.setBackground(new java.awt.Color(8, 102, 255));
-        pnlMedicamentosOutro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblMedicamentosOutro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblMedicamentosOutro.setForeground(new java.awt.Color(255, 255, 255));
@@ -981,7 +978,7 @@ public class TelaDadosGerais extends javax.swing.JFrame {
                             .addComponent(pnlCondicoesMedicasOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblCondicoesMedicas)
                             .addComponent(cbxCondicoesMedicas, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addGroup(pnlDadosMedicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblMedicamentos)
                     .addComponent(cbxMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1082,7 +1079,7 @@ public class TelaDadosGerais extends javax.swing.JFrame {
         // TODO add your handling code here:
         // Instanciamento da tela da de adição de alunos
         log.info("Editando aluno com ID: {}", this.idAlunoEscolhido);
-        TelaEditarAluno novaTela = new TelaEditarAluno(idAlunoEscolhido, this.gestaoAlunoController);
+        TelaEditarAluno novaTela = new TelaEditarAluno(this.idAlunoEscolhido, this.gestaoAlunoController, this.enderecoController);
         novaTela.setVisible(true);
         // Adiciona um ouvinte de eventos de janela à nova tela
         novaTela.addWindowListener(new java.awt.event.WindowAdapter() {

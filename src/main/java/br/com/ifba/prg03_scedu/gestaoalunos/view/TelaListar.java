@@ -4,11 +4,12 @@ package br.com.ifba.prg03_scedu.gestaoalunos.view;
 import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.endereco.controller.EnderecoIController;
+import br.com.ifba.prg03_scedu.escola.controller.EscolaIController;
 import jakarta.persistence.NoResultException;
 import java.awt.event.WindowEvent;
 import java.util.Calendar;
 import java.util.List;
-import javax.print.DocFlavor;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.slf4j.Logger;
@@ -20,11 +21,15 @@ public class TelaListar extends javax.swing.JFrame {
     //Atributos usados na classe
     private static final Logger log = LoggerFactory.getLogger(TelaListar.class);
     private final GestaoAlunoIController gestaoAlunoController;
+    private final EnderecoIController enderecoController;
+    private final EscolaIController escolaController;
 
-    public TelaListar(GestaoAlunoIController gestaoAlunoController) {
+    public TelaListar(GestaoAlunoIController gestaoAlunoController, EnderecoIController enderecoController, EscolaIController escolaController) {
         log.info("Inicializando componentes da tela de listagem de alunos");
         initComponents();
         this.gestaoAlunoController = gestaoAlunoController;
+        this.enderecoController = enderecoController;
+        this.escolaController = escolaController;
         refresh();
     }
     
@@ -51,7 +56,7 @@ public class TelaListar extends javax.swing.JFrame {
                 int anoAtual = dataAtual.get(Calendar.YEAR);
 
                 int idade = anoAtual - anoNascimento;
-                Object[] dados = {lista.getNome(), idade, lista.getEmail(), lista.getNascimento(), lista.getReponsavelLegal(), lista.getTelefone()};
+                Object[] dados = {lista.getNome(), idade, lista.getEmail(), lista.getNascimento(), lista.getReponsavelLegal().getNome(), lista.getTelefone()};
 
                 // Adiciona uma nova linha no modelo da tabela com os dados do aluno
                 dtmAlunos.addRow(dados);
@@ -219,7 +224,7 @@ public class TelaListar extends javax.swing.JFrame {
     private void btnAdcionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdcionarActionPerformed
         // Instanciamento da tela da de adição de alunos
         log.info("Ação de adicionar aluno iniciada");
-        TelaAdicionar novaTela = new TelaAdicionar(gestaoAlunoController);
+        TelaAdicionar novaTela = new TelaAdicionar(this.gestaoAlunoController, this.enderecoController, this.escolaController);
         novaTela.setVisible(true);
         
         // Adiciona um ouvinte de eventos de janela à nova tela
@@ -243,7 +248,7 @@ public class TelaListar extends javax.swing.JFrame {
                     // Obtém o ID do aluno a ser removido da linha selecionada na tabela
                     String alunoRemover = (String) tblAlunos.getValueAt(tblAlunos.getSelectedRow(), 0);
                     //Encontra o aluno
-                    AlunosPrincipal aluno = (AlunosPrincipal) gestaoAlunoController.findByNome(alunoRemover);
+                    AlunosPrincipal aluno = gestaoAlunoController.findByNome(alunoRemover).getFirst();
                     log.info("Excluindo aluno com ID: {}", aluno.getId());
                     //Exclui o aluno
                     this.gestaoAlunoController.delete(aluno);
@@ -307,9 +312,9 @@ public class TelaListar extends javax.swing.JFrame {
             if(tblAlunos.getSelectedRow() != -1){
                 // Obtém o ID do aluno a ser removido da linha selecionada na tabela
                 String alunoEscolhido = (String) tblAlunos.getValueAt(tblAlunos.getSelectedRow(), 0);
-                AlunosPrincipal aluno = (AlunosPrincipal) gestaoAlunoController.findByNome(alunoEscolhido);
+                AlunosPrincipal aluno = gestaoAlunoController.findByNome(alunoEscolhido).getFirst();
                 // Instanciamento da tela da de adição de alunos
-                TelaDadosGerais novaTela = new TelaDadosGerais(this.gestaoAlunoController, aluno.getId());
+                TelaDadosGerais novaTela = new TelaDadosGerais(this.gestaoAlunoController, aluno.getId(), this.enderecoController);
                 novaTela.setVisible(true);
                 // Adiciona um ouvinte de eventos de janela à nova tela
                 novaTela.addWindowListener(new java.awt.event.WindowAdapter() {
