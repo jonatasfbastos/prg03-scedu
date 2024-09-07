@@ -193,7 +193,7 @@ public class SerieCadastrar extends javax.swing.JFrame {
 
             // Verifica se o currículo já está na lista de currículos
             if (!serie.getCurriculo().contains(curriculo)) {
-                  JOptionPane.showMessageDialog(null, "Este currículo já está associado a esta série.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                  JOptionPane.showMessageDialog(null, "Este currículo já está associado a uma série.", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else{
                 serie.getCurriculo().add(curriculo);
                 serieController.save(serie);         
