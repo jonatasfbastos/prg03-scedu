@@ -8,6 +8,8 @@ import br.com.ifba.prg03_scedu.endereco.controller.EnderecoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.Responsaveis;
 import br.com.ifba.prg03_scedu.endereco.entity.Endereco;
 import br.com.ifba.prg03_scedu.endereco.entity.EnderecoId;
+import br.com.ifba.prg03_scedu.escola.controller.EscolaIController;
+import br.com.ifba.prg03_scedu.escola.entity.Escola;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,10 +27,12 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private static final Logger log = LoggerFactory.getLogger(TelaAdicionar.class);
     private final GestaoAlunoIController gestaoAlunoController;
     private final EnderecoIController enderecoController;
+    private final EscolaIController escolaController;
 
-    public TelaAdicionar(GestaoAlunoIController gestaoAlunoController, EnderecoIController enderecoController) {
+    public TelaAdicionar(GestaoAlunoIController gestaoAlunoController, EnderecoIController enderecoController, EscolaIController escolaController) {
         this.gestaoAlunoController = gestaoAlunoController;
         this.enderecoController = enderecoController;
+        this.escolaController = escolaController;
         log.info("Inicializando componentes da tela de listagem de alunos");
         initComponents();
         pnlAlergiaOutro.setVisible(false);
@@ -343,7 +347,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
         txtDataNascimento = new javax.swing.JTextField();
         cbxSexo = new javax.swing.JComboBox<>();
         lblEscolaOrigem = new javax.swing.JLabel();
-        txtscolaOrigem = new javax.swing.JTextField();
+        txtEscolaOrigem = new javax.swing.JTextField();
         pnlSalvar = new javax.swing.JPanel();
         btnSalvar = new javax.swing.JButton();
         pnlDadosReponsaveis = new javax.swing.JPanel();
@@ -574,7 +578,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
                             .addComponent(lblEmail))
                         .addGap(18, 18, 18)
                         .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtscolaOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEscolaOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblEscolaOrigem))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(13, 13, 13))
@@ -593,7 +597,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNomeSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtscolaOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEscolaOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -1308,13 +1312,17 @@ public class TelaAdicionar extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
-        int veref = 1;
-        //if(!validarCampos()){
-        if(veref == 0){
+        //int veref = 1;
+        if(!validarCampos()){
+        //if(veref == 0){
             JOptionPane.showMessageDialog(null, "Dados do aluno não preenchidos", "ERRO", JOptionPane.ERROR_MESSAGE);
             log.error("Erro ao salvar: Campos obrigatórios não preenchidos");
         }else{
             AlunosPrincipal novoAluno = new AlunosPrincipal();
+            Responsaveis responsavelLegalSave = new Responsaveis();
+            Responsaveis responsavelPaiSave = new Responsaveis();
+            Responsaveis responsavelMaeSave = new Responsaveis();
+            
             try{
                 novoAluno.setNome(txtNomeAluno.getText());
                 novoAluno.setNomeSocial(txtNomeSocial.getText());
@@ -1332,101 +1340,159 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 novoAluno.setAlergia(cbxAlergia.getSelectedItem().toString());
                 novoAluno.setCondicoesMedicas(cbxCondicoesMedicas.getSelectedItem().toString());
                 novoAluno.setMedicamentos(cbxMedicamentos.getSelectedItem().toString());
+                novoAluno.setRegiaoMoradia(cbxRegiaoMoradia.getSelectedItem().toString());
+                novoAluno.setNacionalidade(txtNacionalidade.getText());
+                novoAluno.setNaturalidade(txtNaturalidade.getText());
                 
                 List<Responsaveis> responsaveis = gestaoAlunoController.findAllResponsavel();
                 if(!(cbxResponsavelEscolha.getSelectedItem().equals(" "))){
-                    Responsaveis responsavelLegalSave = new Responsaveis();
-                    if(gestaoAlunoController.findByNomeResponsavel(txtNomeResponsavelOutro.getText()) == null){
-                        if(cbxResponsavelEscolha.getSelectedItem().equals("Outro")){
+                    if(cbxResponsavelEscolha.getSelectedItem().equals("Outro")){
+                        if(gestaoAlunoController.findByNomeResponsavel("NENHUM") == null){
+                            responsavelPaiSave.setTipo("  ");
+                            responsavelPaiSave.setNome("NENHUM");
+                            responsavelPaiSave.setCpf("NENHUM");
+                            responsavelPaiSave.setRg("NENHUM");
+                            responsavelPaiSave.setTelefone("NENHUM");
+                            responsavelPaiSave.setOrgaoExpedidorRg("NENHUM");
+                            responsavelPaiSave.setProfissao("NENHUM");
+                            Date dataRgPai = sdf.parse("01/01/0001");
+                            responsavelPaiSave.setDataEmissaoRg(dataRgPai);
+                            gestaoAlunoController.save(responsavelPaiSave);
+                            novoAluno.setPai(responsavelPaiSave);
+
+                            responsavelMaeSave.setTipo("  ");
+                            responsavelMaeSave.setNome("NENHUM");
+                            responsavelMaeSave.setCpf("NENHUM");
+                            responsavelMaeSave.setRg("NENHUM");
+                            responsavelMaeSave.setTelefone("NENHUM");
+                            responsavelMaeSave.setOrgaoExpedidorRg("NENHUM");
+                            responsavelMaeSave.setProfissao("NENHUM");
+                            Date dataRgMae = sdf.parse("01/01/0001");
+                            responsavelMaeSave.setDataEmissaoRg(dataRgMae);
+                            gestaoAlunoController.save(responsavelMaeSave);
+                            novoAluno.setMae(responsavelMaeSave);
+                        }else{
+                            responsavelPaiSave = gestaoAlunoController.findByNomeResponsavel("NENHUM");
+                            novoAluno.setPai(responsavelPaiSave);
+                            responsavelMaeSave = gestaoAlunoController.findByNomeResponsavel("NENHUM");
+                            novoAluno.setMae(responsavelMaeSave);
+                        }
+                        if(gestaoAlunoController.findByNomeResponsavel(txtNomeResponsavelOutro.getText()) == null){
                             for(Responsaveis responsavel: responsaveis){
                                 if(responsavel.getCpf().equals(txtCpfResponsavelOutro.getText())){
                                     exibirErroELog("CPF do Responsável Legal");
                                     return;
                                 }
-                                if (responsavel.getTelefone().equals(txtTelefone.getText())) {
-                                    exibirErroELog("Telefone do responsável");
+                            }
+                            responsavelLegalSave.setTipo(txtTipoResponsavel.getText());
+                            responsavelLegalSave.setNome(txtNomeResponsavelOutro.getText());
+                            responsavelLegalSave.setCpf(txtCpfResponsavelOutro.getText());
+                            responsavelLegalSave.setRg(txtRgResponsavelOutro.getText());
+                            responsavelLegalSave.setOrgaoExpedidorRg(txtOrgaoExpedidorResponsavelOutro.getText());
+                            Date dataRgResponsavelOutro = sdf.parse(txtDataEmissaoResponsavelOutro.getText());
+                            responsavelLegalSave.setDataEmissaoRg(dataRgResponsavelOutro);
+                            responsavelLegalSave.setTelefone(txtTelefoneResponsavel.getText());
+                            gestaoAlunoController.save(responsavelLegalSave);
+                        }else{
+                            responsavelLegalSave = gestaoAlunoController.findByNomeResponsavel(txtNomeResponsavelOutro.getText());
+                        }
+                        novoAluno.setReponsavelLegal(responsavelLegalSave);
+                    }else{
+                        if(gestaoAlunoController.findByNomeResponsavel(txtNomePai.getText()) == null){
+                            for(Responsaveis responsavel: responsaveis){
+                                if (responsavel.getCpf().equals(txtCpfPai.getText())) {
+                                    exibirErroELog("CPF do Pai");
+                                    return;
+                                }
+                                if (responsavel.getCpf().equals(txtCpfMae.getText())) {
+                                    exibirErroELog("CPF da Mãe");
+                                    return;
+                                }
+                                if (responsavel.getRg().equals(txtRgPai.getText())) {
+                                    exibirErroELog("RG do Pai");
+                                    return;
+                                }
+                                if (responsavel.getRg().equals(txtRgMae.getText())) {
+                                    exibirErroELog("RG da Mãe");
                                     return;
                                 }
                             }
+                            //Configuracoes Pai
+                            responsavelPaiSave.setTipo("Pai");
+                            responsavelPaiSave.setNome(txtNomePai.getText());
+                            responsavelPaiSave.setCpf(txtCpfPai.getText());
+                            responsavelPaiSave.setRg(txtRgPai.getText());
+                            if(cbxResponsavelEscolha.getSelectedItem().equals("Pai")){
+                                responsavelPaiSave.setTelefone(txtTelefoneResponsavel.getText());
+                            }
+                            responsavelPaiSave.setOrgaoExpedidorRg(txtOrgaoExpedidorPai.getText());
+                            responsavelPaiSave.setProfissao(txtProfissaoPai.getText());
+                            Date dataRgPai = sdf.parse(txtDataEmissaoPai.getText());
+                            responsavelPaiSave.setDataEmissaoRg(dataRgPai);
+                            gestaoAlunoController.save(responsavelPaiSave);
+                            
+                            //Configuracoes Responsavel Legal
+                            if(cbxResponsavelEscolha.getSelectedItem().equals("Pai")){
+                                responsavelLegalSave.setTipo("Pai");
+                                responsavelLegalSave.setNome(txtNomePai.getText() + "repleg");
+                                responsavelLegalSave.setCpf(txtCpfPai.getText() + "repleg");
+                                responsavelLegalSave.setRg(txtRgPai.getText() + "repleg");
+                                responsavelLegalSave.setOrgaoExpedidorRg(txtOrgaoExpedidorPai.getText());
+                                responsavelLegalSave.setDataEmissaoRg(dataRgPai);
+                                responsavelLegalSave.setTelefone(txtTelefoneResponsavel.getText() + "repleg");
+                                gestaoAlunoController.save(responsavelLegalSave);    
+                                novoAluno.setReponsavelLegal(responsavelLegalSave);
+                            }
+                        }else{
+                            responsavelPaiSave = gestaoAlunoController.findByNomeResponsavel(txtNomePai.getText());
+                            responsavelLegalSave = responsavelPaiSave;
+                            responsavelLegalSave.setNome(responsavelPaiSave.getNome() + "repleg");
+                            responsavelLegalSave.setCpf(responsavelPaiSave.getCpf()+ "repleg");
+                            responsavelLegalSave.setRg(responsavelPaiSave.getRg()+ "repleg");
+                            responsavelLegalSave.setTelefone(responsavelPaiSave.getTelefone()+ "repleg");
+                            novoAluno.setReponsavelLegal(responsavelLegalSave);
                         }
-                        responsavelLegalSave.setTipo(txtTipoResponsavel.getText());
-                        responsavelLegalSave.setNome(txtNomeResponsavelOutro.getText());
-                        responsavelLegalSave.setCpf(txtCpfResponsavelOutro.getText());
-                        responsavelLegalSave.setRg(txtRgResponsavelOutro.getText());
-                        responsavelLegalSave.setOrgaoExpedidorRg(txtOrgaoExpedidorResponsavelOutro.getText());
-                        Date dataRgResponsavelOutro = sdf.parse(txtDataEmissaoResponsavelOutro.getText());
-                        responsavelLegalSave.setDataEmissaoRg(dataRgResponsavelOutro);
-                        if(cbxResponsavelEscolha.getSelectedItem().equals("Outro"))
-                            responsavelLegalSave.setTelefone(txtTelefoneResponsavel.getText());
-                        gestaoAlunoController.save(responsavelLegalSave);
-                    }else{
-                        responsavelLegalSave = gestaoAlunoController.findByNomeResponsavel(txtNomeResponsavelOutro.getText());
+                        novoAluno.setPai(responsavelPaiSave);
+                        
+                        if(gestaoAlunoController.findByNomeResponsavel(txtNomeMae.getText()) == null){
+                            //Configuracoes Mae
+                            responsavelMaeSave.setTipo("Mãe");
+                            responsavelMaeSave.setNome(txtNomeMae.getText());
+                            responsavelMaeSave.setCpf(txtCpfMae.getText());
+                            responsavelMaeSave.setRg(txtRgMae.getText());
+                            if(cbxResponsavelEscolha.getSelectedItem().equals("Mãe")){
+                                responsavelMaeSave.setTelefone(txtTelefoneResponsavel.getText());
+                            }
+                            responsavelMaeSave.setOrgaoExpedidorRg(txtOrgaoExpedidorMae.getText());
+                            responsavelMaeSave.setProfissao(txtProfissaoMae.getText());
+                            Date dataRgMae = sdf.parse(txtDataEmissaoMae.getText());
+                            responsavelMaeSave.setDataEmissaoRg(dataRgMae);
+                            gestaoAlunoController.save(responsavelMaeSave);
+                            
+                            //Configuracoes Responsavel Legal
+                            if(cbxResponsavelEscolha.getSelectedItem().equals("Mãe")){
+                                responsavelLegalSave.setTipo("Mãe");
+                                responsavelLegalSave.setNome(txtNomeMae.getText());
+                                responsavelLegalSave.setCpf(txtCpfMae.getText() + "repleg");
+                                responsavelLegalSave.setRg(txtRgMae.getText() + "repleg");
+                                responsavelLegalSave.setOrgaoExpedidorRg(txtOrgaoExpedidorMae.getText());
+                                responsavelLegalSave.setDataEmissaoRg(dataRgMae);
+                                responsavelLegalSave.setTelefone(txtTelefoneResponsavel.getText());
+                                gestaoAlunoController.save(responsavelLegalSave);   
+                                novoAluno.setReponsavelLegal(responsavelLegalSave);
+                            }
+                        }else{
+                            responsavelMaeSave = gestaoAlunoController.findByNomeResponsavel(txtNomeMae.getText());
+                            responsavelLegalSave = responsavelMaeSave;
+                            responsavelLegalSave.setNome(responsavelMaeSave.getNome() + "repleg");
+                            responsavelLegalSave.setCpf(responsavelMaeSave.getCpf()+ "repleg");
+                            responsavelLegalSave.setRg(responsavelMaeSave.getRg()+ "repleg");
+                            responsavelLegalSave.setTelefone(responsavelMaeSave.getTelefone()+ "repleg");
+                            novoAluno.setReponsavelLegal(responsavelLegalSave);
+                        }
+                        novoAluno.setMae(responsavelMaeSave);
                     }
-                    novoAluno.setReponsavelLegal(responsavelLegalSave);
-
-                    Responsaveis responsavelPaiSave = new Responsaveis();
-                    if(gestaoAlunoController.findByNomeResponsavel(txtNomePai.getText()) == null){
-                        for(Responsaveis responsavel: responsaveis){
-                            if (responsavel.getCpf().equals(txtCpfPai.getText())) {
-                                exibirErroELog("CPF do Pai");
-                                return;
-                            }
-                            if (responsavel.getCpf().equals(txtCpfMae.getText())) {
-                                exibirErroELog("CPF da Mãe");
-                                return;
-                            }
-                            if (responsavel.getRg().equals(txtRgResponsavelOutro.getText())) {
-                                exibirErroELog("RG do Pai");
-                                return;
-                            }
-                            if (responsavel.getRg().equals(txtRgMae.getText())) {
-                                exibirErroELog("RG da Mãe");
-                                return;
-                            }
-                            if (responsavel.getTelefone().equals(txtTelefone.getText())) {
-                                exibirErroELog("Telefone do responsável");
-                                return;
-                            }
-                        }
-                        //Configuracoes Pai
-                        responsavelPaiSave.setTipo("Pai");
-                        responsavelPaiSave.setNome(txtNomePai.getText());
-                        responsavelPaiSave.setCpf(txtCpfPai.getText());
-                        responsavelPaiSave.setRg(txtRgResponsavelOutro.getText());
-                        if(cbxResponsavelEscolha.getSelectedItem().equals("Pai")){
-                            responsavelPaiSave.setTelefone(txtTelefoneResponsavel.getText());
-                        }
-                        responsavelPaiSave.setOrgaoExpedidorRg(txtOrgaoExpedidorPai.getText());
-                        responsavelPaiSave.setProfissao(txtProfissaoPai.getText());
-                        Date dataRgPai = sdf.parse(txtDataEmissaoPai.getText());
-                        responsavelPaiSave.setDataEmissaoRg(dataRgPai);
-                        gestaoAlunoController.save(responsavelPaiSave);
-                    }else{
-                        responsavelPaiSave = gestaoAlunoController.findByNomeResponsavel(txtNomePai.getText());
-                    }
-                    novoAluno.setPai(responsavelPaiSave);
-
-                    Responsaveis responsavelMaeSave = new Responsaveis();
-                    if(gestaoAlunoController.findByNomeResponsavel(txtNomeMae.getText()) == null){
-                        //Configuracoes Mae
-                        responsavelMaeSave.setTipo("Mãe");
-                        responsavelMaeSave.setNome(txtNomeMae.getText());
-                        responsavelMaeSave.setCpf(txtCpfMae.getText());
-                        responsavelMaeSave.setRg(txtRgMae.getText());
-                        if(cbxResponsavelEscolha.getSelectedItem().equals("Mãe")){
-                            responsavelMaeSave.setTelefone(txtTelefoneResponsavel.getText());
-                        }
-                        responsavelMaeSave.setOrgaoExpedidorRg(txtOrgaoExpedidorMae.getText());
-                        responsavelMaeSave.setProfissao(txtProfissaoMae.getText());
-                        Date dataRgMae = sdf.parse(txtDataEmissaoMae.getText());
-                        responsavelMaeSave.setDataEmissaoRg(dataRgMae);
-                        gestaoAlunoController.save(responsavelMaeSave);
-                    }else{
-                        responsavelMaeSave = gestaoAlunoController.findByNomeResponsavel(txtNomeMae.getText());
-                    }
-                    novoAluno.setMae(responsavelMaeSave);
                 }
-                
                 List<AlunosPrincipal> alunos = this.gestaoAlunoController.findAll();
                 String cpf = txtCpf.getText();
                 String email = txtEmail.getText();
@@ -1457,20 +1523,35 @@ public class TelaAdicionar extends javax.swing.JFrame {
                     }
                 }
                 
+                novoAluno.setCpf(cpf);
+                novoAluno.setEmail(email);
+                novoAluno.setRg(rg);
+                novoAluno.setTituloEleitor(tituloEleitor);
+                novoAluno.setTelefone(telefone);
+                
                 EnderecoId id = new EnderecoId(txtRua.getText(), Integer.parseInt(txtNumero.getText()), txtCep.getText());
-                Endereco endereco = new Endereco();
+                Endereco endereco;
                 if(this.enderecoController.findById(id) == null){
+                    endereco = new Endereco(txtRua.getText(), Integer.parseInt(txtNumero.getText()), txtCep.getText());
                     endereco.setBairro(txtBairro.getText());
                     endereco.setCep(txtCep.getText());
                     endereco.setCidade(txtCidade.getText());
                     endereco.setNumero(Integer.parseInt(txtNumero.getText()));
                     endereco.setRua(txtRua.getText());
                     endereco.setUf(cbxUf.getSelectedItem().toString());
+                    enderecoController.save(endereco);
                 }else{
                     endereco = this.enderecoController.findById(id);
                 }
                 novoAluno.setEnderecos(endereco);
 
+                try{
+                    List<Escola> escolas = escolaController.findByNome(txtEscolaOrigem.getText());
+                    novoAluno.setEscolaOrigem(escolas.getFirst());
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Escola de Origem Desconhecida", "ERRO", JOptionPane.ERROR_MESSAGE);
+                }
+                
                 //Salva o aluno no Banco de Dados
                 this.gestaoAlunoController.save(novoAluno);
                 log.info("Aluno salvo com sucesso: {}", novoAluno);
@@ -1648,6 +1729,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private javax.swing.JTextField txtDataNascimento;
     private javax.swing.JTextField txtDeficienciaOutro;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtEscolaOrigem;
     private javax.swing.JTextField txtMedicamentosOutro;
     private javax.swing.JTextField txtNacionalidade;
     private javax.swing.JTextField txtNaturalidade;
@@ -1672,6 +1754,5 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefoneResponsavel;
     private javax.swing.JTextField txtTipoResponsavel;
     private javax.swing.JTextField txtTituloEleitor;
-    private javax.swing.JTextField txtscolaOrigem;
     // End of variables declaration//GEN-END:variables
 }

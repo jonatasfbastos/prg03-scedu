@@ -164,7 +164,7 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtscolaOrigem" min="-2" pref="177" max="-2" attributes="0"/>
+                              <Component id="txtEscolaOrigem" min="-2" pref="177" max="-2" attributes="0"/>
                               <Component id="lblEscolaOrigem" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -189,7 +189,7 @@
                       <Component id="txtEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtNomeAluno" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtNomeSocial" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtscolaOrigem" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtEscolaOrigem" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
@@ -480,7 +480,7 @@
             <Property name="text" type="java.lang.String" value="Escola Origem"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtscolaOrigem">
+        <Component class="javax.swing.JTextField" name="txtEscolaOrigem">
         </Component>
       </SubComponents>
     </Container>

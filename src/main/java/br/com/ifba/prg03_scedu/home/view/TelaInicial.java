@@ -472,7 +472,7 @@ private void adicionarCalendario() {
 
     private void btnGestaoAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestaoAlunoActionPerformed
         // TODO add your handling code here:
-        TelaListar telaAluno = new TelaListar(gestaoAlunoController, enderecoController);
+        TelaListar telaAluno = new TelaListar(gestaoAlunoController, enderecoController,escolaController);
         telaAluno.setVisible(true);
     }//GEN-LAST:event_btnGestaoAlunoActionPerformed
 
