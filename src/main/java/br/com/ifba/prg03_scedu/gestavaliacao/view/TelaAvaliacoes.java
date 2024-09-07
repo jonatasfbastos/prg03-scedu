@@ -8,6 +8,8 @@ import br.com.ifba.prg03_scedu.gestavaliacao.controller.AvaliacaoIController;
 import br.com.ifba.prg03_scedu.gestavaliacao.entity.Avaliacao;
 import br.com.ifba.prg03_scedu.gestavaliacao.view.TelaEditar;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
+import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -20,50 +22,56 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 public class TelaAvaliacoes extends javax.swing.JFrame {
     
-    private final AvaliacaoIController avaliacaoController;
-    
-        private void carregarTabela(){
-        
-            if (avaliacaoController != null) {
-        List<Avaliacao> dadosTabela = avaliacaoController.findAll();
-        // Continue processando a tabela...
-                // Obtém o modelo de tabela do componente tableInfo, que é do tipo DefaultTableModel
-        DefaultTableModel dtmAvalicoes = (DefaultTableModel) tableInfo.getModel();
-        
-        dtmAvalicoes.setRowCount(0);
-        
-        for (Avaliacao lista: dadosTabela){
-            Object[] dados = {lista.getId(), lista.getData(), lista.getDisciplina(), lista.getTipo(), 
-                lista.getPeso(), lista.getDescricao(), lista.getProfessor(),lista.isStatus()};
-            
-            dtmAvalicoes.addRow(dados);
-        
+    private final AvaliacaoIController avaliacaoController; // Controlador para gerenciar as operações de avaliação
+    private final DisciplinaIController disciplinaController; // Controlador para gerenciar as operações de disciplina
+    private final ProfessorIController profController; // Controlador para gerenciar as operações de Professor
+
+    private void carregarTabela() {
+        // Método responsável por carregar e exibir os dados na tabela
+
+        if (avaliacaoController != null) { // Verifica se o controlador de avaliação foi inicializado
+            List<Avaliacao> dadosTabela = avaliacaoController.findAll(); // Obtém a lista de todas as avaliações
+
+            // Obtém o modelo de tabela do componente tableInfo, que é do tipo DefaultTableModel
+            DefaultTableModel dtmAvalicoes = (DefaultTableModel) tableInfo.getModel();
+
+            dtmAvalicoes.setRowCount(0); // Limpa as linhas existentes na tabela
+
+            // Itera sobre a lista de avaliações e adiciona cada uma como uma nova linha na tabela
+            for (Avaliacao lista : dadosTabela) {
+                Object[] dados = {
+                    lista.getId(), // ID da avaliação
+                    lista.getData(), // Data da avaliação
+                    lista.getDisciplina(), // Nome da disciplina
+                    lista.getTipo(), // Tipo da avaliação
+                    lista.getPeso(), // Peso da avaliação
+                    lista.getDescricao(), // Descrição da avaliação
+                    lista.getProfessores().getNome(), // Nome do professor
+                    lista.isStatus() ? "Aplicado" : "Pendente" // Status da avaliação como string
+                };
+
+                dtmAvalicoes.addRow(dados); // Adiciona a nova linha com os dados à tabela
             }
-        dtmAvalicoes.fireTableDataChanged();
-    } else {
-        // Exiba uma mensagem de erro ou faça um log
-        System.err.println("Erro: AvaliacaoIController nao foi inicializado.");
-    }
+
+            dtmAvalicoes.fireTableDataChanged(); // Notifica o modelo de tabela que os dados foram alterados
+        } else {
+            System.err.println("Erro: AvaliacaoIController nao foi inicializado."); // Mensagem de erro caso o controlador não tenha sido inicializado
+        }
     }
 
     /**
      * Creates new form TelaInicial
      */
-    public TelaAvaliacoes(AvaliacaoIController avaliacaoController) {
-        this.avaliacaoController = avaliacaoController;
-        initComponents();
-        carregarTabela();
-        //initComponents();
-    }
+    public TelaAvaliacoes(AvaliacaoIController avaliacaoController, 
+            DisciplinaIController disciplinaController,
+            ProfessorIController profController) {
+    this.avaliacaoController = avaliacaoController; // Inicializa o controlador de avaliação
+    this.disciplinaController = disciplinaController; // Inicializa o controlador de disciplina
+    this.profController = profController; // Inicializa o controlador de professor
+    initComponents(); // Inicializa os componentes da interface gráfica
+    carregarTabela(); // Carrega os dados na tabela usando o controlador de avaliação
+}
     
-//    @PostConstruct
-//    private void init() {
-//        // Chama o método que inicializa os componentes da interface gráfica
-//        initComponents();
-//        // Chama o método que carrega os dados na tabela
-//        carregarTabela();
-//    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -223,25 +231,28 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        if (tableInfo.getSelectedRow() != -1){
-            // Obtém o valor do ID da afvaliacao da coluna específica (index 0) da linha selecionada
+        if (tableInfo.getSelectedRow() != -1) { // Verifica se uma linha está selecionada na tabela
+            // Obtém o valor do ID da avaliação da coluna específica (index 0) da linha selecionada
             Object idAvaliacaoBuscar = tableInfo.getValueAt(tableInfo.getSelectedRow(), 0);
-            
-            // Recupera o objeto Avaliacao correspondente ao ID obtido usando o controlador de curso
+
+            // Recupera o objeto Avaliacao correspondente ao ID obtido usando o controlador de avaliação
             Avaliacao ava = avaliacaoController.findById((Long) idAvaliacaoBuscar);
-            TelaEditar telaEditar = new TelaEditar(ava, avaliacaoController);
-            telaEditar.setVisible(true);
-            
+
+            // Cria uma nova instância da tela de edição, passando a avaliação, o controlador de avaliação e o controlador de disciplina
+            TelaEditar telaEditar = new TelaEditar(ava, avaliacaoController, disciplinaController, profController);
+            telaEditar.setVisible(true); // Torna a tela de edição visível
+
+            // Adiciona um listener para atualizar a tabela quando a janela de edição for fechada
             telaEditar.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosed(java.awt.event.WindowEvent windowEvent) {
                     // Sobrescreve o método windowClosed para que, quando a janela de edição for fechada,
                     // o método carregarTabela() seja chamado para atualizar os dados na tabela
                     carregarTabela();
-                }   
+                }
             });
         } else {
-            // Exibe uma mensagem de aviso informando que um curso precisa ser selecionado para edição
+            // Se nenhuma linha estiver selecionada, exibe uma mensagem de aviso informando ao usuário
             JOptionPane.showMessageDialog(this, "Por favor, selecione um curso para editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
         
@@ -249,12 +260,15 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
 
     private void btnCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadActionPerformed
         // TODO add your handling code here:
-        CadastroAvaliacao telaCad = new CadastroAvaliacao(avaliacaoController);
-        telaCad.setVisible(true);
-        
+        CadastroAvaliacao telaCad = new CadastroAvaliacao(avaliacaoController, 
+                disciplinaController, profController); // Cria uma nova instância do formulário CadastroAvaliacao, passando os controladores
+        telaCad.setVisible(true); // Torna a tela de cadastro visível
+
+        // Adiciona um listener para atualizar a tabela quando a janela de cadastro for fechada
         telaCad.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                // Quando a janela de cadastro for fechada, chama o método carregarTabela() para atualizar os dados na tabela
                 carregarTabela();
             }
         });
@@ -262,26 +276,39 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
 
     private void btnBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaActionPerformed
         // TODO add your handling code here:
-        
-        String disciplina = txtBusca.getText();
-        List<Avaliacao> avaliacoes = avaliacaoController.findByDisciplina(disciplina);
-        if (avaliacoes.isEmpty()) {
+        String disciplina = txtBusca.getText(); // Obtém o nome da disciplina do campo de texto
+        List<Avaliacao> avaliacoes = avaliacaoController.findByDisciplina(disciplina); // Busca avaliações pela disciplina usando o controlador
+
+        if (avaliacoes.isEmpty()) { // Verifica se a lista de avaliações está vazia
+            // Exibe uma mensagem de aviso se nenhuma avaliação for encontrada
             JOptionPane.showMessageDialog(null, "Avaliacao não encontrada.", "Aviso", JOptionPane.WARNING_MESSAGE);
-        }else {
-            Avaliacao avaliacao = avaliacoes.get(0);
+        } else {
+            // Obtém o modelo de tabela do componente tableInfo, que é do tipo DefaultTableModel
             DefaultTableModel dtmAvaliacoes = (DefaultTableModel) tableInfo.getModel();
-            // Limpa todos os dados da tabela
-            dtmAvaliacoes.setRowCount(0);  
-            Object[] dados = {avaliacao.getId(), avaliacao.getData(), avaliacao.getDisciplina(), avaliacao.getTipo(), 
-                avaliacao.getPeso(), avaliacao.getDescricao(), avaliacao.getProfessor(),avaliacao.isStatus()};
-            
-            dtmAvaliacoes.addRow(dados);
+            // Limpa todos os dados existentes na tabela
+            dtmAvaliacoes.setRowCount(0);
+
+            // Itera sobre a lista de avaliações e adiciona cada uma como uma nova linha na tabela
+            for (Avaliacao lista : avaliacoes) {
+                Object[] dados = {
+                    lista.getId(), // ID da avaliação
+                    lista.getData(), // Data da avaliação
+                    lista.getDisciplina(), // Nome da disciplina
+                    lista.getTipo(), // Tipo da avaliação
+                    lista.getPeso(), // Peso da avaliação
+                    lista.getDescricao(), // Descrição da avaliação
+                    lista.getProfessores().getNome(), // Nome do professor
+                    lista.isStatus() ? "Aplicado" : "Pendente" // Status da avaliação como string
+                };
+
+                dtmAvaliacoes.addRow(dados); // Adiciona a nova linha com os dados à tabela
+            }
         }
     }//GEN-LAST:event_btnBuscaActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
-        carregarTabela();
+        carregarTabela();//atualiza a tabela
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
@@ -295,20 +322,20 @@ public class TelaAvaliacoes extends javax.swing.JFrame {
             if (resposta_user == JOptionPane.YES_OPTION) {
                 // Verifica se o usuário clicou em "Sim" na caixa de diálogo de confirmação
                 try {
-                    // Obtém o valor do ID do curso a ser removido da tabela, na coluna 2 da linha selecionada
+                    // Obtém o valor do ID do curso a ser removido da tabela, na coluna 0 da linha selecionada
                     Object idAvaRemover = tableInfo.getValueAt(tableInfo.getSelectedRow(), 0);
-                    // Recupera o objeto Curso correspondente ao ID obtido usando o controlador de curso
+                    // Recupera o objeto Avaliacao correspondente ao ID obtido usando o controlador de avaliacoes
                     Avaliacao removeAvaliacao = avaliacaoController.findById((Long) idAvaRemover);
-                    // Remove o curso do banco de dados usando o controlador de curso
+                    // Remove a avaliacao do banco de dados usando o controlador de curso
                     avaliacaoController.delete(removeAvaliacao);
-                // Exibe uma mensagem informando que o curso foi excluído com sucesso
+                // Exibe uma mensagem informando que a avaliacao foi excluída com sucesso
                 JOptionPane.showMessageDialog(this, "Avaliacao excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception e) {
-                // Exibe uma mensagem de erro informando que houve um problema ao excluir o curso, junto com a mensagem da exceção
+                // Exibe uma mensagem de erro informando que houve um problema ao excluir a avaliacao, junto com a mensagem da exceção
                 JOptionPane.showMessageDialog(this, "Erro ao excluir avaliação: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        // Atualiza a tabela após a exclusão do curso
+        // Atualiza a tabela após a exclusão
         carregarTabela();
         } else {
             // Exibe uma mensagem de erro se nenhuma linha estiver selecionada

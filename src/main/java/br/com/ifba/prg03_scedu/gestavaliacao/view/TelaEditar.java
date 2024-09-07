@@ -4,9 +4,14 @@
  */
 package br.com.ifba.prg03_scedu.gestavaliacao.view;
 
+import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
+import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
+import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
+import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
 import br.com.ifba.prg03_scedu.gestavaliacao.controller.AvaliacaoIController;
 import br.com.ifba.prg03_scedu.gestavaliacao.entity.Avaliacao;
 import java.time.LocalDate;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,18 +20,22 @@ import javax.swing.JOptionPane;
  */
 public class TelaEditar extends javax.swing.JFrame {
     
-    private Avaliacao ava;
+    private Avaliacao ava; // Instância da avaliação a ser editada
 
-    private final AvaliacaoIController avaController;
-    
-
+    private final AvaliacaoIController avaController; // Controlador para gerenciar as operações de avaliação
+    private final DisciplinaIController disciplinaController; // Controlador para gerenciar as operações de disciplina
+    private final ProfessorIController profController; // Controlador para gerenciar as operações de Professor
     /**
      * Creates new form TelaEditar
      */
-    public TelaEditar(Avaliacao ava, AvaliacaoIController avaController) {
-        this.avaController = avaController;
-        this.ava = ava;
-        initComponents();
+    public TelaEditar(Avaliacao ava, AvaliacaoIController avaController
+            , DisciplinaIController disciplinaController,
+            ProfessorIController profController) {
+        this.avaController = avaController; // Inicializa o controlador de avaliação
+        this.ava = ava; // Inicializa a avaliação a ser editada
+        this.disciplinaController = disciplinaController; // Inicializa o controlador de disciplina
+        this.profController = profController; // Inicializa o controlador de professor
+        initComponents(); // Inicializa os componentes da interface gráfica
     }
 
     /**
@@ -71,7 +80,7 @@ public class TelaEditar extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("PROFESSOR:");
+        jLabel3.setText("ID DO PROFESSOR:");
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -159,10 +168,10 @@ public class TelaEditar extends javax.swing.JFrame {
                                         .addComponent(spinAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtProf)
                                     .addComponent(txtDisci, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(boxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6))))
+                                    .addComponent(jLabel6)
+                                    .addComponent(txtProf, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -255,65 +264,85 @@ public class TelaEditar extends javax.swing.JFrame {
 
     private void btnCacelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCacelActionPerformed
         // TODO add your handling code here:
-        setVisible(false);
+        setVisible(false);//cancela a operação
     }//GEN-LAST:event_btnCacelActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        ava.setProfessor(txtProf.getText());
-        
-        // Pegando os valores dos spinners
+        //ava.setProfessor(txtProf.getText()); // Define o professor da avaliação com o texto do campo de entrada
+
+        // Obtém os valores dos spinners para dia, mês e ano
         int dia = (int) spinDia.getValue();
         int mes = (int) spinMes.getValue();
         int ano = (int) spinAno.getValue();
-        // Criando a data a partir dos valores dos spinners
+        // Cria a data a partir dos valores dos spinners e define na avaliação
         LocalDate dataAvaliacao = LocalDate.of(ano, mes, dia);
         ava.setData(dataAvaliacao);
-        
-        ava.setDisciplina(txtDisci.getText());
-        
-        String tipoSelecionado = (String) boxTipo.getSelectedItem();
-        ava.setTipo(tipoSelecionado);
-        
-        ava.setPeso(Integer.parseInt(spinPeso.getValue().toString()));
-        
-        ava.setDescricao(txtDesc.getText());
-        
-        // Obtém o item selecionado do componente choseStatus e converte-o para String, armazenando-o na variável status.
-        String status = boxStatus.getSelectedItem().toString();
-        
-        // Verifica se o status selecionado é "ATIVO".
-        if (status.equals("APLICADA")) {
-            // Se for, define o curso como ativo (true).
-            ava.setStatus(true);
-            // Caso contrário, define o curso como inativo (false).
-            ava.setStatus(false);
+
+        String nomeDisciplina = txtDisci.getText(); // Obtém o nome da disciplina do campo de entrada
+        List<Disciplina> disciplinas = disciplinaController.findByNome(nomeDisciplina); // Busca a disciplina pelo nome
+        if (!disciplinas.isEmpty()) { // Verifica se a lista de disciplinas não está vazia
+            Disciplina disciplina = disciplinas.get(0); // Obtém a primeira disciplina encontrada
+            ava.setDisciplinas(disciplina); // Define a disciplina na avaliação
+            ava.setDisciplina(txtDisci.getText()); // Define o nome da disciplina na avaliação
+        } else {
+            System.out.println("Disciplina não encontrada ou não existente"); // Mensagem no console se a disciplina não for encontrada
         }
-        
-        // Obtém o texto inserido nos campos para o novo nome e novo código do curso
-        String prof = txtProf.getText();
+
+        String tipoSelecionado = (String) boxTipo.getSelectedItem(); // Obtém o tipo selecionado no componente
+        ava.setTipo(tipoSelecionado); // Define o tipo da avaliação
+
+        ava.setPeso(Integer.parseInt(spinPeso.getValue().toString())); // Define o peso da avaliação
+
+        ava.setDescricao(txtDesc.getText()); // Define a descrição da avaliação
+
+        // Obtém o item selecionado do componente boxStatus e converte-o para String
+        String status = boxStatus.getSelectedItem().toString();
+
+        // Verifica se o status selecionado é "APLICADA"
+        if (status.equals("APLICADA")) {
+            ava.setStatus(true); // Define o status da avaliação como ativo
+        } else {
+            ava.setStatus(false); // Define o status da avaliação como inativo
+        }
+
+        // Obtém o texto inserido nos campos para o professor e a disciplina
+//        String prof = txtProf.getText();
         String disc = txtDisci.getText();
         
+        String idProf = txtProf.getText();//obtem o id do professor no campo de texto
+            Long idProfessor = Long.parseLong(idProf);//converte o valor para o tipo long
+            Professor professor = profController.findById(idProfessor);//utiliza op findById atrves do controller da classe professor
+            if(professor == null){
+                JOptionPane.showMessageDialog(this, "Professor não encontrado. Verifique o ID e tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Professor nao encontrado ou nao existente");
+                return; // Interrompe o processamento se o professor não for encontrado
+            }else{
+                //Professor professor = professores.get(0);
+                ava.setProfessores(professor);//define o professor na avaliacao
+                ava.setProfessor(idProf);
+            }
+
         // Verifica se algum dos campos está vazio
-        if (prof.isEmpty() || disc.isEmpty()) {
+        if (idProf.isEmpty() || disc.isEmpty()) {
             // Exibe uma mensagem informando ao usuário que todos os campos devem ser preenchidos
             JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Preencha os campos", JOptionPane.INFORMATION_MESSAGE);
             // Interrompe a execução do método se algum campo estiver vazio
             return;
         } else {
             try {
-                // Tenta atualizar o curso no banco de dados usando o controlador de curso
+                // Tenta atualizar a avaliação no banco de dados usando o controlador de avaliação
                 avaController.update(ava);
                 // Exibe uma mensagem de sucesso após a atualização
                 JOptionPane.showMessageDialog(this, "Avaliacao atualizada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception error) {
                 // Se ocorrer uma exceção durante a atualização, exibe uma mensagem de erro para o usuário
-                JOptionPane.showMessageDialog(this, error.getMessage(), "Erro ao editar os cados", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, error.getMessage(), "Erro ao editar os dados", JOptionPane.ERROR_MESSAGE);
             }
         }
+
         // Fecha a janela atual após a operação de atualização
         this.dispose();
-        
     }//GEN-LAST:event_btnSaveActionPerformed
 
     /**

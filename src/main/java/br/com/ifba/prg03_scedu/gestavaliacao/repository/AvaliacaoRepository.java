@@ -14,8 +14,13 @@ import org.springframework.stereotype.Repository;
  *
  * @author rian1
  */
-@Repository
-public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Long>{
-    public List<Avaliacao> findByData(LocalDate data);
-    public List<Avaliacao> findByDisciplina(String disciplina);
+@Repository // Indica que esta interface é um repositório do Spring, responsável por interagir com o banco de dados.
+public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Long> {
+    // Interface que herda de JpaRepository, fornecendo métodos CRUD para a entidade Avaliacao.
+
+    public List<Avaliacao> findByData(LocalDate data); 
+    // Método personalizado para buscar avaliações pela data.
+
+    public List<Avaliacao> findByDisciplina(String disciplina); 
+    // Método personalizado para buscar avaliações pelo nome da disciplina.
 }

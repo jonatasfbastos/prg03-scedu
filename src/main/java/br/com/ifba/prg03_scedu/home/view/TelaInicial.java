@@ -30,7 +30,6 @@ import br.com.ifba.prg03_scedu.usuario.view.TelaLogin;
 import br.com.ifba.prg03_scedu.usuario.view.UsuarioListar;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-//import com.toedter.calendar.JCalendar;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.*;
@@ -488,7 +487,7 @@ private void adicionarCalendario() {
 
     private void btnAvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvaActionPerformed
         // TODO add your handling code here:
-        TelaAvaliacoes telaAva = new TelaAvaliacoes(avaliacaoController);
+        TelaAvaliacoes telaAva = new TelaAvaliacoes(avaliacaoController, disciplinaController, professorController);
         telaAva.setVisible(true);
     }//GEN-LAST:event_btnAvaActionPerformed
 
