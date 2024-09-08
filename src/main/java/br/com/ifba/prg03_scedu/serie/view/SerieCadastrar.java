@@ -173,14 +173,13 @@ public class SerieCadastrar extends javax.swing.JFrame {
         // TODO add your handling code here:
         long curriculoId = Long.parseLong(txtIdCurriculo.getText());
         Curriculo curriculo = curriculoController.findById(curriculoId);
-
-        Serie serie = new Serie();
         
         //Verifica se o curriculo foi encontrado
         if(curriculo == null) {
             JOptionPane.showMessageDialog(null, "Curriculo nao encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
+        Serie serie = new Serie();
+        
         //Logica para cadastrar no banco de dados
         try {
             //Seta os dados e usa o controller para salvar no banco
@@ -192,7 +191,7 @@ public class SerieCadastrar extends javax.swing.JFrame {
             }
 
             // Verifica se o currículo já está na lista de currículos
-            if (!serie.getCurriculo().contains(curriculo)) {
+            if (serie.getCurriculo().contains(curriculo)) {
                   JOptionPane.showMessageDialog(null, "Este currículo já está associado a uma série.", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else{
                 serie.getCurriculo().add(curriculo);
