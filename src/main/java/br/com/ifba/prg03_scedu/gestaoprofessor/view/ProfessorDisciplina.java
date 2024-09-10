@@ -16,7 +16,9 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
     
     public ProfessorDisciplina(ProfessorIController professorControler) {
         this.professorControler = professorControler;
+        
         initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -36,6 +38,8 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(0, 51, 204));
 
         txtn1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         txtn1.setForeground(new java.awt.Color(255, 255, 255));

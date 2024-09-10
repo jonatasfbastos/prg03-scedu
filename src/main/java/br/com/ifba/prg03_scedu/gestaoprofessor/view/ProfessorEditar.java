@@ -321,11 +321,15 @@ public class ProfessorEditar extends javax.swing.JFrame {
         Calendar calendario = Calendar.getInstance();
         
        
-        
+        //Verificando a data ser e válida pelo método isDateValida() passando a data de forma de String
         if(isDataValida(lblNascimento.getText())){
+            //Convertendo de String para Data
             Date nascimentostr = nascimento.parse(lblNascimento.getText());
+            //Colando a data digitada em calendário
             calendario.setTime(nascimentostr);
+            //Pegando a ano de nascimento
             int ano = calendario.get(Calendar.YEAR);
+            //Verificando o intervalo está fora de 1920 À 2024
             if (ano < 1920 || ano > 2024) {
                 JOptionPane.showInternalMessageDialog(null, "Ano de nascimento inválido. O ano deve estar entre 1920 e 2024.");
                 return;
@@ -348,6 +352,7 @@ public class ProfessorEditar extends javax.swing.JFrame {
        
        dispose();
         }else{
+            //Erro no cadastro
             JOptionPane.showInternalMessageDialog(null, "Data de Nascimento Inválida");
             return;
         }

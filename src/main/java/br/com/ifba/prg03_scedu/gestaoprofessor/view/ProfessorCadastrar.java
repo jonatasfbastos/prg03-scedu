@@ -62,7 +62,7 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 102, 255));
 
-        jPanel1.setBackground(new java.awt.Color(0, 51, 153));
+        jPanel1.setBackground(new java.awt.Color(0, 51, 204));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
         txtN1.setBackground(new java.awt.Color(0, 0, 0));
@@ -257,9 +257,10 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
 
     
     private void cadastramento() throws ParseException{
-        
+        //Criando o objeto professor
         Professor professor = new Professor();
 
+        //Variável
         String nome = lblNome.getText();
         String cpf = lblCpf.getText();
         String materia = lblMateria.getText();
@@ -278,13 +279,18 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
         // Verificação e conversão da data de nascimento 
         SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
         
+        //Pegando o modelo de calendário 
         Calendar calendario = Calendar.getInstance();
         
-        
+        //Verificando ser a data é válida 
         if(isDataValida(lblNascimento.getText())){
+            //Convertendo de String para Data
             Date nascimentostr = nascimento.parse(lblNascimento.getText()); // Converte a String para Datecalendario.setTime(nascimentostr);
+            //Colando a data digitada em calendário
             calendario.setTime(nascimentostr);
+             //Pegando a ano de nascimento
             int ano = calendario.get(Calendar.YEAR);
+            //Verificando o intervalo está fora de 1920 À 2024
             if (ano < 1920 || ano > 2024) {
                 JOptionPane.showInternalMessageDialog(null, "Ano de nascimento inválido. O ano deve estar entre 1920 e 2024.");
                 return;
@@ -313,7 +319,7 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
         dispose();  
         return;
         }else{
-        JOptionPane.showInternalMessageDialog(null, "Digita o dia e o mês Corretamente: 31/12/....");
+         JOptionPane.showInternalMessageDialog(null, "Digita o dia e o mês Corretamente: 31/12/....");
         }
     }
     public static boolean isDataValida(String dataStr) {
