@@ -8,6 +8,7 @@ import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
 import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +26,7 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
      */
     
     private final ProfessorIController professorControler;
+    private static final Logger logger = Logger.getLogger(ProfessorEditar.class.getName());
     
     public ProfessorCadastrar(ProfessorIController professorControler) {
         initComponents();
@@ -55,6 +57,7 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnVoltar = new javax.swing.JButton();
         BtnCadastrar = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 102, 255));
@@ -83,7 +86,7 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
         jLabel5.setText("Data de Nascimento");
 
         lblNascimento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblNascimento.setText("01/01/1900");
+        lblNascimento.setText("01/01/2024");
         lblNascimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lblNascimentoActionPerformed(evt);
@@ -106,7 +109,7 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("CPF");
+        jLabel2.setText("CPF:");
 
         lblCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,6 +137,9 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setBackground(new java.awt.Color(255, 51, 51));
+        jLabel6.setText("*");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -149,42 +155,42 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(32, 32, 32)
                             .addComponent(txtN1, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(154, 154, 154)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(15, 15, 15)
-                                    .addComponent(jLabel2)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(lblCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                             .addContainerGap()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel4)
                                 .addComponent(jLabel5)
-                                .addComponent(jLabel3))
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel1)))
                             .addGap(18, 18, 18)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblFormado)
-                                .addComponent(lblMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(149, 149, 149))))
+                                .addComponent(lblMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(148, 148, 148))))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtN1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtN1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(32, 32, 32)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -271,7 +277,18 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
 
         // Verificação e conversão da data de nascimento 
         SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
-        Date nascimentostr = nascimento.parse(lblNascimento.getText()); // Converte a String para Date
+        
+        Calendar calendario = Calendar.getInstance();
+        
+        
+        if(isDataValida(lblNascimento.getText())){
+            Date nascimentostr = nascimento.parse(lblNascimento.getText()); // Converte a String para Datecalendario.setTime(nascimentostr);
+            calendario.setTime(nascimentostr);
+            int ano = calendario.get(Calendar.YEAR);
+            if (ano < 1920 || ano > 2024) {
+                JOptionPane.showInternalMessageDialog(null, "Ano de nascimento inválido. O ano deve estar entre 1920 e 2024.");
+                return;
+            }
         
         //Verificando Erro na chamada no método
        try { 
@@ -280,6 +297,8 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
             JOptionPane.showInternalMessageDialog(null, "Data de Nascimento Inválida");
             return;
         }
+       
+       
 
         // Salvando se o professor é formado
         professor.setFormado(lblFormado.isSelected());
@@ -293,6 +312,20 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
         JOptionPane.showInternalMessageDialog(null, "Salvo com sucesso!");
         dispose();  
         return;
+        }else{
+        JOptionPane.showInternalMessageDialog(null, "Digita o dia e o mês Corretamente: 31/12/....");
+        }
+    }
+    public static boolean isDataValida(String dataStr) {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        formato.setLenient(false); // Força a validação estrita da data
+
+        try {
+            Date data = formato.parse(dataStr); // Tenta converter a string em uma data válida
+            return true; // A data é válida
+        } catch (ParseException e) {
+            return false; // A data é inválida
+        }
     }
     
     public static void main(String args[]) { 
@@ -306,6 +339,7 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField lblCpf;
     private javax.swing.JCheckBox lblFormado;

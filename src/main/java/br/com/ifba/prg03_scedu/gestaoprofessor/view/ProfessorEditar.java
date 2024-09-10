@@ -8,10 +8,13 @@ import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
 import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static org.hibernate.internal.CoreLogging.logger;
+import static org.hibernate.internal.HEMLogging.logger;
 
 /**
  *
@@ -22,6 +25,7 @@ public class ProfessorEditar extends javax.swing.JFrame {
     
     private final ProfessorIController professorController;
     private final Professor professor;
+    private static final Logger logger = Logger.getLogger(ProfessorCadastrar.class.getName());
     
     public ProfessorEditar(ProfessorIController professorController, Professor professor) {
         this.professorController = professorController;
@@ -314,11 +318,24 @@ public class ProfessorEditar extends javax.swing.JFrame {
         
         // Verificação e conversão da data de nascimento 
         SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
-        Date nascimentostr = nascimento.parse(lblNascimento.getText()); // Converte a String para Date
+        Calendar calendario = Calendar.getInstance();
         
+       
+        
+        if(isDataValida(lblNascimento.getText())){
+            Date nascimentostr = nascimento.parse(lblNascimento.getText());
+            calendario.setTime(nascimentostr);
+            int ano = calendario.get(Calendar.YEAR);
+            if (ano < 1920 || ano > 2024) {
+                JOptionPane.showInternalMessageDialog(null, "Ano de nascimento inválido. O ano deve estar entre 1920 e 2024.");
+                return;
+            }
+             
         //Verificando Erro na chamada no método
        try { 
-            professor.setNascimento(nascimentostr);
+             // Converte a String para Date
+            professor.setNascimento(nascimentostr);   
+           
         } catch (Exception e) {
             JOptionPane.showInternalMessageDialog(null, "Data de Nascimento Inválida");
             return;
@@ -330,6 +347,10 @@ public class ProfessorEditar extends javax.swing.JFrame {
        JOptionPane.showInternalMessageDialog(null, "Atualizado com sucesso");
        
        dispose();
+        }else{
+            JOptionPane.showInternalMessageDialog(null, "Data de Nascimento Inválida");
+            return;
+        }
         
     }
 
@@ -347,5 +368,17 @@ public class ProfessorEditar extends javax.swing.JFrame {
         lblNascimento.setText(nascimentostr);
         
         return;
+    }
+    
+    public static boolean isDataValida(String dataStr) {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        formato.setLenient(false); // Força a validação estrita da data
+
+        try {
+            Date data = formato.parse(dataStr); // Tenta converter a string em uma data válida
+            return true; // A data é válida
+        } catch (ParseException e) {
+            return false; // A data é inválida
+        }
     }
 }

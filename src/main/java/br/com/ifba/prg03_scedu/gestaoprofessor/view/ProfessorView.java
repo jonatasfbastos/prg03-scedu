@@ -70,6 +70,7 @@ public class ProfessorView extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         btnSair = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
+        btnDisciplina = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 51, 255));
@@ -197,6 +198,14 @@ public class ProfessorView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btnDisciplina.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDisciplina.setText("Disciplina");
+        btnDisciplina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDisciplinaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -214,7 +223,9 @@ public class ProfessorView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(35, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -229,7 +240,8 @@ public class ProfessorView extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesquisar))
+                    .addComponent(btnPesquisar)
+                    .addComponent(btnDisciplina))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -340,6 +352,11 @@ public class ProfessorView extends javax.swing.JFrame {
         pesquisarProfessor();
     }//GEN-LAST:event_txtPesquisarActionPerformed
 
+    private void btnDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisciplinaActionPerformed
+        //(**Relações**)Verificando Disciplina Cadastrada
+        new ProfessorDisciplina(professorControler).setVisible(true);
+    }//GEN-LAST:event_btnDisciplinaActionPerformed
+
     
     public void listarProfessor(){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -435,6 +452,11 @@ public class ProfessorView extends javax.swing.JFrame {
         
     }
     
+    // (**Relações**) Verificar Todas as disciplina cadastrada
+    private void listarDisciplina() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
     public static void main(String args[]) {     
         
         
@@ -449,6 +471,7 @@ public class ProfessorView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnAtualizar;
+    private javax.swing.JButton btnDisciplina;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnPesquisar;
@@ -460,5 +483,7 @@ public class ProfessorView extends javax.swing.JFrame {
     private javax.swing.JTextField txtPesquisar;
     private javax.swing.JLabel txtn1;
     // End of variables declaration//GEN-END:variables
+
+    
 
 }
