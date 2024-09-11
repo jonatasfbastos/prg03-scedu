@@ -5,7 +5,6 @@
 package br.com.ifba.prg03_scedu.serie.entity;
 
 import br.com.ifba.prg03_scedu.curriculo.entity.Curriculo;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,18 +32,15 @@ public class Serie {
     @Id
     //Gera automaticamente o id pelo banco
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-   //@SequenceGenerator(name="serie_seq", sequenceName = "serie_seq", allocationSize = 1)
     private Long id;
     
-   // @Column(name = "nome")
     private String nome;
     
-   // @Column(name = "curriculoId")
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
-    name = "serie_curriculo", 
-    joinColumns = @JoinColumn(name = "serie_id"), 
-    inverseJoinColumns = @JoinColumn(name = "curriculo_id"))
+        name = "serie_curriculo", 
+        joinColumns = @JoinColumn(name = "serie_id"), 
+        inverseJoinColumns = @JoinColumn(name = "curriculo_id"))
     private List<Curriculo> curriculo = new ArrayList<>();
     
    // private List<Turma> listaTurma;

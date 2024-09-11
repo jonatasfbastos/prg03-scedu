@@ -252,7 +252,10 @@ public class SerieListar extends javax.swing.JFrame {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         // TODO add your handling code here:
-        pesquisar();
+        long serieId = Long.parseLong(txtPesquisar.getText());
+        // Chama o método pesquisar passando o ID
+        pesquisar(serieId);  
+
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     /**
@@ -337,40 +340,56 @@ public class SerieListar extends javax.swing.JFrame {
             serie = controller.findById(id);
             
             serieEditar.exportarDados(serie);
-            this.serieEditar.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null,"Voce precisa preencher todos os campos!");
         }
     }
     
-    public void pesquisar(){
-
-         //Modelo da tabela
-        DefaultTableModel dtmSerie = (DefaultTableModel) tblSerie.getModel();
-        dtmSerie.setRowCount(0);
-        //dtmSerie.setColumnCount(3); // Número de colunas: ID, Nome, Currículo
-       // dtmSerie.setColumnIdentifiers(new Object[]{"ID", "Nome", "Currículo"});
+    public void pesquisar(Long id){
+        
+        List<Serie> series;
+        //Verifica se o campo de texto ta vazio
+        if (txtPesquisar.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, insira um id.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
         try {
-            List<Serie> series = controller.findAll();
+           // Long idSerie = Long.parseLong(txtPesquisar.getText().trim());
+            System.out.println("ID inserido no campo de texto: " + id); // Debug para verificar o ID
+            
+            //Modelo da tabela
+           DefaultTableModel dtmSerie = (DefaultTableModel) tblSerie.getModel();
+           dtmSerie.setRowCount(0);
         
-            if (series == null){
-                JOptionPane.showMessageDialog(null, "Id não encontrado", "Informação", JOptionPane.INFORMATION_MESSAGE);
+           //Busca a serie pelo id
+           serie = controller.findById(id);
+        
+           //Verifica se a serie foi encontrada
+            if (serie == null){
+                JOptionPane.showMessageDialog(null, "Serie não encontrado", "Informação", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             
-            for (Serie serie : series) {
+            //Converte a lista de serie em uma string
+            //for (Serie serie : series) {
                 String curriculoString = serie.getCurriculo().isEmpty()
                         ? "Sem curriculo" : serie.getCurriculo().stream()
                         .map(curriculo -> String.valueOf(curriculo.getId()))
                         .collect(Collectors.joining(", "));
 
+              //Adiciona a serie na tabela
               dtmSerie.addRow(new Object[] {
                  serie.getId(),
                  serie.getNome(),
                  curriculoString
               });  
-            }
-        } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, "Serie nao encontrada.", "Informação", JOptionPane.INFORMATION_MESSAGE);           
+            //}
+        } catch(NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Insira um numero valido.", "Informação", JOptionPane.INFORMATION_MESSAGE);           
+        } catch (Exception e){
+           JOptionPane.showMessageDialog(null, "Erro ao pesquisar série.", "Erro", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); // Para depuração 
         }
     }
 

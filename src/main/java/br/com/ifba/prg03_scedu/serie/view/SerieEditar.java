@@ -27,8 +27,8 @@ public class SerieEditar extends javax.swing.JFrame {
     
     private final CurriculoIController curriculoController;
      
-    private Serie s = new Serie();
-    private Serie teste = new Serie();
+    private Serie serie = new Serie();
+   // private Serie teste = new Serie();
     /**
      * Creates new form SerieEditar
      */
@@ -38,7 +38,6 @@ public class SerieEditar extends javax.swing.JFrame {
         this.curriculoController = curriculoController;
         initComponents();
        
-        
         //Nao encerra o programa ao fechar a tela
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
@@ -152,41 +151,38 @@ public class SerieEditar extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        /*long curriculoId = Long.parseLong(txtIdCurriculo.getText());
-        
-        if (s.getId() == null) {
-            JOptionPane.showMessageDialog(null, "Erro id nulo");
-            return;
-        }
-        
-        if (!txtNomeSerie.getText().isEmpty()) {
-            s.setNome(txtNomeSerie.getText());
-            s.setCurriculoId(curriculoId);
+        try {
+            //Obetem o id do curriculo a partir do campo de texto
+            long curriculoId = Long.parseLong(txtIdCurriculo.getText());
+
+            //Busca a serie no banco
+            serie = controller.findById(serie.getId());
+            if(serie == null){
+                JOptionPane.showMessageDialog(null, "Serie nao encontrada", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }            
             
-            try {
-                controller.update(s);
-                JOptionPane.showMessageDialog(this, "Série editada com sucesso!");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erro ao editar");
+            //Busca o curriculo associado a serie
+            Curriculo curriculo = curriculoController.findById(curriculoId);
+            if(curriculo == null){
+                JOptionPane.showMessageDialog(null, "Curriculo nao encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            } 
+            
+            //Atualiza os dados de serie
+            serie.setNome(txtNomeSerie.getText());
+            if(serie.getCurriculo() == null) {
+                serie.setCurriculo((new ArrayList<>()));
             }
-        } else {
-           JOptionPane.showMessageDialog(null, "Você precisa preencher todos os campos!");         
-        }*/
-        
-        teste = controller.findById(s.getId());
-        long curriculo = Long.parseLong(txtIdCurriculo.getText());
-        Curriculo curriculoId = curriculoController.findById(curriculo);
-
-
-        teste.setNome(txtNomeSerie.getText());
-        
-        if(teste.getCurriculo() == null) {
-            teste.setCurriculo((new ArrayList<>()));
+            //Adiciona o curriculo na lista de curriculos de serie
+            serie.getCurriculo().add(curriculo);
+            //Salva e atualiza
+            controller.update(serie);
+            JOptionPane.showMessageDialog(null, "Serie atualizada com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao editar serie" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            
         }
-        
-        teste.getCurriculo().add(curriculoId);
-        controller.save(teste);
-        
     }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
@@ -234,8 +230,9 @@ public class SerieEditar extends javax.swing.JFrame {
     private javax.swing.JTextField txtNomeSerie;
     // End of variables declaration//GEN-END:variables
 
+    //Metodo para exportar os dados dessa tela para a tela de listar
     public Serie exportarDados(Serie series) {
-        this.s = series;
-        return s;
+        this.serie = series;
+        return serie;
     }
 }

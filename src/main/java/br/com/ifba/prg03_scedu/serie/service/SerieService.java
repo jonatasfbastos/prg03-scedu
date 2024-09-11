@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import br.com.ifba.prg03_scedu.serie.repository.SerieRepository;
 import org.slf4j.Logger;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -33,7 +35,7 @@ public class SerieService implements SerieIService {
         if (serie == null) {
             throw new RuntimeException("Dados da serie não preenchidos.");
         } if (serie.getId() != null && repositorySerie.existsById(serie.getId())) {
-            throw new RuntimeException("Serie ja cadastrado.");
+            throw new RuntimeException("Serie ja cadastrada.");
         } else {
             log.info("Serie cadastrada com sucesso!");
             return repositorySerie.save(serie);
@@ -47,10 +49,10 @@ public class SerieService implements SerieIService {
         //Verifica se os dados foram preenchidos e se serie existe e atualiza
         if (serie == null) {
             throw new RuntimeException("Dados da serie não preenchidos.");
-        } else if (repositorySerie.existsById(serie.getId())) {
+        } if (!repositorySerie.existsById(serie.getId())) {
            throw new RuntimeException ("Serie nao encontrada.");
         } else {
-            log.info("Serie atualizada com sucesso!");
+            //log.info("Serie atualizada com sucesso!");
             return repositorySerie.save(serie);
         }
     }
@@ -69,8 +71,11 @@ public class SerieService implements SerieIService {
         }
     }
 
-    @Override
+    @Transactional
     public Serie findById(Long id) {
+        Serie serie = repositorySerie.findById(id).orElseThrow();
+        //Inicializa o objetoCurriculo associado a serie
+        Hibernate.initialize(serie.getCurriculo());
         return repositorySerie.getReferenceById(id);
     }
 
