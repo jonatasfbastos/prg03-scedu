@@ -4,7 +4,10 @@
  */
 package br.com.ifba.prg03_scedu.gestaoprofessor.view;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
+import br.com.ifba.prg03_scedu.disciplina.entity.Disciplina;
 import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -57,20 +60,20 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "NOME", "CPF", "MATERIA", "NASCIMENTO", "FORMADO"
+                "ID", "Nome", "Nome Abreviado", "Carga Horaria", "Base Curricular", "Estado", "Curso"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Double.class, java.lang.String.class, java.lang.Byte.class, java.lang.String.class, java.lang.Object.class, java.lang.Boolean.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -177,10 +180,28 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
     private javax.swing.JLabel txtn1;
     // End of variables declaration//GEN-END:variables
 
+    //(*Relacionamento*)
     private void listarDisciplina() {
         
+        //Criando a Tabela de dados na tabela criado
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         
+        //Apagar todos os dados
+        model.setRowCount(0);
         
+        //Busca todos as disciplina e colocar em um Array List pela controle da
+        List<Disciplina> disciplinaList = disciplinaController.findAll();
         
+        //Adicionando nova linha com os dados do professor
+        for(Disciplina disciplina : disciplinaList){
+            model.addRow(new Object []{
+                disciplina.getId(),
+                disciplina.getNome(),
+                disciplina.getNomeAbreviado(),
+                disciplina.getCargaHoraria(),
+                disciplina.getBaseCurricular(),
+                disciplina.isEstado()            
+            });
+        }    
     }
 }

@@ -414,7 +414,7 @@ public class ProfessorView extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Professor não encontrado.");
             } else {
 
-                //Criando a Tabela de dados do banco de dados
+                //Criando a Tabela de dados na tabela criado
                 DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
                 // Apagar todos os dados
