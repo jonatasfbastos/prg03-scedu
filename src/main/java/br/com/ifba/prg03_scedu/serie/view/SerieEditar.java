@@ -34,6 +34,7 @@ public class SerieEditar extends javax.swing.JFrame {
      */
     public SerieEditar(SerieIController serieController, CurriculoIController curriculoController) {
         
+        //Inicializa instancias dos controllers
         this.controller = serieController;
         this.curriculoController = curriculoController;
         initComponents();
@@ -152,17 +153,17 @@ public class SerieEditar extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
         try {
-            //Obetem o id do curriculo a partir do campo de texto
+            //Obtem o id do curriculo a partir do campo de texto
             long curriculoId = Long.parseLong(txtIdCurriculo.getText());
 
-            //Busca a serie no banco
+            //Busca a serie no banco e verifica se foi encontrada
             serie = controller.findById(serie.getId());
             if(serie == null){
                 JOptionPane.showMessageDialog(null, "Serie nao encontrada", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
             }            
             
-            //Busca o curriculo associado a serie
+            //Busca o curriculo associado a serie e verifica se foi econtrado
             Curriculo curriculo = curriculoController.findById(curriculoId);
             if(curriculo == null){
                 JOptionPane.showMessageDialog(null, "Curriculo nao encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -171,6 +172,8 @@ public class SerieEditar extends javax.swing.JFrame {
             
             //Atualiza os dados de serie
             serie.setNome(txtNomeSerie.getText());
+            
+            //Verifica se a lista de curriculos esta nula e inicializa
             if(serie.getCurriculo() == null) {
                 serie.setCurriculo((new ArrayList<>()));
             }

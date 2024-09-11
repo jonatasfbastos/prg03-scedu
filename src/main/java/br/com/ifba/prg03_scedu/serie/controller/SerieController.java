@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
  * @author geovana
  */
 @Controller
+//Gera automaticamente um construtor que incluira os campos final da classe
 @RequiredArgsConstructor
 public class SerieController implements SerieIController{
     

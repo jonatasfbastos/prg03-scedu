@@ -32,6 +32,7 @@ public class SerieCadastrar extends javax.swing.JFrame {
      */
     public SerieCadastrar(SerieIController serieController, CurriculoIController curriculoController) {
 
+        //Inicializa instancias dos controllers
         this.serieController = serieController;
         this.curriculoController = curriculoController;
         this.serieListar = new SerieListar(serieController, curriculoController);
@@ -157,6 +158,7 @@ public class SerieCadastrar extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
+        //Converte o valor do campo para long e busca o curriculo correspondente
         long curriculoId = Long.parseLong(txtIdCurriculo.getText());
         Curriculo curriculo = curriculoController.findById(curriculoId);
         
@@ -168,7 +170,7 @@ public class SerieCadastrar extends javax.swing.JFrame {
         
         //Logica para cadastrar no banco de dados
         try {
-            //Seta os dados e usa o controller para salvar no banco
+            //Seta o nome e usa o controller para salvar no banco
             serie.setNome(txtNomeSerie.getText());
             
             // Inicializa a lista de currículos se estiver nula
@@ -176,10 +178,11 @@ public class SerieCadastrar extends javax.swing.JFrame {
                 serie.setCurriculo(new ArrayList<>());
             }
 
-            // Verifica se o currículo já está na lista de currículos
+            // Verifica se o currículo já está associado a serie
             if (serie.getCurriculo().contains(curriculo)) {
                   JOptionPane.showMessageDialog(null, "Este currículo já está associado a uma série.", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else{
+                //Adiciona o curriculo a lista de curriculos da seriee salva no banco
                 serie.getCurriculo().add(curriculo);
                 serieController.save(serie);         
                 JOptionPane.showMessageDialog(this, "Serie cadastrada com sucesso!");

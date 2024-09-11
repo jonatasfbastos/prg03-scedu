@@ -5,19 +5,15 @@
 package br.com.ifba.prg03_scedu.serie.view;
 
 import br.com.ifba.prg03_scedu.curriculo.controller.CurriculoIController;
-import br.com.ifba.prg03_scedu.curriculo.entity.Curriculo;
 import br.com.ifba.prg03_scedu.serie.controller.SerieIController;
 import br.com.ifba.prg03_scedu.serie.entity.Serie;
 import java.awt.Color;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -39,12 +35,14 @@ public class SerieListar extends javax.swing.JFrame {
      * Creates new form SerieListar
      */
     public SerieListar(SerieIController serieController, CurriculoIController curriculoController) {
-        initComponents();
+       
+        //Inicializa instancias dos controllers
         this.controller = serieController;
         this.curriculoController = curriculoController;
         this.serieEditar = new SerieEditar(serieController, curriculoController);
         this.serieCadastrar = new SerieCadastrar (serieController, curriculoController);
-
+        initComponents();
+        
         //Nao encerra o programa ao fechar a tela
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
@@ -225,32 +223,26 @@ public class SerieListar extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
         
+        //Exporta os dados da serie atual para a tela de edicao
         serieEditar.exportarDados(serie);
+        //Torna a tela visivel e chama o metodo de editar
         serieEditar.setVisible(true);
         editarSerie();
-        
-       // int selectedRow = tblSerie.getSelectedRow();
-        
-       /* if (selectedRow != -1) {
-            DefaultTableModel dtmSerie = (DefaultTableModel) tblSerie.getModel();
-            Number value = (Number) dtmSerie.getValueAt(selectedRow, 0);
-            Long id = value.longValue();
-            serie.setId(id);
-            serieEditar.exportarDados(serie);
-        } else {
-            JOptionPane.showMessageDialog(null,"Voce precisa preencher todos os campos!");
-        }*/
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
         // TODO add your handling code here:
+        //Obtem a linha selecionada da tabela
         int selectRow = tblSerie.getSelectedRow();
         
+        //Verifica se alguma linha foi selecionada
         if (selectRow != -1) {
+            //Obtem o modelo da tabela
             DefaultTableModel dtmSerie = (DefaultTableModel) tblSerie.getModel();
+            //Busca a serie no banco de dados e remove 
             serie = controller.findById((Long) dtmSerie.getValueAt(tblSerie.getSelectedRow(), 0));
             controller.delete(serie);
-            
+            //Remove a linha da tabela
             dtmSerie.removeRow(tblSerie.getSelectedRow());
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
@@ -266,6 +258,7 @@ public class SerieListar extends javax.swing.JFrame {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         // TODO add your handling code here:
+        //Converte o id inserido para o tipo long
         long serieId = Long.parseLong(txtPesquisar.getText());
         // Chama o método pesquisar passando o ID
         pesquisar(serieId);  
@@ -274,6 +267,7 @@ public class SerieListar extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
+        //Chama a tela de cadastro
         serieCadastrar.setVisible(true);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
@@ -326,7 +320,7 @@ public class SerieListar extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void atualizarTabela(){
-        //Obtem todas as series do controller
+        //Obtem todas as series 
         List<Serie> series = controller.findAll();
         //Modelo da tabela
         DefaultTableModel dtmSerie = (DefaultTableModel) tblSerie.getModel();
@@ -334,11 +328,13 @@ public class SerieListar extends javax.swing.JFrame {
         dtmSerie.setRowCount(0);
         
         for (Serie serie : series) {
+            //Converte a lista de curriculo para string
             String curriculoString = serie.getCurriculo().isEmpty() 
                     ? "Sem curriculo" : serie.getCurriculo().stream()
                     .map(curriculo -> String.valueOf(curriculo.getId()))
                     .collect(Collectors.joining(", "));
             
+            //Adiciona serie na tabela
            dtmSerie.addRow(new Object[] {
               serie.getId(),
               serie.getNome(),
@@ -348,17 +344,22 @@ public class SerieListar extends javax.swing.JFrame {
     }
     
     public void editarSerie() {
+        //Obtem a linha da tabela
         int selectedRow = tblSerie.getSelectedRow();
         
+        //Verifica se alguma linha foi selecionada
         if (selectedRow != -1) {
+            //Modelo da tabela
             DefaultTableModel dtmSerie = (DefaultTableModel) tblSerie.getModel();
+           //Pega o valor da primeira coluna da linha selecionada, nesse caso o id da serie
             Number value = (Number) dtmSerie.getValueAt(selectedRow, 0);
-            Long id = value.longValue();
+            Long id = value.longValue(); //Converte o valor
             
+            //Cria uma nova instancia de serie, define o id e busca a serie pelo controller
             Serie serie = new Serie();
             serie.setId(id);
             serie = controller.findById(id);
-            
+            //Exporta os dados da tela de editar 
             serieEditar.exportarDados(serie);
         } else {
             JOptionPane.showMessageDialog(null,"Voce precisa preencher todos os campos!");
@@ -376,7 +377,6 @@ public class SerieListar extends javax.swing.JFrame {
         
         try {
            // Long idSerie = Long.parseLong(txtPesquisar.getText().trim());
-            System.out.println("ID inserido no campo de texto: " + id); // Debug para verificar o ID
             
             //Modelo da tabela
            DefaultTableModel dtmSerie = (DefaultTableModel) tblSerie.getModel();
@@ -392,7 +392,6 @@ public class SerieListar extends javax.swing.JFrame {
             }
             
             //Converte a lista de serie em uma string
-            //for (Serie serie : series) {
                 String curriculoString = serie.getCurriculo().isEmpty()
                         ? "Sem curriculo" : serie.getCurriculo().stream()
                         .map(curriculo -> String.valueOf(curriculo.getId()))
@@ -404,7 +403,6 @@ public class SerieListar extends javax.swing.JFrame {
                  serie.getNome(),
                  curriculoString
               });  
-            //}
         } catch(NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Insira um numero valido.", "Informação", JOptionPane.INFORMATION_MESSAGE);           
         } catch (Exception e){

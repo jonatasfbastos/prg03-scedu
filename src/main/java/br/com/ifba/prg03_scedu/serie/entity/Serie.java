@@ -37,14 +37,17 @@ public class Serie {
     private String nome;
     
     @OneToMany(fetch = FetchType.EAGER)
+    //Define a tabela de juncao de serie e curriculo
     @JoinTable(
         name = "serie_curriculo", 
         joinColumns = @JoinColumn(name = "serie_id"), 
         inverseJoinColumns = @JoinColumn(name = "curriculo_id"))
+    //Declara uma lista vazia de curriculo
     private List<Curriculo> curriculo = new ArrayList<>();
     
    // private List<Turma> listaTurma;
     
+    //Verifica se a lista esta nula, se estiver inicializa como um ArrayList
     public List<Curriculo> getCurriculo(){
         if(curriculo == null) {
             curriculo = new ArrayList<>();
