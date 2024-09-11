@@ -310,9 +310,19 @@ public class ProfessorEditar extends javax.swing.JFrame {
             return;
         }
         
+        //Tirando letra e espaço digitado
+        cpf = cpf.replace("\\D", "");
+        //Verificando o CPF Digitado pelo métodos
+        if(VerificarCPF(cpf)){
+            
+           professor.setCpf(cpf); 
+        }else{
+            return;
+        }
+        
         //Coloca essa informação em Professor
         professor.setNome(nome);
-        professor.setCpf(cpf);
+        
         professor.setMateria(materia);
         professor.setFormado(lblFormado.isSelected());
         
@@ -385,5 +395,16 @@ public class ProfessorEditar extends javax.swing.JFrame {
         } catch (ParseException e) {
             return false; // A data é inválida
         }
+    }
+
+    private boolean VerificarCPF(String cpf) {
+        
+        
+        if(cpf.length() != 11 || cpf.matches("(\\d)\\1{10}")){
+            JOptionPane.showInternalMessageDialog(null, "CPF inválido! Número digitado precisa ser igual a 11 Dígito e não pode ser repetitivos.");
+            return false;
+        }
+        
+        return true;
     }
 }

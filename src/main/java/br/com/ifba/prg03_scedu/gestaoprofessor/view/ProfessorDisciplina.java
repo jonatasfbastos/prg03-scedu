@@ -29,6 +29,7 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
         //Não fechar quando apertar no x
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
+        //Vai atualizar a lista
         listarDisciplina();
     }
 
@@ -60,25 +61,18 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nome", "Nome Abreviado", "Carga Horaria", "Base Curricular", "Estado", "Curso"
+                "ID", "Nome", "Nome Abreviado", "Carga Horaria", "Base Curricular", "Estado"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
-            };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -111,12 +105,12 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(405, 405, 405)
                         .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(257, 257, 257)
                         .addComponent(txtn1)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -160,13 +154,10 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        /*Listar Disciplina*/
+        //(-----Relacionamento----)Listar Disciplina
         listarDisciplina();
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         
     }
@@ -180,7 +171,7 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
     private javax.swing.JLabel txtn1;
     // End of variables declaration//GEN-END:variables
 
-    //(*Relacionamento*)
+    //-------------(*Relacionamento*)-----------------
     private void listarDisciplina() {
         
         //Criando a Tabela de dados na tabela criado
@@ -192,7 +183,7 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
         //Busca todos as disciplina e colocar em um Array List pela controle da
         List<Disciplina> disciplinaList = disciplinaController.findAll();
         
-        //Adicionando nova linha com os dados do professor
+        //Adicionando nova linha com os dados de Disciplina 
         for(Disciplina disciplina : disciplinaList){
             model.addRow(new Object []{
                 disciplina.getId(),

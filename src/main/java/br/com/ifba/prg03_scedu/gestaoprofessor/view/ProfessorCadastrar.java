@@ -271,6 +271,17 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
             return;
         }
 
+        //Tirando letra e espaço digitado
+        cpf = cpf.replace("\\D", "");
+        
+        //Verificando o CPF Digitado pelo métodos
+        if(VerificarCPF(cpf)){
+            
+           professor.setCpf(cpf); 
+        }else{
+            return;
+        }
+        
         // Atribuindo os valores ao objeto professor
         professor.setNome(nome);
         professor.setCpf(cpf);
@@ -354,4 +365,20 @@ public class ProfessorCadastrar extends javax.swing.JFrame {
     private javax.swing.JTextField lblNome;
     private javax.swing.JLabel txtN1;
     // End of variables declaration//GEN-END:variables
+
+    //Verificando o básico do CPF 
+    private boolean VerificarCPF(String cpf) {
+        //Verificando ser é diferente de 11 Dígitos e ser tem número repetitivos
+        //(\\D) é uma expressão regular que corresponde a qualquer caractere não numérico.
+        //O método matches() verifica se a string cpf corresponde ao padrão da expressão regular
+        //\\d corresponde a qualquer dígito (0-9).
+        //(\\d) captura um dígito qualquer.
+        //(\\1) se refere ao valor capturado no primeiro grupo (ou seja, o mesmo dígito capturado por (\\d)).
+        //{10} significa que o dígito capturado deve se repetir 10 vezes consecutivas.
+        if(cpf.length() != 11 || cpf.matches("(\\d)\\1{10}")){
+            JOptionPane.showInternalMessageDialog(null, "CPF inválido! Número digitado precisa ser igual a 11 Dígito e não pode ser repetitivos.");
+            return false;
+        }
+        return true;
+    }
 }
