@@ -22,7 +22,7 @@ import br.com.ifba.prg03_scedu.gestaoprofessor.view.ProfessorView;
 import br.com.ifba.prg03_scedu.gestavaliacao.controller.AvaliacaoIController;
 import br.com.ifba.prg03_scedu.gestavaliacao.view.TelaAvaliacoes;
 import br.com.ifba.prg03_scedu.serie.controller.SerieIController;
-import br.com.ifba.prg03_scedu.serie.view.SerieCadastrar;
+import br.com.ifba.prg03_scedu.serie.view.SerieListar;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioController;
 import br.com.ifba.prg03_scedu.usuario.controller.UsuarioIController;
 import br.com.ifba.prg03_scedu.usuario.entity.Usuario;
@@ -505,7 +505,7 @@ private void adicionarCalendario() {
 
     private void btnSerieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSerieActionPerformed
         // TODO add your handling code here:
-        SerieCadastrar telaSerie = new SerieCadastrar(serieController, curriculoController);
+        SerieListar telaSerie = new SerieListar(serieController, curriculoController);
         telaSerie.setVisible(true);
     }//GEN-LAST:event_btnSerieActionPerformed
 

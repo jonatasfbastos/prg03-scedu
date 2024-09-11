@@ -12,7 +12,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import org.springframework.stereotype.Component;
 
 /**
@@ -66,7 +65,6 @@ public class SerieCadastrar extends javax.swing.JFrame {
         txtNomeSerie = new javax.swing.JTextField();
         txtIdCurriculo = new javax.swing.JTextField();
         btnCadastrar = new javax.swing.JButton();
-        btnListarSerie = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -87,14 +85,6 @@ public class SerieCadastrar extends javax.swing.JFrame {
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarActionPerformed(evt);
-            }
-        });
-
-        btnListarSerie.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnListarSerie.setText("Listar Series");
-        btnListarSerie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnListarSerieActionPerformed(evt);
             }
         });
 
@@ -119,9 +109,7 @@ public class SerieCadastrar extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnListarSerie)
-                .addGap(74, 74, 74))
+                .addGap(154, 154, 154))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,11 +126,9 @@ public class SerieCadastrar extends javax.swing.JFrame {
                         .addComponent(txtNomeSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addComponent(txtIdCurriculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(64, 64, 64)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnListarSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addGap(63, 63, 63)
+                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(199, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -205,13 +191,6 @@ public class SerieCadastrar extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//nao fecha a janela ao encerrar o programa
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
-    private void btnListarSerieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarSerieActionPerformed
-        // TODO add your handling code here:
-        
-        //A tela eh aberta
-       this.serieListar.setVisible(true);
-    }//GEN-LAST:event_btnListarSerieActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -227,7 +206,6 @@ public class SerieCadastrar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
-    private javax.swing.JButton btnListarSerie;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
