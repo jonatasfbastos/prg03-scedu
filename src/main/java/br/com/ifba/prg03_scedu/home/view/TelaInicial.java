@@ -239,7 +239,7 @@ public class TelaInicial extends javax.swing.JFrame {
         btnProfessor.setBackground(new java.awt.Color(0, 51, 255));
         btnProfessor.setFont(new java.awt.Font("Alef", 0, 14)); // NOI18N
         btnProfessor.setForeground(new java.awt.Color(255, 255, 255));
-        btnProfessor.setText("Gestão de Professor");
+        btnProfessor.setText("Professor");
         btnProfessor.setAlignmentX(0.5F);
         btnProfessor.setBorder(null);
         btnProfessor.setBorderPainted(false);
@@ -477,7 +477,7 @@ private void adicionarCalendario() {
     }//GEN-LAST:event_btnGestaoAlunoActionPerformed
 
     private void btnProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfessorActionPerformed
-        ProfessorView professrView = new ProfessorView(professorController);
+        ProfessorView professrView = new ProfessorView(professorController, disciplinaController);
         professrView.setVisible(true);
         professrView.toFront();
     }//GEN-LAST:event_btnProfessorActionPerformed

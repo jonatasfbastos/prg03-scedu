@@ -3,22 +3,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.com.ifba.prg03_scedu.gestaoprofessor.view;
-
+import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
 import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
 
 /**
  *
- * @author hmart
+ * @author Henrique Martins
  */
+
 public class ProfessorDisciplina extends javax.swing.JFrame {
 
     private final ProfessorIController professorControler;
+    private final DisciplinaIController disciplinaController;
     
-    public ProfessorDisciplina(ProfessorIController professorControler) {
+    public ProfessorDisciplina(ProfessorIController professorControler, DisciplinaIController disciplinaController) {
+        //Chamando o controle de Professor
         this.professorControler = professorControler;
+        //Realizando o relacionamento entre Disciplina
+        this.disciplinaController = disciplinaController;
         
         initComponents();
+        //Não fechar quando apertar no x
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        listarDisciplina();
     }
 
     /**
@@ -95,10 +103,6 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -110,6 +114,10 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
                         .addGap(257, 257, 257)
                         .addComponent(txtn1)))
                 .addContainerGap(23, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,6 +152,7 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        //Voltar na tela que Chamou
         dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
@@ -156,35 +165,7 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProfessorDisciplina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProfessorDisciplina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProfessorDisciplina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProfessorDisciplina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                
-            }
-        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -197,6 +178,9 @@ public class ProfessorDisciplina extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void listarDisciplina() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        
+        
+        
     }
 }
