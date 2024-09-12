@@ -4,7 +4,12 @@ package br.com.ifba.prg03_scedu.gestaoalunos.view;
 import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.AlunosPrincipal;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
+import br.com.ifba.prg03_scedu.endereco.controller.EnderecoIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.entity.Responsaveis;
+import br.com.ifba.prg03_scedu.endereco.entity.Endereco;
+import br.com.ifba.prg03_scedu.endereco.entity.EnderecoId;
+import br.com.ifba.prg03_scedu.escola.controller.EscolaIController;
+import br.com.ifba.prg03_scedu.escola.entity.Escola;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,9 +26,13 @@ public class TelaAdicionar extends javax.swing.JFrame {
     //Atributo usado na classe
     private static final Logger log = LoggerFactory.getLogger(TelaAdicionar.class);
     private final GestaoAlunoIController gestaoAlunoController;
+    private final EnderecoIController enderecoController;
+    private final EscolaIController escolaController;
 
-    public TelaAdicionar(GestaoAlunoIController gestaoAlunoController) {
+    public TelaAdicionar(GestaoAlunoIController gestaoAlunoController, EnderecoIController enderecoController, EscolaIController escolaController) {
         this.gestaoAlunoController = gestaoAlunoController;
+        this.enderecoController = enderecoController;
+        this.escolaController = escolaController;
         log.info("Inicializando componentes da tela de listagem de alunos");
         initComponents();
         pnlAlergiaOutro.setVisible(false);
@@ -160,11 +169,11 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 }else{
                     txtCpfPai.setBackground(Color.WHITE);
                 }
-                if(txtRgPai.getText().isEmpty()){
-                    txtRgPai.setBackground(Color.RED);
+                if(txtRgResponsavelOutro.getText().isEmpty()){
+                    txtRgResponsavelOutro.setBackground(Color.RED);
                     verificacao = 1;
                 }else{
-                    txtRgPai.setBackground(Color.WHITE);
+                    txtRgResponsavelOutro.setBackground(Color.WHITE);
                 }
                 if(txtOrgaoExpedidorPai.getText().isEmpty()){
                     txtOrgaoExpedidorPai.setBackground(Color.RED);
@@ -192,7 +201,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 
                 txtNomePai.setBackground(Color.WHITE);
                 txtCpfPai.setBackground(Color.WHITE);
-                txtRgPai.setBackground(Color.WHITE);
+                txtRgResponsavelOutro.setBackground(Color.WHITE);
                 txtOrgaoExpedidorPai.setBackground(Color.WHITE);
                 txtDataEmissaoPai.setBackground(Color.WHITE);
                 txtProfissaoPai.setBackground(Color.WHITE);
@@ -338,7 +347,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
         txtDataNascimento = new javax.swing.JTextField();
         cbxSexo = new javax.swing.JComboBox<>();
         lblEscolaOrigem = new javax.swing.JLabel();
-        txtscolaOrigem = new javax.swing.JTextField();
+        txtEscolaOrigem = new javax.swing.JTextField();
         pnlSalvar = new javax.swing.JPanel();
         btnSalvar = new javax.swing.JButton();
         pnlDadosReponsaveis = new javax.swing.JPanel();
@@ -351,6 +360,12 @@ public class TelaAdicionar extends javax.swing.JFrame {
         txtNomeResponsavelOutro = new javax.swing.JTextField();
         lblCpfResponsavelOutro = new javax.swing.JLabel();
         txtCpfResponsavelOutro = new javax.swing.JTextField();
+        lblRgResponsavelOutro = new javax.swing.JLabel();
+        txtRgResponsavelOutro = new javax.swing.JTextField();
+        lblOrgaoExpedidorResponsavelOutro = new javax.swing.JLabel();
+        txtOrgaoExpedidorResponsavelOutro = new javax.swing.JTextField();
+        lblDataEmissaoResponsavelOutro = new javax.swing.JLabel();
+        txtDataEmissaoResponsavelOutro = new javax.swing.JTextField();
         pnlReponsaveis = new javax.swing.JPanel();
         txtOrgaoExpedidorMae = new javax.swing.JTextField();
         lblDataEmissaoPai = new javax.swing.JLabel();
@@ -374,8 +389,8 @@ public class TelaAdicionar extends javax.swing.JFrame {
         txtOrgaoExpedidorPai = new javax.swing.JTextField();
         lblOrgaoExpedidorPai = new javax.swing.JLabel();
         txtCpfMae = new javax.swing.JTextField();
-        txtRgPai = new javax.swing.JTextField();
         txtProfissaoMae = new javax.swing.JTextField();
+        txtRgPai = new javax.swing.JTextField();
         lblTelefoneResponsavel = new javax.swing.JLabel();
         txtTelefoneResponsavel = new javax.swing.JTextField();
         pnlDadosEndereco = new javax.swing.JPanel();
@@ -563,12 +578,9 @@ public class TelaAdicionar extends javax.swing.JFrame {
                             .addComponent(lblEmail))
                         .addGap(18, 18, 18)
                         .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
-                                .addComponent(txtscolaOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
-                                .addComponent(lblEscolaOrigem)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(txtEscolaOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEscolaOrigem))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(13, 13, 13))
         );
         pnlDadosPessoaisLayout.setVerticalGroup(
@@ -585,7 +597,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNomeSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtscolaOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEscolaOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -683,9 +695,25 @@ public class TelaAdicionar extends javax.swing.JFrame {
         lblNomeResponsavelOutro.setForeground(new java.awt.Color(255, 255, 255));
         lblNomeResponsavelOutro.setText("Nome do Responsável");
 
+        txtNomeResponsavelOutro.setText("padrao");
+
         lblCpfResponsavelOutro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCpfResponsavelOutro.setForeground(new java.awt.Color(255, 255, 255));
         lblCpfResponsavelOutro.setText("CPF");
+
+        lblRgResponsavelOutro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblRgResponsavelOutro.setForeground(new java.awt.Color(255, 255, 255));
+        lblRgResponsavelOutro.setText("RG");
+
+        lblOrgaoExpedidorResponsavelOutro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblOrgaoExpedidorResponsavelOutro.setForeground(new java.awt.Color(255, 255, 255));
+        lblOrgaoExpedidorResponsavelOutro.setText("Orgão Expedidor");
+
+        lblDataEmissaoResponsavelOutro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblDataEmissaoResponsavelOutro.setForeground(new java.awt.Color(255, 255, 255));
+        lblDataEmissaoResponsavelOutro.setText("Data de Emissão");
+
+        txtDataEmissaoResponsavelOutro.setText("01/01/0001");
 
         javax.swing.GroupLayout pnlResponsavelOutroLayout = new javax.swing.GroupLayout(pnlResponsavelOutro);
         pnlResponsavelOutro.setLayout(pnlResponsavelOutroLayout);
@@ -698,13 +726,30 @@ public class TelaAdicionar extends javax.swing.JFrame {
                     .addComponent(txtTipoResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlResponsavelOutroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNomeResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNomeResponsavelOutro))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                    .addGroup(pnlResponsavelOutroLayout.createSequentialGroup()
+                        .addComponent(txtNomeResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtRgResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlResponsavelOutroLayout.createSequentialGroup()
+                        .addComponent(lblNomeResponsavelOutro)
+                        .addGap(61, 61, 61)
+                        .addComponent(lblRgResponsavelOutro)))
                 .addGroup(pnlResponsavelOutroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCpfResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCpfResponsavelOutro))
-                .addGap(27, 27, 27))
+                    .addGroup(pnlResponsavelOutroLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(txtOrgaoExpedidorResponsavelOutro)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDataEmissaoResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlResponsavelOutroLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(lblOrgaoExpedidorResponsavelOutro)
+                        .addGap(26, 26, 26)
+                        .addComponent(lblDataEmissaoResponsavelOutro)))
+                .addGap(18, 18, 18)
+                .addGroup(pnlResponsavelOutroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCpfResponsavelOutro)
+                    .addComponent(txtCpfResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21))
         );
         pnlResponsavelOutroLayout.setVerticalGroup(
             pnlResponsavelOutroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -712,12 +757,18 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 .addGroup(pnlResponsavelOutroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTipoResponsavel)
                     .addComponent(lblNomeResponsavelOutro)
-                    .addComponent(lblCpfResponsavelOutro))
+                    .addComponent(lblCpfResponsavelOutro)
+                    .addComponent(lblRgResponsavelOutro)
+                    .addComponent(lblOrgaoExpedidorResponsavelOutro)
+                    .addComponent(lblDataEmissaoResponsavelOutro))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlResponsavelOutroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTipoResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNomeResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCpfResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtCpfResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRgResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtOrgaoExpedidorResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDataEmissaoResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pnlReponsaveis.setBackground(new java.awt.Color(8, 102, 255));
@@ -759,6 +810,10 @@ public class TelaAdicionar extends javax.swing.JFrame {
         lblProfissaoMae.setForeground(new java.awt.Color(255, 255, 255));
         lblProfissaoMae.setText("Profissão");
 
+        txtNomeMae.setText("padrao");
+
+        txtNomePai.setText("padrao");
+
         lblNomePai.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblNomePai.setForeground(new java.awt.Color(255, 255, 255));
         lblNomePai.setText("Nome do Pai");
@@ -786,7 +841,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
                         .addGroup(pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtCpfMae, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblCpfMae))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE))
                     .addGroup(pnlReponsaveisLayout.createSequentialGroup()
                         .addGroup(pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlReponsaveisLayout.createSequentialGroup()
@@ -802,18 +857,6 @@ public class TelaAdicionar extends javax.swing.JFrame {
                         .addGap(18, 18, 18)))
                 .addGroup(pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlReponsaveisLayout.createSequentialGroup()
-                        .addComponent(lblRgPai)
-                        .addGap(138, 138, 138)
-                        .addComponent(lblOrgaoExpedidorPai))
-                    .addGroup(pnlReponsaveisLayout.createSequentialGroup()
-                        .addComponent(txtRgPai, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtOrgaoExpedidorPai, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblDataEmissaoPai)
-                            .addComponent(txtDataEmissaoPai, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlReponsaveisLayout.createSequentialGroup()
                         .addGroup(pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblRgMae)
                             .addComponent(txtRgMae, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -824,41 +867,49 @@ public class TelaAdicionar extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblDataEmissaoMae)
-                            .addComponent(txtDataEmissaoMae, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtDataEmissaoMae, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlReponsaveisLayout.createSequentialGroup()
+                        .addGroup(pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlReponsaveisLayout.createSequentialGroup()
+                                .addComponent(txtRgPai, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtOrgaoExpedidorPai, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlReponsaveisLayout.createSequentialGroup()
+                                .addComponent(lblRgPai)
+                                .addGap(138, 138, 138)
+                                .addComponent(lblOrgaoExpedidorPai)))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDataEmissaoPai)
+                            .addComponent(txtDataEmissaoPai, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblProfissaoMae)
                     .addComponent(txtProfissaoPai, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblProfissaoPai)
                     .addComponent(txtProfissaoMae, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         pnlReponsaveisLayout.setVerticalGroup(
             pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReponsaveisLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlReponsaveisLayout.createSequentialGroup()
-                        .addContainerGap(10, Short.MAX_VALUE)
-                        .addGroup(pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblCpfPai)
-                                .addComponent(lblRgPai))
-                            .addComponent(lblNomePai, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(pnlReponsaveisLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblOrgaoExpedidorPai)
-                            .addComponent(lblDataEmissaoPai)
-                            .addComponent(lblProfissaoPai))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblCpfPai)
+                        .addComponent(lblRgPai)
+                        .addComponent(lblOrgaoExpedidorPai)
+                        .addComponent(lblDataEmissaoPai)
+                        .addComponent(lblProfissaoPai))
+                    .addComponent(lblNomePai, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNomePai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCpfPai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtRgPai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtOrgaoExpedidorPai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDataEmissaoPai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtProfissaoPai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtProfissaoPai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRgPai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNomeMae)
@@ -892,38 +943,38 @@ public class TelaAdicionar extends javax.swing.JFrame {
                     .addGroup(pnlDadosReponsaveisLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(pnlReponsaveis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlDadosReponsaveisLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDadosReponsaveisLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(pnlDadosReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlResponsavelOutro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(pnlDadosReponsaveisLayout.createSequentialGroup()
-                                .addComponent(cbxResponsavelEscolha, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTelefoneResponsavel, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
-                            .addGroup(pnlDadosReponsaveisLayout.createSequentialGroup()
-                                .addComponent(lblResponsavelEscolha)
-                                .addGap(90, 90, 90)
-                                .addComponent(lblTelefoneResponsavel)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)))
+                                .addGroup(pnlDadosReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlDadosReponsaveisLayout.createSequentialGroup()
+                                        .addComponent(cbxResponsavelEscolha, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtTelefoneResponsavel))
+                                    .addGroup(pnlDadosReponsaveisLayout.createSequentialGroup()
+                                        .addComponent(lblResponsavelEscolha)
+                                        .addGap(90, 90, 90)
+                                        .addComponent(lblTelefoneResponsavel)))
+                                .addGap(636, 636, 636)))))
                 .addGap(6, 6, 6))
         );
         pnlDadosReponsaveisLayout.setVerticalGroup(
             pnlDadosReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDadosReponsaveisLayout.createSequentialGroup()
                 .addGap(7, 7, 7)
-                .addGroup(pnlDadosReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlDadosReponsaveisLayout.createSequentialGroup()
-                        .addGroup(pnlDadosReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblResponsavelEscolha)
-                            .addComponent(lblTelefoneResponsavel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlDadosReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbxResponsavelEscolha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTelefoneResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(pnlResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addComponent(pnlReponsaveis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlDadosReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblResponsavelEscolha)
+                    .addComponent(lblTelefoneResponsavel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDadosReponsaveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxResponsavelEscolha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTelefoneResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(pnlResponsavelOutro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlReponsaveis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -1261,17 +1312,17 @@ public class TelaAdicionar extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
+        //int veref = 1;
         if(!validarCampos()){
+        //if(veref == 0){
             JOptionPane.showMessageDialog(null, "Dados do aluno não preenchidos", "ERRO", JOptionPane.ERROR_MESSAGE);
             log.error("Erro ao salvar: Campos obrigatórios não preenchidos");
         }else{
             AlunosPrincipal novoAluno = new AlunosPrincipal();
-            Responsaveis responsavelMae = new Responsaveis();
-            Responsaveis responsavelPai = new Responsaveis();
-            Responsaveis responsavelLegal = new Responsaveis();
-            Responsaveis responsavelMaeSave = new Responsaveis();
-            Responsaveis responsavelPaiSave = new Responsaveis();
             Responsaveis responsavelLegalSave = new Responsaveis();
+            Responsaveis responsavelPaiSave = new Responsaveis();
+            Responsaveis responsavelMaeSave = new Responsaveis();
+            
             try{
                 novoAluno.setNome(txtNomeAluno.getText());
                 novoAluno.setNomeSocial(txtNomeSocial.getText());
@@ -1289,95 +1340,159 @@ public class TelaAdicionar extends javax.swing.JFrame {
                 novoAluno.setAlergia(cbxAlergia.getSelectedItem().toString());
                 novoAluno.setCondicoesMedicas(cbxCondicoesMedicas.getSelectedItem().toString());
                 novoAluno.setMedicamentos(cbxMedicamentos.getSelectedItem().toString());
+                novoAluno.setRegiaoMoradia(cbxRegiaoMoradia.getSelectedItem().toString());
+                novoAluno.setNacionalidade(txtNacionalidade.getText());
+                novoAluno.setNaturalidade(txtNaturalidade.getText());
                 
                 List<Responsaveis> responsaveis = gestaoAlunoController.findAllResponsavel();
                 if(!(cbxResponsavelEscolha.getSelectedItem().equals(" "))){
                     if(cbxResponsavelEscolha.getSelectedItem().equals("Outro")){
-                        for(Responsaveis responsavel: responsaveis){
-                            if(responsavel.getCpf().equals(txtCpfResponsavelOutro.getText())){
-                                exibirErroELog("CPF do Responsável Legal");
-                                return;
-                            }
-                            if (responsavel.getTelefone().equals(txtTelefone.getText())) {
-                                exibirErroELog("Telefone do responsável");
-                                return;
-                            }
-                        }
-                        responsavelLegal = gestaoAlunoController.findByNomeResponsavel(txtNomeResponsavelOutro.getText());
-                        if(responsavelLegal == null){
-                            responsavelLegalSave.setTipo(txtTipoResponsavel.getText());
-                            responsavelLegalSave.setNome(txtNomeResponsavelOutro.getText());
-                            responsavelLegalSave.setCpf(txtCpfResponsavelOutro.getText());
-                            responsavelLegalSave.setTelefone(txtTelefoneResponsavel.getText());
-                            gestaoAlunoController.save(responsavelLegalSave);
-                            novoAluno.setReponsavelLegal(responsavelLegalSave);
-                        }else{
-                            novoAluno.setReponsavelLegal(responsavelLegal);
-                        }
-                    }else{
-                        for(Responsaveis responsavel: responsaveis){
-                            if (responsavel.getCpf().equals(txtCpfPai.getText())) {
-                                exibirErroELog("CPF do Pai");
-                                return;
-                            }
-                            if (responsavel.getCpf().equals(txtCpfMae.getText())) {
-                                exibirErroELog("CPF da Mãe");
-                                return;
-                            }
-                            if (responsavel.getRg().equals(txtRgPai.getText())) {
-                                exibirErroELog("RG do Pai");
-                                return;
-                            }
-                            if (responsavel.getRg().equals(txtRgMae.getText())) {
-                                exibirErroELog("RG da Mãe");
-                                return;
-                            }
-                            if (responsavel.getTelefone().equals(txtTelefone.getText())) {
-                                exibirErroELog("Telefone do responsável");
-                                return;
-                            }
-                        }
-                        responsavelPai = gestaoAlunoController.findByNomeResponsavel(txtNomePai.getText());
-                        if(responsavelPai == null){
-                            //Configuracoes Pai
-                            responsavelPaiSave.setNome(txtNomePai.getText());
-                            responsavelPaiSave.setCpf(txtCpfPai.getText());
-                            responsavelPaiSave.setRg(txtRgPai.getText());
-                            responsavelPaiSave.setOrgaoExpedidorRg(txtOrgaoExpedidorPai.getText());
-                            responsavelPaiSave.setProfissao(txtProfissaoPai.getText());
-                            Date dataRgPai = sdf.parse(txtDataEmissao.getText());
+                        if(gestaoAlunoController.findByNomeResponsavel("NENHUM") == null){
+                            responsavelPaiSave.setTipo("  ");
+                            responsavelPaiSave.setNome("NENHUM");
+                            responsavelPaiSave.setCpf("NENHUM");
+                            responsavelPaiSave.setRg("NENHUM");
+                            responsavelPaiSave.setTelefone("NENHUM");
+                            responsavelPaiSave.setOrgaoExpedidorRg("NENHUM");
+                            responsavelPaiSave.setProfissao("NENHUM");
+                            Date dataRgPai = sdf.parse("01/01/0001");
                             responsavelPaiSave.setDataEmissaoRg(dataRgPai);
                             gestaoAlunoController.save(responsavelPaiSave);
                             novoAluno.setPai(responsavelPaiSave);
-                        }else{
-                            novoAluno.setPai(responsavelPai);
-                        }
-                        
-                        responsavelMae = (Responsaveis) gestaoAlunoController.findByNomeResponsavel(txtNomeMae.getText());
-                        if(responsavelMae == null){
-                            //Configuracoes Mae
-                            responsavelMaeSave.setNome(txtNomeMae.getText());
-                            responsavelMaeSave.setCpf(txtCpfMae.getText());
-                            responsavelMaeSave.setRg(txtRgMae.getText());
-                            responsavelMaeSave.setOrgaoExpedidorRg(txtOrgaoExpedidorMae.getText());
-                            responsavelMaeSave.setProfissao(txtProfissaoMae.getText());
-                            Date dataRgMae = sdf.parse(txtDataEmissao.getText());
+
+                            responsavelMaeSave.setTipo("  ");
+                            responsavelMaeSave.setNome("NENHUM");
+                            responsavelMaeSave.setCpf("NENHUM");
+                            responsavelMaeSave.setRg("NENHUM");
+                            responsavelMaeSave.setTelefone("NENHUM");
+                            responsavelMaeSave.setOrgaoExpedidorRg("NENHUM");
+                            responsavelMaeSave.setProfissao("NENHUM");
+                            Date dataRgMae = sdf.parse("01/01/0001");
                             responsavelMaeSave.setDataEmissaoRg(dataRgMae);
                             gestaoAlunoController.save(responsavelMaeSave);
                             novoAluno.setMae(responsavelMaeSave);
                         }else{
-                            novoAluno.setMae(responsavelMae);
+                            responsavelPaiSave = gestaoAlunoController.findByNomeResponsavel("NENHUM");
+                            novoAluno.setPai(responsavelPaiSave);
+                            responsavelMaeSave = gestaoAlunoController.findByNomeResponsavel("NENHUM");
+                            novoAluno.setMae(responsavelMaeSave);
                         }
-
-                        if(cbxResponsavelEscolha.getSelectedItem().equals("Pai")){
-                            responsavelLegal.setTipo("Pai");
+                        if(gestaoAlunoController.findByNomeResponsavel(txtNomeResponsavelOutro.getText()) == null){
+                            for(Responsaveis responsavel: responsaveis){
+                                if(responsavel.getCpf().equals(txtCpfResponsavelOutro.getText())){
+                                    exibirErroELog("CPF do Responsável Legal");
+                                    return;
+                                }
+                            }
+                            responsavelLegalSave.setTipo(txtTipoResponsavel.getText());
+                            responsavelLegalSave.setNome(txtNomeResponsavelOutro.getText());
+                            responsavelLegalSave.setCpf(txtCpfResponsavelOutro.getText());
+                            responsavelLegalSave.setRg(txtRgResponsavelOutro.getText());
+                            responsavelLegalSave.setOrgaoExpedidorRg(txtOrgaoExpedidorResponsavelOutro.getText());
+                            Date dataRgResponsavelOutro = sdf.parse(txtDataEmissaoResponsavelOutro.getText());
+                            responsavelLegalSave.setDataEmissaoRg(dataRgResponsavelOutro);
+                            responsavelLegalSave.setTelefone(txtTelefoneResponsavel.getText());
+                            gestaoAlunoController.save(responsavelLegalSave);
                         }else{
-                            responsavelLegal.setTipo("Mãe");
+                            responsavelLegalSave = gestaoAlunoController.findByNomeResponsavel(txtNomeResponsavelOutro.getText());
                         }
-                        responsavelLegal.setTelefone(txtTelefoneResponsavel.getText());
+                        novoAluno.setReponsavelLegal(responsavelLegalSave);
+                    }else{
+                        if(gestaoAlunoController.findByNomeResponsavel(txtNomePai.getText()) == null){
+                            for(Responsaveis responsavel: responsaveis){
+                                if (responsavel.getCpf().equals(txtCpfPai.getText())) {
+                                    exibirErroELog("CPF do Pai");
+                                    return;
+                                }
+                                if (responsavel.getCpf().equals(txtCpfMae.getText())) {
+                                    exibirErroELog("CPF da Mãe");
+                                    return;
+                                }
+                                if (responsavel.getRg().equals(txtRgPai.getText())) {
+                                    exibirErroELog("RG do Pai");
+                                    return;
+                                }
+                                if (responsavel.getRg().equals(txtRgMae.getText())) {
+                                    exibirErroELog("RG da Mãe");
+                                    return;
+                                }
+                            }
+                            //Configuracoes Pai
+                            responsavelPaiSave.setTipo("Pai");
+                            responsavelPaiSave.setNome(txtNomePai.getText());
+                            responsavelPaiSave.setCpf(txtCpfPai.getText());
+                            responsavelPaiSave.setRg(txtRgPai.getText());
+                            if(cbxResponsavelEscolha.getSelectedItem().equals("Pai")){
+                                responsavelPaiSave.setTelefone(txtTelefoneResponsavel.getText());
+                            }
+                            responsavelPaiSave.setOrgaoExpedidorRg(txtOrgaoExpedidorPai.getText());
+                            responsavelPaiSave.setProfissao(txtProfissaoPai.getText());
+                            Date dataRgPai = sdf.parse(txtDataEmissaoPai.getText());
+                            responsavelPaiSave.setDataEmissaoRg(dataRgPai);
+                            gestaoAlunoController.save(responsavelPaiSave);
+                            
+                            //Configuracoes Responsavel Legal
+                            if(cbxResponsavelEscolha.getSelectedItem().equals("Pai")){
+                                responsavelLegalSave.setTipo("Pai");
+                                responsavelLegalSave.setNome(txtNomePai.getText() + "repleg");
+                                responsavelLegalSave.setCpf(txtCpfPai.getText() + "repleg");
+                                responsavelLegalSave.setRg(txtRgPai.getText() + "repleg");
+                                responsavelLegalSave.setOrgaoExpedidorRg(txtOrgaoExpedidorPai.getText());
+                                responsavelLegalSave.setDataEmissaoRg(dataRgPai);
+                                responsavelLegalSave.setTelefone(txtTelefoneResponsavel.getText() + "repleg");
+                                gestaoAlunoController.save(responsavelLegalSave);    
+                                novoAluno.setReponsavelLegal(responsavelLegalSave);
+                            }
+                        }else{
+                            responsavelPaiSave = gestaoAlunoController.findByNomeResponsavel(txtNomePai.getText());
+                            responsavelLegalSave = responsavelPaiSave;
+                            responsavelLegalSave.setNome(responsavelPaiSave.getNome() + "repleg");
+                            responsavelLegalSave.setCpf(responsavelPaiSave.getCpf()+ "repleg");
+                            responsavelLegalSave.setRg(responsavelPaiSave.getRg()+ "repleg");
+                            responsavelLegalSave.setTelefone(responsavelPaiSave.getTelefone()+ "repleg");
+                            novoAluno.setReponsavelLegal(responsavelLegalSave);
+                        }
+                        novoAluno.setPai(responsavelPaiSave);
+                        
+                        if(gestaoAlunoController.findByNomeResponsavel(txtNomeMae.getText()) == null){
+                            //Configuracoes Mae
+                            responsavelMaeSave.setTipo("Mãe");
+                            responsavelMaeSave.setNome(txtNomeMae.getText());
+                            responsavelMaeSave.setCpf(txtCpfMae.getText());
+                            responsavelMaeSave.setRg(txtRgMae.getText());
+                            if(cbxResponsavelEscolha.getSelectedItem().equals("Mãe")){
+                                responsavelMaeSave.setTelefone(txtTelefoneResponsavel.getText());
+                            }
+                            responsavelMaeSave.setOrgaoExpedidorRg(txtOrgaoExpedidorMae.getText());
+                            responsavelMaeSave.setProfissao(txtProfissaoMae.getText());
+                            Date dataRgMae = sdf.parse(txtDataEmissaoMae.getText());
+                            responsavelMaeSave.setDataEmissaoRg(dataRgMae);
+                            gestaoAlunoController.save(responsavelMaeSave);
+                            
+                            //Configuracoes Responsavel Legal
+                            if(cbxResponsavelEscolha.getSelectedItem().equals("Mãe")){
+                                responsavelLegalSave.setTipo("Mãe");
+                                responsavelLegalSave.setNome(txtNomeMae.getText());
+                                responsavelLegalSave.setCpf(txtCpfMae.getText() + "repleg");
+                                responsavelLegalSave.setRg(txtRgMae.getText() + "repleg");
+                                responsavelLegalSave.setOrgaoExpedidorRg(txtOrgaoExpedidorMae.getText());
+                                responsavelLegalSave.setDataEmissaoRg(dataRgMae);
+                                responsavelLegalSave.setTelefone(txtTelefoneResponsavel.getText());
+                                gestaoAlunoController.save(responsavelLegalSave);   
+                                novoAluno.setReponsavelLegal(responsavelLegalSave);
+                            }
+                        }else{
+                            responsavelMaeSave = gestaoAlunoController.findByNomeResponsavel(txtNomeMae.getText());
+                            responsavelLegalSave = responsavelMaeSave;
+                            responsavelLegalSave.setNome(responsavelMaeSave.getNome() + "repleg");
+                            responsavelLegalSave.setCpf(responsavelMaeSave.getCpf()+ "repleg");
+                            responsavelLegalSave.setRg(responsavelMaeSave.getRg()+ "repleg");
+                            responsavelLegalSave.setTelefone(responsavelMaeSave.getTelefone()+ "repleg");
+                            novoAluno.setReponsavelLegal(responsavelLegalSave);
+                        }
+                        novoAluno.setMae(responsavelMaeSave);
                     }
                 }
-                
                 List<AlunosPrincipal> alunos = this.gestaoAlunoController.findAll();
                 String cpf = txtCpf.getText();
                 String email = txtEmail.getText();
@@ -1407,7 +1522,36 @@ public class TelaAdicionar extends javax.swing.JFrame {
                         return;
                     }
                 }
+                
+                novoAluno.setCpf(cpf);
+                novoAluno.setEmail(email);
+                novoAluno.setRg(rg);
+                novoAluno.setTituloEleitor(tituloEleitor);
+                novoAluno.setTelefone(telefone);
+                
+                EnderecoId id = new EnderecoId(txtRua.getText(), Integer.parseInt(txtNumero.getText()), txtCep.getText());
+                Endereco endereco;
+                if(this.enderecoController.findById(id) == null){
+                    endereco = new Endereco(txtRua.getText(), Integer.parseInt(txtNumero.getText()), txtCep.getText());
+                    endereco.setBairro(txtBairro.getText());
+                    endereco.setCep(txtCep.getText());
+                    endereco.setCidade(txtCidade.getText());
+                    endereco.setNumero(Integer.parseInt(txtNumero.getText()));
+                    endereco.setRua(txtRua.getText());
+                    endereco.setUf(cbxUf.getSelectedItem().toString());
+                    enderecoController.save(endereco);
+                }else{
+                    endereco = this.enderecoController.findById(id);
+                }
+                novoAluno.setEnderecos(endereco);
 
+                try{
+                    List<Escola> escolas = escolaController.findByNome(txtEscolaOrigem.getText());
+                    novoAluno.setEscolaOrigem(escolas.getFirst());
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Escola de Origem Desconhecida", "ERRO", JOptionPane.ERROR_MESSAGE);
+                }
+                
                 //Salva o aluno no Banco de Dados
                 this.gestaoAlunoController.save(novoAluno);
                 log.info("Aluno salvo com sucesso: {}", novoAluno);
@@ -1521,6 +1665,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private javax.swing.JLabel lblCpfResponsavelOutro;
     private javax.swing.JLabel lblDataEmissaoMae;
     private javax.swing.JLabel lblDataEmissaoPai;
+    private javax.swing.JLabel lblDataEmissaoResponsavelOutro;
     private javax.swing.JLabel lblDataEmissão;
     private javax.swing.JLabel lblDataNascimento;
     private javax.swing.JLabel lblDeficiencia;
@@ -1541,6 +1686,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private javax.swing.JLabel lblOrgaoExpedidor;
     private javax.swing.JLabel lblOrgaoExpedidorMae;
     private javax.swing.JLabel lblOrgaoExpedidorPai;
+    private javax.swing.JLabel lblOrgaoExpedidorResponsavelOutro;
     private javax.swing.JLabel lblProfissaoMae;
     private javax.swing.JLabel lblProfissaoPai;
     private javax.swing.JLabel lblRegiaoMoradia;
@@ -1548,6 +1694,7 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private javax.swing.JLabel lblRg;
     private javax.swing.JLabel lblRgMae;
     private javax.swing.JLabel lblRgPai;
+    private javax.swing.JLabel lblRgResponsavelOutro;
     private javax.swing.JLabel lblRua;
     private javax.swing.JLabel lblSexo;
     private javax.swing.JLabel lblTelefone;
@@ -1578,9 +1725,11 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private javax.swing.JTextField txtDataEmissao;
     private javax.swing.JTextField txtDataEmissaoMae;
     private javax.swing.JTextField txtDataEmissaoPai;
+    private javax.swing.JTextField txtDataEmissaoResponsavelOutro;
     private javax.swing.JTextField txtDataNascimento;
     private javax.swing.JTextField txtDeficienciaOutro;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtEscolaOrigem;
     private javax.swing.JTextField txtMedicamentosOutro;
     private javax.swing.JTextField txtNacionalidade;
     private javax.swing.JTextField txtNaturalidade;
@@ -1593,16 +1742,17 @@ public class TelaAdicionar extends javax.swing.JFrame {
     private javax.swing.JTextField txtOrgaoExpedidor;
     private javax.swing.JTextField txtOrgaoExpedidorMae;
     private javax.swing.JTextField txtOrgaoExpedidorPai;
+    private javax.swing.JTextField txtOrgaoExpedidorResponsavelOutro;
     private javax.swing.JTextField txtProfissaoMae;
     private javax.swing.JTextField txtProfissaoPai;
     private javax.swing.JTextField txtRg;
     private javax.swing.JTextField txtRgMae;
     private javax.swing.JTextField txtRgPai;
+    private javax.swing.JTextField txtRgResponsavelOutro;
     private javax.swing.JTextField txtRua;
     private javax.swing.JTextField txtTelefone;
     private javax.swing.JTextField txtTelefoneResponsavel;
     private javax.swing.JTextField txtTipoResponsavel;
     private javax.swing.JTextField txtTituloEleitor;
-    private javax.swing.JTextField txtscolaOrigem;
     // End of variables declaration//GEN-END:variables
 }

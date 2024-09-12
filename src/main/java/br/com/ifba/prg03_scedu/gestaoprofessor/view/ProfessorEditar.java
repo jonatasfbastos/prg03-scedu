@@ -8,10 +8,13 @@ import br.com.ifba.prg03_scedu.gestaoprofessor.controller.ProfessorIController;
 import br.com.ifba.prg03_scedu.gestaoprofessor.entity.Professor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static org.hibernate.internal.CoreLogging.logger;
+import static org.hibernate.internal.HEMLogging.logger;
 
 /**
  *
@@ -22,6 +25,7 @@ public class ProfessorEditar extends javax.swing.JFrame {
     
     private final ProfessorIController professorController;
     private final Professor professor;
+    private static final Logger logger = Logger.getLogger(ProfessorCadastrar.class.getName());
     
     public ProfessorEditar(ProfessorIController professorController, Professor professor) {
         this.professorController = professorController;
@@ -170,9 +174,9 @@ public class ProfessorEditar extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(29, 29, 29)
                 .addComponent(txtN1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -306,19 +310,46 @@ public class ProfessorEditar extends javax.swing.JFrame {
             return;
         }
         
+        //Tirando letra e espaço digitado
+        cpf = cpf.replace("\\D", "");
+        //Verificando o CPF Digitado pelo métodos
+        if(VerificarCPF(cpf)){
+            
+           professor.setCpf(cpf); 
+        }else{
+            return;
+        }
+        
         //Coloca essa informação em Professor
         professor.setNome(nome);
-        professor.setCpf(cpf);
+        
         professor.setMateria(materia);
         professor.setFormado(lblFormado.isSelected());
         
         // Verificação e conversão da data de nascimento 
         SimpleDateFormat nascimento = new SimpleDateFormat("dd/MM/yyyy");
-        Date nascimentostr = nascimento.parse(lblNascimento.getText()); // Converte a String para Date
+        Calendar calendario = Calendar.getInstance();
         
+       
+        //Verificando a data ser e válida pelo método isDateValida() passando a data de forma de String
+        if(isDataValida(lblNascimento.getText())){
+            //Convertendo de String para Data
+            Date nascimentostr = nascimento.parse(lblNascimento.getText());
+            //Colando a data digitada em calendário
+            calendario.setTime(nascimentostr);
+            //Pegando a ano de nascimento
+            int ano = calendario.get(Calendar.YEAR);
+            //Verificando o intervalo está fora de 1920 À 2024
+            if (ano < 1920 || ano > 2024) {
+                JOptionPane.showInternalMessageDialog(null, "Ano de nascimento inválido. O ano deve estar entre 1920 e 2024.");
+                return;
+            }
+             
         //Verificando Erro na chamada no método
        try { 
-            professor.setNascimento(nascimentostr);
+             // Converte a String para Date
+            professor.setNascimento(nascimentostr);   
+           
         } catch (Exception e) {
             JOptionPane.showInternalMessageDialog(null, "Data de Nascimento Inválida");
             return;
@@ -330,6 +361,11 @@ public class ProfessorEditar extends javax.swing.JFrame {
        JOptionPane.showInternalMessageDialog(null, "Atualizado com sucesso");
        
        dispose();
+        }else{
+            //Erro no cadastro
+            JOptionPane.showInternalMessageDialog(null, "Data de Nascimento Inválida");
+            return;
+        }
         
     }
 
@@ -347,5 +383,28 @@ public class ProfessorEditar extends javax.swing.JFrame {
         lblNascimento.setText(nascimentostr);
         
         return;
+    }
+    
+    public static boolean isDataValida(String dataStr) {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        formato.setLenient(false); // Força a validação estrita da data
+
+        try {
+            Date data = formato.parse(dataStr); // Tenta converter a string em uma data válida
+            return true; // A data é válida
+        } catch (ParseException e) {
+            return false; // A data é inválida
+        }
+    }
+
+    private boolean VerificarCPF(String cpf) {
+        
+        
+        if(cpf.length() != 11 || cpf.matches("(\\d)\\1{10}")){
+            JOptionPane.showInternalMessageDialog(null, "CPF inválido! Número digitado precisa ser igual a 11 Dígito e não pode ser repetitivos.");
+            return false;
+        }
+        
+        return true;
     }
 }

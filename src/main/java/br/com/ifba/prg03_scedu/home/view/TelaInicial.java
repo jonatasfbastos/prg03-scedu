@@ -11,6 +11,7 @@ import br.com.ifba.prg03_scedu.curriculo.view.CurriculoListar;
 import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
 import br.com.ifba.prg03_scedu.curso.view.CursoListar;
 import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
+import br.com.ifba.prg03_scedu.endereco.controller.EnderecoIController;
 import br.com.ifba.prg03_scedu.escola.controller.EscolaIController;
 import br.com.ifba.prg03_scedu.escola.view.ListaEscola;
 import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
@@ -53,6 +54,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private final GestaoAlunoIController gestaoAlunoController;
     private final ProfessorIController professorController;
     private final SerieIController serieController;
+    private final EnderecoIController enderecoController;
     private JLabel lblHora;
     
     public TelaInicial(
@@ -65,7 +67,8 @@ public class TelaInicial extends javax.swing.JFrame {
         AvaliacaoIController avaliacaoController,
         GestaoAlunoIController gestaoAlunoController,
         ProfessorIController professorController,
-        SerieIController serieController
+        SerieIController serieController,
+        EnderecoIController enderecoController
 
     ) {
         initComponents();
@@ -79,7 +82,7 @@ public class TelaInicial extends javax.swing.JFrame {
         this.gestaoAlunoController = gestaoAlunoController;
         this.professorController = professorController;
         this.serieController = serieController;
-
+        this.enderecoController = enderecoController;
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         adicionarRelogio();
         atualizarInformacoesUsuario();
@@ -243,7 +246,7 @@ public class TelaInicial extends javax.swing.JFrame {
         btnProfessor.setBackground(new java.awt.Color(0, 51, 255));
         btnProfessor.setFont(new java.awt.Font("Alef", 0, 14)); // NOI18N
         btnProfessor.setForeground(new java.awt.Color(255, 255, 255));
-        btnProfessor.setText("Gestão de Professor");
+        btnProfessor.setText("Professor");
         btnProfessor.setAlignmentX(0.5F);
         btnProfessor.setBorder(null);
         btnProfessor.setBorderPainted(false);
@@ -493,12 +496,12 @@ private void adicionarCalendario() {
 
     private void btnGestaoAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestaoAlunoActionPerformed
         // TODO add your handling code here:
-        TelaListar telaAluno = new TelaListar(gestaoAlunoController);
+        TelaListar telaAluno = new TelaListar(gestaoAlunoController, enderecoController,escolaController);
         telaAluno.setVisible(true);
     }//GEN-LAST:event_btnGestaoAlunoActionPerformed
 
     private void btnProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfessorActionPerformed
-        ProfessorView professrView = new ProfessorView(professorController);
+        ProfessorView professrView = new ProfessorView(professorController, disciplinaController);
         professrView.setVisible(true);
         professrView.toFront();
     }//GEN-LAST:event_btnProfessorActionPerformed

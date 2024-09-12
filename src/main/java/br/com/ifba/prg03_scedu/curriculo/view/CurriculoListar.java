@@ -390,7 +390,7 @@ public class CurriculoListar extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         CurriculoCadastro curriculoCadastro = new CurriculoCadastro(curriculoController, disciplinaController);
-        curriculoCadastro.setTitle("Editar curriculo");
+        curriculoCadastro.setTitle("Cadastrar curriculo");
         curriculoCadastro.setLocationRelativeTo(null);
         curriculoCadastro.setVisible(true);
         //Adiciona um WindowListener para capturar o evento de fechamento da janela

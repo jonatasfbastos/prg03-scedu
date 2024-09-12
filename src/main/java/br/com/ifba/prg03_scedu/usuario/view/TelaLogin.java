@@ -8,6 +8,7 @@ import br.com.ifba.prg03_scedu.disciplina.controller.DisciplinaIController;
 import br.com.ifba.prg03_scedu.Prg03SceduApplication;
 import br.com.ifba.prg03_scedu.curriculo.controller.CurriculoIController;
 import br.com.ifba.prg03_scedu.curso.controller.CursoIController;
+import br.com.ifba.prg03_scedu.endereco.controller.EnderecoIController;
 import br.com.ifba.prg03_scedu.escola.controller.EscolaIController;
 import br.com.ifba.prg03_scedu.faltas.controller.GestaoFaltasIController;
 import br.com.ifba.prg03_scedu.gestaoalunos.controller.GestaoAlunoIController;
@@ -42,7 +43,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private final GestaoAlunoIController gestaoAlunoController;
     private final ProfessorIController professorController;
     private final SerieIController serieController;
-    
+    private final EnderecoIController enderecoController;
     
     public TelaLogin(
             CurriculoIController curriculoController,
@@ -55,7 +56,8 @@ public class TelaLogin extends javax.swing.JFrame {
             AvaliacaoIController avaliacaoController,
             GestaoAlunoIController gestaoAlunoController,
             ProfessorIController professorController,
-            SerieIController serieController
+            SerieIController serieController,
+            EnderecoIController enderecoController
     ) {
         this.curriculoController = curriculoController;
         this.usuarioController = usuarioController;
@@ -68,6 +70,7 @@ public class TelaLogin extends javax.swing.JFrame {
         this.avaliacaoController = avaliacaoController;
         this.professorController = professorController;
         this.serieController = serieController;
+        this.enderecoController = enderecoController;
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
@@ -289,7 +292,8 @@ public class TelaLogin extends javax.swing.JFrame {
             // Limpa o array de caracteres após o uso para segurança
             Arrays.fill(senhaArray, ' ');
 
-            TelaInicial telaInicial = new TelaInicial(disciplinaController, curriculoController, gestaoFaltasController, cursoController, usuarioController, escolaController, avaliacaoController, gestaoAlunoController, professorController, serieController);
+            TelaInicial telaInicial = new TelaInicial(disciplinaController, curriculoController, gestaoFaltasController, cursoController, usuarioController, escolaController, avaliacaoController, gestaoAlunoController, professorController, serieController, enderecoController);
+
             telaInicial.setVisible(true);
             telaInicial.toFront();
             this.dispose();
