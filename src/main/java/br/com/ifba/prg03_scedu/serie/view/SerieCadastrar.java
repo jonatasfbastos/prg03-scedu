@@ -182,23 +182,6 @@ public class SerieCadastrar extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
-       /* //Novo objeto de serie
-        Serie serie = new Serie();
-        
-        //Seta o nome e usa o controller para salvar no banco
-        serie.setNome(txtNomeSerie.getText());
-        List<Curriculo> curriculoSelecionado = new ArrayList<>();
-        for (JCheckBox checkBox : checkBoxes) {
-            if (checkBox.isSelected()) {
-                List<Curriculo> curriculos = curriculoController.findById(Long.parseLong(checkBox.getText()));
-            }
-        }*/
-
-        //Converte o valor do campo para long e busca o curriculo correspondente
-       /* long curriculoId = Long.parseLong(txtIdCurriculo.getText());
-        Curriculo curriculo = curriculoController.findById(curriculoId);
-       */
-
         //Logica para cadastrar no banco de dados
         try { 
             //Cria um objeto serie
@@ -232,11 +215,15 @@ public class SerieCadastrar extends javax.swing.JFrame {
                         curriculoAssociado = true;
                           JOptionPane.showMessageDialog(null, "Este currículo já está associado a uma série.", "Aviso", JOptionPane.WARNING_MESSAGE);
                     } else{
+                        //Se nao estiver adiciona o curriculo
                         serie.getCurriculo().add(curriculo);
                     }
                 }
             }
+            //Salva a serie
             serieController.save(serie);
+            
+            //Verifica curriculos associados
             if(curriculoAssociado){
                 JOptionPane.showMessageDialog(null, "Alguns curriculos selecionados ja foram associados a serie,os demais foram adicionados.", "Aviso", JOptionPane.ERROR_MESSAGE);
             } else {
