@@ -64,23 +64,27 @@
                   <Component id="lblCadastrarSerie" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="139" max="-2" attributes="0"/>
               </Group>
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblNomeSerie" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="lblIdCurriculo" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="btnCadastrar" min="-2" pref="116" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblNomeSerie" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="lblIdCurriculo" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txtNomeSerie" min="-2" pref="260" max="-2" attributes="0"/>
+                              <Component id="btnSelecionar" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="57" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtNomeSerie" alignment="0" min="-2" pref="260" max="-2" attributes="0"/>
-                      <Component id="txtIdCurriculo" alignment="0" min="-2" pref="260" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="57" max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="btnCadastrar" min="-2" pref="116" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -90,21 +94,23 @@
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Component id="lblCadastrarSerie" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="lblNomeSerie" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                          <Component id="lblIdCurriculo" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblIdCurriculo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnSelecionar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="txtNomeSerie" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                          <Component id="txtIdCurriculo" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="btnCadastrar" min="-2" pref="32" max="-2" attributes="0"/>
-                  <EmptySpace pref="199" max="32767" attributes="0"/>
+                  <EmptySpace pref="181" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -137,8 +143,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtNomeSerie">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtIdCurriculo">
-        </Component>
         <Component class="javax.swing.JButton" name="btnCadastrar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -148,6 +152,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnSelecionar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Selecionar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSelecionarActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

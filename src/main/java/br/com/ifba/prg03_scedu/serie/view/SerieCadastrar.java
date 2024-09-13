@@ -8,10 +8,21 @@ import br.com.ifba.prg03_scedu.curriculo.controller.CurriculoIController;
 import br.com.ifba.prg03_scedu.curriculo.entity.Curriculo;
 import br.com.ifba.prg03_scedu.serie.controller.SerieIController;
 import br.com.ifba.prg03_scedu.serie.entity.Serie;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,6 +34,8 @@ public class SerieCadastrar extends javax.swing.JFrame {
       
     private SerieListar serieListar;
     
+    private List<JCheckBox> checkBoxes;
+    
     private final SerieIController serieController;
     
     private final CurriculoIController curriculoController;
@@ -30,12 +43,13 @@ public class SerieCadastrar extends javax.swing.JFrame {
     /**
      * Creates new form SerieTela
      */
+    @Autowired
     public SerieCadastrar(SerieIController serieController, CurriculoIController curriculoController) {
 
         //Inicializa instancias dos controllers
         this.serieController = serieController;
         this.curriculoController = curriculoController;
-        this.serieListar = new SerieListar(serieController, curriculoController);
+        this.serieListar = serieListar;
         initComponents();
         
         //Nao encerra o programa ao fechar a tela
@@ -64,8 +78,8 @@ public class SerieCadastrar extends javax.swing.JFrame {
         lblNomeSerie = new javax.swing.JLabel();
         lblIdCurriculo = new javax.swing.JLabel();
         txtNomeSerie = new javax.swing.JTextField();
-        txtIdCurriculo = new javax.swing.JTextField();
         btnCadastrar = new javax.swing.JButton();
+        btnSelecionar = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -89,6 +103,13 @@ public class SerieCadastrar extends javax.swing.JFrame {
             }
         });
 
+        btnSelecionar.setText("Selecionar");
+        btnSelecionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelecionarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -100,17 +121,19 @@ public class SerieCadastrar extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNomeSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblIdCurriculo))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNomeSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtIdCurriculo, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(57, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(154, 154, 154))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(154, 154, 154))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNomeSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblIdCurriculo))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNomeSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSelecionar))
+                        .addContainerGap(57, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,18 +141,19 @@ public class SerieCadastrar extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(lblCadastrarSerie)
                 .addGap(78, 78, 78)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(lblNomeSerie)
                         .addGap(8, 8, 8)
-                        .addComponent(lblIdCurriculo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblIdCurriculo)
+                            .addComponent(btnSelecionar)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(txtNomeSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(txtIdCurriculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(63, 63, 63)
+                        .addGap(48, 48, 48)))
+                .addGap(40, 40, 40)
                 .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(199, Short.MAX_VALUE))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -158,41 +182,107 @@ public class SerieCadastrar extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
-        //Converte o valor do campo para long e busca o curriculo correspondente
-        long curriculoId = Long.parseLong(txtIdCurriculo.getText());
-        Curriculo curriculo = curriculoController.findById(curriculoId);
-        
-        //Verifica se o curriculo foi encontrado
-        if(curriculo == null) {
-            JOptionPane.showMessageDialog(null, "Curriculo nao encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+       /* //Novo objeto de serie
         Serie serie = new Serie();
         
+        //Seta o nome e usa o controller para salvar no banco
+        serie.setNome(txtNomeSerie.getText());
+        List<Curriculo> curriculoSelecionado = new ArrayList<>();
+        for (JCheckBox checkBox : checkBoxes) {
+            if (checkBox.isSelected()) {
+                List<Curriculo> curriculos = curriculoController.findById(Long.parseLong(checkBox.getText()));
+            }
+        }*/
+
+        //Converte o valor do campo para long e busca o curriculo correspondente
+       /* long curriculoId = Long.parseLong(txtIdCurriculo.getText());
+        Curriculo curriculo = curriculoController.findById(curriculoId);
+       */
+
         //Logica para cadastrar no banco de dados
-        try {
-            //Seta o nome e usa o controller para salvar no banco
-            serie.setNome(txtNomeSerie.getText());
+        try { 
+            //Cria um objeto serie
+            Serie serie = new Serie();
             
-            // Inicializa a lista de currículos se estiver nula
-            if (serie.getCurriculo() == null) {
+            //Define o nome da serie a partir do campo de texto da tela e verifica se estar vazio
+            String nomeSerie = txtNomeSerie.getText();
+            if(nomeSerie == null || nomeSerie.trim().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Insira o nome da serie!");
+                return;
+            }
+            //Seta o nome da serie
+            serie.setNome(nomeSerie);
+            
+            //Verifica se o curriculo eh nulo e inicia uma lista 
+            if(serie.getCurriculo() == null) {
                 serie.setCurriculo(new ArrayList<>());
             }
-
-            // Verifica se o currículo já está associado a serie
-            if (serie.getCurriculo().contains(curriculo)) {
-                  JOptionPane.showMessageDialog(null, "Este currículo já está associado a uma série.", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else{
-                //Adiciona o curriculo a lista de curriculos da seriee salva no banco
-                serie.getCurriculo().add(curriculo);
-                serieController.save(serie);         
-                JOptionPane.showMessageDialog(this, "Serie cadastrada com sucesso!");
+            
+            boolean curriculoAssociado = false;
+            
+            //Percorre os checkBoxes pra encontrar os curriculos que foram selecionados
+            for (JCheckBox checkBox : checkBoxes) {
+                if(checkBox.isSelected()) {
+                    //Converte o checkBox em long e busca o curriculo pelo id
+                    Long curriculoId = Long.parseLong(checkBox.getText());
+                    Curriculo curriculo = curriculoController.findById(curriculoId);
+                    
+                    // Verifica se o currículo já está associado a serie
+                    if (serie.getCurriculo().contains(curriculo)) {
+                        curriculoAssociado = true;
+                          JOptionPane.showMessageDialog(null, "Este currículo já está associado a uma série.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    } else{
+                        serie.getCurriculo().add(curriculo);
+                    }
+                }
             }
+            serieController.save(serie);
+            if(curriculoAssociado){
+                JOptionPane.showMessageDialog(null, "Alguns curriculos selecionados ja foram associados a serie,os demais foram adicionados.", "Aviso", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Série cadastrada com sucesso!");
+            }
+            
         } catch (Exception error) {
             //Tratamento de execoes
             JOptionPane.showMessageDialog(null, error, "Erro ao cadastrar", JOptionPane.ERROR_MESSAGE);
         }
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//nao fecha a janela ao encerrar o programa
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//nao encerra o programa ao fechar a janela
     }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
+        // TODO add your handling code here     
+        //Cria o JDialog
+        JDialog dialog = new JDialog(this, "Selecione os IDs dos curriculos", true);
+        dialog.setSize(300, 200);
+        dialog.setLocationRelativeTo(btnSelecionar);
+          
+            List<Curriculo> curriculoLista = curriculoController.findAll();
+            checkBoxes = new ArrayList<>();
+            
+            //Cria o painel de checkboxes
+            JPanel panelCurriculos = new JPanel();
+            panelCurriculos.setLayout(new GridLayout(0, 1));
+            
+            //Cria uma check box para cada curriculo do banco
+            for (Curriculo curriculo : curriculoLista){
+                //Converte o ID para String
+                JCheckBox checkBox = new JCheckBox(curriculo.getId().toString());
+                checkBoxes.add(checkBox);
+                panelCurriculos.add(checkBox);
+            }
+            
+            JScrollPane scrollPane = new JScrollPane(panelCurriculos);
+            scrollPane.setPreferredSize(new Dimension(280, 150));
+            
+            dialog.add(scrollPane, BorderLayout.CENTER);
+            
+            JButton btnOk = new JButton("Ok");
+            btnOk.addActionListener(e -> dialog.dispose());
+            dialog.add(btnOk, BorderLayout.SOUTH);
+            
+            dialog.setVisible(true);
+    }//GEN-LAST:event_btnSelecionarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,13 +299,13 @@ public class SerieCadastrar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnSelecionar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCadastrarSerie;
     private javax.swing.JLabel lblIdCurriculo;
     private javax.swing.JLabel lblNomeSerie;
-    private javax.swing.JTextField txtIdCurriculo;
     private javax.swing.JTextField txtNomeSerie;
     // End of variables declaration//GEN-END:variables
 }
